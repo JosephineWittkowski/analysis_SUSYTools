@@ -130,9 +130,10 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
   int flag = nt.evt()->cutFlags[NtSys_NOM];
   //   charge flip background contribution in SS channels: for the e^pm e^pm and e^pm mu^pm channels, processes that are opposite-sign in truth but where one electron has undergone a “charge flip”. Contributions from WW, ttbar, Z/gamma* and single top are via charge-flip
   // In previous analysis, it has been observed that the charge flip rate in data is lower than that in the simulation by about 20%. Because of this disagreement, the electron charge flip rate is measured in data as a function of |eta| and combined with the smaller dependence on pT taken from simulation.
-  float weight_ALL_EE = nt.evt()->w;
-  float weight_ALL_MM = nt.evt()->w;
-  float weight_ALL_EM = nt.evt()->w;
+  float weight_ALL_EE =  (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
+  float weight_ALL_MM =  (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
+  float weight_ALL_EM =  (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
+  
   
   float cutnumber = 0.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_EE); fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM); // all events in the sample
 
@@ -322,41 +323,6 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
 		cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 
-		bool unbiased = true;
-		float d0_el0;
-		float d0_el1;
-		float err_d0_el0;
-		float err_d0_el1;
-		if(unbiased){
-		  d0_el0 = el0->d0Unbiased;
-		  err_d0_el0 = el0->errD0Unbiased;
-		  d0_el1 = el1->d0Unbiased;		  
-		  err_d0_el1 = el1->errD0Unbiased;
-		}
-		else{
-		  d0_el0 = el0->d0;
-		  err_d0_el0 = el0->errD0;
-		  d0_el1 = el1->d0;  
-		  err_d0_el1 = el1->errD0;
-		}
-// 		cout << "-----------------------" << endl;
-// 		const Jet* closestJet_el0;
-// 		float mindR=999;
-// 		float mindPhiJMet=999;
-// 		for(uint j=0; j<m_signalJets2Lep.size(); j++){
-// 		  const Jet* cj = m_signalJets2Lep.at(j);
-// 		  float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-// 		  if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
-// 		  if(el0->DeltaR(*cj)>mindR) continue;
-// 		  mindR = el0->DeltaR(*cj);
-// 		  closestJet_el0 = cj;
-// 		}
-// 		float qd0_el0 =d0_el0/fabs(d0_el0);
-// 		float m_sPhi_el0 = el0->phi + qd0_el0 * TMath::Pi()/2.;
-// 		float dPhi_el0 = m_sPhi_el0- closestJet_el0->phi;
-// 		float signIP_el0 =  fabs(cos(dPhi_el0))/(cos(dPhi_el0)+1e-32) * fabs(d0_el0); 
-// 		float sD0_el0 = signIP_el0 / el0->d0Sig(true);
-// 		cout << nt.evt()->event << " d0_el0= " << d0_el0 << " err_d0_el0= " << err_d0_el0 << " j->phi= " << closestJet_el0->phi << " el0->phi= " << el0->phi << " signIP_el0= " << signIP_el0 << endl;
 		
 		if(fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron) (update to latest QFlip)
 		  cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
@@ -367,20 +333,16 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		      cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 		      if(numberOfCLJets(m_signalJets2Lep) >=1){
 			cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		
 			if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
 			  
 			  cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 			  if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
 			    cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
-// 			    cout << "EE event " << nt.evt()->event << " el0.Pt()= " << el0_SS_TLV.Pt() << " el1.Pt()= " << el1_SS_TLV.Pt(); 
 			    float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
-// 			     cout << " mtWW= " << mtWW_EE << endl;
 			    
 			    //SRSS1
-			    
-			    if(mtWW_EE >= 150.){
-// 			      cout << "passed" << endl;
-			      
+			    if(mtWW_EE >= 150.){			      
 			      cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 			      float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
 			      if(HT_EE >= 200.){
@@ -519,6 +481,10 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		  //------------------------------------------------------------------------------------
 		  if(mu0->q*mu1->q>0){
 		    cutnumber = 21.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //SS cut: for MM applied only on SS events.
+		    
+		   
+
+		
 		    if(muEtConeCorr(mu0, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu0->pt < 0.1 && muEtConeCorr(mu1, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu1->pt < 0.1){
 		      cutnumber = 22.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 		      cutnumber = 23.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
@@ -529,6 +495,65 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			  cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			  if(numberOfCLJets(m_signalJets2Lep) >=1){
 			    cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    
+			     bool unbiased = true;
+		    float d0_mu0;
+		    float d0_mu1;
+		    float err_d0_mu0;
+		    float err_d0_mu1;
+		    if(unbiased){
+		      d0_mu0 = mu0->d0Unbiased;
+		      err_d0_mu0 = mu0->errD0Unbiased;
+		      d0_mu1 = mu1->d0Unbiased;		  
+		      err_d0_mu1 = mu1->errD0Unbiased;
+		    }
+		    else{
+		      d0_mu0 = mu0->d0;
+		      err_d0_mu0 = mu0->errD0;
+		      d0_mu1 = mu1->d0;  
+		      err_d0_mu1 = mu1->errD0;
+		    }
+
+		    const Jet* closestJet_mu0;
+		    float mindR=999;
+		    float mindPhiJMet=999;
+		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
+		      const Jet* cj = m_signalJets2Lep.at(j);
+		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
+// 		      cout << "dPhi= " << dPhi << endl;
+		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
+		      if(mu0->DeltaR(*cj)>mindR) continue;
+		      mindR = mu0->DeltaR(*cj);
+		      closestJet_mu0 = cj;
+		    }
+		    
+		    const Jet* closestJet_mu1;
+		    mindR=999;
+		    mindPhiJMet=999;
+		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
+		      const Jet* cj = m_signalJets2Lep.at(j);
+		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
+		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
+		      if(mu1->DeltaR(*cj)>mindR) continue;
+		      mindR = mu1->DeltaR(*cj);
+		      closestJet_mu1 = cj;
+		    }
+// 		    cout << "mindPhiJMet= " << mindPhiJMet << " closestJet_mu0->phi= " << closestJet_mu0->phi << endl;
+		    
+		    float qd0_mu0 =d0_mu0/fabs(d0_mu0);
+		    float m_sPhi_mu0 = mu0->phi + qd0_mu0 * TMath::Pi()/2.;
+
+		    float dPhi_mu0 = m_sPhi_mu0- closestJet_mu0->phi;
+		    float signIP_mu0 =  fabs(cos(dPhi_mu0))/(cos(dPhi_mu0)+1e-32) * fabs(d0_mu0); 
+		    float sD0_mu0 = signIP_mu0 / mu0->d0Sig(true);
+		    
+		    float qd0_mu1 =d0_mu1/fabs(d0_mu1);
+		    float m_sPhi_mu1 = mu1->phi + qd0_mu1 * TMath::Pi()/2.;
+		    float dPhi_mu1 = m_sPhi_mu1- closestJet_mu1->phi;
+		    float signIP_mu1 =  fabs(cos(dPhi_mu1))/(cos(dPhi_mu1)+1e-32) * fabs(d0_mu1); 
+		    float sD0_mu1 = signIP_mu1 / mu1->d0Sig(true);
+// 		    cout << "sD0_mu1= " << sD0_mu1 << endl;
+		    
 			    if(m_signalLeptons.at(0)->Pt() >= 30.){
 			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    cutnumber = 28.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //ZVeto
@@ -656,6 +681,10 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
   Muon* mu;
   mu = muons.at(0);
   el = electrons.at(0);
+  Lepton* lep0;
+  Lepton* lep1;
+  lep0 = (leptons.at(0)->pt > leptons.at(1)->pt) ? leptons.at(0) :leptons.at(1);
+  lep1 = (leptons.at(0)->pt > leptons.at(1)->pt) ? leptons.at(1) :leptons.at(0);
   
   cutnumber = 15.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM); //pass category
 
@@ -733,6 +762,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		//------------------------------------------------------------------------------------
 		
 		cutnumber = 21.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //SS cut: applied only on weighted events
+		    
 		if(muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1){
 		  cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		  if(fabs(el->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron)
@@ -744,6 +774,63 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
 			  cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);   
+			  
+		    bool unbiased = true;
+		    float d0_lep0;
+		    float d0_lep1;
+		    float err_d0_lep0;
+		    float err_d0_lep1;
+		    if(unbiased){
+		      d0_lep0 = lep0->d0Unbiased;
+		      err_d0_lep0 = lep0->errD0Unbiased;
+		      d0_lep1 = lep1->d0Unbiased;		  
+		      err_d0_lep1 = lep1->errD0Unbiased;
+		    }
+		    else{
+		      d0_lep0 = lep0->d0;
+		      err_d0_lep0 = lep0->errD0;
+		      d0_lep1 = lep1->d0;  
+		      err_d0_lep1 = lep1->errD0;
+		    }
+
+		    const Jet* closestJet_lep0;
+		    float mindR=999;
+		    float mindPhiJMet=999;
+		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
+		      const Jet* cj = m_signalJets2Lep.at(j);
+		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
+		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
+		      if(lep0->DeltaR(*cj)>mindR) continue;
+		      mindR = lep0->DeltaR(*cj);
+		      closestJet_lep0 = cj;
+		    }
+		    
+		    const Jet* closestJet_lep1;
+		    mindR=999;
+		    mindPhiJMet=999;
+		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
+		      const Jet* cj = m_signalJets2Lep.at(j);
+		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
+		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
+		      if(lep1->DeltaR(*cj)>mindR) continue;
+		      mindR = lep1->DeltaR(*cj);
+		      closestJet_lep1 = cj;
+		    }
+		    
+		    float qd0_lep0 =d0_lep0/fabs(d0_lep0);
+		    float m_sPhi_lep0 = lep0->phi + qd0_lep0 * TMath::Pi()/2.;
+// 		    cout << "closestJet_lep0->phi= " << closestJet_lep0->phi << endl;
+		    float dPhi_lep0 = m_sPhi_lep0- closestJet_lep0->phi;
+		    float signIP_lep0 =  fabs(cos(dPhi_lep0))/(cos(dPhi_lep0)+1e-32) * fabs(d0_lep0); 
+		    float sD0_lep0 = signIP_lep0 / lep0->d0Sig(true);
+		    
+		    float qd0_lep1 =d0_lep1/fabs(d0_lep1);
+		    float m_sPhi_lep1 = lep1->phi + qd0_lep1 * TMath::Pi()/2.;
+		    float dPhi_lep1 = m_sPhi_lep1- closestJet_lep1->phi;
+		    float signIP_lep1 =  fabs(cos(dPhi_lep1))/(cos(dPhi_lep1)+1e-32) * fabs(d0_lep1); 
+		    float sD0_lep1 = signIP_lep1 / lep1->d0Sig(true);
+// 		    cout << "sD0_lep1= " << sD0_lep1 << endl;
+		    
 			  if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
 			    cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			    cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
@@ -757,8 +844,6 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 				//------------------------------------------------------------------------------------
 				//----------------------------------SR-SS2-EM------------------------------------------
 				//------------------------------------------------------------------------------------
-				float l0pt = (el_SS_TLV.Pt()>mu_TLV.Pt()) ? el_SS_TLV.Pt() : mu_TLV.Pt();
-				float l1pt = (el_SS_TLV.Pt()>mu_TLV.Pt()) ? mu_TLV.Pt() : el_SS_TLV.Pt();
 				float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 				if(METrel_SS>50.){
 				  cutnumber = 31.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
@@ -1061,7 +1146,45 @@ float TSelector_SusyNtuple_cutflow::getFakeWeight(const LeptonVector &baseLeps,
   return weight;// * getEvtWeight(baseLeps,true,true);
 
 }
+/*--------------------------------------------------------------------------------*/
+const Jet* TSelector_SusyNtuple_cutflow::getClosestJet(const Lepton* lep)
+{
+  const Jet* closestJet_el0;
+  float mindR=999;
+  float mindPhiJMet=999;
+  for(uint j=0; j<m_signalJets2Lep.size(); j++){
+    const Jet* cj = m_signalJets2Lep.at(j);
+    float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
+    if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
+    if(lep->DeltaR(*cj)>mindR) continue;
+    mindR = lep->DeltaR(*cj);
+    closestJet_el0 = cj;
+  }
+  return closestJet_el0;
+}		
 
+/*--------------------------------------------------------------------------------*/
+float TSelector_SusyNtuple_cutflow::recalc_sD0(bool unbiased, const Lepton* lep, const Jet* closestJet_lep)
+{
+  float d0_branch;
+  float err_d0_branch;
+  
+  if(unbiased){
+    d0_branch = lep->d0Unbiased;
+    err_d0_branch = lep->errD0Unbiased;
+  }
+  else{
+    d0_branch = lep->d0;
+    err_d0_branch = lep->errD0;
+  }
+		
+  float qd0 =d0_branch/fabs(d0_branch);
+  float m_sPhi = lep->phi + qd0 * TMath::Pi()/2.;
+  float dPhi_lep = m_sPhi- closestJet_lep->phi;
+  float signIP_lep =  fabs(cos(dPhi_lep))/(cos(dPhi_lep)+1e-32) * fabs(d0_branch); 
+  float sD0_lep = signIP_lep / lep->d0Sig(true);
+  return sD0_lep;
+}
 /*--------------------------------------------------------------------------------*/
 // Debug event
 /*--------------------------------------------------------------------------------*/
@@ -1074,12 +1197,13 @@ bool TSelector_SusyNtuple_cutflow::debugEvent()
 
   return false;
 }
-
+/*--------------------------------------------------------------------------------*/
 void TSelector_SusyNtuple_cutflow::SlaveTerminate()
 {
   TString outputfile="";
   if(sample_identifier == 126893)outputfile="histos_cutflow_126893.root";
   if(sample_identifier == 177503)outputfile="histos_cutflow_177503.root";
+  if(sample_identifier == 176576)outputfile="histos_cutflow_176576.root";
 //   if(sample_identifier == 110813)outputfile="histos_cutflow_110813.root";
 //   if(sample_identifier == 110814)outputfile="histos_cutflow_110814.root";
 //   if(sample_identifier == 110815)outputfile="histos_cutflow_110815.root";

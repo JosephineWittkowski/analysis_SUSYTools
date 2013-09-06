@@ -96,6 +96,8 @@ class TSelector_SusyNtuple_cutflow : public SusyNtAna
     void fillHistos_EM_SROS1(int cutnumber, int mcid, float weight);
     float getFakeWeight(const LeptonVector &baseLeps, SusyMatrixMethod::FAKE_REGION region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
     // Selection region
+    const Jet* getClosestJet(const Lepton* lep);
+    float recalc_sD0(bool unbiased, const Lepton* lep, const Jet* closestJet_lep);
     void setSelection(std::string s) { m_sel = s; }
 
     // debug check
