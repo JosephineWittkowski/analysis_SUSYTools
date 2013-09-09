@@ -77,7 +77,10 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
   m_chainEntry++;
   unsigned int mcid;
   if(nt.evt()->isMC) mcid = nt.evt()->mcChannel;
-  else mcid = 111111;
+  else{
+    mcid = 111111;
+    calcFakeContribution = true;   
+  }
   if(m_chainEntry==0){
     sample_identifier = mcid;
 //     mcid_of_first_entry = mcid;
@@ -86,7 +89,6 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 
     if(m_kIsData){
     cout << " DATA DATA DATA DATA DATA DATA" << endl;
-      calcFakeContribution = true;
   }
     else cout << "MC MC MC MC MC MC MC MC" << endl;
     cout << "sample_identifier= " << sample_identifier << endl;
@@ -226,7 +228,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
     LeptonVector leptons;
     ElectronVector electrons;
     TLorentzVector el0_TLV, el1_TLV;
-    
+//     cout << "m_signalElectrons.size()= " << m_signalElectrons.size() << " m_baseElectrons.size()= " << m_baseElectrons.size() << endl;
     if(m_signalElectrons.size()==2){
       passEE = true;
       cutnumber = 16.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_EE); //pass nlep
@@ -248,15 +250,18 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 	electrons = m_baseElectrons;
 	el0 = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(0) : electrons.at(1);
 	el1 = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(1) : electrons.at(0);
+	
+	el0_TLV.SetPtEtaPhiE(el0->pt, el0->eta ,el0->phi, el0->pt*cosh(el0->eta));
+	el1_TLV.SetPtEtaPhiE(el1->pt, el1->eta ,el1->phi, el1->pt*cosh(el1->eta));
       }
 	
       if(passEE && m_signalTaus.size() == 0){
 	
 	  cutnumber = 17.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_EE);
-	  if(m_trigObjWithoutRU->passDilEvtTrig(leptons, 0., nt.evt())){ //valid pT region
+	  if(m_trigObjWithoutRU->passDilEvtTrig(leptons, m_met->Et, nt.evt())){ //valid pT region
 	    cutnumber = 18.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_EE);
 	
-	    if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, 0., nt.evt()))){  //match to trigger (in MC not needed bc weighted)
+	    if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, m_met->Et, nt.evt()))){  //match to trigger (in MC not needed bc weighted)
 	      cutnumber = 19.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_EE);
 	      if(!nt.evt()->isMC || CheckRealLeptons(electrons, m_signalMuons)){
 		cutnumber = 20.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_EE);
@@ -269,8 +274,8 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		
 		//calc trigger weight:
 		float trigW_EE = 1.;
-		if(nt.evt()->isMC) trigW_EE = m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM);
-		//product of all weights:
+		if(nt.evt()->isMC) trigW_EE = m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM);
+		//product of all weights, for SS and OS MC events:
 		weight_ALL_EE = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) * lep_SF_EE * trigW_EE : 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
 		
 		//calc charge flip weights: 
@@ -293,15 +298,13 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		TVector2 met_SS_TVector2;
 		met_SS_TLV = m_met->lv();
 		met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
-		if((el0->q * el1->q)<0){		  
+		//if SS event, get ChargeFlipWeight and modify electron and met TLV:
+		if((el0->q * el1->q)<0 && nt.evt()->isMC){		  
 		  int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
 		  int pdg1 = 11 * (-1) * el1->q;
 		  
 		  chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
-// 		  cout << nt.evt()->event << "  chargeFlipWeight= " << chargeFlipWeight << endl;
-		  chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;
-// 		  cout << nt.evt()->event << " chargeFlipWeight= " << chargeFlipWeight << endl;
-		  
+		  chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;		  
 
 		  //get changed MET and fill in TLorentzVector:
 		  met_SS_TLV.SetPx(met_SS_TVector2.Px());
@@ -310,13 +313,18 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 
 		}
 		float weight_ALL_SS_EE = 1.0;
+		weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight; //multiply only SS weight by chargeFlipWeight
+// 		cout << "weight_ALL_SS_EE= " << weight_ALL_SS_EE;
+		//------------------------------------------------------------------------------------
+		calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
+		//if running on data for fake bg, instead of weights (pileup, xsec, eventweight, trigger, SF, btag, ...) use fakeWeight from SusyMatrixMethod		
+		float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
 		if(!nt.evt()->isMC && calcFakeContribution){
 		  weight_ALL_EE = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
-		  weight_ALL_SS_EE = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
+		  weight_ALL_SS_EE = weight_ALL_EE;
 		}
-		weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight;
-		//------------------------------------------------------------------------------------
-		calc_EE_variables(el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
+// 		cout << " " << weight_ALL_SS_EE << endl;
+		
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS-EE------------------------------------------
 		//------------------------------------------------------------------------------------
@@ -328,6 +336,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		  cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 		  if(numberOfFJets(m_signalJets2Lep) == 0){
 		    weight_ALL_SS_EE *= getBTagWeight(nt.evt());
+// 		    cout << "EE event  " << nt.evt()->event << "gen " << nt.evt()->w  << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EE  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM) <<  " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EE << endl;
 		    cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 		    if(numberOfCBJets(m_signalJets2Lep) == 0){
 		      cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
@@ -347,7 +356,6 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			      float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
 			      if(HT_EE >= 200.){
 				cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
 				if(METrel_SS>=50.){
 				  cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 				  //SRSS2
@@ -386,13 +394,13 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			  if(el0_TLV.Pt() >= 30 && el1_TLV.Pt() >= 30){
 			    cutnumber = 56.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
 			    float DeltaRee = fabs(el0_TLV.DeltaR(el1_TLV));
-			    if(DeltaRee<1.5){
+			    if(DeltaRee<=1.5){
 			      cutnumber = 57.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
 			      float mTemin = (Mt(el0, m_met) > Mt(el1, m_met)) ? Mt(el1, m_met) : Mt(el0, m_met);
 			      if(mTemin >= 60.){
 				cutnumber = 58.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
 				float DeltaPhiMETee = fabs((el0_TLV + el1_TLV).DeltaPhi(m_met->lv()));
-				if(DeltaPhiMETee>1.5){
+				if(DeltaPhiMETee>=1.5){
 				  cutnumber = 59.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
 				  if(m_met->lv().Pt() >= 80.){
 				    cutnumber = 60.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
@@ -446,6 +454,8 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
       passMM = true;
       mu0 = (m_baseMuons.at(0)->pt > m_baseMuons.at(1)->pt) ? m_baseMuons.at(0) : m_baseMuons.at(1);
       mu1 = (m_baseMuons.at(0)->pt > m_baseMuons.at(1)->pt) ? m_baseMuons.at(1) : m_baseMuons.at(0);
+      mu0_TLV.SetPtEtaPhiE(mu0->pt, mu0->eta ,mu0->phi, mu0->pt*cosh(mu0->eta));
+      mu1_TLV.SetPtEtaPhiE(mu1->pt, mu1->eta ,mu1->phi, mu1->pt*cosh(mu1->eta));
       
       leptons = m_baseLeptons;
       muons = m_baseMuons;
@@ -454,11 +464,11 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 	cutnumber = 16.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //pass nlep
 	if(m_signalTaus.size() == 0){
 	  cutnumber = 17.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-	  if(m_trigObjWithoutRU->passDilEvtTrig(leptons, 0., nt.evt())){ //valid pT region
+	  if(m_trigObjWithoutRU->passDilEvtTrig(leptons, m_met->Et, nt.evt())){ //valid pT region
 	    cutnumber = 18.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 	    if(m_signalTaus.size() == 0){
 	      
-	      if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, 0., nt.evt()))){ //match to trigger
+	      if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, m_met->Et, nt.evt()))){ //match to trigger
 		cutnumber = 19.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 
 		if(!nt.evt()->isMC || CheckRealLeptons(m_signalElectrons, muons)){
@@ -470,96 +480,37 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		  if(nt.evt()->isMC) lep_SF_MM = mu0->effSF * mu1->effSF;	
 		  //calc trigger weight:
 		  float trigW_MM = 1.;
-		  if(nt.evt()->isMC) trigW_MM = m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->lv().Et(), numberOfCLJets(m_signalJets2Lep), nt.evt()->nVtx, NtSys_NOM);
+		  if(nt.evt()->isMC) trigW_MM = m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM);
 		  //product of all weights:
 		  weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) * lep_SF_MM * trigW_MM: 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
+		  		  //------------------------------------------------------------------------------------
+		  calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets);
 		  if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
-		  //------------------------------------------------------------------------------------
-		  calc_MM_variables(mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets);
+		  
+
 		  //------------------------------------------------------------------------------------
 		  //----------------------------------SR-SS-MM------------------------------------------
 		  //------------------------------------------------------------------------------------
 		  if(mu0->q*mu1->q>0){
 		    cutnumber = 21.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //SS cut: for MM applied only on SS events.
-		    
-		   
-
-		
+// 		
 		    if(muEtConeCorr(mu0, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu0->pt < 0.1 && muEtConeCorr(mu1, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu1->pt < 0.1){
 		      cutnumber = 22.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 		      cutnumber = 23.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 		      if(numberOfFJets(m_signalJets2Lep) == 0){
 			weight_ALL_MM *= getBTagWeight(nt.evt());
+// 			cout << "MM event  " << nt.evt()->event << " gen " << nt.evt()->w << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_MM  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM) << " all " << weight_ALL_MM << endl;
 			cutnumber = 24.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			if(numberOfCBJets(m_signalJets2Lep) == 0){
 			  cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			  if(numberOfCLJets(m_signalJets2Lep) >=1){
-			    cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-			    
-			     bool unbiased = true;
-		    float d0_mu0;
-		    float d0_mu1;
-		    float err_d0_mu0;
-		    float err_d0_mu1;
-		    if(unbiased){
-		      d0_mu0 = mu0->d0Unbiased;
-		      err_d0_mu0 = mu0->errD0Unbiased;
-		      d0_mu1 = mu1->d0Unbiased;		  
-		      err_d0_mu1 = mu1->errD0Unbiased;
-		    }
-		    else{
-		      d0_mu0 = mu0->d0;
-		      err_d0_mu0 = mu0->errD0;
-		      d0_mu1 = mu1->d0;  
-		      err_d0_mu1 = mu1->errD0;
-		    }
-
-		    const Jet* closestJet_mu0;
-		    float mindR=999;
-		    float mindPhiJMet=999;
-		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
-		      const Jet* cj = m_signalJets2Lep.at(j);
-		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-// 		      cout << "dPhi= " << dPhi << endl;
-		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
-		      if(mu0->DeltaR(*cj)>mindR) continue;
-		      mindR = mu0->DeltaR(*cj);
-		      closestJet_mu0 = cj;
-		    }
-		    
-		    const Jet* closestJet_mu1;
-		    mindR=999;
-		    mindPhiJMet=999;
-		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
-		      const Jet* cj = m_signalJets2Lep.at(j);
-		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
-		      if(mu1->DeltaR(*cj)>mindR) continue;
-		      mindR = mu1->DeltaR(*cj);
-		      closestJet_mu1 = cj;
-		    }
-// 		    cout << "mindPhiJMet= " << mindPhiJMet << " closestJet_mu0->phi= " << closestJet_mu0->phi << endl;
-		    
-		    float qd0_mu0 =d0_mu0/fabs(d0_mu0);
-		    float m_sPhi_mu0 = mu0->phi + qd0_mu0 * TMath::Pi()/2.;
-
-		    float dPhi_mu0 = m_sPhi_mu0- closestJet_mu0->phi;
-		    float signIP_mu0 =  fabs(cos(dPhi_mu0))/(cos(dPhi_mu0)+1e-32) * fabs(d0_mu0); 
-		    float sD0_mu0 = signIP_mu0 / mu0->d0Sig(true);
-		    
-		    float qd0_mu1 =d0_mu1/fabs(d0_mu1);
-		    float m_sPhi_mu1 = mu1->phi + qd0_mu1 * TMath::Pi()/2.;
-		    float dPhi_mu1 = m_sPhi_mu1- closestJet_mu1->phi;
-		    float signIP_mu1 =  fabs(cos(dPhi_mu1))/(cos(dPhi_mu1)+1e-32) * fabs(d0_mu1); 
-		    float sD0_mu1 = signIP_mu1 / mu1->d0Sig(true);
-// 		    cout << "sD0_mu1= " << sD0_mu1 << endl;
-		    
-			    if(m_signalLeptons.at(0)->Pt() >= 30.){
+			    cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		    
+			    if(mu0->pt >= 30.){
 			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    cutnumber = 28.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //ZVeto
 			    float mtWW_MM = calcMt((mu0_TLV + mu1_TLV), m_met->lv());
 			    //SRSS1
-			    if(mtWW_MM > 100.){ //100, 150, 200
+			    if(mtWW_MM >= 100.){ //100, 150, 200
 			      cutnumber = 29.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			      float HT_MM = calcHT(mu0_TLV, mu1_TLV, m_met->lv(), m_signalJets2Lep);
 			      if(HT_MM >= 200.){
@@ -567,7 +518,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			      }
 			    }
 			    //SRSS2
-			    if(mtWW_MM > 150.){ //100, 150, 200
+			    if(mtWW_MM >= 150.){ //100, 150, 200
 			      cutnumber = 32.; fillHistos_MM_SRSS2(cutnumber, mcid, weight_ALL_MM);
 			      float HT_MM = calcHT(mu0_TLV, mu1_TLV, m_met->lv(), m_signalJets2Lep);
 			      if(HT_MM >= 200.){
@@ -575,7 +526,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			      }
 			    }
 			    //SRSS3
-			    if(mtWW_MM > 200.){ //100, 150, 200
+			    if(mtWW_MM >= 200.){ //100, 150, 200
 			      cutnumber = 35.; fillHistos_MM_SRSS3(cutnumber, mcid, weight_ALL_MM);
 			      float HT_MM = calcHT(mu0_TLV, mu1_TLV, m_met->lv(), m_signalJets2Lep);
 			      if(HT_MM >= 200.){
@@ -583,7 +534,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			      }
 			    }
 			    //SRSS4
-			    if(mtWW_MM > 200.){ //100, 150, 200
+			    if(mtWW_MM >= 200.){ //100, 150, 200
 			      cutnumber = 38.; fillHistos_MM_SRSS4(cutnumber, mcid, weight_ALL_MM);
 			      float HT_MM = calcHT(mu0_TLV, mu1_TLV, m_met->lv(), m_signalJets2Lep);
 			      if(HT_MM >= 200.){
@@ -628,7 +579,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 				  if(mTmmin >= 60.){			  
 				    cutnumber = 58.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 				    float DeltaPhiMETmm = fabs((mu0_TLV + mu1_TLV).DeltaPhi(m_met->lv()));
-				    if(DeltaPhiMETmm>1.5){
+				    if(DeltaPhiMETmm>=1.5){
 				      cutnumber = 59.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 				      if(m_met->lv().Pt() >= 80.){
 					cutnumber = 60.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
@@ -657,7 +608,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 
   
 
-  
+//   cout << "m_signalMuons.size()= " << m_signalMuons.size() << " m_signalElectrons.size()= " << m_signalElectrons.size() << " ... m_baseElectrons.size()= " << m_baseElectrons.size() << " m_baseMuons.size()= " <<  m_baseMuons.size() << endl;
 
   if((m_baseElectrons.size()==1 && m_baseMuons.size() ==1)){
 
@@ -700,10 +651,10 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 	float pt2 = (mu->pt > el->pt) ? el->pt : mu->pt;
 	if(m_signalTaus.size() == 0){
 	  cutnumber = 17.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
-	  if(m_trigObjWithoutRU->passDilEvtTrig(leptons, 0., nt.evt())){ //valid pT region)   
+	  if(m_trigObjWithoutRU->passDilEvtTrig(leptons, m_met->Et, nt.evt())){ //valid pT region)   
 	    cutnumber = 18.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
 
-	    if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, 0., nt.evt()))){ //match to trigger
+	    if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, m_met->Et, nt.evt()))){ //match to trigger
 	      cutnumber = 19.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
 	      if(!nt.evt()->isMC || CheckRealLeptons(electrons, muons)){
 		cutnumber = 20.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
@@ -741,7 +692,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		int pdg0 = 11 * (-1) * el->q; // Remember 11 = elec which has charge -1
 		TLorentzVector empty_TLV;
 		  
-		  if(el->q*mu->q<0){  
+		  if(el->q*mu->q<0 && nt.evt()->isMC){  
 		    chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el_SS_TLV, 13, &empty_TLV, &met_SS_TVector2, 0);
 		    chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;
 		    //get changed MET and fill in TLorentzVector:
@@ -750,12 +701,15 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		    met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
 		}
 		float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
+// 		cout << "weight_ALL_EM= " << weight_ALL_EM;
+		//------------------------------------------------------------------------------------
+		float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
+		calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
 		if(!nt.evt()->isMC && calcFakeContribution){ 
 		  weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
 		  weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
+// 		  cout << "  " << weight_ALL_EM << endl;
 		}
-		//------------------------------------------------------------------------------------
-		calc_EM_variables(el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
 		
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS1-EM------------------------------------------
@@ -769,74 +723,18 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		    cutnumber = 23.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		    if(numberOfFJets(m_signalJets2Lep) == 0){
 		      weight_ALL_SS_EM *= getBTagWeight(nt.evt());
+// 		      cout << "EM event  " << nt.evt()->event << " gen " << nt.evt()->w << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EM  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM) <<  " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EM << endl;
 		      cutnumber = 24.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		      if(numberOfCBJets(m_signalJets2Lep) == 0){
 			cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
-			  cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);   
-			  
-		    bool unbiased = true;
-		    float d0_lep0;
-		    float d0_lep1;
-		    float err_d0_lep0;
-		    float err_d0_lep1;
-		    if(unbiased){
-		      d0_lep0 = lep0->d0Unbiased;
-		      err_d0_lep0 = lep0->errD0Unbiased;
-		      d0_lep1 = lep1->d0Unbiased;		  
-		      err_d0_lep1 = lep1->errD0Unbiased;
-		    }
-		    else{
-		      d0_lep0 = lep0->d0;
-		      err_d0_lep0 = lep0->errD0;
-		      d0_lep1 = lep1->d0;  
-		      err_d0_lep1 = lep1->errD0;
-		    }
-
-		    const Jet* closestJet_lep0;
-		    float mindR=999;
-		    float mindPhiJMet=999;
-		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
-		      const Jet* cj = m_signalJets2Lep.at(j);
-		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
-		      if(lep0->DeltaR(*cj)>mindR) continue;
-		      mindR = lep0->DeltaR(*cj);
-		      closestJet_lep0 = cj;
-		    }
-		    
-		    const Jet* closestJet_lep1;
-		    mindR=999;
-		    mindPhiJMet=999;
-		    for(uint j=0; j<m_signalJets2Lep.size(); j++){
-		      const Jet* cj = m_signalJets2Lep.at(j);
-		      float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-		      if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
-		      if(lep1->DeltaR(*cj)>mindR) continue;
-		      mindR = lep1->DeltaR(*cj);
-		      closestJet_lep1 = cj;
-		    }
-		    
-		    float qd0_lep0 =d0_lep0/fabs(d0_lep0);
-		    float m_sPhi_lep0 = lep0->phi + qd0_lep0 * TMath::Pi()/2.;
-// 		    cout << "closestJet_lep0->phi= " << closestJet_lep0->phi << endl;
-		    float dPhi_lep0 = m_sPhi_lep0- closestJet_lep0->phi;
-		    float signIP_lep0 =  fabs(cos(dPhi_lep0))/(cos(dPhi_lep0)+1e-32) * fabs(d0_lep0); 
-		    float sD0_lep0 = signIP_lep0 / lep0->d0Sig(true);
-		    
-		    float qd0_lep1 =d0_lep1/fabs(d0_lep1);
-		    float m_sPhi_lep1 = lep1->phi + qd0_lep1 * TMath::Pi()/2.;
-		    float dPhi_lep1 = m_sPhi_lep1- closestJet_lep1->phi;
-		    float signIP_lep1 =  fabs(cos(dPhi_lep1))/(cos(dPhi_lep1)+1e-32) * fabs(d0_lep1); 
-		    float sD0_lep1 = signIP_lep1 / lep1->d0Sig(true);
-// 		    cout << "sD0_lep1= " << sD0_lep1 << endl;
-		    
+			  cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);   		    
 			  if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
 			    cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			    cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
 			    float mtWW_EM = calcMt((mu_TLV + el_SS_TLV), met_SS_TLV);
 			    //SRSS1
-			    if(mtWW_EM > 140.){ //140, 140, 140
+			    if(mtWW_EM > 140.){
 			      cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			      float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
 			      if(HT_EM > 200.){
@@ -844,7 +742,6 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 				//------------------------------------------------------------------------------------
 				//----------------------------------SR-SS2-EM------------------------------------------
 				//------------------------------------------------------------------------------------
-				float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 				if(METrel_SS>50.){
 				  cutnumber = 31.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
 				}
@@ -871,18 +768,18 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 			if(numberOfCLJets(m_signalJets2Lep) >=2){
 			  cutnumber = 54.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
 			  mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
-			  if(mjj > 50. && mjj < 100.){
+			  if(mjj >= 50. && mjj <= 100.){
 			    cutnumber = 55.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
 			    if(el_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_TLV.Pt()>mu_TLV.Pt() && el_TLV.Pt() >= 30.) || (el_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
 			      cutnumber = 56.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
 			      float DeltaRem = fabs(el_TLV.DeltaR(mu_TLV));
-			      if(DeltaRem<1.5){
+			      if(DeltaRem<=1.5){
 				cutnumber = 57.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
 				float mTemmin = (Mt(el, m_met) > Mt(mu, m_met)) ? Mt(mu, m_met) : Mt(el, m_met);
-				if(mTemmin > 60.){
+				if(mTemmin >= 60.){
 				cutnumber = 58.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
 				float DeltaPhiMETem = fabs((el_TLV + mu_TLV).DeltaPhi(m_met->lv()));
-				if(DeltaPhiMETem>1.5){
+				if(DeltaPhiMETem>=1.5){
 				  cutnumber = 59.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
 				  if(m_met->lv().Pt() >= 80.){
 				    cutnumber = 60.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);	      
@@ -948,15 +845,16 @@ bool TSelector_SusyNtuple_cutflow::CheckChargeFlipElectrons(const ElectronVector
 /*--------------------------------------------------------------------------------*/
 float TSelector_SusyNtuple_cutflow::getBTagWeight(const Event* evt)
 {
+  //will return 1 if !MC
+  
   JetVector tempJets;
-  for(uint ij=0; ij<m_baseJets.size(); ++ij){
-    Jet* jet = m_baseJets.at(ij);
-    if( !(jet->Pt() > 20 && fabs(jet->detEta) < 2.4) ) continue;
+  for(uint ij=0; ij<m_signalJets2Lep.size(); ++ij){
+    Jet* jet = m_signalJets2Lep.at(ij);
+    if( !(jet->Pt() > 20 && fabs(jet->detEta) < 2.5) ) continue;
     tempJets.push_back(jet);
   }
 
   return bTagSF(evt, tempJets, nt.evt()->mcChannel, BTag_NOM);
-// return 0.;
 }
 
 
@@ -1106,15 +1004,15 @@ void TSelector_SusyNtuple_cutflow::calcJet_variables(TLorentzVector signalJet0_T
   //nothing happens  
 }
 /*--------------------------------------------------------------------------------*/
-void TSelector_SusyNtuple_cutflow::calc_EE_variables(Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets ){
+void TSelector_SusyNtuple_cutflow::calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets ){
   //nothing happens
 }
 /*--------------------------------------------------------------------------------*/
-void TSelector_SusyNtuple_cutflow::calc_MM_variables(Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets){
+void TSelector_SusyNtuple_cutflow::calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets){
   //nothing happens  
 }
 /*--------------------------------------------------------------------------------*/
-void TSelector_SusyNtuple_cutflow::calc_EM_variables(Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets){
+void TSelector_SusyNtuple_cutflow::calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets){
   //nothing happens  
 }
 
@@ -1208,7 +1106,7 @@ void TSelector_SusyNtuple_cutflow::SlaveTerminate()
 //   if(sample_identifier == 110814)outputfile="histos_cutflow_110814.root";
 //   if(sample_identifier == 110815)outputfile="histos_cutflow_110815.root";
 //   if(sample_identifier == 110816)outputfile="histos_cutflow_110816.root";
-  if(sample_identifier == 111111) outputfile="histos_cutflow_data.root";
+  if(sample_identifier == 111111) outputfile="histos_cutflow_data_Muons.root";
   cout << "ouputfile: " << outputfile << endl;
   cout << " " << endl;
   TFile* output_file = new TFile(outputfile, "recreate") ;//update or recreate?
