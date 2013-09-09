@@ -1,5 +1,15 @@
 *~
+*.o
+*Cint*
 *root
+*/
+TSelector_SusyNtuple*.*
+histos*
+log*
+*par
+!TSelector_SusyNtuple
+!TSelector_SusyNtuple_cutflow
+!TSelector_SusyNtuple_Zll
 
 # a comment - this is ignored
 # no .a files
