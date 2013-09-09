@@ -24,6 +24,7 @@
 #include "SusyMatrixMethod/DiLeptonMatrixMethod.h"
 #include "TH1.h"
 #include "TH2.h"
+#include "mmc/mmc.cpp"
 
 #ifndef __CINT__
 #include "ChargeFlip/ChargeFlip.h"
@@ -600,6 +601,110 @@ class TSelector_SusyNtuple : public SusyNtAna
   TH2F* h_DeltaYjj_MM_SROS1; 
   TH2F* h_DeltaYjj_EM_SROS1; 
   
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0_branch_l0_EE_SRSS1;
+  TH2F* h_D0_branch_l0_EE_SRSS2;
+  TH2F* h_D0_branch_l0_MM_SRSS1;  
+  TH2F* h_D0_branch_l0_MM_SRSS2;
+  TH2F* h_D0_branch_l0_MM_SRSS3;
+  TH2F* h_D0_branch_l0_MM_SRSS4;
+  TH2F* h_D0_branch_l0_EM_SRSS1;
+  TH2F* h_D0_branch_l0_EM_SRSS2;
+  TH2F* h_D0_branch_l0_EE_SROS1;
+  TH2F* h_D0_branch_l0_MM_SROS1;
+  TH2F* h_D0_branch_l0_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0_branch_l1_EE_SRSS1;
+  TH2F* h_D0_branch_l1_EE_SRSS2;
+  TH2F* h_D0_branch_l1_MM_SRSS1;  
+  TH2F* h_D0_branch_l1_MM_SRSS2;
+  TH2F* h_D0_branch_l1_MM_SRSS3;
+  TH2F* h_D0_branch_l1_MM_SRSS4;
+  TH2F* h_D0_branch_l1_EM_SRSS1;
+  TH2F* h_D0_branch_l1_EM_SRSS2;
+  TH2F* h_D0_branch_l1_EE_SROS1;
+  TH2F* h_D0_branch_l1_MM_SROS1;
+  TH2F* h_D0_branch_l1_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0_recalc_l0_EE_SRSS1;
+  TH2F* h_D0_recalc_l0_EE_SRSS2;
+  TH2F* h_D0_recalc_l0_MM_SRSS1;  
+  TH2F* h_D0_recalc_l0_MM_SRSS2;
+  TH2F* h_D0_recalc_l0_MM_SRSS3;
+  TH2F* h_D0_recalc_l0_MM_SRSS4;
+  TH2F* h_D0_recalc_l0_EM_SRSS1;
+  TH2F* h_D0_recalc_l0_EM_SRSS2;
+  TH2F* h_D0_recalc_l0_EE_SROS1;
+  TH2F* h_D0_recalc_l0_MM_SROS1;
+  TH2F* h_D0_recalc_l0_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0_recalc_l1_EE_SRSS1;
+  TH2F* h_D0_recalc_l1_EE_SRSS2;
+  TH2F* h_D0_recalc_l1_MM_SRSS1;  
+  TH2F* h_D0_recalc_l1_MM_SRSS2;
+  TH2F* h_D0_recalc_l1_MM_SRSS3;
+  TH2F* h_D0_recalc_l1_MM_SRSS4;
+  TH2F* h_D0_recalc_l1_EM_SRSS1;
+  TH2F* h_D0_recalc_l1_EM_SRSS2;
+  TH2F* h_D0_recalc_l1_EE_SROS1;
+  TH2F* h_D0_recalc_l1_MM_SROS1;
+  TH2F* h_D0_recalc_l1_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0Signif_branch_l0_EE_SRSS1;
+  TH2F* h_D0Signif_branch_l0_EE_SRSS2;
+  TH2F* h_D0Signif_branch_l0_MM_SRSS1;  
+  TH2F* h_D0Signif_branch_l0_MM_SRSS2;
+  TH2F* h_D0Signif_branch_l0_MM_SRSS3;
+  TH2F* h_D0Signif_branch_l0_MM_SRSS4;
+  TH2F* h_D0Signif_branch_l0_EM_SRSS1;
+  TH2F* h_D0Signif_branch_l0_EM_SRSS2;
+  TH2F* h_D0Signif_branch_l0_EE_SROS1;
+  TH2F* h_D0Signif_branch_l0_MM_SROS1;
+  TH2F* h_D0Signif_branch_l0_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0Signif_branch_l1_EE_SRSS1;
+  TH2F* h_D0Signif_branch_l1_EE_SRSS2;
+  TH2F* h_D0Signif_branch_l1_MM_SRSS1;  
+  TH2F* h_D0Signif_branch_l1_MM_SRSS2;
+  TH2F* h_D0Signif_branch_l1_MM_SRSS3;
+  TH2F* h_D0Signif_branch_l1_MM_SRSS4;
+  TH2F* h_D0Signif_branch_l1_EM_SRSS1;
+  TH2F* h_D0Signif_branch_l1_EM_SRSS2;
+  TH2F* h_D0Signif_branch_l1_EE_SROS1;
+  TH2F* h_D0Signif_branch_l1_MM_SROS1;
+  TH2F* h_D0Signif_branch_l1_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0Signif_recalc_l0_EE_SRSS1;
+  TH2F* h_D0Signif_recalc_l0_EE_SRSS2;
+  TH2F* h_D0Signif_recalc_l0_MM_SRSS1;  
+  TH2F* h_D0Signif_recalc_l0_MM_SRSS2;
+  TH2F* h_D0Signif_recalc_l0_MM_SRSS3;
+  TH2F* h_D0Signif_recalc_l0_MM_SRSS4;
+  TH2F* h_D0Signif_recalc_l0_EM_SRSS1;
+  TH2F* h_D0Signif_recalc_l0_EM_SRSS2;
+  TH2F* h_D0Signif_recalc_l0_EE_SROS1;
+  TH2F* h_D0Signif_recalc_l0_MM_SROS1;
+  TH2F* h_D0Signif_recalc_l0_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0Signif_recalc_l1_EE_SRSS1;
+  TH2F* h_D0Signif_recalc_l1_EE_SRSS2;
+  TH2F* h_D0Signif_recalc_l1_MM_SRSS1;  
+  TH2F* h_D0Signif_recalc_l1_MM_SRSS2;
+  TH2F* h_D0Signif_recalc_l1_MM_SRSS3;
+  TH2F* h_D0Signif_recalc_l1_MM_SRSS4;
+  TH2F* h_D0Signif_recalc_l1_EM_SRSS1;
+  TH2F* h_D0Signif_recalc_l1_EM_SRSS2;
+  TH2F* h_D0Signif_recalc_l1_EE_SROS1;
+  TH2F* h_D0Signif_recalc_l1_MM_SROS1;
+  TH2F* h_D0Signif_recalc_l1_EM_SROS1;
+  
 
     
     SUSYObjDef m_susyObj;      // SUSY object definitions
@@ -643,9 +748,9 @@ class TSelector_SusyNtuple : public SusyNtAna
     void fillHistos_EM(int cutnumber, float weight);
     
     void calcJet_variables(TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, TLorentzVector met_TLV);
-    void calc_EE_variables(Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets );
-    void calc_MM_variables(Muon* mu1, Muon* mu2, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets);
-    void calc_EM_variables(Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets);
+    void calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets );
+    void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets);
+    void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets);
     
     void fillHistos_EE_SRSS1(float cut_EE, int mcid, float weight_ALL_EE);
     void fillHistos_EE_SRSS2(float cut_EE, int mcid, float weight_ALL_EE);
@@ -662,6 +767,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     void fillHistos_EM_SROS1(float cut_EM, int mcid, float weight_ALL_EM);
     
     float getFakeWeight(const LeptonVector &baseLeps, SusyMatrixMethod::FAKE_REGION region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
+    
+    const Jet* getClosestJet(const Lepton* lep);
+    float recalc_D0(bool unbiased, const Lepton* lep, const Jet* closestJet_lep);
+    float calc_D0(bool unbiased, const Lepton* lep);
 
     // Selection region
     void setSelection(std::string s) { m_sel = s; }
@@ -670,111 +779,151 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool debugEvent();
     Analysis::AnalysisMuonConfigurableScaleFactors* m_muon_scaleFactor;
 
-  int nSignalJets;
-  float MET;
-  float ptj0;
-  float ptj1;
-  float eta_j0;
-  float eta_j1;
-  float mjj;
-  float DeltaPhijj;
-  float pTjj;
-  float DeltaPhiMETj0;
-  float DeltaPhiMETj1;
-  float DeltaRjj;
-  float DeltaEtajj;
-  float DeltaYjj;
-  float DeltaPhiMETjj;
-  int NBJets;
-  int NCJets;
-  int NFJets;
-  float meff;
-  
-  float mZTT_coll;
-  float mZTT_mmc; 
-  
-  float ptel0;
-  float ptel1;
-  float eta_el0;
-  float eta_el1;
-  float DeltaRee;
-  float pTee;
-  float Mee;
-  float METrelee;
-  float METee;
-  float HT_EE;
-  float mTWW_EE;
-  float mTee;
-  float mTemin;
-  float mTel0MET;
-  float mTel1MET;
-  float mMETee;
-  float DeltaPhiEE;
-  float DeltaPhiMETel0;
-  float DeltaPhiMETel1;
-  float DeltaPhiMETee;
-  float mt2_ee;  
-  float DeltaPhieejj;
-  float DeltaPhiel0jj;
-  float DeltaPhiel1jj;
-  float DeltaReejj;
-  
-  
-  float ptmu0;
-  float ptmu1;
-  float eta_mu0;
-  float eta_mu1;
-  float DeltaRmm;
-  float pTmm;
-  float Mmm;
-  float mTmm;
-  float METrelmm;
-  float METmm;
-  float HT_MM;
-  float mTWW_MM;
-  float mTmmin;
-  float mTmu0MET;
-  float mTmu1MET;
-  float mMETmm;
-  float DeltaPhiMM;
-  float DeltaPhiMETmu0;
-  float DeltaPhiMETmu1;
-  float DeltaPhiMETmm;
-  float mt2_mm;
-  
-  float DeltaPhimmjj;
-  float DeltaPhimu0jj;
-  float DeltaPhimu1jj;
-  float DeltaRmmjj;
-  
-  float ptl0;
-  float ptl1;
-  float eta_l0;
-  float eta_l1;
-  float DeltaRem;
-  float pTem;
-  float Mem;
-  float mTem;
-  float METrelem;
-  float METem;
-  float HT_EM;
-  float mTWW_EM;
-  float mTemmin;
-  float mTl0MET;
-  float mTl1MET;
-  float mMETem;
-  float DeltaPhiem;
-  float DeltaPhiMETl0;
-  float DeltaPhiMETl1;
-  float DeltaPhiMETem;
-  float mt2_em;
-  
-  float DeltaPhiemjj;
-  float DeltaPhil0jj;
-  float DeltaPhil1jj;
-  float DeltaRemjj;
-  
+    int nSignalJets;
+    float MET;
+    float pTj0;
+    float pTj1;
+    float eta_j0;
+    float eta_j1;
+    float mjj;
+    float DeltaPhijj;
+    float pTjj;
+    float DeltaPhiMETj0;
+    float DeltaPhiMETj1;
+    float DeltaRjj;
+    float DeltaEtajj;
+    float DeltaYjj;
+    float DeltaPhiMETjj;
+    int NBJets;
+    int NCJets;
+    int NFJets;
+    float meff;
     
+    float mZTT_coll;
+    float mZTT_mmc; 
+    
+    //#####################################
+    float ptel0;
+    float ptel1;
+    float eta_el0;
+    float eta_el1;
+    float DeltaRee;
+    float pTee;
+    float Mee;
+    float METrelee;
+    float METee;
+    float HT_EE;
+    float mTWW_EE;
+    float mTee;
+    float mTemin;
+    float mTel0MET;
+    float mTel1MET;
+    float mMETee;
+    float DeltaPhiEE;
+    float DeltaPhiMETel0;
+    float DeltaPhiMETel1;
+    float DeltaPhiMETee;
+    float mt2_ee;  
+    float DeltaPhieejj;
+    float DeltaPhiel0jj;
+    float DeltaPhiel1jj;
+    float DeltaReejj;
+    
+    float D0_branch_el0;
+    float D0_branch_el1;
+    float D0err_branch_el0;
+    float D0err_branch_el1;
+    
+    float D0_recalc_el0;
+    float D0_recalc_el1;
+    
+    float sD0Signif_branch_el0;
+    float sD0Signif_branch_el1;
+    float sD0Signif_recalc_el0;
+    float sD0Signif_recalc_el1;
+    //#####################################
+    
+    float ptmu0;
+    float ptmu1;
+    float eta_mu0;
+    float eta_mu1;
+    float DeltaRmm;
+    float pTmm;
+    float Mmm;
+    float mTmm;
+    float METrelmm;
+    float METmm;
+    float HT_MM;
+    float mTWW_MM;
+    float mTmmin;
+    float mTmu0MET;
+    float mTmu1MET;
+    float mMETmm;
+    float DeltaPhiMM;
+    float DeltaPhiMETmu0;
+    float DeltaPhiMETmu1;
+    float DeltaPhiMETmm;
+    float mt2_mm;
+    
+    float DeltaPhimmjj;
+    float DeltaPhimu0jj;
+    float DeltaPhimu1jj;
+    float DeltaRmmjj;
+
+    float D0_branch_mu0;
+    float D0_branch_mu1;
+    float D0err_branch_mu0;
+    float D0err_branch_mu1;
+    
+    float D0_recalc_mu0;
+    float D0_recalc_mu1;
+    
+    float sD0Signif_branch_mu0;
+    float sD0Signif_branch_mu1;
+    float sD0Signif_recalc_mu0;
+    float sD0Signif_recalc_mu1;
+    //#####################################
+    
+    float ptl0;
+    float ptl1;
+    float eta_l0;
+    float eta_l1;
+    float DeltaRem;
+    float pTem;
+    float Mem;
+    float mTem;
+    float METrelem;
+    float METem;
+    float HT_EM;
+    float mTWW_EM;
+    float mTemmin;
+    float mTl0MET;
+    float mTl1MET;
+    float mMETem;
+    float DeltaPhiem;
+    float DeltaPhiMETl0;
+    float DeltaPhiMETl1;
+    float DeltaPhiMETem;
+    float mt2_em;
+    
+    float DeltaPhiemjj;
+    float DeltaPhil0jj;
+    float DeltaPhil1jj;
+    float DeltaRemjj;
+
+    float D0_branch_l0;
+    float D0_branch_l1;
+    float D0err_branch_l0;
+    float D0err_branch_l1;
+    
+    float D0_recalc_l0;
+    float D0_recalc_l1;
+    
+    float sD0Signif_branch_l0;
+    float sD0Signif_branch_l1;
+    float sD0Signif_recalc_l0;
+    float sD0Signif_recalc_l1;
+    //#####################################
     
     ClassDef(TSelector_SusyNtuple, 1);
 
@@ -785,6 +934,8 @@ class TSelector_SusyNtuple : public SusyNtAna
     DilTrigLogic*      m_trigObjWithoutRU;      // My trigger logic class
     chargeFlip m_chargeFlip;
     SusyMatrixMethod::DiLeptonMatrixMethod* m_matrix;
+    //initialize missing mass calculator MMC for identification of Z->tau tau events
+    mmc MMC_sumet;
 //     TGuiUtils* GuiUtils;
 
     // Cut variables
