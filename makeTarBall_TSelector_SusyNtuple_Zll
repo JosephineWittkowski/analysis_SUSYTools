@@ -1,0 +1,2 @@
+tar cfz TSelector_SusyNtuple_Zll.par TSelector_SusyNtuple_Zll/
+echo "making TSelector_SusyNtuple_Zll.par"
