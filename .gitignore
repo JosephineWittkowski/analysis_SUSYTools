@@ -1,6 +1,6 @@
-# *~
-# *.o
-# *Cint*
+*~
+*.o
+*Cint*
 *root
 */
 TSelector_SusyNtuple*.*

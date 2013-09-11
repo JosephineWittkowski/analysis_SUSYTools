@@ -628,56 +628,56 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_D0_recalc_l1_EM_SROS1 = new TH2F("h_D0_recalc_l1_EM_SROS1", "h_D0_recalc_l1_EM_SROS1", 1200, -1.5, 1.5, 80, 0, 79);  h_D0_recalc_l1_EM_SROS1->Sumw2();
 
   /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_branch_l0_EE_SRSS1 = new TH2F("h_D0Signif_branch_l0_EE_SRSS1", "h_D0Signif_branch_l0_EE_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_EE_SRSS1->Sumw2();
-  h_D0Signif_branch_l0_EE_SRSS2 = new TH2F("h_D0Signif_branch_l0_EE_SRSS2", "h_D0Signif_branch_l0_EE_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_EE_SRSS2->Sumw2();
-  h_D0Signif_branch_l0_MM_SRSS1 = new TH2F("h_D0Signif_branch_l0_MM_SRSS1", "h_D0Signif_branch_l0_MM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS1->Sumw2();  
-  h_D0Signif_branch_l0_MM_SRSS2 = new TH2F("h_D0Signif_branch_l0_MM_SRSS2", "h_D0Signif_branch_l0_MM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS2->Sumw2();
-  h_D0Signif_branch_l0_MM_SRSS3 = new TH2F("h_D0Signif_branch_l0_MM_SRSS3", "h_D0Signif_branch_l0_MM_SRSS3", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS3->Sumw2();
-  h_D0Signif_branch_l0_MM_SRSS4 = new TH2F("h_D0Signif_branch_l0_MM_SRSS4", "h_D0Signif_branch_l0_MM_SRSS4", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS4->Sumw2();
-  h_D0Signif_branch_l0_EM_SRSS1 = new TH2F("h_D0Signif_branch_l0_EM_SRSS1", "h_D0Signif_branch_l0_EM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_EM_SRSS1->Sumw2();
-  h_D0Signif_branch_l0_EM_SRSS2 = new TH2F("h_D0Signif_branch_l0_EM_SRSS2", "h_D0Signif_branch_l0_EM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_EM_SRSS2->Sumw2();
-  h_D0Signif_branch_l0_EE_SROS1 = new TH2F("h_D0Signif_branch_l0_EE_SROS1", "h_D0Signif_branch_l0_EE_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_EE_SROS1->Sumw2();
-  h_D0Signif_branch_l0_MM_SROS1 = new TH2F("h_D0Signif_branch_l0_MM_SROS1", "h_D0Signif_branch_l0_MM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_MM_SROS1->Sumw2();
-  h_D0Signif_branch_l0_EM_SROS1 = new TH2F("h_D0Signif_branch_l0_EM_SROS1", "h_D0Signif_branch_l0_EM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l0_EM_SROS1->Sumw2();
+  h_D0Signif_branch_l0_EE_SRSS1 = new TH2F("h_D0Signif_branch_l0_EE_SRSS1", "h_D0Signif_branch_l0_EE_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_EE_SRSS1->Sumw2();
+  h_D0Signif_branch_l0_EE_SRSS2 = new TH2F("h_D0Signif_branch_l0_EE_SRSS2", "h_D0Signif_branch_l0_EE_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_EE_SRSS2->Sumw2();
+  h_D0Signif_branch_l0_MM_SRSS1 = new TH2F("h_D0Signif_branch_l0_MM_SRSS1", "h_D0Signif_branch_l0_MM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS1->Sumw2();  
+  h_D0Signif_branch_l0_MM_SRSS2 = new TH2F("h_D0Signif_branch_l0_MM_SRSS2", "h_D0Signif_branch_l0_MM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS2->Sumw2();
+  h_D0Signif_branch_l0_MM_SRSS3 = new TH2F("h_D0Signif_branch_l0_MM_SRSS3", "h_D0Signif_branch_l0_MM_SRSS3", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS3->Sumw2();
+  h_D0Signif_branch_l0_MM_SRSS4 = new TH2F("h_D0Signif_branch_l0_MM_SRSS4", "h_D0Signif_branch_l0_MM_SRSS4", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_MM_SRSS4->Sumw2();
+  h_D0Signif_branch_l0_EM_SRSS1 = new TH2F("h_D0Signif_branch_l0_EM_SRSS1", "h_D0Signif_branch_l0_EM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_EM_SRSS1->Sumw2();
+  h_D0Signif_branch_l0_EM_SRSS2 = new TH2F("h_D0Signif_branch_l0_EM_SRSS2", "h_D0Signif_branch_l0_EM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_EM_SRSS2->Sumw2();
+  h_D0Signif_branch_l0_EE_SROS1 = new TH2F("h_D0Signif_branch_l0_EE_SROS1", "h_D0Signif_branch_l0_EE_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_EE_SROS1->Sumw2();
+  h_D0Signif_branch_l0_MM_SROS1 = new TH2F("h_D0Signif_branch_l0_MM_SROS1", "h_D0Signif_branch_l0_MM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_MM_SROS1->Sumw2();
+  h_D0Signif_branch_l0_EM_SROS1 = new TH2F("h_D0Signif_branch_l0_EM_SROS1", "h_D0Signif_branch_l0_EM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l0_EM_SROS1->Sumw2();
   
   /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_branch_l1_EE_SRSS1 = new TH2F("h_D0Signif_branch_l1_EE_SRSS1", "h_D0Signif_branch_l1_EE_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_EE_SRSS1->Sumw2();
-  h_D0Signif_branch_l1_EE_SRSS2 = new TH2F("h_D0Signif_branch_l1_EE_SRSS2", "h_D0Signif_branch_l1_EE_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_EE_SRSS2->Sumw2();
-  h_D0Signif_branch_l1_MM_SRSS1 = new TH2F("h_D0Signif_branch_l1_MM_SRSS1", "h_D0Signif_branch_l1_MM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS1->Sumw2();  
-  h_D0Signif_branch_l1_MM_SRSS2 = new TH2F("h_D0Signif_branch_l1_MM_SRSS2", "h_D0Signif_branch_l1_MM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS2->Sumw2();
-  h_D0Signif_branch_l1_MM_SRSS3 = new TH2F("h_D0Signif_branch_l1_MM_SRSS3", "h_D0Signif_branch_l1_MM_SRSS3", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS3->Sumw2();
-  h_D0Signif_branch_l1_MM_SRSS4 = new TH2F("h_D0Signif_branch_l1_MM_SRSS4", "h_D0Signif_branch_l1_MM_SRSS4", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS4->Sumw2();
-  h_D0Signif_branch_l1_EM_SRSS1 = new TH2F("h_D0Signif_branch_l1_EM_SRSS1", "h_D0Signif_branch_l1_EM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_EM_SRSS1->Sumw2();
-  h_D0Signif_branch_l1_EM_SRSS2 = new TH2F("h_D0Signif_branch_l1_EM_SRSS2", "h_D0Signif_branch_l1_EM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_EM_SRSS2->Sumw2();
-  h_D0Signif_branch_l1_EE_SROS1 = new TH2F("h_D0Signif_branch_l1_EE_SROS1", "h_D0Signif_branch_l1_EE_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_EE_SROS1->Sumw2();
-  h_D0Signif_branch_l1_MM_SROS1 = new TH2F("h_D0Signif_branch_l1_MM_SROS1", "h_D0Signif_branch_l1_MM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_MM_SROS1->Sumw2();
-  h_D0Signif_branch_l1_EM_SROS1 = new TH2F("h_D0Signif_branch_l1_EM_SROS1", "h_D0Signif_branch_l1_EM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_branch_l1_EM_SROS1->Sumw2();
+  h_D0Signif_branch_l1_EE_SRSS1 = new TH2F("h_D0Signif_branch_l1_EE_SRSS1", "h_D0Signif_branch_l1_EE_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_EE_SRSS1->Sumw2();
+  h_D0Signif_branch_l1_EE_SRSS2 = new TH2F("h_D0Signif_branch_l1_EE_SRSS2", "h_D0Signif_branch_l1_EE_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_EE_SRSS2->Sumw2();
+  h_D0Signif_branch_l1_MM_SRSS1 = new TH2F("h_D0Signif_branch_l1_MM_SRSS1", "h_D0Signif_branch_l1_MM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS1->Sumw2();  
+  h_D0Signif_branch_l1_MM_SRSS2 = new TH2F("h_D0Signif_branch_l1_MM_SRSS2", "h_D0Signif_branch_l1_MM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS2->Sumw2();
+  h_D0Signif_branch_l1_MM_SRSS3 = new TH2F("h_D0Signif_branch_l1_MM_SRSS3", "h_D0Signif_branch_l1_MM_SRSS3", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS3->Sumw2();
+  h_D0Signif_branch_l1_MM_SRSS4 = new TH2F("h_D0Signif_branch_l1_MM_SRSS4", "h_D0Signif_branch_l1_MM_SRSS4", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_MM_SRSS4->Sumw2();
+  h_D0Signif_branch_l1_EM_SRSS1 = new TH2F("h_D0Signif_branch_l1_EM_SRSS1", "h_D0Signif_branch_l1_EM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_EM_SRSS1->Sumw2();
+  h_D0Signif_branch_l1_EM_SRSS2 = new TH2F("h_D0Signif_branch_l1_EM_SRSS2", "h_D0Signif_branch_l1_EM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_EM_SRSS2->Sumw2();
+  h_D0Signif_branch_l1_EE_SROS1 = new TH2F("h_D0Signif_branch_l1_EE_SROS1", "h_D0Signif_branch_l1_EE_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_EE_SROS1->Sumw2();
+  h_D0Signif_branch_l1_MM_SROS1 = new TH2F("h_D0Signif_branch_l1_MM_SROS1", "h_D0Signif_branch_l1_MM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_MM_SROS1->Sumw2();
+  h_D0Signif_branch_l1_EM_SROS1 = new TH2F("h_D0Signif_branch_l1_EM_SROS1", "h_D0Signif_branch_l1_EM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_branch_l1_EM_SROS1->Sumw2();
   
   /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_recalc_l0_EE_SRSS1 = new TH2F("h_D0Signif_recalc_l0_EE_SRSS1", "h_D0Signif_recalc_l0_EE_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_EE_SRSS1->Sumw2();
-  h_D0Signif_recalc_l0_EE_SRSS2 = new TH2F("h_D0Signif_recalc_l0_EE_SRSS2", "h_D0Signif_recalc_l0_EE_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_EE_SRSS2->Sumw2();
-  h_D0Signif_recalc_l0_MM_SRSS1 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS1", "h_D0Signif_recalc_l0_MM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS1->Sumw2();  
-  h_D0Signif_recalc_l0_MM_SRSS2 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS2", "h_D0Signif_recalc_l0_MM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l0_MM_SRSS3 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS3", "h_D0Signif_recalc_l0_MM_SRSS3", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS3->Sumw2();
-  h_D0Signif_recalc_l0_MM_SRSS4 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS4", "h_D0Signif_recalc_l0_MM_SRSS4", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS4->Sumw2();
-  h_D0Signif_recalc_l0_EM_SRSS1 = new TH2F("h_D0Signif_recalc_l0_EM_SRSS1", "h_D0Signif_recalc_l0_EM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_EM_SRSS1->Sumw2();
-  h_D0Signif_recalc_l0_EM_SRSS2 = new TH2F("h_D0Signif_recalc_l0_EM_SRSS2", "h_D0Signif_recalc_l0_EM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_EM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l0_EE_SROS1 = new TH2F("h_D0Signif_recalc_l0_EE_SROS1", "h_D0Signif_recalc_l0_EE_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_EE_SROS1->Sumw2();
-  h_D0Signif_recalc_l0_MM_SROS1 = new TH2F("h_D0Signif_recalc_l0_MM_SROS1", "h_D0Signif_recalc_l0_MM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SROS1->Sumw2();
-  h_D0Signif_recalc_l0_EM_SROS1 = new TH2F("h_D0Signif_recalc_l0_EM_SROS1", "h_D0Signif_recalc_l0_EM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l0_EM_SROS1->Sumw2();
+  h_D0Signif_recalc_l0_EE_SRSS1 = new TH2F("h_D0Signif_recalc_l0_EE_SRSS1", "h_D0Signif_recalc_l0_EE_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_EE_SRSS1->Sumw2();
+  h_D0Signif_recalc_l0_EE_SRSS2 = new TH2F("h_D0Signif_recalc_l0_EE_SRSS2", "h_D0Signif_recalc_l0_EE_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_EE_SRSS2->Sumw2();
+  h_D0Signif_recalc_l0_MM_SRSS1 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS1", "h_D0Signif_recalc_l0_MM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS1->Sumw2();  
+  h_D0Signif_recalc_l0_MM_SRSS2 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS2", "h_D0Signif_recalc_l0_MM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS2->Sumw2();
+  h_D0Signif_recalc_l0_MM_SRSS3 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS3", "h_D0Signif_recalc_l0_MM_SRSS3", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS3->Sumw2();
+  h_D0Signif_recalc_l0_MM_SRSS4 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS4", "h_D0Signif_recalc_l0_MM_SRSS4", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SRSS4->Sumw2();
+  h_D0Signif_recalc_l0_EM_SRSS1 = new TH2F("h_D0Signif_recalc_l0_EM_SRSS1", "h_D0Signif_recalc_l0_EM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_EM_SRSS1->Sumw2();
+  h_D0Signif_recalc_l0_EM_SRSS2 = new TH2F("h_D0Signif_recalc_l0_EM_SRSS2", "h_D0Signif_recalc_l0_EM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_EM_SRSS2->Sumw2();
+  h_D0Signif_recalc_l0_EE_SROS1 = new TH2F("h_D0Signif_recalc_l0_EE_SROS1", "h_D0Signif_recalc_l0_EE_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_EE_SROS1->Sumw2();
+  h_D0Signif_recalc_l0_MM_SROS1 = new TH2F("h_D0Signif_recalc_l0_MM_SROS1", "h_D0Signif_recalc_l0_MM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_MM_SROS1->Sumw2();
+  h_D0Signif_recalc_l0_EM_SROS1 = new TH2F("h_D0Signif_recalc_l0_EM_SROS1", "h_D0Signif_recalc_l0_EM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l0_EM_SROS1->Sumw2();
   
   /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_recalc_l1_EE_SRSS1 = new TH2F("h_D0Signif_recalc_l1_EE_SRSS1", "h_D0Signif_recalc_l1_EE_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_EE_SRSS1->Sumw2();
-  h_D0Signif_recalc_l1_EE_SRSS2 = new TH2F("h_D0Signif_recalc_l1_EE_SRSS2", "h_D0Signif_recalc_l1_EE_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_EE_SRSS2->Sumw2();
-  h_D0Signif_recalc_l1_MM_SRSS1 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS1", "h_D0Signif_recalc_l1_MM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS1->Sumw2();  
-  h_D0Signif_recalc_l1_MM_SRSS2 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS2", "h_D0Signif_recalc_l1_MM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l1_MM_SRSS3 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS3", "h_D0Signif_recalc_l1_MM_SRSS3", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS3->Sumw2();
-  h_D0Signif_recalc_l1_MM_SRSS4 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS4", "h_D0Signif_recalc_l1_MM_SRSS4", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS4->Sumw2();
-  h_D0Signif_recalc_l1_EM_SRSS1 = new TH2F("h_D0Signif_recalc_l1_EM_SRSS1", "h_D0Signif_recalc_l1_EM_SRSS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_EM_SRSS1->Sumw2();
-  h_D0Signif_recalc_l1_EM_SRSS2 = new TH2F("h_D0Signif_recalc_l1_EM_SRSS2", "h_D0Signif_recalc_l1_EM_SRSS2", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_EM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l1_EE_SROS1 = new TH2F("h_D0Signif_recalc_l1_EE_SROS1", "h_D0Signif_recalc_l1_EE_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_EE_SROS1->Sumw2();
-  h_D0Signif_recalc_l1_MM_SROS1 = new TH2F("h_D0Signif_recalc_l1_MM_SROS1", "h_D0Signif_recalc_l1_MM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SROS1->Sumw2();
-  h_D0Signif_recalc_l1_EM_SROS1 = new TH2F("h_D0Signif_recalc_l1_EM_SROS1", "h_D0Signif_recalc_l1_EM_SROS1", 240, -20, 40, 80, 0, 79);  h_D0Signif_recalc_l1_EM_SROS1->Sumw2();
+  h_D0Signif_recalc_l1_EE_SRSS1 = new TH2F("h_D0Signif_recalc_l1_EE_SRSS1", "h_D0Signif_recalc_l1_EE_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_EE_SRSS1->Sumw2();
+  h_D0Signif_recalc_l1_EE_SRSS2 = new TH2F("h_D0Signif_recalc_l1_EE_SRSS2", "h_D0Signif_recalc_l1_EE_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_EE_SRSS2->Sumw2();
+  h_D0Signif_recalc_l1_MM_SRSS1 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS1", "h_D0Signif_recalc_l1_MM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS1->Sumw2();  
+  h_D0Signif_recalc_l1_MM_SRSS2 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS2", "h_D0Signif_recalc_l1_MM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS2->Sumw2();
+  h_D0Signif_recalc_l1_MM_SRSS3 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS3", "h_D0Signif_recalc_l1_MM_SRSS3", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS3->Sumw2();
+  h_D0Signif_recalc_l1_MM_SRSS4 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS4", "h_D0Signif_recalc_l1_MM_SRSS4", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SRSS4->Sumw2();
+  h_D0Signif_recalc_l1_EM_SRSS1 = new TH2F("h_D0Signif_recalc_l1_EM_SRSS1", "h_D0Signif_recalc_l1_EM_SRSS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_EM_SRSS1->Sumw2();
+  h_D0Signif_recalc_l1_EM_SRSS2 = new TH2F("h_D0Signif_recalc_l1_EM_SRSS2", "h_D0Signif_recalc_l1_EM_SRSS2", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_EM_SRSS2->Sumw2();
+  h_D0Signif_recalc_l1_EE_SROS1 = new TH2F("h_D0Signif_recalc_l1_EE_SROS1", "h_D0Signif_recalc_l1_EE_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_EE_SROS1->Sumw2();
+  h_D0Signif_recalc_l1_MM_SROS1 = new TH2F("h_D0Signif_recalc_l1_MM_SROS1", "h_D0Signif_recalc_l1_MM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_MM_SROS1->Sumw2();
+  h_D0Signif_recalc_l1_EM_SROS1 = new TH2F("h_D0Signif_recalc_l1_EM_SROS1", "h_D0Signif_recalc_l1_EM_SROS1", 200, -10, 10, 80, 0, 79);  h_D0Signif_recalc_l1_EM_SROS1->Sumw2();
 
   /*--------------------------------------------------------------------------------*/ 
 
@@ -2111,6 +2111,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   }
   sD0Signif_branch_el0 = calc_D0(unbiased, leptons.at(0)) / D0err_branch_el0;
   sD0Signif_branch_el1 = calc_D0(unbiased, leptons.at(1)) / D0err_branch_el1;
+//   cout << "sD0Signif_branch_el0= " << sD0Signif_branch_el0 << " sD0Signif_branch_el1= " << sD0Signif_branch_el1 << endl;
   sD0Signif_recalc_el0 = D0_recalc_el0 / D0err_branch_el0;
   sD0Signif_recalc_el1 = D0_recalc_el1 / D0err_branch_el1;
   

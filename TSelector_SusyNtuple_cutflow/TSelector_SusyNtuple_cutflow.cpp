@@ -302,7 +302,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		if((el0->q * el1->q)<0 && nt.evt()->isMC){		  
 		  int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
 		  int pdg1 = 11 * (-1) * el1->q;
-		  
+		  m_chargeFlip.setSeed(nt.evt()->event);
 		  chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
 		  chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;		  
 
@@ -693,6 +693,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		TLorentzVector empty_TLV;
 		  
 		  if(el->q*mu->q<0 && nt.evt()->isMC){  
+		    m_chargeFlip.setSeed(nt.evt()->event);
 		    chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el_SS_TLV, 13, &empty_TLV, &met_SS_TVector2, 0);
 		    chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;
 		    //get changed MET and fill in TLorentzVector:
@@ -848,9 +849,9 @@ float TSelector_SusyNtuple_cutflow::getBTagWeight(const Event* evt)
   //will return 1 if !MC
   
   JetVector tempJets;
-  for(uint ij=0; ij<m_signalJets2Lep.size(); ++ij){
-    Jet* jet = m_signalJets2Lep.at(ij);
-    if( !(jet->Pt() > 20 && fabs(jet->detEta) < 2.5) ) continue;
+  for(uint ij=0; ij<m_baseJets.size(); ++ij){
+    Jet* jet = m_baseJets.at(ij);
+    if( !(jet->Pt() > 20 && fabs(jet->detEta) < 2.4) ) continue;
     tempJets.push_back(jet);
   }
 
