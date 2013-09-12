@@ -1,6 +1,6 @@
 {
    
-  TFile hn("/data/etp/jwittkowski/analysis_SUSYTools_03_04/histos_cutflow_data_Muons.root");
+  TFile hn("/data/etp/jwittkowski/analysis_SUSYTools_03_04/histos_cutflow_data_Egamma_periodA.root");
   hn.Print();
 TH1F *alpha_raw = (TH1F*)hn.Get("cutflow_EE");
 TH1F *beta_raw = (TH1F*)hn.Get("cutflow_EM");

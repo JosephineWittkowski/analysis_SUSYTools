@@ -91,16 +91,16 @@ void run_root_TSelector_SusyNtuple(TString InputPath) {
 
       gROOT->ProcessLine(processLine); // need to add this, or PoD at LRZ will not be able to load the .so
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
-//       ch->Add(InputPath);
+      ch->Add(InputPath);
       
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00006.susyNt.root");
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00040.susyNt.root");
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00109.susyNt.root");
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00144.susyNt.root");
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00177.susyNt.root");
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.116630._00002.susyNt.root.1");
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00007.susyNt.root");
-      ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00041.susyNt.root");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00006.susyNt.root");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00040.susyNt.root");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00109.susyNt.root");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00144.susyNt.root");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00177.susyNt.root");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.116630._00002.susyNt.root.1");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00007.susyNt.root");
+//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00041.susyNt.root");
 
 
 

@@ -213,7 +213,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   calcJet_variables(signalJet0_TLV, signalJet1_TLV, m_met->lv());
  
 
-  ////////////////////////////        EE            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ ////////////////////////////        EE            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   //calculate normal contribution with signal leptons:
@@ -295,15 +295,18 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		TVector2 met_SS_TVector2;
 		met_SS_TLV = m_met->lv();
 		met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
-		float flipProb = 1.;
-		float overlapFrac = 1.;
+		
+// 		cout << "before chargeflip: lv0 px: "<<el0_SS_TLV.Px()<<" py: "<<el0_SS_TLV.Py()<<" pz: "<<el0_SS_TLV.Pz() << " pT= " << el0_SS_TLV.Pt() << " phi= " << el0_SS_TLV.Phi()
+// 		<<" lv1 px: "<<el1_SS_TLV.Px()<<" py: "<<el1_SS_TLV.Py()<<" pz: "<<el1_SS_TLV.Pz() << " pT= " << el1_SS_TLV.Pt() << " phi= " << el1_SS_TLV.Phi()
+// 		<<" met px: "<<met_SS_TLV.Px()<<" py: "<<met_SS_TLV.Py()<<" pT: "<<met_SS_TLV.Pt()<<" phi: "<<met_SS_TLV.Phi()
+// 		<<endl;
 		//if SS event, get ChargeFlipWeight and modify electron and met TLV:
+		int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
+		int pdg1 = 11 * (-1) * el1->q;
 		if((el0->q * el1->q)<0 && nt.evt()->isMC){		  
-		  int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
-		  int pdg1 = 11 * (-1) * el1->q;
-		  
-		  flipProb = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
-		  overlapFrac =  m_chargeFlip.overlapFrac().first;		  
+		  m_chargeFlip.setSeed(nt.evt()->event);
+		  chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
+		  chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;		  
 
 		  //get changed MET and fill in TLorentzVector:
 		  met_SS_TLV.SetPx(met_SS_TVector2.Px());
@@ -311,7 +314,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
 
 		}
-		chargeFlipWeight = flipProb * overlapFrac;
 		float weight_ALL_SS_EE = 1.0;
 		weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight; //multiply only SS weight by chargeFlipWeight
 // 		cout << "weight_ALL_SS_EE= " << weight_ALL_SS_EE;
@@ -328,168 +330,180 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS-EE------------------------------------------
 		//------------------------------------------------------------------------------------
-		cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
-		cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		if(nt.evt()->isMC || (!nt.evt()->isMC && (el0->q * el1->q)>0)){
+		  cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
+		  cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //iso cut (muons)
 
 		
-		if(fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron) (update to latest QFlip)
-		  cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		  if(numberOfFJets(m_signalJets2Lep) == 0){
-		    weight_ALL_SS_EE *= getBTagWeight(nt.evt());
-		  cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		  if(numberOfCBJets(m_signalJets2Lep) == 0){
-		    cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    if(numberOfCLJets(m_signalJets2Lep) >=1){
-		      cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-	      
-		      if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
-			
-			cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
-			  cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
-			  float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
-			  
-			  //SRSS1
-			  if(mtWW_EE >= 150.){			      
-			    cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			    float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
-			    if(HT_EE >= 200.){
-			      cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      if(METrel_SS>=30.){
-				cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				if(METrel_SS>=50.){
-				  cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
-				  if(mt2>=30.){
-				    cutnumber = 33.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mt2>=70.){
-				    cutnumber = 34.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mt2>=90.){
-				    cutnumber = 35.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(METrelee >= 100.){
-				    cutnumber = 36.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(el0_SS_TLV.Pt()>=50. && el1_SS_TLV.Pt()>=50. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 60.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 60.))){
-				    cutnumber = 37.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTemin >= 50.){
-				    cutnumber = 38.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTemin >= 60.){
-				    cutnumber = 39.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(meff >= 50.){
-				    cutnumber = 40.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(meff >= 80.){
-				    cutnumber = 41.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mjj >= 20.){
-				    cutnumber = 42.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mjj >= 30.){
-				    cutnumber = 43.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(pTjj >= 40.){
-				    cutnumber = 44.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(pTee >= 50.){
-				    cutnumber = 45.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(DeltaPhiMETjj <= 2.8){
-				    cutnumber = 46.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(fabs(eta_el0) <= 2.0 && fabs(eta_el1) <= 2.0){
-				    cutnumber = 47.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTel0MET >= 90.){
-				    cutnumber = 48.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTel1MET >= 60.){
-				    cutnumber = 49.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTee >= 90.){
-				    cutnumber = 50.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mMETee >= 170.){
-				    cutnumber = 51.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mMETee >= 190.){
-				    cutnumber = 52.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		  if(fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron) (update to latest QFlip)
+		    cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		    if(numberOfFJets(m_signalJets2Lep) == 0){
+		      weight_ALL_SS_EE *= getBTagWeight(nt.evt());
+// 		      cout << "EE event  " << nt.evt()->event << " gen " << nt.evt()->w  << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EE  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM) << " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EE
+// 		      << endl;
+	  
+// 		      cout <<" pdg0 "<<pdg0
+// 		      <<" lv0 px: "<<el0_SS_TLV.Px()<<" py: "<<el0_SS_TLV.Py()<<" pz: "<<el0_SS_TLV.Pz() << " pT= " << el0_SS_TLV.Pt() << " phi= " << el0_SS_TLV.Phi()
+// 		      <<" pdg1 "<<pdg1
+// 		      <<" lv1 px: "<<el1_SS_TLV.Px()<<" py: "<<el1_SS_TLV.Py()<<" pz: "<<el1_SS_TLV.Pz() << " pT= " << el1_SS_TLV.Pt() << " phi= " << el1_SS_TLV.Phi()
+// 		      <<" met px: "<<met_SS_TLV.Px()<<" py: "<<met_SS_TLV.Py()<<" pT: "<<met_SS_TLV.Pt()<<" phi: "<<met_SS_TLV.Phi()
+// 		      <<endl;
+		      cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		      if(numberOfCBJets(m_signalJets2Lep) == 0){
+			cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			if(numberOfCLJets(m_signalJets2Lep) >=1){
+			  cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		  
+			  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+			    
+			    cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
+			      cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
+			      float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
+			      
+			      //SRSS1
+			      if(mtWW_EE >= 150.){			      
+				cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
+				if(HT_EE >= 200.){
+				  cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				  if(METrel_SS>=30.){
+				    cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				    if(METrel_SS>=50.){
+				      cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
+				      if(mt2>=30.){
+					cutnumber = 33.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mt2>=70.){
+					cutnumber = 34.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mt2>=90.){
+					cutnumber = 35.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(METrelee >= 100.){
+					cutnumber = 36.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(el0_SS_TLV.Pt()>=50. && el1_SS_TLV.Pt()>=50. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 60.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 60.))){
+					cutnumber = 37.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTemin >= 50.){
+					cutnumber = 38.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTemin >= 60.){
+					cutnumber = 39.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(meff >= 50.){
+					cutnumber = 40.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(meff >= 80.){
+					cutnumber = 41.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mjj >= 20.){
+					cutnumber = 42.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mjj >= 30.){
+					cutnumber = 43.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(pTjj >= 40.){
+					cutnumber = 44.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(pTee >= 50.){
+					cutnumber = 45.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(DeltaPhiMETjj <= 2.8){
+					cutnumber = 46.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(fabs(eta_el0) <= 2.0 && fabs(eta_el1) <= 2.0){
+					cutnumber = 47.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTel0MET >= 90.){
+					cutnumber = 48.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTel1MET >= 60.){
+					cutnumber = 49.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTee >= 90.){
+					cutnumber = 50.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mMETee >= 170.){
+					cutnumber = 51.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mMETee >= 190.){
+					cutnumber = 52.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				    }
 				  }
 				}
-			      }
-			    }
-			    if(HT_EE >= 160.){
-			      cutnumber = 30.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			      float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
-			      if(METrel_SS>=30.){
-				cutnumber = 31.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				if(METrel_SS>=50.){
-				  cutnumber = 32.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
-				  if(mt2>=30.){
-				    cutnumber = 33.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mt2>=70.){
-				    cutnumber = 34.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mt2>=90.){
-				    cutnumber = 35.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(METrelee > 100.){
-				    cutnumber = 36.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(el0_SS_TLV.Pt()>=50. && el1_SS_TLV.Pt()>=50. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 60.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 60.))){
-				    cutnumber = 37.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTemin >= 50.){
-				    cutnumber = 38.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTemin >= 60.){
-				    cutnumber = 39.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(meff >= 50.){
-				    cutnumber = 40.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(meff >= 80.){
-				    cutnumber = 41.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mjj >= 20.){
-				    cutnumber = 42.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mjj >= 30.){
-				    cutnumber = 43.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(pTjj >= 40.){
-				    cutnumber = 44.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(pTee >= 50.){
-				    cutnumber = 45.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(DeltaPhiMETjj <= 2.8){
-				    cutnumber = 46.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(fabs(eta_el0) <= 2.0 && fabs(eta_el1) <= 2.0){
-				    cutnumber = 47.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTel0MET >= 90.){
-				    cutnumber = 48.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTel1MET >= 60.){
-				    cutnumber = 49.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mTee >= 90.){
-				    cutnumber = 50.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mMETee >= 170.){
-				    cutnumber = 51.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(mMETee >= 190.){
-				    cutnumber = 52.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				if(HT_EE >= 160.){
+				  cutnumber = 30.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				  float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
+				  if(METrel_SS>=30.){
+				    cutnumber = 31.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				    if(METrel_SS>=50.){
+				      cutnumber = 32.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
+				      if(mt2>=30.){
+					cutnumber = 33.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mt2>=70.){
+					cutnumber = 34.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mt2>=90.){
+					cutnumber = 35.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(METrelee > 100.){
+					cutnumber = 36.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(el0_SS_TLV.Pt()>=50. && el1_SS_TLV.Pt()>=50. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 60.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 60.))){
+					cutnumber = 37.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTemin >= 50.){
+					cutnumber = 38.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTemin >= 60.){
+					cutnumber = 39.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(meff >= 50.){
+					cutnumber = 40.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(meff >= 80.){
+					cutnumber = 41.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mjj >= 20.){
+					cutnumber = 42.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mjj >= 30.){
+					cutnumber = 43.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(pTjj >= 40.){
+					cutnumber = 44.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(pTee >= 50.){
+					cutnumber = 45.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(DeltaPhiMETjj <= 2.8){
+					cutnumber = 46.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(fabs(eta_el0) <= 2.0 && fabs(eta_el1) <= 2.0){
+					cutnumber = 47.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTel0MET >= 90.){
+					cutnumber = 48.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTel1MET >= 60.){
+					cutnumber = 49.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mTee >= 90.){
+					cutnumber = 50.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mMETee >= 170.){
+					cutnumber = 51.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				      if(mMETee >= 190.){
+					cutnumber = 52.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				      }
+				    }
 				  }
 				}
 			      }
@@ -498,7 +512,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			}
 		      }
 		    }
-		  }
 		}
 	      }
 	      //------------------------------------------------------------------------------------
@@ -553,7 +566,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   
  
   
-  ////////////////////////////        MM            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////        MM            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   if(m_baseMuons.size()==2){
@@ -595,39 +608,42 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	if(m_signalTaus.size() == 0){
 	  cutnumber = 17.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 	  if(m_trigObjWithoutRU->passDilEvtTrig(leptons, m_met->Et, nt.evt())){ //valid pT region
-	    cutnumber = 18.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	    
-	    if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, m_met->Et, nt.evt()))){ //match to trigger
-	      cutnumber = 19.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+	    cutnumber = 18.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+	    if(m_signalTaus.size() == 0){
+	      
+	      if(nt.evt()->isMC || (!nt.evt()->isMC && m_trigObjWithoutRU->passDilTrigMatch(leptons, m_met->Et, nt.evt()))){ //match to trigger
+		cutnumber = 19.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 
-	      if(!nt.evt()->isMC || CheckRealLeptons(m_signalElectrons, muons)){
-		cutnumber = 20.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-		//time to calc weights:
-		//------------------------------------------------------------------------------------
-		//calc lepton SF:		  
-		float lep_SF_MM = 1.0;
-		if(nt.evt()->isMC) lep_SF_MM = mu0->effSF * mu1->effSF;	
-		//calc trigger weight:
-		float trigW_MM = 1.;
-		if(nt.evt()->isMC) trigW_MM = m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM);
-		//product of all weights:
-		weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) * lep_SF_MM * trigW_MM: 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
-				//------------------------------------------------------------------------------------
-		calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets);
-		if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
-		
+		if(!nt.evt()->isMC || CheckRealLeptons(m_signalElectrons, muons)){
+		  cutnumber = 20.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+		  //time to calc weights:
+		  //------------------------------------------------------------------------------------
+		  //calc lepton SF:		  
+		  float lep_SF_MM = 1.0;
+		  if(nt.evt()->isMC) lep_SF_MM = mu0->effSF * mu1->effSF;	
+		  //calc trigger weight:
+		  float trigW_MM = 1.;
+		  if(nt.evt()->isMC) trigW_MM = m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM);
+		  //product of all weights:
+		  weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) * lep_SF_MM * trigW_MM: 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
+		  		  //------------------------------------------------------------------------------------
+		  calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets);
+		  if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
+		  
 
-		//------------------------------------------------------------------------------------
-		//----------------------------------SR-SS-MM------------------------------------------
-		//------------------------------------------------------------------------------------
-		if(mu0->q*mu1->q>0){
-		  cutnumber = 21.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //SS cut: for MM applied only on SS events.
+		  //------------------------------------------------------------------------------------
+		  //----------------------------------SR-SS-MM------------------------------------------
+		  //------------------------------------------------------------------------------------
+		  if(mu0->q*mu1->q>0){
+		    cutnumber = 21.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //SS cut: for MM applied only on SS events.
 // 		
-		  if(muEtConeCorr(mu0, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu0->pt < 0.1 && muEtConeCorr(mu1, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu1->pt < 0.1){
-		    cutnumber = 22.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-		    cutnumber = 23.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-		    if(numberOfFJets(m_signalJets2Lep) == 0){
-		      weight_ALL_MM *= getBTagWeight(nt.evt());
-		      cutnumber = 24.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+		    if(muEtConeCorr(mu0, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu0->pt < 0.1 && muEtConeCorr(mu1, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu1->pt < 0.1){
+		      cutnumber = 22.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+		      cutnumber = 23.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+		      if(numberOfFJets(m_signalJets2Lep) == 0){
+			weight_ALL_MM *= getBTagWeight(nt.evt());
+// 			cout << "MM event  " << nt.evt()->event << " gen " << nt.evt()->w << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_MM  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM) << " all " << weight_ALL_MM << endl;
+			cutnumber = 24.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 		      if(numberOfCBJets(m_signalJets2Lep) == 0){
 			cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
@@ -1040,11 +1056,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	}
       }
     }
+  }
 	 
   
  ////////////////////////////        EM            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   
 
 //   cout << "m_signalMuons.size()= " << m_signalMuons.size() << " m_signalElectrons.size()= " << m_signalElectrons.size() << " ... m_baseElectrons.size()= " << m_baseElectrons.size() << " m_baseMuons.size()= " <<  m_baseMuons.size() << endl;
@@ -1132,6 +1148,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		TLorentzVector empty_TLV;
 		  
 		  if(el->q*mu->q<0 && nt.evt()->isMC){  
+		    m_chargeFlip.setSeed(nt.evt()->event);
 		    chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el_SS_TLV, 13, &empty_TLV, &met_SS_TVector2, 0);
 		    chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;
 		    //get changed MET and fill in TLorentzVector:
@@ -1150,209 +1167,209 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 // 		  cout << "  " << weight_ALL_EM << endl;
 		}
 		
-		
-		
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS1-EM------------------------------------------
 		//------------------------------------------------------------------------------------
-		
-		cutnumber = 21.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //SS cut: applied only on weighted events
-		    
-		if(muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1){
-		  cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		  if(fabs(el->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron)
-		    cutnumber = 23.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		    if(numberOfFJets(m_signalJets2Lep) == 0){
-		      weight_ALL_SS_EM *= getBTagWeight(nt.evt());
-		      cutnumber = 24.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		      if(numberOfCBJets(m_signalJets2Lep) == 0){
-			cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			if(numberOfCLJets(m_signalJets2Lep) >=1){
-			  cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);   		    
-			  float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
-			  if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
-			    cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			    cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
-			    float mtWW_EM = calcMt((mu_TLV + el_SS_TLV), met_SS_TLV);
-			    //SRSS1
-			    if(mtWW_EM >= 140.){ 
-			      cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			      float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
-			      if(HT_EM >= 200.){
-				cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				if(METrel_SS>=30.){
-				  cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(METrel_SS>=50.){
-				  cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(METrel_SS>=70.){
-				  cutnumber = 33.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				
-				if(Mem >= 50.){
-				  cutnumber = 34.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(Mem >= 60.){
-				  cutnumber = 35.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				
-				if(mTemmin >= 40.){
-				  cutnumber = 36.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mTemmin >= 60.){
-				  cutnumber = 37.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(meff >= 60.){
-				  cutnumber = 38.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(meff >= 80.){
-				  cutnumber = 39.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mt2_em>=30.){
-				  cutnumber = 40.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mt2_em>=50.){
-				  cutnumber = 41.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mjj >= 20.){
-				  cutnumber = 42.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mjj >= 30.){
-				  cutnumber = 43.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(pTjj >= 30.){
-				  cutnumber = 44.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(pTjj >= 40.){
-				  cutnumber = 45.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(pTmm >= 40.){
-				  cutnumber = 49.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(DeltaPhiMETjj <= 2.8){
-				  cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(fabs(eta_l0) <= 2.0 && fabs(eta_l1) <= 2.0){
-				  cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mTl0MET >= 70.){
-				  cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mTl0MET >= 80.){
-				  cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mTl1MET >= 50.){
-				  cutnumber = 54.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mTem >= 75.){
-				  cutnumber = 55.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mMETmm >= 120.){
-				  cutnumber = 56.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(mMETmm >= 130.){
-				  cutnumber = 57.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				if(pTj0 >= 30.){
-				  cutnumber = 58.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				}
-				
-				
-				//------------------------------------------------------------------------------------
-				//----------------------------------SR-SS2-EM------------------------------------------
-				//------------------------------------------------------------------------------------
-				
-				if(METrel_SS>=50.){
-				  cutnumber = 30.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
-				  
-				  
+		if(nt.evt()->isMC || (!nt.evt()->isMC && (el->q*mu->q)>0)){
+		  cutnumber = 21.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //SS cut: applied only on weighted events
+		      
+		  if(muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1){
+		    cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		    if(fabs(el->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron)
+		      cutnumber = 23.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		      if(numberOfFJets(m_signalJets2Lep) == 0){
+			weight_ALL_SS_EM *= getBTagWeight(nt.evt());
+// 			cout << "EM event  " << nt.evt()->event << " gen " << nt.evt()->w << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EM  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM) <<  " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EM << endl;
+			cutnumber = 24.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			if(numberOfCBJets(m_signalJets2Lep) == 0){
+			  cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			  if(numberOfCLJets(m_signalJets2Lep) >=1){
+			    cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);   		    
+			    float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
+			    if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+			      cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			      cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
+// 			      float mtWW_EM = calcMt((mu_TLV + el_SS_TLV), met_SS_TLV);
+			      //SRSS1
+			      if(mTWW_EM >= 140.){ 
+				cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+				float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
+				if(HT_EM >= 200.){
+				  cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  if(METrel_SS>=30.){
-				    cutnumber = 31.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+				  }
+				  if(METrel_SS>=50.){
+				    cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(METrel_SS>=70.){
-				    cutnumber = 32.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 33.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  
 				  if(Mem >= 50.){
-				    cutnumber = 33.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 34.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(Mem >= 60.){
-				    cutnumber = 34.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 35.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  
 				  if(mTemmin >= 40.){
-				    cutnumber = 35.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 36.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mTemmin >= 60.){
-				    cutnumber = 36.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 37.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(meff >= 60.){
-				    cutnumber = 37.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 38.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(meff >= 80.){
-				    cutnumber = 38.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 39.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mt2_em>=30.){
-				    cutnumber = 39.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 40.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mt2_em>=50.){
-				    cutnumber = 40.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 41.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mjj >= 20.){
-				    cutnumber = 41.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 42.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mjj >= 30.){
-				    cutnumber = 42.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 43.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(pTjj >= 30.){
-				    cutnumber = 43.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 44.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(pTjj >= 40.){
-				    cutnumber = 44.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 45.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(pTmm >= 40.){
-				    cutnumber = 49.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 49.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(DeltaPhiMETjj <= 2.8){
-				    cutnumber = 50.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(fabs(eta_l0) <= 2.0 && fabs(eta_l1) <= 2.0){
-				    cutnumber = 51.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mTl0MET >= 70.){
-				    cutnumber = 52.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mTl0MET >= 80.){
-				    cutnumber = 53.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mTl1MET >= 50.){
-				    cutnumber = 54.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 54.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mTem >= 75.){
-				    cutnumber = 55.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 55.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mMETmm >= 120.){
-				    cutnumber = 56.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 56.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(mMETmm >= 130.){
-				    cutnumber = 57.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    cutnumber = 57.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				  }
 				  if(pTj0 >= 30.){
-				    cutnumber = 58.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
-				  } 
+				    cutnumber = 58.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+				  }
+				  
+				  
+				  //------------------------------------------------------------------------------------
+				  //----------------------------------SR-SS2-EM------------------------------------------
+				  //------------------------------------------------------------------------------------
+				  
+				  if(METrel_SS>=50.){
+				    cutnumber = 30.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    
+				    
+				    if(METrel_SS>=30.){
+				      cutnumber = 31.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(METrel_SS>=70.){
+				      cutnumber = 32.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    
+				    if(Mem >= 50.){
+				      cutnumber = 33.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(Mem >= 60.){
+				      cutnumber = 34.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    
+				    if(mTemmin >= 40.){
+				      cutnumber = 35.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mTemmin >= 60.){
+				      cutnumber = 36.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(meff >= 60.){
+				      cutnumber = 37.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(meff >= 80.){
+				      cutnumber = 38.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mt2_em>=30.){
+				      cutnumber = 39.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mt2_em>=50.){
+				      cutnumber = 40.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mjj >= 20.){
+				      cutnumber = 41.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mjj >= 30.){
+				      cutnumber = 42.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(pTjj >= 30.){
+				      cutnumber = 43.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(pTjj >= 40.){
+				      cutnumber = 44.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(pTmm >= 40.){
+				      cutnumber = 49.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(DeltaPhiMETjj <= 2.8){
+				      cutnumber = 50.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(fabs(eta_l0) <= 2.0 && fabs(eta_l1) <= 2.0){
+				      cutnumber = 51.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mTl0MET >= 70.){
+				      cutnumber = 52.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mTl0MET >= 80.){
+				      cutnumber = 53.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mTl1MET >= 50.){
+				      cutnumber = 54.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mTem >= 75.){
+				      cutnumber = 55.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mMETmm >= 120.){
+				      cutnumber = 56.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(mMETmm >= 130.){
+				      cutnumber = 57.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    }
+				    if(pTj0 >= 30.){
+				      cutnumber = 58.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				    } 
+				  }
 				}
 			      }
+			      if(mTWW_EM >= 100.){
+				cutnumber = 59.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			      }
+			      if(HT_EM >= 120.){
+				cutnumber = 60.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			      }
+			      if(HT_EM >= 140.){
+				cutnumber = 61.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			      }			    
 			    }
-			    if(mtWW_EM >= 100.){
-			      cutnumber = 59.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			    }
-			    if(HT_EM >= 120.){
-			      cutnumber = 60.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			    }
-			    if(HT_EM >= 140.){
-			      cutnumber = 61.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			    }			    
 			  }
 			}
 		      }
@@ -1408,7 +1425,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	  }
 	}
       }
-  }
+    }
   }
 
   return kTRUE;
@@ -1591,88 +1608,88 @@ float TSelector_SusyNtuple::calcMZTauTau_coll(const TLorentzVector &signal_lep_0
 float TSelector_SusyNtuple::calcMZTauTau_mmc(TLorentzVector lep1, TLorentzVector lep2, int tau0_decay_type, int tau1_decay_type){
  //initialize missing mass calculator MMC for identification of Z->tau tau events https://svnweb.cern.ch/trac/atlasusr/browser/mflechl/code/htautau/mmc/tags/mmc-00-01-10/README
      
-  float sum_et = 0.;
-  sum_et += m_met->refEle_sumet;
-  sum_et += m_met->refGamma_sumet;
-  //taus?
-  sum_et += m_met->refJet_sumet;
-  sum_et += m_met->softTerm_sumet;
-  sum_et += m_met->refMuo_sumet;  
-
-  TLorentzVector vec1, vec2;
-  vec1 = lep1; //ELECTRON
-  vec2 = lep2; // MUON
-
-  float met_resolution = 0.;
-//   cout << "nSignalJets= " << nSignalJets << endl;
-  if(nt.evt()->isMC){
-    if(nSignalJets==0){
-      met_resolution = 4.447 + 0.505 * sqrt(sum_et);
-    }
-    if(nSignalJets==1){
-      met_resolution = 5.000 + 0.500 * sqrt(sum_et);
-    }
-    if(nSignalJets==2){
-      met_resolution = 4.635 + 0.514 * sqrt(sum_et);
-    }
-    if(nSignalJets>=3){
-      met_resolution = 4.528 + 0.513 * sqrt(sum_et);
-    }
-  }
-
-  if(!nt.evt()->isMC){
-    if(nSignalJets==0){
-      met_resolution = 4.314 + 0.498 * sqrt(sum_et);
-    }
-    if(nSignalJets==1){
-      met_resolution = 4.700 + 0.509 * sqrt(sum_et);
-    }
-    if(nSignalJets==2){
-      met_resolution = 4.539 + 0.519 * sqrt(sum_et);
-    }
-    if(nSignalJets>=3){
-      met_resolution = 3.897 + 0.540 * sqrt(sum_et);
-    }
-  }
-//   mode:
-//   11 - for ee final state
-//   13 - for emu final state
-//   31 - for mue final state
-//   33 - for mumu final state
-
-  int mode = 0;
-  
-  if(tau0_decay_type == 0 && tau1_decay_type == 0) mode = 11; //EE channel
-
-  if(tau0_decay_type == 0 && tau1_decay_type == 1){ //EM channel
-    if(vec1.Pt() > vec2.Pt()) mode = 13; //EMU
-    if(vec1.Pt() < vec2.Pt()) mode = 31; //MUE
-  }
-  if(tau0_decay_type == 1 && tau1_decay_type == 1) mode = 33; //MM channel
-  
-  MMC_sumet.Clear();
-//   cout << "lep1.Pt()= " << lep1.Pt() << " lep2.Pt()= " << lep2.Pt() << " m_met->lv().Px()= " << m_met->lv().Px() << " m_met->lv().Py()= " << m_met->lv().Py() << " met_resolution= " << met_resolution << " mode= " << mode;
-  MMC_sumet.Scan6dAnal(vec1, vec2, m_met->lv().Px(), m_met->lv().Py(), met_resolution, mode); 
-  
-//   MMC_sumet.Set_Alpha(1.);
-//   MMC_sumet.Scan6d(vec1, vec2, m_met->lv().Px(), m_met->lv().Py(), met_resolution, mode); 
-  
-  float met_ex = MMC_sumet.GetCorrMEX();
-  float met_ey = MMC_sumet.GetCorrMEY();
-//   cout << " corrected met_ex= " << met_ex << " met_ey= " << met_ey << endl;
-  
-//   if (isnan(met_ex) || isnan(met_ey) ){
-//     met_ex = m_met->lv().Px();
-//     met_ey = m_met->lv().Py();
-//     cout << "shift corrected met to old values because NAN" << endl;
+//   float sum_et = 0.;
+//   sum_et += m_met->refEle_sumet;
+//   sum_et += m_met->refGamma_sumet;
+//   //taus?
+//   sum_et += m_met->refJet_sumet;
+//   sum_et += m_met->softTerm_sumet;
+//   sum_et += m_met->refMuo_sumet;  
+// 
+//   TLorentzVector vec1, vec2;
+//   vec1 = lep1; //ELECTRON
+//   vec2 = lep2; // MUON
+// 
+//   float met_resolution = 0.;
+// //   cout << "nSignalJets= " << nSignalJets << endl;
+//   if(nt.evt()->isMC){
+//     if(nSignalJets==0){
+//       met_resolution = 4.447 + 0.505 * sqrt(sum_et);
+//     }
+//     if(nSignalJets==1){
+//       met_resolution = 5.000 + 0.500 * sqrt(sum_et);
+//     }
+//     if(nSignalJets==2){
+//       met_resolution = 4.635 + 0.514 * sqrt(sum_et);
+//     }
+//     if(nSignalJets>=3){
+//       met_resolution = 4.528 + 0.513 * sqrt(sum_et);
+//     }
 //   }
-  MMC_sumet.Scan4dAnal(vec1, vec2, met_ex, met_ey, mode);
-    //validate: which method is best to get mass value? 
-  float mZTauTau_mmc = -1.;
-  mZTauTau_mmc = MMC_sumet.GetMZ_peak(); 
-//   cout << "MMC_sumet.GetMZ_mean()= " << MMC_sumet.GetMZ_mean() << " MMC_sumet.GetMZ_maxprob()= " << MMC_sumet.GetMZ_maxprob() << endl;
-//   cout << "mZTauTau_mmc= " << mZTauTau_mmc << endl;
-  return mZTauTau_mmc;
+// 
+//   if(!nt.evt()->isMC){
+//     if(nSignalJets==0){
+//       met_resolution = 4.314 + 0.498 * sqrt(sum_et);
+//     }
+//     if(nSignalJets==1){
+//       met_resolution = 4.700 + 0.509 * sqrt(sum_et);
+//     }
+//     if(nSignalJets==2){
+//       met_resolution = 4.539 + 0.519 * sqrt(sum_et);
+//     }
+//     if(nSignalJets>=3){
+//       met_resolution = 3.897 + 0.540 * sqrt(sum_et);
+//     }
+//   }
+// //   mode:
+// //   11 - for ee final state
+// //   13 - for emu final state
+// //   31 - for mue final state
+// //   33 - for mumu final state
+// 
+//   int mode = 0;
+//   
+//   if(tau0_decay_type == 0 && tau1_decay_type == 0) mode = 11; //EE channel
+// 
+//   if(tau0_decay_type == 0 && tau1_decay_type == 1){ //EM channel
+//     if(vec1.Pt() > vec2.Pt()) mode = 13; //EMU
+//     if(vec1.Pt() < vec2.Pt()) mode = 31; //MUE
+//   }
+//   if(tau0_decay_type == 1 && tau1_decay_type == 1) mode = 33; //MM channel
+//   
+//   MMC_sumet.Clear();
+// //   cout << "lep1.Pt()= " << lep1.Pt() << " lep2.Pt()= " << lep2.Pt() << " m_met->lv().Px()= " << m_met->lv().Px() << " m_met->lv().Py()= " << m_met->lv().Py() << " met_resolution= " << met_resolution << " mode= " << mode;
+//   MMC_sumet.Scan6dAnal(vec1, vec2, m_met->lv().Px(), m_met->lv().Py(), met_resolution, mode); 
+//   
+// //   MMC_sumet.Set_Alpha(1.);
+// //   MMC_sumet.Scan6d(vec1, vec2, m_met->lv().Px(), m_met->lv().Py(), met_resolution, mode); 
+//   
+//   float met_ex = MMC_sumet.GetCorrMEX();
+//   float met_ey = MMC_sumet.GetCorrMEY();
+// //   cout << " corrected met_ex= " << met_ex << " met_ey= " << met_ey << endl;
+//   
+// //   if (isnan(met_ex) || isnan(met_ey) ){
+// //     met_ex = m_met->lv().Px();
+// //     met_ey = m_met->lv().Py();
+// //     cout << "shift corrected met to old values because NAN" << endl;
+// //   }
+//   MMC_sumet.Scan4dAnal(vec1, vec2, met_ex, met_ey, mode);
+//     //validate: which method is best to get mass value? 
+//   float mZTauTau_mmc = -1.;
+//   mZTauTau_mmc = MMC_sumet.GetMZ_peak(); 
+// //   cout << "MMC_sumet.GetMZ_mean()= " << MMC_sumet.GetMZ_mean() << " MMC_sumet.GetMZ_maxprob()= " << MMC_sumet.GetMZ_maxprob() << endl;
+// //   cout << "mZTauTau_mmc= " << mZTauTau_mmc << endl;
+//   return mZTauTau_mmc;
   return 111.;
 
 }
@@ -1815,21 +1832,24 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_base.root";
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_base.root";
     if(sample_identifier == 177503)outputfile="histos_ZN_177503_base.root";
     if(sample_identifier == 177506)outputfile="histos_ZN_177506_base.root";
     if(sample_identifier == 177508)outputfile="histos_ZN_177508_base.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_base.root";
     if(sample_identifier == 177510)outputfile="histos_ZN_177510_base.root";
     if(sample_identifier == 177513)outputfile="histos_ZN_177513_base.root";
     if(sample_identifier == 177514)outputfile="histos_ZN_177514_base.root";
     if(sample_identifier == 177517)outputfile="histos_ZN_177517_base.root";
     if(sample_identifier == 177521)outputfile="histos_ZN_177521_base.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_base.root";
     if(sample_identifier == 177523)outputfile="histos_ZN_177523_base.root";
     if(sample_identifier == 177525)outputfile="histos_ZN_177525_base.root";
     
     if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_base_1.root";
 //     if(sample_identifier == 111111) outputfile="histos_cutflow_fake_MuonsA.root";
 //     if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_base.root";
-    outputfile = "histo_test_d0_ttbar.root";
+//     outputfile = "histo_test_d0_ttbar.root";
 /*    if(sample_identifier == 110813)outputfile="histos_cutflow_110813_base.root";
     if(sample_identifier == 110814)outputfile="histos_cutflow_110814_base.root";
     if(sample_identifier == 110815)outputfile="histos_cutflow_110815_base.root";

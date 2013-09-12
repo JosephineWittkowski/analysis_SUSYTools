@@ -298,10 +298,15 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		TVector2 met_SS_TVector2;
 		met_SS_TLV = m_met->lv();
 		met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
+		
+// 		cout << "before chargeflip: lv0 px: "<<el0_SS_TLV.Px()<<" py: "<<el0_SS_TLV.Py()<<" pz: "<<el0_SS_TLV.Pz() << " pT= " << el0_SS_TLV.Pt() << " phi= " << el0_SS_TLV.Phi()
+// 		<<" lv1 px: "<<el1_SS_TLV.Px()<<" py: "<<el1_SS_TLV.Py()<<" pz: "<<el1_SS_TLV.Pz() << " pT= " << el1_SS_TLV.Pt() << " phi= " << el1_SS_TLV.Phi()
+// 		<<" met px: "<<met_SS_TLV.Px()<<" py: "<<met_SS_TLV.Py()<<" pT: "<<met_SS_TLV.Pt()<<" phi: "<<met_SS_TLV.Phi()
+// 		<<endl;
 		//if SS event, get ChargeFlipWeight and modify electron and met TLV:
+		int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
+		int pdg1 = 11 * (-1) * el1->q;
 		if((el0->q * el1->q)<0 && nt.evt()->isMC){		  
-		  int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
-		  int pdg1 = 11 * (-1) * el1->q;
 		  m_chargeFlip.setSeed(nt.evt()->event);
 		  chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
 		  chargeFlipWeight*=  m_chargeFlip.overlapFrac().first;		  
@@ -328,40 +333,50 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS-EE------------------------------------------
 		//------------------------------------------------------------------------------------
-		cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
-		cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		if(nt.evt()->isMC || (!nt.evt()->isMC && (el0->q * el1->q)>0)){
+		  cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
+		  cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //iso cut (muons)
 
 		
-		if(fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron) (update to latest QFlip)
-		  cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		  if(numberOfFJets(m_signalJets2Lep) == 0){
-		    weight_ALL_SS_EE *= getBTagWeight(nt.evt());
-// 		    cout << "EE event  " << nt.evt()->event << "gen " << nt.evt()->w  << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EE  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM) <<  " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EE << endl;
-		    cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    if(numberOfCBJets(m_signalJets2Lep) == 0){
-		      cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      if(numberOfCLJets(m_signalJets2Lep) >=1){
-			cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		
-			if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
-			  
-			  cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			  if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
-			    cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
-			    float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
+		  if(fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron) (update to latest QFlip)
+		    cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		    if(numberOfFJets(m_signalJets2Lep) == 0){
+		      weight_ALL_SS_EE *= getBTagWeight(nt.evt());
+// 		      cout << "EE event  " << nt.evt()->event << " gen " << nt.evt()->w  << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EE  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM) << " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EE
+// 		       << endl;
+// 	  
+// 		      cout <<" pdg0 "<<pdg0
+// 		      <<" lv0 px: "<<el0_SS_TLV.Px()<<" py: "<<el0_SS_TLV.Py()<<" pz: "<<el0_SS_TLV.Pz() << " pT= " << el0_SS_TLV.Pt() << " phi= " << el0_SS_TLV.Phi()
+// 		      <<" pdg1 "<<pdg1
+// 		      <<" lv1 px: "<<el1_SS_TLV.Px()<<" py: "<<el1_SS_TLV.Py()<<" pz: "<<el1_SS_TLV.Pz() << " pT= " << el1_SS_TLV.Pt() << " phi= " << el1_SS_TLV.Phi()
+// 		      <<" met px: "<<met_SS_TLV.Px()<<" py: "<<met_SS_TLV.Py()<<" pT: "<<met_SS_TLV.Pt()<<" phi: "<<met_SS_TLV.Phi()
+// 		      <<endl;
+		      cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		      if(numberOfCBJets(m_signalJets2Lep) == 0){
+			cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			if(numberOfCLJets(m_signalJets2Lep) >=1){
+			  cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		  
+			  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
 			    
-			    //SRSS1
-			    if(mtWW_EE >= 150.){			      
-			      cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
-			      if(HT_EE >= 200.){
-				cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				if(METrel_SS>=50.){
-				  cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  //SRSS2
-				  float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
-				  if(mt2>=90.){
-				    cutnumber = 32.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+			    cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
+			      cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
+			      float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
+			      
+			      //SRSS1
+			      if(mtWW_EE >= 150.){			      
+				cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
+				if(HT_EE >= 200.){
+				  cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				  if(METrel_SS>=50.){
+				    cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+				    //SRSS2
+				    float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
+				    if(mt2>=90.){
+				      cutnumber = 32.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
+				    }
 				  }
 				}
 			      }
@@ -371,7 +386,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		      }
 		    }
 		  }
-		}
+	      }
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-OS-EE------------------------------------------
 		//------------------------------------------------------------------------------------
@@ -715,36 +730,37 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS1-EM------------------------------------------
 		//------------------------------------------------------------------------------------
-		
-		cutnumber = 21.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //SS cut: applied only on weighted events
-		    
-		if(muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1){
-		  cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		  if(fabs(el->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron)
-		    cutnumber = 23.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		    if(numberOfFJets(m_signalJets2Lep) == 0){
-		      weight_ALL_SS_EM *= getBTagWeight(nt.evt());
-// 		      cout << "EM event  " << nt.evt()->event << " gen " << nt.evt()->w << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EM  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM) <<  " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EM << endl;
-		      cutnumber = 24.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		      if(numberOfCBJets(m_signalJets2Lep) == 0){
-			cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			if(numberOfCLJets(m_signalJets2Lep) >=1){
-			  cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);   		    
-			  if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
-			    cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			    cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
-			    float mtWW_EM = calcMt((mu_TLV + el_SS_TLV), met_SS_TLV);
-			    //SRSS1
-			    if(mtWW_EM > 140.){
-			      cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			      float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
-			      if(HT_EM > 200.){
-				cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-				//------------------------------------------------------------------------------------
-				//----------------------------------SR-SS2-EM------------------------------------------
-				//------------------------------------------------------------------------------------
-				if(METrel_SS>50.){
-				  cutnumber = 31.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+		if(nt.evt()->isMC || (!nt.evt()->isMC && (el->q*mu->q)>0)){
+		  cutnumber = 21.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //SS cut: applied only on weighted events
+		      
+		  if(muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1){
+		    cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		    if(fabs(el->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron)
+		      cutnumber = 23.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		      if(numberOfFJets(m_signalJets2Lep) == 0){
+			weight_ALL_SS_EM *= getBTagWeight(nt.evt());
+  // 		      cout << "EM event  " << nt.evt()->event << " gen " << nt.evt()->w << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EM  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM) <<  " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EM << endl;
+			cutnumber = 24.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			if(numberOfCBJets(m_signalJets2Lep) == 0){
+			  cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			  if(numberOfCLJets(m_signalJets2Lep) >=1){
+			    cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);   		    
+			    if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+			      cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			      cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
+			      float mtWW_EM = calcMt((mu_TLV + el_SS_TLV), met_SS_TLV);
+			      //SRSS1
+			      if(mtWW_EM > 140.){
+				cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+				float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
+				if(HT_EM > 200.){
+				  cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+				  //------------------------------------------------------------------------------------
+				  //----------------------------------SR-SS2-EM------------------------------------------
+				  //------------------------------------------------------------------------------------
+				  if(METrel_SS>50.){
+				    cutnumber = 31.; fillHistos_EM_SRSS2(cutnumber, mcid, weight_ALL_SS_EM);
+				  }
 				}
 			      }
 			    }
@@ -753,7 +769,7 @@ Bool_t TSelector_SusyNtuple_cutflow::Process(Long64_t entry)
 		      }
 		    }
 		  }
-		}
+	      }
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-OS1-EM------------------------------------------
 		//------------------------------------------------------------------------------------
@@ -1107,7 +1123,7 @@ void TSelector_SusyNtuple_cutflow::SlaveTerminate()
 //   if(sample_identifier == 110814)outputfile="histos_cutflow_110814.root";
 //   if(sample_identifier == 110815)outputfile="histos_cutflow_110815.root";
 //   if(sample_identifier == 110816)outputfile="histos_cutflow_110816.root";
-  if(sample_identifier == 111111) outputfile="histos_cutflow_data_Muons.root";
+  if(sample_identifier == 111111) outputfile="histos_cutflow_data_Egamma_periodA.root";
   cout << "ouputfile: " << outputfile << endl;
   cout << " " << endl;
   TFile* output_file = new TFile(outputfile, "recreate") ;//update or recreate?
