@@ -914,7 +914,7 @@ float TSelector_SusyNtuple_cutflow::calcHT(TLorentzVector l1, TLorentzVector l2,
   HT += l2.Pt();
   
   for(uint i=0; i<signalJets.size(); i++){
-    if(signalJets[i]->Pt() > 40) HT += signalJets[i]->Pt();
+    if(signalJets[i]->Pt() > 20) HT += signalJets[i]->Pt();
   }
   
   HT += met.E();

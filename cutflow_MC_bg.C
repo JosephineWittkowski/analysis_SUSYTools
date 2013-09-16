@@ -1,6 +1,6 @@
 {
    
-  TFile hn("/data/etp/jwittkowski/analysis_SUSYTools_03_04/histos_cutflow_data_Egamma_periodA.root");
+  TFile hn("/data/etp/jwittkowski/analysis_SUSYTools_03_04/histos_ZN_177503_base_test.root");
   hn.Print();
 TH1F *alpha_raw = (TH1F*)hn.Get("cutflow_EE");
 TH1F *beta_raw = (TH1F*)hn.Get("cutflow_EM");
@@ -47,7 +47,7 @@ cout << "lep pt             :" << alpha_raw->GetBinContent(28) << "     " << gam
 cout << "mll                :" << alpha_raw->GetBinContent(29) << "     " << gamma_raw->GetBinContent(29) << "     " << beta_raw->GetBinContent(29)  << endl; 
 cout << "mWWT               :" << alpha_raw->GetBinContent(30) << "     " << gamma_raw->GetBinContent(30) << "     " << beta_raw->GetBinContent(30)  << endl; 
 cout << "HT                 :" << alpha_raw->GetBinContent(31) << "     " << gamma_raw->GetBinContent(31) << "     " << beta_raw->GetBinContent(31)  << endl; 
-cout << "metREL             :" << alpha_raw->GetBinContent(33) << "     " << gamma_raw->GetBinContent(33) << "     " << beta_raw->GetBinContent(33)  << endl; 
+cout << "metREL             :" << alpha_raw->GetBinContent(32) << "     " <<  "  xxx "                    << "     " <<  "  xxx "                    << endl; 
 
 // cout << "MM SRSS2: " << endl;
 // cout << "mWWT                :"  << gamma_raw->GetBinContent(33) << endl; 
@@ -129,7 +129,7 @@ cout << "lep pt             :" << alpha_mcEventWeight->GetBinContent(28) << "   
 cout << "mll                :" << alpha_mcEventWeight->GetBinContent(29) << "     " << gamma_mcEventWeight->GetBinContent(29) << "     " << beta_mcEventWeight->GetBinContent(29)  << endl; 
 cout << "mWWT               :" << alpha_mcEventWeight->GetBinContent(30) << "     " << gamma_mcEventWeight->GetBinContent(30) << "     " << beta_mcEventWeight->GetBinContent(30)  << endl; 
 cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(31) << "     " << gamma_mcEventWeight->GetBinContent(31) << "     " << beta_mcEventWeight->GetBinContent(31)  << endl; 
-cout << "metREL             :" << alpha_mcEventWeight->GetBinContent(33) << "     " << gamma_mcEventWeight->GetBinContent(33) << "     " << beta_mcEventWeight->GetBinContent(33)  << endl; 
+cout << "metREL             :" << alpha_mcEventWeight->GetBinContent(32) << "     " <<  "  xxx "                              << "     " <<  "  xxx "                              << endl; 
 
 // cout << "MM SRSS2: " << endl;
 // cout << "mWWT                :"  << gamma_mcEventWeight->GetBinContent(33) << endl; 

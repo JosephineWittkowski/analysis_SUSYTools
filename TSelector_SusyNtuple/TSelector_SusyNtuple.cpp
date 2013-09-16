@@ -54,7 +54,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   m_chargeFlip.initialize("/data/etp/jwittkowski/analysis_SUSYTools_03_04/ChargeFlip/data/d0_chargeflip_map.root");  
   
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();  
-  m_matrix->configure("/data/etp/jwittkowski/analysis_SUSYTools_03_04/SusyMatrixMethod/data/pass3_Summer2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
+  m_matrix->configure("/data/etp/jwittkowski/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
   
 }
 
@@ -322,7 +322,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		//if running on data for fake bg, instead of weights (pileup, xsec, eventweight, trigger, SF, btag, ...) use fakeWeight from SusyMatrixMethod		
 		float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
 		if(!nt.evt()->isMC && calcFakeContribution){
-		  weight_ALL_EE = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
+		  weight_ALL_EE = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
 		  weight_ALL_SS_EE = weight_ALL_EE;
 		}
 // 		cout << " " << weight_ALL_SS_EE << endl;
@@ -362,7 +362,8 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
 			      
 			      //SRSS1
-			      if(mtWW_EE >= 150.){			      
+			      if(mtWW_EE >= 150.){	
+// 				cout << m_chainEntry << " EE event  " << nt.evt()->event << "met_SS_TLV= " << met_SS_TLV.Et() << " met.Phi= " << met_SS_TLV.Phi() << " metRel =  " << METrel_SS << " mtWW= " << mtWW_EE << endl;
 				cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 				float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
 				if(HT_EE >= 200.){
@@ -628,7 +629,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) * lep_SF_MM * trigW_MM: 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
 		  		  //------------------------------------------------------------------------------------
 		  calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets);
-		  if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
+		  if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
 		  
 
 		  //------------------------------------------------------------------------------------
@@ -654,6 +655,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			  float mtWW_MM = calcMt((mu0_TLV + mu1_TLV), m_met->lv());
 			  //SRSS1
 			  if(mtWW_MM >= 100.){ //100, 150, 200
+// 			    cout << m_chainEntry << " MM event  " << nt.evt()->event << "met_SS_TLV= " << m_met->lv().Et() << " met.Phi= " << m_met->lv().Phi() << " metRel =  " << METrelmm << " mtWW= " << mtWW_MM << endl;
 			    cutnumber = 29.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    float HT_MM = calcHT(mu0_TLV, mu1_TLV, m_met->lv(), m_signalJets2Lep);
 			    if(HT_MM >= 200.){
@@ -1162,8 +1164,8 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 		calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
 		if(!nt.evt()->isMC && calcFakeContribution){ 
-		  weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
-		  weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRSSInc, METrel, SusyMatrixMethod::SYS_NONE);
+		  weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
+		  weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
 // 		  cout << "  " << weight_ALL_EM << endl;
 		}
 		
@@ -1192,6 +1194,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 // 			      float mtWW_EM = calcMt((mu_TLV + el_SS_TLV), met_SS_TLV);
 			      //SRSS1
 			      if(mTWW_EM >= 140.){ 
+// 				cout << m_chainEntry << " EM event  " << nt.evt()->event << "met_SS_TLV= " << met_SS_TLV.Et() << " met.Phi= " << met_SS_TLV.Phi() << " metRel =  " << METrel_SS << " mtWW= " << mTWW_EM << endl;
 				cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 				float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
 				if(HT_EM >= 200.){
@@ -1521,12 +1524,25 @@ float TSelector_SusyNtuple::calcHT(TLorentzVector l1, TLorentzVector l2, TLorent
   HT += l2.Pt();
   
   for(uint i=0; i<signalJets.size(); i++){
-    if(signalJets[i]->Pt() > 40) HT += signalJets[i]->Pt();
+    if(signalJets[i]->Pt() > 20) HT += signalJets[i]->Pt();
   }
   
   HT += met.E();
   return HT;  
 
+//   ht = Meff(*leptons, *jets, met, JET_PT_CUT);  //The function is defined in SusyNtTools.cxx  & is  the sum  pT of leptons, jets and met
+// where JET_PT_CUT = 20 (the default in the function uses pt=40)
+  
+//   float SusyNtTools::Meff(const LeptonVector& leps, const JetVector& jets, const Met* met)
+// {
+//   float meff = 0;
+//   for(uint i=0; i<leps.size(); i++) meff += leps[i]->Pt();
+//   for(uint i=0; i<jets.size(); i++){
+//     if(jets[i]->Pt() > 40) meff += jets[i]->Pt();
+//   }
+//   meff += met->Et;
+//   return meff;
+// }
 }
 
 /*--------------------------------------------------------------------------------*/
@@ -1825,35 +1841,35 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 126988)outputfile="histos_ZN_WW_base.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_base.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_base.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_ZV_base.root";
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_base.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WW_HT20_Davide.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_HT20_Davide.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_HT20_Davide.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_ZV_HT20_Davide.root";
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_HT20_Davide.root";
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_base.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_base.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_base.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_base.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_base.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_base.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_base.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_base.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_base.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_base.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_base.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_base.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_base.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_HT20_Davide.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_HT20_Davide.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_HT20_Davide.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_HT20_Davide.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_HT20_Davide.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_HT20_Davide.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_HT20_Davide.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_HT20_Davide.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_HT20_Davide.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_HT20_Davide.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_HT20_Davide.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_HT20_Davide.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_HT20_Davide.root";
     
-    if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_base_1.root";
+    if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_HT20_Davide.root";
 //     if(sample_identifier == 111111) outputfile="histos_cutflow_fake_MuonsA.root";
-//     if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_base.root";
-//     outputfile = "histo_test_d0_ttbar.root";
-/*    if(sample_identifier == 110813)outputfile="histos_cutflow_110813_base.root";
-    if(sample_identifier == 110814)outputfile="histos_cutflow_110814_base.root";
-    if(sample_identifier == 110815)outputfile="histos_cutflow_110815_base.root";
-    if(sample_identifier == 110816)outputfile="histos_cutflow_110816_base.root"*/;
+//     if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_HT20_Davide.root";
+//     outputfile = "histo_test_SusyMatrixMethodDavide.root";
+/*    if(sample_identifier == 110813)outputfile="histos_cutflow_110813_HT20_Davide.root";
+    if(sample_identifier == 110814)outputfile="histos_cutflow_110814_HT20_Davide.root";
+    if(sample_identifier == 110815)outputfile="histos_cutflow_110815_HT20_Davide.root";
+    if(sample_identifier == 110816)outputfile="histos_cutflow_110816_HT20_Davide.root"*/;
     
 //     if(sample_identifier>=176574 && sample_identifier <= 176640){
 //     char buffer[10];
