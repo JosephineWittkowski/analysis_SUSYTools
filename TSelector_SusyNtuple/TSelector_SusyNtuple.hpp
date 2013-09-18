@@ -559,6 +559,19 @@ class TSelector_SusyNtuple : public SusyNtAna
   TH2F* h_DeltaEtajj_EE_SROS1; 
   TH2F* h_DeltaEtajj_MM_SROS1; 
   TH2F* h_DeltaEtajj_EM_SROS1;   
+  
+      /*--------------------------------------------------------------------------------*/   
+  TH2F* h_DeltaEtall_EE_SRSS1; 
+  TH2F* h_DeltaEtall_EE_SRSS2; 
+  TH2F* h_DeltaEtall_MM_SRSS1;   
+  TH2F* h_DeltaEtall_MM_SRSS2; 
+  TH2F* h_DeltaEtall_MM_SRSS3; 
+  TH2F* h_DeltaEtall_MM_SRSS4; 
+  TH2F* h_DeltaEtall_EM_SRSS1; 
+  TH2F* h_DeltaEtall_EM_SRSS2; 
+  TH2F* h_DeltaEtall_EE_SROS1; 
+  TH2F* h_DeltaEtall_MM_SROS1; 
+  TH2F* h_DeltaEtall_EM_SROS1;   
 
 
   /*--------------------------------------------------------------------------------*/ 
@@ -828,6 +841,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhiel0jj;
     float DeltaPhiel1jj;
     float DeltaReejj;
+    float DeltaEtaee;
     
     float D0_branch_el0;
     float D0_branch_el1;
@@ -869,6 +883,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhimu0jj;
     float DeltaPhimu1jj;
     float DeltaRmmjj;
+    float DeltaEtamm;
 
     float D0_branch_mu0;
     float D0_branch_mu1;
@@ -910,6 +925,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhil0jj;
     float DeltaPhil1jj;
     float DeltaRemjj;
+    float DeltaEtaem;
 
     float D0_branch_l0;
     float D0_branch_l1;

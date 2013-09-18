@@ -533,6 +533,19 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_DeltaEtajj_EE_SROS1 = new TH2F("h_DeltaEtajj_EE_SROS1", "h_DeltaEtajj_EE_SROS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtajj_EE_SROS1->Sumw2();
   h_DeltaEtajj_MM_SROS1 = new TH2F("h_DeltaEtajj_MM_SROS1", "h_DeltaEtajj_MM_SROS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtajj_MM_SROS1->Sumw2();
   h_DeltaEtajj_EM_SROS1 = new TH2F("h_DeltaEtajj_EM_SROS1", "h_DeltaEtajj_EM_SROS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtajj_EM_SROS1->Sumw2();  
+  
+      /*--------------------------------------------------------------------------------*/ 
+  h_DeltaEtall_EE_SRSS1 = new TH2F("h_DeltaEtall_EE_SRSS1", "h_DeltaEtall_EE_SRSS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_EE_SRSS1->Sumw2();
+  h_DeltaEtall_EE_SRSS2 = new TH2F("h_DeltaEtall_EE_SRSS2", "h_DeltaEtall_EE_SRSS2", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_EE_SRSS2->Sumw2();
+  h_DeltaEtall_MM_SRSS1 = new TH2F("h_DeltaEtall_MM_SRSS1", "h_DeltaEtall_MM_SRSS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_MM_SRSS1->Sumw2();  
+  h_DeltaEtall_MM_SRSS2 = new TH2F("h_DeltaEtall_MM_SRSS2", "h_DeltaEtall_MM_SRSS2", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_MM_SRSS2->Sumw2();
+  h_DeltaEtall_MM_SRSS3 = new TH2F("h_DeltaEtall_MM_SRSS3", "h_DeltaEtall_MM_SRSS3", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_MM_SRSS3->Sumw2();
+  h_DeltaEtall_MM_SRSS4 = new TH2F("h_DeltaEtall_MM_SRSS4", "h_DeltaEtall_MM_SRSS4", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_MM_SRSS4->Sumw2();
+  h_DeltaEtall_EM_SRSS1 = new TH2F("h_DeltaEtall_EM_SRSS1", "h_DeltaEtall_EM_SRSS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_EM_SRSS1->Sumw2();
+  h_DeltaEtall_EM_SRSS2 = new TH2F("h_DeltaEtall_EM_SRSS2", "h_DeltaEtall_EM_SRSS2", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_EM_SRSS2->Sumw2();
+  h_DeltaEtall_EE_SROS1 = new TH2F("h_DeltaEtall_EE_SROS1", "h_DeltaEtall_EE_SROS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_EE_SROS1->Sumw2();
+  h_DeltaEtall_MM_SROS1 = new TH2F("h_DeltaEtall_MM_SROS1", "h_DeltaEtall_MM_SROS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_MM_SROS1->Sumw2();
+  h_DeltaEtall_EM_SROS1 = new TH2F("h_DeltaEtall_EM_SROS1", "h_DeltaEtall_EM_SROS1", 70, 0, 7, 80, 0, 79);  h_DeltaEtall_EM_SROS1->Sumw2();  
 
 
   /*--------------------------------------------------------------------------------*/ 
@@ -1205,6 +1218,19 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_DeltaEtajj_EE_SROS1->Write(); 
   h_DeltaEtajj_MM_SROS1->Write(); 
   h_DeltaEtajj_EM_SROS1->Write();   
+  
+      /*--------------------------------------------------------------------------------*/   
+  h_DeltaEtall_EE_SRSS1->Write(); 
+  h_DeltaEtall_EE_SRSS2->Write(); 
+  h_DeltaEtall_MM_SRSS1->Write();   
+  h_DeltaEtall_MM_SRSS2->Write(); 
+  h_DeltaEtall_MM_SRSS3->Write(); 
+  h_DeltaEtall_MM_SRSS4->Write(); 
+  h_DeltaEtall_EM_SRSS1->Write(); 
+  h_DeltaEtall_EM_SRSS2->Write(); 
+  h_DeltaEtall_EE_SROS1->Write(); 
+  h_DeltaEtall_MM_SROS1->Write(); 
+  h_DeltaEtall_EM_SROS1->Write();  
 
 
   /*--------------------------------------------------------------------------------*/ 
@@ -1874,6 +1900,19 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( h_DeltaEtajj_EE_SROS1); 
   fOutput->Add( h_DeltaEtajj_MM_SROS1); 
   fOutput->Add( h_DeltaEtajj_EM_SROS1);   
+  
+      /*--------------------------------------------------------------------------------*/   
+  fOutput->Add( h_DeltaEtall_EE_SRSS1); 
+  fOutput->Add( h_DeltaEtall_EE_SRSS2); 
+  fOutput->Add( h_DeltaEtall_MM_SRSS1);   
+  fOutput->Add( h_DeltaEtall_MM_SRSS2); 
+  fOutput->Add( h_DeltaEtall_MM_SRSS3); 
+  fOutput->Add( h_DeltaEtall_MM_SRSS4); 
+  fOutput->Add( h_DeltaEtall_EM_SRSS1); 
+  fOutput->Add( h_DeltaEtall_EM_SRSS2); 
+  fOutput->Add( h_DeltaEtall_EE_SROS1); 
+  fOutput->Add( h_DeltaEtall_MM_SROS1); 
+  fOutput->Add( h_DeltaEtall_EM_SROS1);   
 
 
   /*--------------------------------------------------------------------------------*/ 
@@ -2061,8 +2100,8 @@ void TSelector_SusyNtuple::calcJet_variables(TLorentzVector signalJet0_TLV, TLor
 }
 void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets ){
   
-  ptel0 = el0_TLV.Pt();
-  ptel1 = el1_TLV.Pt();
+  ptel0 = el0_TLV.Pt() > el1_TLV.Pt() ? el0_TLV.Pt() : el1_TLV.Pt();
+  ptel1 = el0_TLV.Pt() > el1_TLV.Pt() ? el1_TLV.Pt() : el0_TLV.Pt();
   eta_el0 = el0_TLV.Eta();
   eta_el1 = el1_TLV.Eta();
   DeltaRee = fabs(el0_TLV.DeltaR(el1_TLV));
@@ -2088,6 +2127,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   DeltaPhiel0jj = (nSignalJets>1) ? ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
   DeltaPhiel1jj= (nSignalJets>1) ?  ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
   DeltaReejj = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : 0.;
+  DeltaEtaee = fabs(el0_TLV.Eta() - el1_TLV.Eta());
     
   bool unbiased = true;
   if(unbiased){
@@ -2125,8 +2165,8 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   mu0_TLV_n.SetPtEtaPhiE(mu1->pt, mu1->eta ,mu1->phi, mu1->pt*cosh(mu1->eta));
   
   DeltaRmm = mu0_TLV.DeltaR(mu1_TLV);
-  ptmu0 = mu0_TLV.Pt();
-  ptmu1 = mu1_TLV.Pt();
+  ptmu0 = mu0_TLV.Pt() > mu1_TLV.Pt() ? mu0_TLV.Pt() : mu1_TLV.Pt();
+  ptmu1 = mu0_TLV.Pt() > mu1_TLV.Pt() ? mu1_TLV.Pt() : mu0_TLV.Pt();
   eta_mu0 = mu0_TLV.Eta();
   eta_mu1 = mu1_TLV.Eta();
   pTmm = (mu0_TLV_n + mu1_TLV_n).Pt();
@@ -2152,6 +2192,7 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   DeltaPhimu0jj = (nSignalJets>1) ?  ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
   DeltaPhimu1jj= (nSignalJets>1) ?  ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
   DeltaRmmjj = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : 0.;
+  DeltaEtamm = fabs(mu0_TLV.Eta() - mu1_TLV.Eta());
   
 bool unbiased = true;
   if(unbiased){
@@ -2210,6 +2251,7 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   DeltaPhil0jj = (nSignalJets>1) ? ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
   DeltaPhil1jj = (nSignalJets>1) ? ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
   DeltaRemjj = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : 0.;
+  DeltaEtaem = fabs(mu_TLV.Eta() - el_TLV.Eta());  
   
 bool unbiased = true;
   if(unbiased){
@@ -2285,6 +2327,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float wei
   h_DeltaPhil1jj_EE_SRSS1->Fill(DeltaPhiel1jj, cut_EE, weight_ALL_EE);  
   h_DeltaRlljj_EE_SRSS1->Fill(DeltaReejj, cut_EE, weight_ALL_EE);  
   h_DeltaEtajj_EE_SRSS1->Fill(DeltaEtajj, cut_EE, weight_ALL_EE);  
+  h_DeltaEtall_EE_SRSS1->Fill(DeltaEtaee, cut_EE, weight_ALL_EE);  
   h_mTll_EE_SRSS1->Fill(mTee, cut_EE, weight_ALL_EE);  
   h_mMETll_EE_SRSS1->Fill(mMETee, cut_EE, weight_ALL_EE);  
   h_DeltaYjj_EE_SRSS1->Fill(DeltaYjj, cut_EE, weight_ALL_EE);  
@@ -2348,7 +2391,8 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS2(float cut_EE, int mcid, float wei
   h_DeltaPhil0jj_EE_SRSS2->Fill(DeltaPhiel0jj, cut_EE, weight_ALL_EE);  
   h_DeltaPhil1jj_EE_SRSS2->Fill(DeltaPhiel1jj, cut_EE, weight_ALL_EE);  
   h_DeltaRlljj_EE_SRSS2->Fill(DeltaReejj, cut_EE, weight_ALL_EE);  
-  h_DeltaEtajj_EE_SRSS2->Fill(DeltaEtajj, cut_EE, weight_ALL_EE);  
+  h_DeltaEtajj_EE_SRSS2->Fill(DeltaEtajj, cut_EE, weight_ALL_EE);
+  h_DeltaEtall_EE_SRSS2->Fill(DeltaEtaee, cut_EE, weight_ALL_EE);    
   h_mTll_EE_SRSS2->Fill(mTee, cut_EE, weight_ALL_EE);  
   h_mMETll_EE_SRSS2->Fill(mMETee, cut_EE, weight_ALL_EE);  
   h_DeltaYjj_EE_SRSS2->Fill(DeltaYjj, cut_EE, weight_ALL_EE);  
@@ -2412,6 +2456,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SROS1(float cut_EE, int mcid, float wei
   h_DeltaPhil1jj_EE_SROS1->Fill(DeltaPhiel1jj, cut_EE, weight_ALL_EE);  
   h_DeltaRlljj_EE_SROS1->Fill(DeltaReejj, cut_EE, weight_ALL_EE);  
   h_DeltaEtajj_EE_SROS1->Fill(DeltaEtajj, cut_EE, weight_ALL_EE);  
+  h_DeltaEtall_EE_SROS1->Fill(DeltaEtaee, cut_EE, weight_ALL_EE);    
   h_mTll_EE_SROS1->Fill(mTee, cut_EE, weight_ALL_EE);  
   h_mMETll_EE_SROS1->Fill(mMETee, cut_EE, weight_ALL_EE);  
   h_DeltaYjj_EE_SROS1->Fill(DeltaYjj, cut_EE, weight_ALL_EE);  
@@ -2473,6 +2518,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   h_DeltaPhil1jj_MM_SRSS1->Fill(DeltaPhimu1jj, cut_MM, weight_ALL_MM);  
   h_DeltaRlljj_MM_SRSS1->Fill(DeltaRmmjj, cut_MM, weight_ALL_MM);  
   h_DeltaEtajj_MM_SRSS1->Fill(DeltaEtajj, cut_MM, weight_ALL_MM);  
+  h_DeltaEtall_MM_SRSS1->Fill(DeltaEtamm, cut_MM, weight_ALL_MM);    
   h_mTll_MM_SRSS1->Fill(mTmm, cut_MM, weight_ALL_MM);  
   h_mMETll_MM_SRSS1->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS1->Fill(DeltaYjj, cut_MM, weight_ALL_MM);
@@ -2534,6 +2580,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS2(float cut_MM, int mcid, float wei
   h_DeltaPhil1jj_MM_SRSS2->Fill(DeltaPhimu1jj, cut_MM, weight_ALL_MM);  
   h_DeltaRlljj_MM_SRSS2->Fill(DeltaRmmjj, cut_MM, weight_ALL_MM);  
   h_DeltaEtajj_MM_SRSS2->Fill(DeltaEtajj, cut_MM, weight_ALL_MM);  
+  h_DeltaEtall_MM_SRSS2->Fill(DeltaEtamm, cut_MM, weight_ALL_MM);    
   h_mTll_MM_SRSS2->Fill(mTmm, cut_MM, weight_ALL_MM);  
   h_mMETll_MM_SRSS2->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS2->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
@@ -2595,6 +2642,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS3(float cut_MM, int mcid, float wei
   h_DeltaPhil1jj_MM_SRSS3->Fill(DeltaPhimu1jj, cut_MM, weight_ALL_MM);  
   h_DeltaRlljj_MM_SRSS3->Fill(DeltaRmmjj, cut_MM, weight_ALL_MM);  
   h_DeltaEtajj_MM_SRSS3->Fill(DeltaEtajj, cut_MM, weight_ALL_MM);  
+  h_DeltaEtall_MM_SRSS3->Fill(DeltaEtamm, cut_MM, weight_ALL_MM);    
   h_mTll_MM_SRSS3->Fill(mTmm, cut_MM, weight_ALL_MM);  
   h_mMETll_MM_SRSS3->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS3->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
@@ -2656,6 +2704,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS4(float cut_MM, int mcid, float wei
   h_DeltaPhil1jj_MM_SRSS4->Fill(DeltaPhimu1jj, cut_MM, weight_ALL_MM);  
   h_DeltaRlljj_MM_SRSS4->Fill(DeltaRmmjj, cut_MM, weight_ALL_MM);  
   h_DeltaEtajj_MM_SRSS4->Fill(DeltaEtajj, cut_MM, weight_ALL_MM);  
+  h_DeltaEtall_MM_SRSS4->Fill(DeltaEtamm, cut_MM, weight_ALL_MM);    
   h_mTll_MM_SRSS4->Fill(mTmm, cut_MM, weight_ALL_MM);  
   h_mMETll_MM_SRSS4->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS4->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
@@ -2716,6 +2765,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SROS1(float cut_MM, int mcid, float wei
   h_DeltaPhil1jj_MM_SROS1->Fill(DeltaPhimu1jj, cut_MM, weight_ALL_MM);  
   h_DeltaRlljj_MM_SROS1->Fill(DeltaRmmjj, cut_MM, weight_ALL_MM);  
   h_DeltaEtajj_MM_SROS1->Fill(DeltaEtajj, cut_MM, weight_ALL_MM);  
+  h_DeltaEtall_MM_SROS1->Fill(DeltaEtamm, cut_MM, weight_ALL_MM);    
   h_mTll_MM_SROS1->Fill(mTmm, cut_MM, weight_ALL_MM);  
   h_mMETll_MM_SROS1->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SROS1->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
@@ -2776,6 +2826,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
   h_DeltaPhil1jj_EM_SRSS1->Fill(DeltaPhil1jj, cut_EM, weight_ALL_EM);  
   h_DeltaRlljj_EM_SRSS1->Fill(DeltaRemjj, cut_EM, weight_ALL_EM);  
   h_DeltaEtajj_EM_SRSS1->Fill(DeltaEtajj, cut_EM, weight_ALL_EM);  
+  h_DeltaEtall_EM_SRSS1->Fill(DeltaEtaem, cut_EM, weight_ALL_EM);    
   h_mTll_EM_SRSS1->Fill(mTem, cut_EM, weight_ALL_EM);  
   h_mMETll_EM_SRSS1->Fill(mMETem, cut_EM, weight_ALL_EM);  
   h_DeltaYjj_EM_SRSS1->Fill(DeltaYjj, cut_EM, weight_ALL_EM);  
@@ -2837,6 +2888,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS2(float cut_EM, int mcid, float wei
   h_DeltaPhil1jj_EM_SRSS2->Fill(DeltaPhil1jj, cut_EM, weight_ALL_EM);  
   h_DeltaRlljj_EM_SRSS2->Fill(DeltaRemjj, cut_EM, weight_ALL_EM);  
   h_DeltaEtajj_EM_SRSS2->Fill(DeltaEtajj, cut_EM, weight_ALL_EM);  
+  h_DeltaEtall_EM_SRSS2->Fill(DeltaEtaem, cut_EM, weight_ALL_EM);    
   h_mTll_EM_SRSS2->Fill(mTem, cut_EM, weight_ALL_EM);  
   h_mMETll_EM_SRSS2->Fill(mMETem, cut_EM, weight_ALL_EM);  
   h_DeltaYjj_EM_SRSS2->Fill(DeltaYjj, cut_EM, weight_ALL_EM);  
@@ -2900,7 +2952,8 @@ void TSelector_SusyNtuple::fillHistos_EM_SROS1(float cut_EM, int mcid, float wei
   h_DeltaPhil0jj_EM_SROS1->Fill(DeltaPhil0jj, cut_EM, weight_ALL_EM);  
   h_DeltaPhil1jj_EM_SROS1->Fill(DeltaPhil1jj, cut_EM, weight_ALL_EM);  
   h_DeltaRlljj_EM_SROS1->Fill(DeltaRemjj, cut_EM, weight_ALL_EM);  
-  h_DeltaEtajj_EM_SROS1->Fill(DeltaEtajj, cut_EM, weight_ALL_EM);  
+  h_DeltaEtajj_EM_SROS1->Fill(DeltaEtajj, cut_EM, weight_ALL_EM); 
+  h_DeltaEtall_EM_SROS1->Fill(DeltaEtaem, cut_EM, weight_ALL_EM);    
   h_mTll_EM_SROS1->Fill(mTem, cut_EM, weight_ALL_EM);  
   h_mMETll_EM_SROS1->Fill(mMETem, cut_EM, weight_ALL_EM);  
   h_DeltaYjj_EM_SROS1->Fill(DeltaYjj, cut_EM, weight_ALL_EM);  
