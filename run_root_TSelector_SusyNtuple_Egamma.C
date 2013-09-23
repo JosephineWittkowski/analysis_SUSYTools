@@ -118,7 +118,7 @@ void run_root_TSelector_SusyNtuple_Egamma() {
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163424/*");
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163609/*");
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163708/*");
-      
+//       
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163819/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163947/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164048/*");
