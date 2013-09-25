@@ -10,6 +10,14 @@ bool TSelector_SusyNtuple::defineHistos(){
 
   cutflow_EM = new TH1F("cutflow_EM", "cutflow_EM" ,130, 0, 129);
   cutflow_EM_ALL = new TH1F("cutflow_EM_ALL", "cutflow_EM_ALL" ,130, 0, 129);  
+  
+  h_D0Signif_recalc_l0_EE = new TH2F("h_D0Signif_recalc_l0_EE", "h_D0Signif_recalc_l0_EE", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_l0_EE->Sumw2();
+  h_D0Signif_recalc_l0_MM = new TH2F("h_D0Signif_recalc_l0_MM", "h_D0Signif_recalc_l0_MM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_l0_MM->Sumw2();
+  h_D0Signif_recalc_l0_EM = new TH2F("h_D0Signif_recalc_l0_EM", "h_D0Signif_recalc_l0_EM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_l0_EM->Sumw2();
+  
+  h_D0_recalc_l0_EE = new TH2F("h_D0_recalc_l0_EE", "h_D0_recalc_l0_EE", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_l0_EE->Sumw2();
+  h_D0_recalc_l0_MM = new TH2F("h_D0_recalc_l0_MM", "h_D0_recalc_l0_MM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_l0_MM->Sumw2();
+  h_D0_recalc_l0_EM = new TH2F("h_D0_recalc_l0_EM", "h_D0_recalc_l0_EM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_l0_EM->Sumw2();
 
    /*--------------------------------------------------------------------------------*/ 
   h_DeltaRLeptons_EE_SRSS1 = new TH2F("h_DeltaRLeptons_EE_SRSS1", "h_DeltaRLeptons_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRLeptons_EE_SRSS1->Sumw2();
@@ -1381,8 +1389,14 @@ bool TSelector_SusyNtuple::writeHistos(){
   cutflow_MM_ALL->Write();  
   cutflow_EM->Write();
   cutflow_EM_ALL->Write();
-
-
+  
+  h_D0Signif_recalc_l0_EE->Write();
+  h_D0Signif_recalc_l0_MM->Write();
+  h_D0Signif_recalc_l0_EM->Write();
+  
+  h_D0_recalc_l0_EE->Write();
+  h_D0_recalc_l0_MM->Write();
+  h_D0_recalc_l0_EM->Write();
     
     return true;
 }
@@ -2066,8 +2080,15 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( cutflow_EM_ALL);
   fOutput->Add( cutflow_ME);
   fOutput->Add( cutflow_ME_ALL);
-    
-    return true;
+  
+  fOutput->Add( h_D0Signif_recalc_l0_EE);
+  fOutput->Add( h_D0Signif_recalc_l0_MM);
+  fOutput->Add( h_D0Signif_recalc_l0_EM);
+  
+  fOutput->Add( h_D0_recalc_l0_EE);
+  fOutput->Add( h_D0_recalc_l0_MM);  
+  fOutput->Add( h_D0_recalc_l0_EM);  
+  return true;
     
 }
 void TSelector_SusyNtuple::calcJet_variables(TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, TLorentzVector met_TLV){
