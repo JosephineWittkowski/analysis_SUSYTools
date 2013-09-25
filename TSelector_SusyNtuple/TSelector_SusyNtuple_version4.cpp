@@ -1963,8 +1963,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      
 			      //keep mTWW > 140 GeV, try mTWW > 150, 160? 
 			      if(mTWW_EM >= 150.){ 
-			      }
 				cutnumber = 34.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			      }
+
 			      if(mTWW_EM >= 160.){ 
 				cutnumber = 35.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			      }
