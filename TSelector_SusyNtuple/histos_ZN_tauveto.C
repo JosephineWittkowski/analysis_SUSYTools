@@ -11,13 +11,25 @@ bool TSelector_SusyNtuple::defineHistos(){
   cutflow_EM = new TH1F("cutflow_EM", "cutflow_EM" ,130, 0, 129);
   cutflow_EM_ALL = new TH1F("cutflow_EM_ALL", "cutflow_EM_ALL" ,130, 0, 129);  
   
-  h_D0Signif_recalc_l0_EE = new TH2F("h_D0Signif_recalc_l0_EE", "h_D0Signif_recalc_l0_EE", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_l0_EE->Sumw2();
-  h_D0Signif_recalc_l0_MM = new TH2F("h_D0Signif_recalc_l0_MM", "h_D0Signif_recalc_l0_MM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_l0_MM->Sumw2();
-  h_D0Signif_recalc_l0_EM = new TH2F("h_D0Signif_recalc_l0_EM", "h_D0Signif_recalc_l0_EM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_l0_EM->Sumw2();
+  h_D0Signif_recalc_PR_EE = new TH2F("h_D0Signif_recalc_PR_EE", "h_D0Signif_recalc_PR_EE", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_PR_EE->Sumw2();
+  h_D0Signif_recalc_HF_EE = new TH2F("h_D0Signif_recalc_HF_EE", "h_D0Signif_recalc_HF_EE", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_HF_EE->Sumw2();
+  h_D0Signif_recalc_LF_EE = new TH2F("h_D0Signif_recalc_LF_EE", "h_D0Signif_recalc_LF_EE", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_LF_EE->Sumw2();
+  h_D0Signif_recalc_PR_MM = new TH2F("h_D0Signif_recalc_PR_MM", "h_D0Signif_recalc_PR_MM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_PR_MM->Sumw2();
+  h_D0Signif_recalc_HF_MM = new TH2F("h_D0Signif_recalc_HF_MM", "h_D0Signif_recalc_HF_MM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_HF_MM->Sumw2();
+  h_D0Signif_recalc_LF_MM = new TH2F("h_D0Signif_recalc_LF_MM", "h_D0Signif_recalc_LF_MM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_LF_MM->Sumw2();
+  h_D0Signif_recalc_PR_EM = new TH2F("h_D0Signif_recalc_PR_EM", "h_D0Signif_recalc_PR_EM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_PR_EM->Sumw2();
+  h_D0Signif_recalc_HF_EM = new TH2F("h_D0Signif_recalc_HF_EM", "h_D0Signif_recalc_HF_EM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_HF_EM->Sumw2();
+  h_D0Signif_recalc_LF_EM = new TH2F("h_D0Signif_recalc_LF_EM", "h_D0Signif_recalc_LF_EM", 2000, -10, 10, 10, -1, 9);  h_D0Signif_recalc_LF_EM->Sumw2();
   
-  h_D0_recalc_l0_EE = new TH2F("h_D0_recalc_l0_EE", "h_D0_recalc_l0_EE", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_l0_EE->Sumw2();
-  h_D0_recalc_l0_MM = new TH2F("h_D0_recalc_l0_MM", "h_D0_recalc_l0_MM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_l0_MM->Sumw2();
-  h_D0_recalc_l0_EM = new TH2F("h_D0_recalc_l0_EM", "h_D0_recalc_l0_EM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_l0_EM->Sumw2();
+  h_D0_recalc_PR_EE = new TH2F("h_D0_recalc_PR_EE", "h_D0_recalc_PR_EE", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_PR_EE->Sumw2();
+  h_D0_recalc_HF_EE = new TH2F("h_D0_recalc_HF_EE", "h_D0_recalc_HF_EE", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_HF_EE->Sumw2();
+  h_D0_recalc_LF_EE = new TH2F("h_D0_recalc_LF_EE", "h_D0_recalc_LF_EE", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_LF_EE->Sumw2();
+  h_D0_recalc_PR_MM = new TH2F("h_D0_recalc_PR_MM", "h_D0_recalc_PR_MM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_PR_MM->Sumw2();
+  h_D0_recalc_HF_MM = new TH2F("h_D0_recalc_HF_MM", "h_D0_recalc_HF_MM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_HF_MM->Sumw2();
+  h_D0_recalc_LF_MM = new TH2F("h_D0_recalc_LF_MM", "h_D0_recalc_LF_MM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_LF_MM->Sumw2();
+  h_D0_recalc_PR_EM = new TH2F("h_D0_recalc_PR_EM", "h_D0_recalc_PR_EM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_PR_EM->Sumw2();
+  h_D0_recalc_HF_EM = new TH2F("h_D0_recalc_HF_EM", "h_D0_recalc_HF_EM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_HF_EM->Sumw2();
+  h_D0_recalc_LF_EM = new TH2F("h_D0_recalc_LF_EM", "h_D0_recalc_LF_EM", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_LF_EM->Sumw2();
 
    /*--------------------------------------------------------------------------------*/ 
   h_DeltaRLeptons_EE_SRSS1 = new TH2F("h_DeltaRLeptons_EE_SRSS1", "h_DeltaRLeptons_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRLeptons_EE_SRSS1->Sumw2();
@@ -1390,13 +1402,26 @@ bool TSelector_SusyNtuple::writeHistos(){
   cutflow_EM->Write();
   cutflow_EM_ALL->Write();
   
-  h_D0Signif_recalc_l0_EE->Write();
-  h_D0Signif_recalc_l0_MM->Write();
-  h_D0Signif_recalc_l0_EM->Write();
-  
-  h_D0_recalc_l0_EE->Write();
-  h_D0_recalc_l0_MM->Write();
-  h_D0_recalc_l0_EM->Write();
+ h_D0Signif_recalc_PR_EE->Write();
+ h_D0Signif_recalc_HF_EE->Write();
+ h_D0Signif_recalc_LF_EE->Write();
+ h_D0Signif_recalc_PR_MM->Write();
+ h_D0Signif_recalc_HF_MM->Write();
+ h_D0Signif_recalc_LF_MM->Write();
+ h_D0Signif_recalc_PR_EM->Write();
+ h_D0Signif_recalc_HF_EM->Write();
+ h_D0Signif_recalc_LF_EM->Write();
+ 
+ 
+ h_D0_recalc_PR_EE->Write();
+ h_D0_recalc_HF_EE->Write();
+ h_D0_recalc_LF_EE->Write();
+ h_D0_recalc_PR_MM->Write();
+ h_D0_recalc_HF_MM->Write();
+ h_D0_recalc_LF_MM->Write();
+ h_D0_recalc_PR_EM->Write();
+ h_D0_recalc_HF_EM->Write();
+ h_D0_recalc_LF_EM->Write();
     
     return true;
 }
@@ -2081,13 +2106,27 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( cutflow_ME);
   fOutput->Add( cutflow_ME_ALL);
   
-  fOutput->Add( h_D0Signif_recalc_l0_EE);
-  fOutput->Add( h_D0Signif_recalc_l0_MM);
-  fOutput->Add( h_D0Signif_recalc_l0_EM);
+  fOutput->Add( h_D0Signif_recalc_PR_EE);
+  fOutput->Add( h_D0Signif_recalc_HF_EE);
+  fOutput->Add( h_D0Signif_recalc_LF_EE);
+  fOutput->Add( h_D0Signif_recalc_PR_MM);
+  fOutput->Add( h_D0Signif_recalc_HF_MM);
+  fOutput->Add( h_D0Signif_recalc_LF_MM);
+  fOutput->Add( h_D0Signif_recalc_PR_EM);
+  fOutput->Add( h_D0Signif_recalc_HF_EM);
+  fOutput->Add( h_D0Signif_recalc_LF_EM);
   
-  fOutput->Add( h_D0_recalc_l0_EE);
-  fOutput->Add( h_D0_recalc_l0_MM);  
-  fOutput->Add( h_D0_recalc_l0_EM);  
+  
+  fOutput->Add( h_D0_recalc_PR_EE);
+  fOutput->Add( h_D0_recalc_HF_EE);
+  fOutput->Add( h_D0_recalc_LF_EE);
+  fOutput->Add( h_D0_recalc_PR_MM);
+  fOutput->Add( h_D0_recalc_HF_MM);
+  fOutput->Add( h_D0_recalc_LF_MM);
+  fOutput->Add( h_D0_recalc_PR_EM);
+  fOutput->Add( h_D0_recalc_HF_EM);
+  fOutput->Add( h_D0_recalc_LF_EM);
+  
   return true;
     
 }

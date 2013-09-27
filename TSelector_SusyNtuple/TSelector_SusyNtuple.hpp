@@ -52,12 +52,26 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* cutflow_ME;
     TH1F* cutflow_ME_ALL;
     
-    TH2F* h_D0Signif_recalc_l0_EE;
-    TH2F* h_D0Signif_recalc_l0_MM;
-    TH2F* h_D0Signif_recalc_l0_EM;
-    TH2F* h_D0_recalc_l0_EE;
-    TH2F* h_D0_recalc_l0_MM;
-    TH2F* h_D0_recalc_l0_EM;
+    TH2F* h_D0Signif_recalc_PR_EE;
+    TH2F* h_D0Signif_recalc_HF_EE;
+    TH2F* h_D0Signif_recalc_LF_EE;
+    TH2F* h_D0Signif_recalc_PR_MM;
+    TH2F* h_D0Signif_recalc_HF_MM;
+    TH2F* h_D0Signif_recalc_LF_MM;
+    TH2F* h_D0Signif_recalc_PR_EM;
+    TH2F* h_D0Signif_recalc_HF_EM;
+    TH2F* h_D0Signif_recalc_LF_EM;
+    
+    
+    TH2F* h_D0_recalc_PR_EE;
+    TH2F* h_D0_recalc_HF_EE;
+    TH2F* h_D0_recalc_LF_EE;
+    TH2F* h_D0_recalc_PR_MM;
+    TH2F* h_D0_recalc_HF_MM;
+    TH2F* h_D0_recalc_LF_MM;
+    TH2F* h_D0_recalc_PR_EM;
+    TH2F* h_D0_recalc_HF_EM;
+    TH2F* h_D0_recalc_LF_EM;
     
     TH2F* h_DeltaRLeptons_EE_SRSS1;
     TH2F* h_DeltaRLeptons_EE_SRSS2;

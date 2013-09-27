@@ -17,7 +17,7 @@ TSelector_SusyNtuple::TSelector_SusyNtuple() :
         m_vetoSFOS  (false),
         m_writeOut  (false)
 {
-  setAnaType(Ana_2Lep);
+  setAnaType(Ana_2LepWH);
 
   if(m_writeOut) {
     out.open("event.dump");
@@ -212,6 +212,90 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   
   calcJet_variables(signalJet0_TLV, signalJet1_TLV, m_met->lv());
  
+//   if(nt.evt()->isMC && numberOfCLJets(m_signalJets2Lep) > 0){
+//     
+//     
+//   for (int ilep = 0; ilep < m_signalLeptons.size(); ilep ++){
+//       
+//     bool unbiased = true;
+//     float D0_branch = 0.;
+//     float D0err_branch = 0.;
+//     float D0_recalc = 0.;
+//      //read d0 and errd0 from ntuple (d0Sig = d0 / errD0)
+//     if(unbiased){
+//       D0_branch = m_signalLeptons.at(ilep)->d0Unbiased;
+//       D0err_branch = m_signalLeptons.at(ilep)->errD0Unbiased;
+//     }
+//     else{
+//       D0_branch = m_signalLeptons.at(ilep)->d0;
+//       D0err_branch = m_signalLeptons.at(ilep)->errD0;
+//     }
+//   
+//     //calc closest jet for lepton
+//     const Jet* closestJet = getClosestJet(m_signalLeptons.at(ilep));	
+//     //recalc sign of d0 wrt closest jet
+//     D0_recalc = recalc_D0(unbiased, m_signalLeptons.at(ilep), closestJet);
+// 
+//     float sD0Signif_recalc = D0_recalc / D0err_branch;
+// 
+//     if(m_signalLeptons.at(ilep)->truthType == PR){ 
+//       if(m_signalLeptons.at(ilep)->isEle()){ 
+// 	h_D0Signif_recalc_PR_EE->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+// 	h_D0_recalc_PR_EE->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+//       }
+//       else{
+// 	h_D0Signif_recalc_PR_MM->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+// 	h_D0_recalc_PR_MM->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+//       }
+//     }
+//     
+//     if(m_signalLeptons.at(ilep)->truthType == HF){ 
+//       if(m_signalLeptons.at(ilep)->isEle()){ 
+// 	h_D0Signif_recalc_HF_EE->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+// 	h_D0_recalc_HF_EE->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+//       }
+//       else{
+// 	h_D0Signif_recalc_HF_MM->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+// 	h_D0_recalc_HF_MM->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+//       }
+//     }
+//     
+//     if(m_signalLeptons.at(ilep)->truthType == LF){ 
+//       if(m_signalLeptons.at(ilep)->isEle()){ 
+// 	h_D0Signif_recalc_LF_EE->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+// 	h_D0_recalc_LF_EE->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+//       }
+//       else{
+// 	h_D0Signif_recalc_LF_MM->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+// 	h_D0_recalc_LF_MM->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+//       }
+//     }
+// 
+// //       bool isConv = m_signalLeptons.at(ilep)->truthType == CONV;
+// //       bool isqFlip = false;
+// // 
+// //       if(isConv){      
+// // 	if(m_signalLeptons.at(ilep)->isEle()){
+// // 	  for(int iel = 0; iel < m_baseElectrons.size(); iel ++){
+// // 	    if(m_signalLeptons.at(ilep)->Pt() == m_baseElectrons.at(iel)->Pt()){
+// // 	      isqFlip = m_baseElectrons.at(iel)->isChargeFlip;
+// // 	      break;
+// // 	    }
+// // 	  }
+// // 	}
+// //       }
+// //       if(isConv && !isqFlip){
+// // 	if(m_signalLeptons.at(ilep)->isEle()){
+// // 	  h_D0Signif_recalc_l0_EE->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+// // 	  h_D0_recalc_l0_EE->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_EE);
+// // 	}
+// // 	else{
+// // 	  h_D0Signif_recalc_l0_MM->Fill(sD0Signif_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+// // 	  h_D0_recalc_l0_MM->Fill(D0_recalc, m_signalLeptons.at(ilep)->truthType, weight_ALL_MM);
+// // 	}
+// //       }
+//     }
+//   }
 
  ////////////////////////////        EE            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -316,6 +400,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		}
 		float weight_ALL_SS_EE = 1.0;
 		weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight; //multiply only SS weight by chargeFlipWeight
+// 		cout << "weight_ALL_SS_EE= " << weight_ALL_SS_EE;
 		//------------------------------------------------------------------------------------
 		calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
 		//if running on data for fake bg, instead of weights (pileup, xsec, eventweight, trigger, SF, btag, ...) use fakeWeight from SusyMatrixMethod		
@@ -324,7 +409,8 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  weight_ALL_EE = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
 		  weight_ALL_SS_EE = weight_ALL_EE;
 		}
-
+// 		cout << " " << weight_ALL_SS_EE << endl;
+		
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS-EE------------------------------------------
 		//------------------------------------------------------------------------------------
@@ -336,6 +422,25 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		if(nt.evt()->isMC || (!nt.evt()->isMC && (el0->q * el1->q)>0)){
 		  cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
 		  cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //iso cut (muons)
+		  
+// truthMatchType == PR
+// truthMatchType == HF
+// truthMatchType == LF
+// 
+// For conversion it's s little more complicated
+// 
+// bool isConv       = el0->truthType == CONV;
+// bool isqFlip =  isEle ? isChargeFlip : false;
+// return isConv && !isqFlip;
+// if(nt.evt()->isMC){
+//     for (int iel = 0; iel < m_signalElectrons.size(); iel ++){
+// //       cout << "m_baseElectrons.at(iel)->truthType = " << m_baseElectrons.at(iel)->truthType << endl;
+// // 		    if(el0->truthType == PR) cout << "is PR" << endl;
+//     if(m_signalElectrons.at(iel)->truthType == HF) cout << "is HF" << endl; 
+//     if(m_signalElectrons.at(iel)->truthType == LF) cout << "is LF" << endl;
+//     }
+//   }
+
 // 		  cout << "run " << nt.evt()->run
 // 		  << " evt " << nt.evt()->event 
 // 		  << " ee l0: pt=" << el0_SS_TLV.Pt() <<  " eta=" << el0_SS_TLV.Eta() 
@@ -682,10 +787,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   
    ////////////////////////////        MM            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  
-  
 
   if(m_baseMuons.size()==2){
     cutnumber = 15.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //pass category
@@ -1533,6 +1634,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
  ////////////////////////////        EM            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
+
+//   cout << "m_signalMuons.size()= " << m_signalMuons.size() << " m_signalElectrons.size()= " << m_signalElectrons.size() << " ... m_baseElectrons.size()= " << m_baseElectrons.size() << " m_baseMuons.size()= " <<  m_baseMuons.size() << endl;
+
   if((m_baseElectrons.size()==1 && m_baseMuons.size() ==1)){
 
   TLorentzVector el_TLV, mu_TLV;
@@ -1625,12 +1729,14 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
 		}
 		float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
+// 		cout << "weight_ALL_EM= " << weight_ALL_EM;
 		//------------------------------------------------------------------------------------
 		float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 		calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
 		if(!nt.evt()->isMC && calcFakeContribution){ 
 		  weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
 		  weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
+// 		  cout << "  " << weight_ALL_EM << endl;
 		}
 		
 		//------------------------------------------------------------------------------------
@@ -2116,8 +2222,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   return kTRUE;
 }
 
-
-
 /*--------------------------------------------------------------------------------*/
 // Analysis cuts
 /*--------------------------------------------------------------------------------*/
@@ -2448,23 +2552,25 @@ float TSelector_SusyNtuple::getFakeWeight(const LeptonVector &baseLeps,
 /*--------------------------------------------------------------------------------*/
 const Jet* TSelector_SusyNtuple::getClosestJet(const Lepton* lep)
 {
-  const Jet* closestJet_el0;
+  const Jet* closestJet;
   float mindR=999;
-  float mindPhiJMet=999;
-  for(uint j=0; j<m_signalJets2Lep.size(); j++){
-    const Jet* cj = m_signalJets2Lep.at(j);
-    float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-    if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
+  
+  for(uint j=0; j<m_baseJets.size(); j++){
+    const Jet* cj = m_baseJets.at(j);
+    
     if(lep->DeltaR(*cj)>mindR) continue;
     mindR = lep->DeltaR(*cj);
-    closestJet_el0 = cj;
+    closestJet = cj;
   }
-  return closestJet_el0;
+  return closestJet;
 }		
 
 /*--------------------------------------------------------------------------------*/
-float TSelector_SusyNtuple::recalc_D0(bool unbiased, const Lepton* lep, const Jet* closestJet_lep)
+float TSelector_SusyNtuple::recalc_D0(bool unbiased, const Lepton* lep, const Jet* closestJet)
 {
+  // recalculate sign of d0. 
+  // For significance, still needs to be divided by err!!!
+
   float d0_branch;
   
   if(unbiased){
@@ -2473,12 +2579,18 @@ float TSelector_SusyNtuple::recalc_D0(bool unbiased, const Lepton* lep, const Je
   else{
     d0_branch = lep->d0;
   }
-		
+//calc sign of d0 from ntuple ('branch'):		  
   float qd0 =d0_branch/fabs(d0_branch);
-  float m_sPhi = lep->phi + qd0 * TMath::Pi()/2.;
-  float dPhi_lep = m_sPhi- closestJet_lep->phi;
-  float signIP_lep =  fabs(cos(dPhi_lep))/(cos(dPhi_lep)+1e-32) * fabs(d0_branch); 
+  
+// calc angle "Phi" between jet and direction to the track (= lepton) closest point from the PMV, based on (closestJet->phi - lep->phi)
+  float phi_lepd0 = lep->phi + qd0 * TMath::Pi()/2.;
+  float Phi = phi_lepd0- closestJet->phi;
+  
+// recalc sign = sign of cos(Phi):   
+  float signIP_lep =  fabs(cos(Phi))/(cos(Phi)+1e-32) * fabs(d0_branch); 
   return signIP_lep;
+
+  
 }
 
 /*--------------------------------------------------------------------------------*/
@@ -2523,40 +2635,36 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 126988)outputfile="histos_ZN_WW_version5.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_version5.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_version5.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_ZV_version5.root";
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_version5.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WW_version5_2.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_version5_2.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_version5_2.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_ZV_version5_2.root";
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_version5_2.root";
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_version5.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_version5.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_version5.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_version5.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_version5.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_version5.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_version5.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_version5.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_version5.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_version5.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_version5.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_version5.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_version5.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_version5.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_version5.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_version5.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_version5.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_version5.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_version5_2.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_version5_2.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_version5_2.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_version5_2.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_version5_2.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_version5_2.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_version5_2.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_version5_2.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_version5_2.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_version5_2.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_version5_2.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_version5_2.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_version5_2.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_version5_2.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_version5_2.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_version5_2.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_version5_2.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_version5_2.root";
     
-//     if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_version5.root";
-    if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_version5_2.root";
-//     if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_version5.root";
-//     outputfile = "histo_test_SusyMatrixMethodDavide.root";
-/*    if(sample_identifier == 110813)outputfile="histos_cutflow_110813_version5.root";
-    if(sample_identifier == 110814)outputfile="histos_cutflow_110814_version5.root";
-    if(sample_identifier == 110815)outputfile="histos_cutflow_110815_version5.root";
-    if(sample_identifier == 110816)outputfile="histos_cutflow_110816_version5.root"*/;
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_version5_1.root";
+
+
+/*  
     
 //     if(sample_identifier>=176574 && sample_identifier <= 176640){
 //     char buffer[10];
@@ -2570,7 +2678,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
 //     string str2 = ".root";
 //     str.append(str2);
 //     outputfile = str;
-//     }
+//     }*/
     cout << " " << endl;
     cout << "ouputfile: " << outputfile << endl;
     cout << " " << endl;
@@ -2583,7 +2691,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
    output_file->Write() ;
    output_file->Close();
     
-}
+  }
 }
 /*--------------------------------------------------------------------------------*/
 // The Terminate() function is the last function to be called
