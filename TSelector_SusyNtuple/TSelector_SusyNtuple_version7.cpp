@@ -909,6 +909,30 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			  // 1 or 2 jets?  
 //highest sensitiviy for points in the middle area (and elsewhere): 
 // mTWW >= 140, METrel >= 50, HT >= 200, |etal0|, |etal1| <= 2.2, mT(l0,MET) >= 120, DeltaR(jj) <= 2.6, DeltaR(ll,jj) <= 2.0, DeltaEta(l,l) <= 1.9
+			  if(mTWW_MM >= 140.){
+			    cutnumber = 30.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+			    if(METrelmm >= 50.){
+			      cutnumber = 31.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+				if(HT_MM >= 200.){
+				  cutnumber = 32.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+				  if(fabs(eta_mu0)<= 2.2 && fabs(eta_mu1) <= 2.2){
+				    cutnumber = 33.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+				    if(mTl0MET >= 120.){
+				      cutnumber = 34.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+				      if(DeltaRjj <= 2.6){
+					cutnumber = 35.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+					if(DeltaRmmjj <= 2.0){
+					  cutnumber = 36.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+					  if(DeltaEtamm <= 1.9){
+					    cutnumber = 37.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
+					  }
+					}
+				      }
+				    }
+				  }
+				}
+			    }
+			  }
 
 
 			}
@@ -1950,7 +1974,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 177526)outputfile="histos_ZN_177526_version7.root";
     if(sample_identifier == 177527)outputfile="histos_ZN_177527_version7.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_version7_1.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_version7_2.root";
 
 
 /*  

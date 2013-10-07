@@ -42,6 +42,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   m_susyObj.initialize(nt.evt()->isMC);
 
   SusyNtAna::Begin(0);
+//   setAnaType(Ana_2LepWH);
 
 
   setSelectTaus(true);
@@ -122,7 +123,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   
    
 
-// select signal objects
+// select objects
+//   cout << 
+//   " evt " << nt.evt()->event <<
+//   " selectObjects: " << endl;
+
   selectObjects(NtSys_NOM, false, TauID_medium);
 
   int flag = nt.evt()->cutFlags[NtSys_NOM];
@@ -328,7 +333,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	  cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
 	  cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //iso cut (muons)
 
-
+// 	  cout << 
+// 	    " evt " << nt.evt()->event <<
+// 	    " fabs(el0->d0Sig(true)): " << fabs(el0->d0Sig(true)) <<
+// 	    " fabs(el1->d0Sig(true)): " << fabs(el1->d0Sig(true)) << 
+// 	    endl;
 	  if((calcFakeContribution && !nt.evt()->isMC) || (nt.evt()->isMC && fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0)){//|d0/sd0|<3 (for electron)
 	  cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 	    if(numberOfFJets(m_signalJets2Lep) == 0){
@@ -694,14 +703,14 @@ cutnumber = 60.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 		met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
 	      }
 	      float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
-	      cout << "weight_ALL_EM= " << weight_ALL_EM;
+// 	      cout << "weight_ALL_EM= " << weight_ALL_EM;
 	      //------------------------------------------------------------------------------------
 	      float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 	      calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
 	      if(!nt.evt()->isMC && calcFakeContribution){
 		weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
 		weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
-		cout << " " << weight_ALL_EM << endl;
+// 		cout << " " << weight_ALL_EM << endl;
 	      }
 
 //------------------------------------------------------------------------------------
@@ -1235,7 +1244,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 177525)outputfile="histos_ZN_177525_HT20_Davide.root";
     
 // if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_HT20_Davide.root";
-    if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Egamma_periodA_Davide.root";
+    if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_periodA.root";
 // if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_HT20_Davide.root";
 // outputfile = "histo_test_SusyMatrixMethodDavide.root";
 /* if(sample_identifier == 110813)outputfile="histos_cutflow_110813_HT20_Davide.root";

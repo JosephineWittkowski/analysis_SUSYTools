@@ -42,6 +42,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   m_susyObj.initialize(nt.evt()->isMC);
 
   SusyNtAna::Begin(0);
+//   setAnaType(Ana_2LepWH);
 
 
   setSelectTaus(true);
@@ -122,7 +123,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   
    
 
-// select signal objects
+// select objects
+//   cout << 
+//   " evt " << nt.evt()->event <<
+//   " selectObjects: " << endl;
+
   selectObjects(NtSys_NOM, false, TauID_medium);
 
   int flag = nt.evt()->cutFlags[NtSys_NOM];
@@ -328,291 +333,72 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	  cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
 	  cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //iso cut (muons)
 
+// 	  cout << 
+// 	    " evt " << nt.evt()->event <<
+// 	    " fabs(el0->d0Sig(true)): " << fabs(el0->d0Sig(true)) <<
+// 	    " fabs(el1->d0Sig(true)): " << fabs(el1->d0Sig(true)) << 
+// 	    endl;
+	  if((calcFakeContribution && !nt.evt()->isMC) || (nt.evt()->isMC && fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0)){//|d0/sd0|<3 (for electron)
+	  cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+	    if(numberOfFJets(m_signalJets2Lep) == 0){
+	      weight_ALL_SS_EE *= getBTagWeight(nt.evt());
 
-	  if(fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0){//|d0/sd0|<3   (for electron) (update to latest QFlip)
-		    cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    if(numberOfFJets(m_signalJets2Lep) == 0){
-		      weight_ALL_SS_EE *= getBTagWeight(nt.evt());
-// 		      cout << "EE event  " << nt.evt()->event << " gen " << nt.evt()->w  << " pileup " <<  nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw  << " lepSf " << lep_SF_EE  << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, m_met->Et, m_signalJets2Lep.size(), nt.evt()->nVtx, NtSys_NOM) << " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EE
-// 		      << endl;
-	  
-// 		      cout <<" pdg0 "<<pdg0
-// 		      <<" lv0 px: "<<el0_SS_TLV.Px()<<" py: "<<el0_SS_TLV.Py()<<" pz: "<<el0_SS_TLV.Pz() << " pT= " << el0_SS_TLV.Pt() << " phi= " << el0_SS_TLV.Phi()
-// 		      <<" pdg1 "<<pdg1
-// 		      <<" lv1 px: "<<el1_SS_TLV.Px()<<" py: "<<el1_SS_TLV.Py()<<" pz: "<<el1_SS_TLV.Pz() << " pT= " << el1_SS_TLV.Pt() << " phi= " << el1_SS_TLV.Phi()
-// 		      <<" met px: "<<met_SS_TLV.Px()<<" py: "<<met_SS_TLV.Py()<<" pT: "<<met_SS_TLV.Pt()<<" phi: "<<met_SS_TLV.Phi()
-// 		      <<endl;
-		      cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      if(numberOfCBJets(m_signalJets2Lep) == 0){
-			cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			if(numberOfCLJets(m_signalJets2Lep) >=1){
-			  cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		  
-// 			  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+	      cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+	      if(numberOfCBJets(m_signalJets2Lep) == 0){
+		cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		if(numberOfCLJets(m_signalJets2Lep) >=1){
+		  cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+
+		  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+
+		    cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
+		    cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
+		    float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
+
+		    //SRSS1
+		    if(mtWW_EE >= 150.){	
+		      // cout << m_chainEntry << " EE event " << nt.evt()->event << "met_SS_TLV= " << met_SS_TLV.Et() << " met.Phi= " << met_SS_TLV.Phi() << " metRel = " << METrel_SS << " mtWW= " << mtWW_EE << endl;
+		      cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		      float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
+		      if(HT_EE >= 200.){
+			cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			if(METrel_SS>=30.){
+			  cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			  if(METrel_SS>=50.){
 			    
-// 			    cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-// 			    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
-// 			      cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
-// 			      float mTWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
-			      
-			      
-			      // 1 or 2 jets?
-// 
-// try different cuts on lepton pT later in cutflow
-// 
-// same for mll: later
-// 
-// try mTWW with 130, 140, 150, 160, 170, 180 GeV (150 already very good value)
-// 
-// HT: not meaningful. Remove!
-// 
-// METrel >= 50 GeV important. Try higher values: 60, 70, 80 GeV
-// 
-// min(mT(l0), mT(l1)) >= 60 GeV important cut. Try higher: 70, 80, 90
-// 
-// meff >= 50 GeV is good. Try 60, 70 GeV (80 is too high)
-// 
-// forget mjj, pTjj
-//   
-// try DeltaPhi(MET, ll) <= 5.0
-// try DeltaPhi(ll, jj) <= 3.0, 2.8
-// try DeltaPhi(l0, jj) <= 3.0, 2.8
-// try DeltaPhi(l1, jj) <= 3.0, 2.8
-// 
-// 
-// 
-// pTll >= 50 GeV is good. Try 60, 70 GeV
-// 
-// DeltaPhi(MET, jj) <= 2.8 is good. Try also 3.0, 2.9. 2.7 ?
-// 
-// fabs(etal0), fabs(etal1) <= 2.0 is good. Try also 1.7, 1.8, 1.9, 2.1, 2.2
-// 
-// 
-// mT(l0, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV.
-// 
-// mT(l1, MET) >= 60 GeV is good. Try 70, 80, 90, 100 GeV.
-// 
-// mT(ll, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV
-// 
-// m(MET, ll) >= 190 GeV is good. Try 200, 210, 220, 230 GeV
-// 
-// mT2 >= 70 GeV is good. Try 40, 50 GeV.
-			      
-			      //play with cuts:
-			      // try mTWW with 130, 140, 150, 160, 170, 180 GeV (150 already very good value)
-			      if(mTWW_EE >= 130.){
-				cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTWW_EE >= 140.){
-				cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTWW_EE >= 160.){
-				cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTWW_EE >= 170.){
-				cutnumber = 33.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTWW_EE >= 180.){
-				cutnumber = 34.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      }			      
-			      if(mTWW_EE >= 150.){	
-				cutnumber = 35.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				
-			      
-			      if(mTWW_EE >= 150.){	
-				cutnumber = 36.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				// METrel >= 50 GeV important. Try higher values: 60, 70, 80 GeV
-				if(METrelee >= 60.){
-				  cutnumber = 37.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(METrelee >= 70.){
-				  cutnumber = 38.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(METrelee >= 80.){
-				  cutnumber = 39.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(METrelee >= 50.){				
-				  cutnumber = 40.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  
-				  // try different cuts on lepton pT later in cutflow
-				  if(ptel1>=20. && ptel1 >= 30.){
-				    cutnumber = 41.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    // same for mll: later
-				    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
-				      cutnumber = 42.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				      // min(mT(l0), mT(l1)) >= 60 GeV important cut. Try higher: 70, 80, 90
-				      if(mTemin>= 70.){
-					cutnumber = 43.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mTemin>= 80.){
-					cutnumber = 44.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mTemin>= 90.){
-					cutnumber = 45.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mTemin>= 60.){			
-					cutnumber = 46.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					// meff >= 50 GeV is good. Try 60, 70 GeV (80 is too high)
-					if(meff >= 60.){
-					  cutnumber = 47.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					}
-					if(meff >= 70.){
-					  cutnumber = 48.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					}
-					if(meff >= 50.){
-					  cutnumber = 49.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  // try DeltaPhi(MET, ll) <= 5.0
-					  if(DeltaPhiMETee<= 3.0){
-					    cutnumber = 50.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(DeltaPhiMETee<= 2.8){
-					    cutnumber = 51.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  // try DeltaPhi(l0, jj) <= 3.0, 2.8
-					  if(DeltaPhiel0jj <= 3.0){
-					    cutnumber = 52.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(DeltaPhiel0jj <= 2.8){
-					    cutnumber = 53.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }					  
-					  // try DeltaPhi(l1, jj) <= 3.0, 2.8
-					  if(DeltaPhiel1jj <= 3.0){
-					    cutnumber = 54.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(DeltaPhiel1jj <= 2.8){
-					    cutnumber = 55.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }		
-// 					  pTll >= 50 GeV is good. Try 60, 70 GeV
-					  if(pTee>= 60.){
-					    cutnumber = 56.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(pTee>= 70.){
-					    cutnumber = 57.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					  }					  
-					  if(pTee>= 50.){	
-					    cutnumber = 58.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					    // DeltaPhi(MET, jj) <= 2.8 is good. Try also 3.0, 2.9. 2.7 ?
-					    if(DeltaPhiMETjj <= 3.0){
-					      cutnumber = 59.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					    }
-					    if(DeltaPhiMETjj <= 2.9){
-					      cutnumber = 60.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					    }
-					    if(DeltaPhiMETjj <= 2.7){
-					      cutnumber = 61.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					    }
-					    if(DeltaPhiMETjj <= 2.8){
-					      cutnumber = 62.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					      
-					      // fabs(etal0), fabs(etal1) <= 2.0 is good. Try also 1.7, 1.8, 1.9, 2.1, 2.2					      
-					      if(fabs(eta_el0) <= 2.2 && fabs(eta_el1) <= 2.2){
-						cutnumber = 63.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					      }
-					      if(fabs(eta_el0) <= 2.1 && fabs(eta_el1) <= 2.1){
-						cutnumber = 64.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					      }
-					      if(fabs(eta_el0) <= 1.9 && fabs(eta_el1) <= 1.9){
-						cutnumber = 65.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					      }
-					      if(fabs(eta_el0) <= 1.8 && fabs(eta_el1) <= 1.8){
-						cutnumber = 66.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					      }
-					      if(fabs(eta_el0) <= 1.7 && fabs(eta_el1) <= 1.7){
-						cutnumber = 67.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					      }					      
-					      if(fabs(eta_el0) <= 2.0 && fabs(eta_el1) <= 2.0){
-						cutnumber = 68.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-					      }
-					    }
-					  }
-					}
-				      }
-				      
-				      // mT(l0, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV.
-				      if(mTel0MET >= 80.){
-					cutnumber = 30.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mTel0MET >= 100.){
-					cutnumber = 31.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mTel0MET >= 110.){
-					cutnumber = 32.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mTel0MET >= 120.){
-					cutnumber = 33.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mTel0MET >= 90.){		      
-					cutnumber = 34.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					// mT(l1, MET) >= 60 GeV is good. Try 70, 80, 90, 100 GeV.
-					if(mTel0MET >= 70.){	
-					  cutnumber = 35.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					}
-					if(mTel0MET >= 80.){	
-					  cutnumber = 36.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					}
-					if(mTel0MET >= 90.){	
-					  cutnumber = 37.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					}
-					if(mTel0MET >= 100.){	
-					  cutnumber = 38.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					}
-					if(mTel0MET >= 60.){	
-					  cutnumber = 39.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					  // mT(ll, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV
-					  if(mTee>= 80.){
-					    cutnumber = 40.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(mTee>= 100.){
-					    cutnumber = 41.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(mTee>= 110.){
-					    cutnumber = 42.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(mTee>= 120.){
-					    cutnumber = 43.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					  }
-					  if(mTee>= 90.){
-					    cutnumber = 44.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					     // m(MET, ll) >= 190 GeV is good. Try 200, 210, 220, 230 GeV
-					     if(mMETee>= 200.){
-					       cutnumber = 45.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					     }
-					     if(mMETee>= 210.){
-					       cutnumber = 46.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					     }
-					     if(mMETee>= 220.){
-					       cutnumber = 47.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					     }
-					     if(mMETee>= 230.){
-					       cutnumber = 48.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					     }
-					     if(mMETee>= 190.){
-					       cutnumber = 49.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					       // mT2 >= 70 GeV is good. Try 40, 50 GeV.
-					       if(mt2_ee>= 40.){
-						 cutnumber = 50.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					       }
-					       if(mt2_ee>= 50.){
-						 cutnumber = 51.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					       }
-					       if(mt2_ee>= 70.){
-						 cutnumber = 52.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-					       }
-					     }
-					  }
-					}
-				      }
-				    }
-				  }
-				}
-			      }
-			    }
 
+// 			    cout << "EE event " << nt.evt()->event << /*" gen " << nt.evt()->w << " pileup " << nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw << " lepSf " << lep_SF_EE << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM) << " chargeFlipWeight " << chargeFlipWeight <<*/ " weight all " << weight_ALL_SS_EE << 
+// 			    " l0 pT= " << m_baseLeptons.at(0)->Pt() << 
+// 			    " l0 eta= " << m_baseLeptons.at(0)->Eta() << 
+// 			    " l1 pT= " << m_baseLeptons.at(1)->Pt() << 
+// 			    " l1 eta= " << m_baseLeptons.at(1)->Eta() <<  
+// 			    " METrel_SS = " << METrel_SS << 
+// 			    " isSignalLepton(baseLeps[0])= " << isSignalLepton(m_baseLeptons.at(0),m_baseElectrons, m_baseMuons,nt.evt()->nVtx,nt.evt()->isMC) << 
+// 			    " isSignalLepton(baseLeps[1])= " << isSignalLepton(m_baseLeptons.at(1),m_baseElectrons, m_baseMuons,nt.evt()->nVtx,nt.evt()->isMC) << 
+// 			     " fabs(ele0->d0Sig(true))= " << fabs(m_baseElectrons.at(0)->d0Sig(true)) << " fabs(ele0->z0SinTheta(true))= " << fabs(m_baseElectrons.at(0)->z0SinTheta(true)) << 
+// 			    " fabs(ele1->d0Sig(true))= " << fabs(m_baseElectrons.at(1)->d0Sig(true)) << " fabs(ele1->z0SinTheta(true))= " << fabs(m_baseElectrons.at(1)->z0SinTheta(true)) << 
+// 			    " el0 ptcone30/pt= " << elPtConeCorr(m_baseElectrons.at(0), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(0)->Pt() << 
+// 			    " el1 ptcone30/pt= " << elPtConeCorr(m_baseElectrons.at(1), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(1)->Pt() << 
+// 			    " el0 etcone/pt= " << elEtTopoConeCorr(m_baseElectrons.at(0), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(0)->Pt() <<     
+// 			    " el1 etcone/pt= " << elEtTopoConeCorr(m_baseElectrons.at(1), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(1)->Pt() <<     
+// 			    endl;
+
+			    
+			    cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			    float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
+			    
 			  }
 			}
 		      }
 		    }
 		  }
+		}
+	      }
+	    }
+	  }
+	}
+      }
 //------------------------------------------------------------------------------------
 //----------------------------------SR-OS-EE------------------------------------------
 //------------------------------------------------------------------------------------
@@ -749,9 +535,20 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
 			  cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-			  // 1 or 2 jets?  
-//highest sensitiviy for points in the middle area (and elsewhere): 
-// mTWW >= 140, METrel >= 50, HT >= 200, |etal0|, |etal1| <= 2.2, mT(l0,MET) >= 120, DeltaR(jj) <= 2.6, DeltaR(ll,jj) <= 2.0, DeltaEta(l,l) <= 1.9
+			  if(mu0->pt >= 30.){
+			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    cutnumber = 28.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //ZVeto
+			    float mtWW_MM = calcMt((mu0_TLV + mu1_TLV), m_met->lv());
+			  //SRSS1
+			    if(mtWW_MM >= 100.){ //100, 150, 200
+			      cutnumber = 29.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			      float HT_MM = calcHT(mu0_TLV, mu1_TLV, m_met->lv(), m_signalJets2Lep);
+			      if(HT_MM >= 200.){
+				cutnumber = 30.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+
+			      }
+			    }
+			  }
 			}
 		      }
 		    }
@@ -913,7 +710,7 @@ cutnumber = 60.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 	      if(!nt.evt()->isMC && calcFakeContribution){
 		weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
 		weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
-		cout << " " << weight_ALL_EM << endl;
+// 		cout << " " << weight_ALL_EM << endl;
 	      }
 
 //------------------------------------------------------------------------------------
@@ -1447,7 +1244,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 177525)outputfile="histos_ZN_177525_HT20_Davide.root";
     
 // if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_HT20_Davide.root";
-    if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Egamma_periodA_Davide.root";
+    if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_periodA.root";
 // if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_HT20_Davide.root";
 // outputfile = "histo_test_SusyMatrixMethodDavide.root";
 /* if(sample_identifier == 110813)outputfile="histos_cutflow_110813_HT20_Davide.root";
