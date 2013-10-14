@@ -105,6 +105,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 
   runWithPoD = false;
   
+  // only needed when running with proof on demand: recalculate sumw map. Otherwise use  susyAna->buildSumwMap(ch) in runSelector.C
   if(runWithPoD && !m_kIsData && (m_chainEntry==0 || (mcid_of_first_entry != mcid))){
 // float recalc_sumw = 0.;
 // map<unsigned int, float>::const_iterator sumwMapIter = m_sumwMap.find(mcid);
@@ -120,14 +121,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       pFileIn_sumw->Close();
     }
     
-  
-   
-
-// select objects
-//   cout << 
-//   " evt " << nt.evt()->event <<
-//   " selectObjects: " << endl;
-
   selectObjects(NtSys_NOM, false, TauID_medium);
 
   int flag = nt.evt()->cutFlags[NtSys_NOM];
@@ -332,107 +325,35 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	if(nt.evt()->isMC || (!nt.evt()->isMC && (el0->q * el1->q)>0)){ //MC: also take into account OS events by charge flip weight!
 	  cutnumber = 21.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //SS cut: applied only on weighted events
 	  cutnumber = 22.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //iso cut (muons)
-
-// 	  cout << 
-// 	    " evt " << nt.evt()->event <<
-// 	    " fabs(el0->d0Sig(true)): " << fabs(el0->d0Sig(true)) <<
-// 	    " fabs(el1->d0Sig(true)): " << fabs(el1->d0Sig(true)) << 
-// 	    endl;
-// 	  if((calcFakeContribution && !nt.evt()->isMC) || (nt.evt()->isMC && fabs(el0->d0Sig(true))<=3.0 && fabs(el1->d0Sig(true))<=3.0)){//|d0/sd0|<3 (for electron)
 	  cutnumber = 23.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-	    if(numberOfFJets(m_signalJets2Lep) == 0){
-	      weight_ALL_SS_EE *= getBTagWeight(nt.evt());
+	  if(numberOfFJets(m_signalJets2Lep) == 0){
+	    weight_ALL_SS_EE *= getBTagWeight(nt.evt());
 
-	      cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-	      if(numberOfCBJets(m_signalJets2Lep) == 0){
-		cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		if(numberOfCLJets(m_signalJets2Lep) >=1){
-		  cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+	    cutnumber = 24.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+	    if(numberOfCBJets(m_signalJets2Lep) == 0){
+	      cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+	      if(numberOfCLJets(m_signalJets2Lep) >=1){
+		cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 
-		  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+		if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
 
-		    cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
-		    cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
-		    float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
+		  cutnumber = 27.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		  if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
+		  cutnumber = 28.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE); //ZVeto
+		  float mtWW_EE = calcMt((el0_SS_TLV + el1_SS_TLV), met_SS_TLV);
 
-		    //SRSS1
-		    if(mtWW_EE >= 150.){	
-		      // cout << m_chainEntry << " EE event " << nt.evt()->event << "met_SS_TLV= " << met_SS_TLV.Et() << " met.Phi= " << met_SS_TLV.Phi() << " metRel = " << METrel_SS << " mtWW= " << mtWW_EE << endl;
-		      cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
-		      if(HT_EE >= 200.){
-			cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			if(METrel_SS>=30.){
-			  cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			  if(METrel_SS>=50.){
-			    
-
-// 			    cout << "EE event " << nt.evt()->event << /*" gen " << nt.evt()->w << " pileup " << nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw << " lepSf " << lep_SF_EE << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM) << " chargeFlipWeight " << chargeFlipWeight <<*/ " weight all " << weight_ALL_SS_EE << 
-// 			    " l0 pT= " << m_baseLeptons.at(0)->Pt() << 
-// 			    " l0 eta= " << m_baseLeptons.at(0)->Eta() << 
-// 			    " l1 pT= " << m_baseLeptons.at(1)->Pt() << 
-// 			    " l1 eta= " << m_baseLeptons.at(1)->Eta() <<  
-// 			    " METrel_SS = " << METrel_SS << 
-// 			    " isSignalLepton(baseLeps[0])= " << isSignalLepton(m_baseLeptons.at(0),m_baseElectrons, m_baseMuons,nt.evt()->nVtx,nt.evt()->isMC) << 
-// 			    " isSignalLepton(baseLeps[1])= " << isSignalLepton(m_baseLeptons.at(1),m_baseElectrons, m_baseMuons,nt.evt()->nVtx,nt.evt()->isMC) << 
-// 			     " fabs(ele0->d0Sig(true))= " << fabs(m_baseElectrons.at(0)->d0Sig(true)) << " fabs(ele0->z0SinTheta(true))= " << fabs(m_baseElectrons.at(0)->z0SinTheta(true)) << 
-// 			    " fabs(ele1->d0Sig(true))= " << fabs(m_baseElectrons.at(1)->d0Sig(true)) << " fabs(ele1->z0SinTheta(true))= " << fabs(m_baseElectrons.at(1)->z0SinTheta(true)) << 
-// 			    " el0 ptcone30/pt= " << elPtConeCorr(m_baseElectrons.at(0), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(0)->Pt() << 
-// 			    " el1 ptcone30/pt= " << elPtConeCorr(m_baseElectrons.at(1), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(1)->Pt() << 
-// 			    " el0 etcone/pt= " << elEtTopoConeCorr(m_baseElectrons.at(0), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(0)->Pt() <<     
-// 			    " el1 etcone/pt= " << elEtTopoConeCorr(m_baseElectrons.at(1), m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false)/m_baseElectrons.at(1)->Pt() <<     
-// 			    endl;
-
-			    
-			    cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			    float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
-			    
-			  }
-			}
-		      }
-		    }
-		  }
-		}
-	      }
-	    }
-	  }
-// 	}
-      }
-//------------------------------------------------------------------------------------
-//----------------------------------SR-OS-EE------------------------------------------
-//------------------------------------------------------------------------------------
-      if((el0->q * el1->q)<0){
-	cutnumber = 50.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-	cutnumber = 51.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-	if(numberOfFJets(m_signalJets2Lep) == 0){
-	  weight_ALL_EE *= getBTagWeight(nt.evt());
-	  cutnumber = 52.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-	  if(numberOfCBJets(m_signalJets2Lep) == 0){
-	    cutnumber = 53.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-	    if(numberOfCLJets(m_signalJets2Lep) >=2){
-	      cutnumber = 54.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-	      TLorentzVector signalJet0_TLV, signalJet1_TLV;
-	      signalJet0_TLV.SetPtEtaPhiE(jet0->pt, jet0->eta, jet0->phi, jet0->pt*cosh(jet0->eta));
-	      signalJet1_TLV.SetPtEtaPhiE(jet1->pt, jet1->eta, jet1->phi, jet1->pt*cosh(jet1->eta));
-	      mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
-	      if(mjj >= 50. && mjj <= 100.){
-		cutnumber = 55.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-		if(el0_TLV.Pt() >= 30 && el1_TLV.Pt() >= 30){
-		  cutnumber = 56.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-		  float DeltaRee = fabs(el0_TLV.DeltaR(el1_TLV));
-		  if(DeltaRee<=1.5){
-		    cutnumber = 57.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-		    float mTemin = (Mt(el0, m_met) > Mt(el1, m_met)) ? Mt(el1, m_met) : Mt(el0, m_met);
-		    if(mTemin >= 60.){
-		      cutnumber = 58.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-		      float DeltaPhiMETee = fabs((el0_TLV + el1_TLV).DeltaPhi(m_met->lv()));
-		      if(DeltaPhiMETee>=1.5){
-			cutnumber = 59.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-			if(m_met->lv().Pt() >= 80.){
-			  mZTT_coll = calcMZTauTau_coll(el0_SS_TLV, el1_SS_TLV, met_SS_TLV);
-			  mZTT_mmc = calcMZTauTau_mmc(el0_SS_TLV, el1_SS_TLV, 0, 0);
-			  cutnumber = 60.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+		  //SRSS1
+		  if(mtWW_EE >= 150.){	
+		    cutnumber = 29.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		    float HT_EE = calcHT(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_signalJets2Lep);
+		    if(HT_EE >= 200.){
+		      cutnumber = 30.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		      if(METrel_SS>=30.){
+			cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			if(METrel_SS>=50.){			    
+			  cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+			  float mt2 = calcMT2(met_SS_TLV, el0_SS_TLV, el1_SS_TLV);
+			  
 			}
 		      }
 		    }
@@ -443,10 +364,52 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	  }
 	}
       }
-
-  }
-}
-}
+	      //----------------------------------SR-OS-EE------------------------------------------
+	      //------------------------------------------------------------------------------------
+	      if((el0->q * el1->q)<0){
+		cutnumber = 50.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+		cutnumber = 51.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+		if(numberOfFJets(m_signalJets2Lep) == 0){
+		  weight_ALL_EE *= getBTagWeight(nt.evt());
+		  cutnumber = 52.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+		  if(numberOfCBJets(m_signalJets2Lep) == 0){
+		    cutnumber = 53.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+		    if(numberOfCLJets(m_signalJets2Lep) >=2){
+		      cutnumber = 54.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+		      TLorentzVector signalJet0_TLV, signalJet1_TLV;
+		      signalJet0_TLV.SetPtEtaPhiE(jet0->pt, jet0->eta, jet0->phi, jet0->pt*cosh(jet0->eta));
+		      signalJet1_TLV.SetPtEtaPhiE(jet1->pt, jet1->eta, jet1->phi, jet1->pt*cosh(jet1->eta));
+		      mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
+		      if(mjj >= 50. && mjj <= 100.){
+			cutnumber = 55.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+			if(el0_TLV.Pt() >= 30 && el1_TLV.Pt() >= 30){
+			  cutnumber = 56.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+			  float DeltaRee = fabs(el0_TLV.DeltaR(el1_TLV));
+			  if(DeltaRee<=1.5){
+			    cutnumber = 57.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+			    float mTemin = (Mt(el0, m_met) > Mt(el1, m_met)) ? Mt(el1, m_met) : Mt(el0, m_met);
+			    if(mTemin >= 60.){
+			      cutnumber = 58.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+			      float DeltaPhiMETee = fabs((el0_TLV + el1_TLV).DeltaPhi(m_met->lv()));
+			      if(DeltaPhiMETee>=1.5){
+				cutnumber = 59.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+				if(m_met->lv().Pt() >= 80.){
+				  mZTT_coll = calcMZTauTau_coll(el0_SS_TLV, el1_SS_TLV, met_SS_TLV);
+				  mZTT_mmc = calcMZTauTau_mmc(el0_SS_TLV, el1_SS_TLV, 0, 0);
+				  cutnumber = 60.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
+				}
+			      }
+			    }
+			  }
+			}
+		      }
+		    }
+		  }
+		}
+	      }
+	    }
+	  }
+	}
       }
     }
   
@@ -522,8 +485,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 //------------------------------------------------------------------------------------
 		if(mu0->q*mu1->q>0){
 		  cutnumber = 21.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //SS cut: for MM applied only on SS events.
-		  //
-// 		  if((calcFakeContribution && !nt.evt()->isMC) || (nt.evt()->isMC && muEtConeCorr(mu0, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu0->pt < 0.1 && muEtConeCorr(mu1, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu1->pt < 0.1)){
 		    cutnumber = 22.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 		    cutnumber = 23.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 		    if(numberOfFJets(m_signalJets2Lep) == 0){
@@ -551,58 +512,57 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			}
 		      }
 		    }
-// 		  }
 		}
-//------------------------------------------------------------------------------------
-//----------------------------------SR-OS-MM------------------------------------------
-//------------------------------------------------------------------------------------
-if((mu0->q * mu1->q)<0){
-cutnumber = 50.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-if(muEtConeCorr(mu0, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu0->pt < 0.1 && muEtConeCorr(mu1, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu1->pt < 0.1){
-cutnumber = 51.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-if(numberOfFJets(m_signalJets2Lep) == 0){
-weight_ALL_MM *= getBTagWeight(nt.evt());
-cutnumber = 52.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-if(numberOfCBJets(m_signalJets2Lep) == 0){
-cutnumber = 53.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-if(numberOfCLJets(m_signalJets2Lep) >=2){
-cutnumber = 54.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-TLorentzVector signalJet0_TLV, signalJet1_TLV;
-signalJet0_TLV.SetPtEtaPhiE(jet0->pt, jet0->eta, jet0->phi, jet0->pt*cosh(jet0->eta));
-signalJet1_TLV.SetPtEtaPhiE(jet1->pt, jet1->eta, jet1->phi, jet1->pt*cosh(jet1->eta));
-mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
-if(mjj >= 50. && mjj <= 100.){
-cutnumber = 55.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-if(mu0_TLV.Pt() >= 30 && mu1_TLV.Pt() >= 30){
-cutnumber = 56.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-float DeltaRmm = fabs(mu0_TLV.DeltaR(mu1_TLV));
-if(DeltaRmm<1.5){
-cutnumber = 57.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-float mTmmin = (Mt(mu0, m_met) > Mt(mu1, m_met)) ? Mt(mu1, m_met) : Mt(mu0, m_met);
-if(mTmmin >= 60.){	
-cutnumber = 58.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-float DeltaPhiMETmm = fabs((mu0_TLV + mu1_TLV).DeltaPhi(m_met->lv()));
-if(DeltaPhiMETmm>=1.5){
-cutnumber = 59.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-if(m_met->lv().Pt() >= 80.){
-mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, m_met->lv());
-mZTT_mmc = calcMZTauTau_mmc(mu0_TLV, mu1_TLV, 1, 1);
-cutnumber = 60.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
+		//------------------------------------------------------------------------------------
+		//----------------------------------SR-OS-MM------------------------------------------
+		//------------------------------------------------------------------------------------
+		if((mu0->q * mu1->q)<0){
+		  cutnumber = 50.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+		  if(muEtConeCorr(mu0, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu0->pt < 0.1 && muEtConeCorr(mu1, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu1->pt < 0.1){
+		    cutnumber = 51.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+		    if(numberOfFJets(m_signalJets2Lep) == 0){
+		      weight_ALL_MM *= getBTagWeight(nt.evt());
+		      cutnumber = 52.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+		      if(numberOfCBJets(m_signalJets2Lep) == 0){
+			cutnumber = 53.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+			if(numberOfCLJets(m_signalJets2Lep) >=2){  
+			  cutnumber = 54.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+			  TLorentzVector signalJet0_TLV, signalJet1_TLV;
+			  signalJet0_TLV.SetPtEtaPhiE(jet0->pt, jet0->eta, jet0->phi, jet0->pt*cosh(jet0->eta));
+			  signalJet1_TLV.SetPtEtaPhiE(jet1->pt, jet1->eta, jet1->phi, jet1->pt*cosh(jet1->eta));
+			  mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
+			  if(mjj >= 50. && mjj <= 100.){
+			    cutnumber = 55.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+			    if(mu0_TLV.Pt() >= 30 && mu1_TLV.Pt() >= 30){
+			      cutnumber = 56.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+			      float DeltaRmm = fabs(mu0_TLV.DeltaR(mu1_TLV));
+			      if(DeltaRmm<1.5){
+				cutnumber = 57.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+				float mTmmin = (Mt(mu0, m_met) > Mt(mu1, m_met)) ? Mt(mu1, m_met) : Mt(mu0, m_met);
+				if(mTmmin >= 60.){			  
+				  cutnumber = 58.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+				  float DeltaPhiMETmm = fabs((mu0_TLV + mu1_TLV).DeltaPhi(m_met->lv()));
+				  if(DeltaPhiMETmm>=1.5){
+				    cutnumber = 59.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+				    if(m_met->lv().Pt() >= 80.){
+				      mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, m_met->lv());
+				      mZTT_mmc = calcMZTauTau_mmc(mu0_TLV, mu1_TLV, 1, 1);
+				      cutnumber = 60.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
+				    }
+				  }
+				}
+			      }
+			    }
+			  }
+			}
+		      }
+		    }
+		  }
+		}
+	      }
+	    }
+	  }
+	}
       }
     }
   }
@@ -717,36 +677,76 @@ cutnumber = 60.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 //------------------------------------------------------------------------------------
 	      if(nt.evt()->isMC || (!nt.evt()->isMC && (el->q*mu->q)>0)){
 		cutnumber = 21.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //SS cut: applied only on weighted events
-
-// 		if((calcFakeContribution && !nt.evt()->isMC) || (nt.evt()->isMC && muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1)){
-		  cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-// 		  if((calcFakeContribution && !nt.evt()->isMC) || (nt.evt()->isMC && fabs(el->d0Sig(true))<=3.0)){//|d0/sd0|<3 (for electron)
-		    cutnumber = 23.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		cutnumber = 23.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		if(numberOfFJets(m_signalJets2Lep) == 0){
+		weight_ALL_SS_EM *= getBTagWeight(nt.evt());
+		cutnumber = 24.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		if(numberOfCBJets(m_signalJets2Lep) == 0){
+		  cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		  if(numberOfCLJets(m_signalJets2Lep) >=1){
+		  cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		  float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
+		  if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+		    cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		    cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
+		    
+		    //SRSS1
+		    if(mTWW_EM >= 140.){
+		      cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		      float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
+		      if(HT_EM >= 200.){
+			cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			if(METrel_SS>=30.){
+			  cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			}
+			if(METrel_SS>=50.){
+			  cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			}
+		      }
+		    }
+		  }
+		}
+	      }
+	    }
+	  }
+		//------------------------------------------------------------------------------------
+		//----------------------------------SR-OS1-EM------------------------------------------
+		//------------------------------------------------------------------------------------
+		mZTT_mmc = calcMZTauTau_mmc(el_SS_TLV, mu_TLV, 0, 1);
+		if((el->q * mu->q)<0){
+		  cutnumber = 50.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+		  if(muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1/* && fabs(el->d0Sig(true))<=3.0*/){//|d0/sd0|<3   (for electron)
+		    cutnumber = 51.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
 		    if(numberOfFJets(m_signalJets2Lep) == 0){
-		    weight_ALL_SS_EM *= getBTagWeight(nt.evt());
-// 		    cout << "EM event " << nt.evt()->event << " gen " << nt.evt()->w << " pileup " << nt.evt()->wPileup << " norm " << nt.evt()->xsec * LUMI_A_L / nt.evt()->sumw << " lepSf " << lep_SF_EM << " btag " << getBTagWeight(nt.evt()) << " trigger " << m_trigObjWithoutRU->getTriggerWeight(leptons, nt.evt()->isMC, 0., 0, nt.evt()->nVtx, NtSys_NOM) << " chargeFlipWeight " << chargeFlipWeight << " all " << weight_ALL_SS_EM << endl;
-		    cutnumber = 24.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		    if(numberOfCBJets(m_signalJets2Lep) == 0){
-		      cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		      if(numberOfCLJets(m_signalJets2Lep) >=1){
-		      cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		      float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
-		      if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
-			cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
-			// float mtWW_EM = calcMt((mu_TLV + el_SS_TLV), met_SS_TLV);
-			//SRSS1
-			if(mTWW_EM >= 140.){
-			  // cout << m_chainEntry << " EM event " << nt.evt()->event << "met_SS_TLV= " << met_SS_TLV.Et() << " met.Phi= " << met_SS_TLV.Phi() << " metRel = " << METrel_SS << " mtWW= " << mTWW_EM << endl;
-			  cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			  float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
-			  if(HT_EM >= 200.){
-			    cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			    if(METrel_SS>=30.){
-			      cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			    }
-			    if(METrel_SS>=50.){
-			      cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		      weight_ALL_EM *= getBTagWeight(nt.evt());
+		      cutnumber = 52.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+		      if(numberOfCBJets(m_signalJets2Lep) == 0){
+			cutnumber = 53.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+			if(numberOfCLJets(m_signalJets2Lep) >=2){
+			  cutnumber = 54.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+			  mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
+			  if(mjj >= 50. && mjj <= 100.){
+			    cutnumber = 55.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+			    if(el_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_TLV.Pt()>mu_TLV.Pt() && el_TLV.Pt() >= 30.) || (el_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+			      cutnumber = 56.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+			      float DeltaRem = fabs(el_TLV.DeltaR(mu_TLV));
+			      if(DeltaRem<=1.5){
+				cutnumber = 57.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+				float mTemmin = (Mt(el, m_met) > Mt(mu, m_met)) ? Mt(mu, m_met) : Mt(el, m_met);
+				if(mTemmin >= 60.){
+				cutnumber = 58.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+				float DeltaPhiMETem = fabs((el_TLV + mu_TLV).DeltaPhi(m_met->lv()));
+				if(DeltaPhiMETem>=1.5){
+				  cutnumber = 59.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
+				  if(m_met->lv().Pt() >= 80.){
+				    mZTT_coll = calcMZTauTau_coll(el_SS_TLV, mu_TLV, met_SS_TLV);
+// 				    mZTT_mmc = calcMZTauTau_mmc(el_SS_TLV, mu_TLV, 0, 1);
+				    cutnumber = 60.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);	      
+				    }
+				  }
+				}
+			      }
 			    }
 			  }
 			}
@@ -754,57 +754,10 @@ cutnumber = 60.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 		    }
 		  }
 		}
-// 	      }
-// 	    }
+	      }
+	    }
 	  }
-//------------------------------------------------------------------------------------
-//----------------------------------SR-OS1-EM------------------------------------------
-//------------------------------------------------------------------------------------
-mZTT_mmc = calcMZTauTau_mmc(el_SS_TLV, mu_TLV, 0, 1);
-if((el->q * mu->q)<0){
-cutnumber = 50.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-if(muEtConeCorr(mu, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC)/mu->pt < 0.1/* && fabs(el->d0Sig(true))<=3.0*/){//|d0/sd0|<3 (for electron)
-cutnumber = 51.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-if(numberOfFJets(m_signalJets2Lep) == 0){
-weight_ALL_EM *= getBTagWeight(nt.evt());
-cutnumber = 52.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-if(numberOfCBJets(m_signalJets2Lep) == 0){
-cutnumber = 53.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-if(numberOfCLJets(m_signalJets2Lep) >=2){
-cutnumber = 54.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
-if(mjj >= 50. && mjj <= 100.){
-cutnumber = 55.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-if(el_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_TLV.Pt()>mu_TLV.Pt() && el_TLV.Pt() >= 30.) || (el_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
-cutnumber = 56.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-float DeltaRem = fabs(el_TLV.DeltaR(mu_TLV));
-if(DeltaRem<=1.5){
-cutnumber = 57.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-float mTemmin = (Mt(el, m_met) > Mt(mu, m_met)) ? Mt(mu, m_met) : Mt(el, m_met);
-if(mTemmin >= 60.){
-cutnumber = 58.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-float DeltaPhiMETem = fabs((el_TLV + mu_TLV).DeltaPhi(m_met->lv()));
-if(DeltaPhiMETem>=1.5){
-cutnumber = 59.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);
-if(m_met->lv().Pt() >= 80.){
-mZTT_coll = calcMZTauTau_coll(el_SS_TLV, mu_TLV, met_SS_TLV);
-// mZTT_mmc = calcMZTauTau_mmc(el_SS_TLV, mu_TLV, 0, 1);
-cutnumber = 60.; fillHistos_EM_SROS1(cutnumber, mcid, weight_ALL_EM);	
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
+	}
       }
     }
   }
@@ -1142,13 +1095,13 @@ float TSelector_SusyNtuple::getFakeWeight(const LeptonVector &baseLeps,
 
 }
 /*--------------------------------------------------------------------------------*/
-const Jet* TSelector_SusyNtuple::getClosestJet(const Lepton* lep)
+const Jet* TSelector_SusyNtuple::getClosestJet(const Lepton* lep, const JetVector &jets)
 {
   const Jet* closestJet_el0;
   float mindR=999;
   float mindPhiJMet=999;
-  for(uint j=0; j<m_signalJets2Lep.size(); j++){
-    const Jet* cj = m_signalJets2Lep.at(j);
+  for(uint j=0; j<jets.size(); j++){
+    const Jet* cj = jets.at(j);
     float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
     if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
     if(lep->DeltaR(*cj)>mindR) continue;
@@ -1219,31 +1172,41 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 126988)outputfile="histos_ZN_WW_HT20_Davide.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_HT20_Davide.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_HT20_Davide.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_ZV_HT20_Davide.root";
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_HT20_Davide.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WW_version7.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_version7.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WZ_version7.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_ZZ_version7.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_version7_DeltaRClosestJet06.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_version7.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_version7.root";
+    
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_HT20_Davide.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_HT20_Davide.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_HT20_Davide.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_HT20_Davide.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_HT20_Davide.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_HT20_Davide.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_HT20_Davide.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_HT20_Davide.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_HT20_Davide.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_HT20_Davide.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_HT20_Davide.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_HT20_Davide.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_HT20_Davide.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_HT20_Davide.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_HT20_Davide.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_version7.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_version7.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_version7.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_version7.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_version7.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_version7.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_version7.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_version7.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_version7.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_version7.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_version7.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_version7.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_version7.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_version7.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_version7.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_version7.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_version7.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_version7.root";
+    
+    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_version7_2.root";
+
+
     
 // if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_HT20_Davide.root";
-    if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_periodA.root";
+//     if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_periodA.root";
 // if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_HT20_Davide.root";
 // outputfile = "histo_test_SusyMatrixMethodDavide.root";
 /* if(sample_identifier == 110813)outputfile="histos_cutflow_110813_HT20_Davide.root";

@@ -74,7 +74,7 @@ void run_root_TSelector_SusyNtuple_Egamma() {
     
       cout<<"Have you set up RootCore via  \"source RootCore/scripts/setup.sh\" ?"<<endl;  
 
-      gSystem->Setenv("ROOTCOREDIR", "/data/etp/jwittkowski/analysis_SUSYTools_03_04/RootCore");
+      gSystem->Setenv("ROOTCOREDIR", "/data/etp3/jwittkow/analysis_SUSYTools_03_04/RootCore");
       gSystem->SetIncludePath("-I$ROOTCOREDIR/include/");
 
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+"); 
@@ -114,40 +114,40 @@ void run_root_TSelector_SusyNtuple_Egamma() {
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163249/*");
       
       
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130710001607/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130710001635/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163344/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163424/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163609/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163708/*");      
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163819/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163947/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164048/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130710001810/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164142/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164215/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164247/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164312/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164417/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164445/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164506/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164536/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164607/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709051000/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709211606/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164723/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164818/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164908/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164947/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165040/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709051609/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709211909/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165112/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165144/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165203/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165221/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165250/*");
-      ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165406/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130710001607/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130710001635/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163344/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163424/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163609/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163708/*");      
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163819/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708163947/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164048/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodG.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130710001810/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164142/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164215/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164247/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164312/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708164417/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164445/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164506/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164536/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164607/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709051000/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709211606/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164723/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164818/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164908/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708164947/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165040/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709051609/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130709211909/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165112/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165144/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165203/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165221/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165250/*");
+//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodL.physics_Egamma.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708165406/*");
 
 
       Long64_t nEntries = ch->GetEntries();

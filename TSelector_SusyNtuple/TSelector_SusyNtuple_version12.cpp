@@ -1615,7 +1615,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 177526)outputfile="histos_ZN_177526_version12.root";
     if(sample_identifier == 177527)outputfile="histos_ZN_177527_version12.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_version12_1.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_version12_1.root";
     
 // if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_HT20_Davide.root";
 //     if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_periodA.root";

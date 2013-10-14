@@ -11,20 +11,25 @@ bool TSelector_SusyNtuple::defineHistos(){
   cutflow_EM = new TH1F("cutflow_EM", "cutflow_EM" ,130, 0, 129);
   cutflow_EM_ALL = new TH1F("cutflow_EM_ALL", "cutflow_EM_ALL" ,130, 0, 129);  
   
-  h_D0Signif_recalc_PR_elec = new TH2F("h_D0Signif_recalc_PR_elec", "h_D0Signif_recalc_PR_elec", 8000, -40, 40, 10, -1, 9);  h_D0Signif_recalc_PR_elec->Sumw2();
-  h_D0Signif_recalc_HF_elec = new TH2F("h_D0Signif_recalc_HF_elec", "h_D0Signif_recalc_HF_elec", 8000, -40, 40, 10, -1, 9);  h_D0Signif_recalc_HF_elec->Sumw2();
-  h_D0Signif_recalc_LF_elec = new TH2F("h_D0Signif_recalc_LF_elec", "h_D0Signif_recalc_LF_elec", 8000, -40, 40, 10, -1, 9);  h_D0Signif_recalc_LF_elec->Sumw2();
-  h_D0Signif_recalc_PR_muon = new TH2F("h_D0Signif_recalc_PR_muon", "h_D0Signif_recalc_PR_muon", 8000, -40, 40, 10, -1, 9);  h_D0Signif_recalc_PR_muon->Sumw2();
-  h_D0Signif_recalc_HF_muon = new TH2F("h_D0Signif_recalc_HF_muon", "h_D0Signif_recalc_HF_muon", 8000, -40, 40, 10, -1, 9);  h_D0Signif_recalc_HF_muon->Sumw2();
-  h_D0Signif_recalc_LF_muon = new TH2F("h_D0Signif_recalc_LF_muon", "h_D0Signif_recalc_LF_muon", 8000, -40, 40, 10, -1, 9);  h_D0Signif_recalc_LF_muon->Sumw2();
+  h_D0Signif_recalc_PR_elec = new TH1F("h_D0Signif_recalc_PR_elec", "h_D0Signif_recalc_PR_elec", 8000, -40, 40);  h_D0Signif_recalc_PR_elec->Sumw2();
+  h_D0Signif_recalc_HF_elec = new TH1F("h_D0Signif_recalc_HF_elec", "h_D0Signif_recalc_HF_elec", 8000, -40, 40);  h_D0Signif_recalc_HF_elec->Sumw2();
+  h_D0Signif_recalc_LF_elec = new TH1F("h_D0Signif_recalc_LF_elec", "h_D0Signif_recalc_LF_elec", 8000, -40, 40);  h_D0Signif_recalc_LF_elec->Sumw2();
+  h_D0Signif_recalc_PR_muon = new TH1F("h_D0Signif_recalc_PR_muon", "h_D0Signif_recalc_PR_muon", 8000, -40, 40);  h_D0Signif_recalc_PR_muon->Sumw2();
+  h_D0Signif_recalc_HF_muon = new TH1F("h_D0Signif_recalc_HF_muon", "h_D0Signif_recalc_HF_muon", 8000, -40, 40);  h_D0Signif_recalc_HF_muon->Sumw2();
+  h_D0Signif_recalc_LF_muon = new TH1F("h_D0Signif_recalc_LF_muon", "h_D0Signif_recalc_LF_muon", 8000, -40, 40);  h_D0Signif_recalc_LF_muon->Sumw2();
   
   
-  h_D0_recalc_PR_elec = new TH2F("h_D0_recalc_PR_elec", "h_D0_recalc_PR_elec", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_PR_elec->Sumw2();
-  h_D0_recalc_HF_elec = new TH2F("h_D0_recalc_HF_elec", "h_D0_recalc_HF_elec", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_HF_elec->Sumw2();
-  h_D0_recalc_LF_elec = new TH2F("h_D0_recalc_LF_elec", "h_D0_recalc_LF_elec", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_LF_elec->Sumw2();
-  h_D0_recalc_PR_muon = new TH2F("h_D0_recalc_PR_muon", "h_D0_recalc_PR_muon", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_PR_muon->Sumw2();
-  h_D0_recalc_HF_muon = new TH2F("h_D0_recalc_HF_muon", "h_D0_recalc_HF_muon", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_HF_muon->Sumw2();
-  h_D0_recalc_LF_muon = new TH2F("h_D0_recalc_LF_muon", "h_D0_recalc_LF_muon", 1200, -1.5, 1.5, 10, -1, 9);  h_D0_recalc_LF_muon->Sumw2();
+  h_D0_recalc_PR_elec = new TH1F("h_D0_recalc_PR_elec", "h_D0_recalc_PR_elec", 1200, -1.5, 1.5);  h_D0_recalc_PR_elec->Sumw2();
+  h_D0_recalc_HF_elec = new TH1F("h_D0_recalc_HF_elec", "h_D0_recalc_HF_elec", 1200, -1.5, 1.5);  h_D0_recalc_HF_elec->Sumw2();
+  h_D0_recalc_LF_elec = new TH1F("h_D0_recalc_LF_elec", "h_D0_recalc_LF_elec", 1200, -1.5, 1.5);  h_D0_recalc_LF_elec->Sumw2();
+  h_D0_recalc_PR_muon = new TH1F("h_D0_recalc_PR_muon", "h_D0_recalc_PR_muon", 1200, -1.5, 1.5);  h_D0_recalc_PR_muon->Sumw2();
+  h_D0_recalc_HF_muon = new TH1F("h_D0_recalc_HF_muon", "h_D0_recalc_HF_muon", 1200, -1.5, 1.5);  h_D0_recalc_HF_muon->Sumw2();
+  h_D0_recalc_LF_muon = new TH1F("h_D0_recalc_LF_muon", "h_D0_recalc_LF_muon", 1200, -1.5, 1.5);  h_D0_recalc_LF_muon->Sumw2();
+  
+  h_jetTruthInfo_elec = new TH1F("h_jetTruthInfo_elec", "h_jetTruthInfo_elec", 16, 0, 16); h_jetTruthInfo_elec->Sumw2();
+  h_jetTruthInfo_muon = new TH1F("h_jetTruthInfo_muon", "h_jetTruthInfo_muon", 16, 0, 16); h_jetTruthInfo_muon->Sumw2();
+  
+  
 
    /*--------------------------------------------------------------------------------*/ 
   h_DeltaRLeptons_EE_SRSS1 = new TH2F("h_DeltaRLeptons_EE_SRSS1", "h_DeltaRLeptons_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRLeptons_EE_SRSS1->Sumw2();
@@ -1411,6 +1416,8 @@ bool TSelector_SusyNtuple::writeHistos(){
  h_D0_recalc_PR_muon->Write();
  h_D0_recalc_HF_muon->Write();
  h_D0_recalc_LF_muon->Write();
+ h_jetTruthInfo_elec->Write();
+ h_jetTruthInfo_muon->Write();
     
     return true;
 }
@@ -2110,6 +2117,8 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( h_D0_recalc_PR_muon);
   fOutput->Add( h_D0_recalc_HF_muon);
   fOutput->Add( h_D0_recalc_LF_muon);
+  fOutput->Add( h_jetTruthInfo_elec);
+  fOutput->Add( h_jetTruthInfo_muon);
   
   return true;
     
@@ -2188,8 +2197,8 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   }
   
   if(nSignalJets>0){
-    const Jet* closestJet_el0 = getClosestJet(leptons.at(0));	
-    const Jet* closestJet_el1 = getClosestJet(leptons.at(1));
+    const Jet* closestJet_el0 = getClosestJet(leptons.at(0), m_signalJets2Lep);	
+    const Jet* closestJet_el1 = getClosestJet(leptons.at(1), m_signalJets2Lep);
     D0_recalc_el0 = recalc_D0(unbiased, leptons.at(0), closestJet_el0);
     D0_recalc_el1 = recalc_D0(unbiased, leptons.at(1), closestJet_el1);
   }
@@ -2253,8 +2262,8 @@ bool unbiased = true;
   }
   
   if(nSignalJets>0){
-    const Jet* closestJet_mu0 = getClosestJet(leptons.at(0));	
-    const Jet* closestJet_mu1 = getClosestJet(leptons.at(1));
+    const Jet* closestJet_mu0 = getClosestJet(leptons.at(0), m_signalJets2Lep);	
+    const Jet* closestJet_mu1 = getClosestJet(leptons.at(1), m_signalJets2Lep);
     D0_recalc_mu0 = recalc_D0(unbiased, leptons.at(0), closestJet_mu0);
     D0_recalc_mu1 = recalc_D0(unbiased, leptons.at(1), closestJet_mu1);
   }
@@ -2312,8 +2321,8 @@ bool unbiased = true;
   }
   
   if(nSignalJets>0){
-    const Jet* closestJet_l0 = getClosestJet(leptons.at(0));	
-    const Jet* closestJet_l1 = getClosestJet(leptons.at(1));
+    const Jet* closestJet_l0 = getClosestJet(leptons.at(0), m_signalJets2Lep);	
+    const Jet* closestJet_l1 = getClosestJet(leptons.at(1), m_signalJets2Lep);
     D0_recalc_l0 = recalc_D0(unbiased, leptons.at(0), closestJet_l0);
     D0_recalc_l1 = recalc_D0(unbiased, leptons.at(1), closestJet_l1);
   }

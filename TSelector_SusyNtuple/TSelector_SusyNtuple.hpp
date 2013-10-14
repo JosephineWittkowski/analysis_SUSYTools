@@ -52,19 +52,22 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* cutflow_ME;
     TH1F* cutflow_ME_ALL;
     
-    TH2F* h_D0Signif_recalc_PR_elec;
-    TH2F* h_D0Signif_recalc_HF_elec;
-    TH2F* h_D0Signif_recalc_LF_elec;
-    TH2F* h_D0Signif_recalc_PR_muon;
-    TH2F* h_D0Signif_recalc_HF_muon;
-    TH2F* h_D0Signif_recalc_LF_muon;  
+    TH1F* h_D0Signif_recalc_PR_elec;
+    TH1F* h_D0Signif_recalc_HF_elec;
+    TH1F* h_D0Signif_recalc_LF_elec;
+    TH1F* h_D0Signif_recalc_PR_muon;
+    TH1F* h_D0Signif_recalc_HF_muon;
+    TH1F* h_D0Signif_recalc_LF_muon;  
     
-    TH2F* h_D0_recalc_PR_elec;
-    TH2F* h_D0_recalc_HF_elec;
-    TH2F* h_D0_recalc_LF_elec;
-    TH2F* h_D0_recalc_PR_muon;
-    TH2F* h_D0_recalc_HF_muon;
-    TH2F* h_D0_recalc_LF_muon;
+    TH1F* h_D0_recalc_PR_elec;
+    TH1F* h_D0_recalc_HF_elec;
+    TH1F* h_D0_recalc_LF_elec;
+    TH1F* h_D0_recalc_PR_muon;
+    TH1F* h_D0_recalc_HF_muon;
+    TH1F* h_D0_recalc_LF_muon;
+    
+    TH1F* h_jetTruthInfo_elec;
+    TH1F* h_jetTruthInfo_muon;
     
     TH2F* h_DeltaRLeptons_EE_SRSS1;
     TH2F* h_DeltaRLeptons_EE_SRSS2;
@@ -794,7 +797,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     float getFakeWeight(const LeptonVector &baseLeps, SusyMatrixMethod::FAKE_REGION region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
     
-    const Jet* getClosestJet(const Lepton* lep);
+    const Jet* getClosestJet(const Lepton* lep, const JetVector &jets);
     float recalc_D0(bool unbiased, const Lepton* lep, const Jet* closestJet_lep);
     float calc_D0(bool unbiased, const Lepton* lep);
 
