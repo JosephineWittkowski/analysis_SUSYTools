@@ -55,16 +55,22 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* h_D0Signif_recalc_PR_elec;
     TH1F* h_D0Signif_recalc_HF_elec;
     TH1F* h_D0Signif_recalc_LF_elec;
+    TH1F* h_D0Signif_recalc_elec;
+    
     TH1F* h_D0Signif_recalc_PR_muon;
     TH1F* h_D0Signif_recalc_HF_muon;
     TH1F* h_D0Signif_recalc_LF_muon;  
+    TH1F* h_D0Signif_recalc_muon;  
     
     TH1F* h_D0_recalc_PR_elec;
     TH1F* h_D0_recalc_HF_elec;
     TH1F* h_D0_recalc_LF_elec;
+    TH1F* h_D0_recalc_elec;
+    
     TH1F* h_D0_recalc_PR_muon;
     TH1F* h_D0_recalc_HF_muon;
     TH1F* h_D0_recalc_LF_muon;
+    TH1F* h_D0_recalc_muon;
     
     TH1F* h_jetTruthInfo_elec;
     TH1F* h_jetTruthInfo_muon;

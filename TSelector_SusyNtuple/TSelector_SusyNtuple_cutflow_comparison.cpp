@@ -52,10 +52,10 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   
   cout << "initialize chargeFlip tool" << endl;
   
-  m_chargeFlip.initialize("/data/etp/jwittkowski/analysis_SUSYTools_03_04/ChargeFlip/data/d0_chargeflip_map.root");
+  m_chargeFlip.initialize("/data/etp3/jwittkow/analysis_SUSYTools_03_04/ChargeFlip/data/d0_chargeflip_map.root");
   
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
-  m_matrix->configure("/data/etp/jwittkowski/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
+  m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
   
 }
 
@@ -114,14 +114,12 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       mcid_of_first_entry = mcid;
 // cout << "recalc_sumw= " << recalc_sumw << endl;
       
-      TFile *pFileIn_sumw = new TFile("/data/etp/jwittkowski/analysis_SUSYTools_03_04/sumw_file_mcid126892.root");
+      TFile *pFileIn_sumw = new TFile("/data/etp3/jwittkow/analysis_SUSYTools_03_04/sumw_file_mcid126892.root");
       TH1F *h_storeSumwMcid_out = (TH1F*)pFileIn_sumw->Get("h_storeSumwMcid_merged");
       sumw_from_histo = h_storeSumwMcid_out->GetBinContent(mcid+1);
       cout << "sumw_from_histo= " << sumw_from_histo << " = " << h_storeSumwMcid_out->GetBinContent(mcid+1) << endl;
       pFileIn_sumw->Close();
     }
-    
-  selectObjects(NtSys_NOM, false, TauID_medium);
 
   int flag = nt.evt()->cutFlags[NtSys_NOM];
   // charge flip background contribution in SS channels: for the e^pm e^pm and e^pm mu^pm channels, processes that are opposite-sign in truth but where one electron has undergone a “charge flip”. Contributions from WW, ttbar, Z/gamma* and single top are via charge-flip
@@ -130,6 +128,132 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   float weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
   float weight_ALL_EM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
   
+  //............................................................................................................
+  //Fill d0 histos for validation purpose:     
+// Don't cut on d0sig to plot these (I'm assuming you do looking at these plots)
+// You can also drop the iso and the dR cuts (overlap w./ jets) for the purpose of validating the var)
+
+//use baseline leptons before OR and before Mll cut.
+
+// Truth flavour of reconstructed jet(s) - only identifies b-type (5), c-type (4) , or tau-type jets (15) 
+
+  ElectronVector elecs_D0 = getPreElectrons(&nt, NtSys_NOM);
+  MuonVector muons_D0 = getPreMuons(&nt, NtSys_NOM);
+  JetVector jets_D0 = getPreJets(&nt, NtSys_NOM);
+  
+  if(nt.evt()->isMC && jets_D0.size() > 0){
+    
+    for (int ielec = 0; ielec < elecs_D0.size(); ielec ++){
+      
+      bool unbiased = true;
+      float D0_branch = 0.;
+      float D0err_branch = 0.;
+      float D0_recalc = 0.;
+      //read d0 and errd0 from ntuple (d0Sig = d0 / errD0)
+      if(unbiased){
+	D0_branch = elecs_D0.at(ielec)->d0Unbiased;
+	D0err_branch = elecs_D0.at(ielec)->errD0Unbiased;
+      }
+      else{
+	D0_branch = elecs_D0.at(ielec)->d0;
+	D0err_branch = elecs_D0.at(ielec)->errD0;
+      }
+    
+      //calc closest jet for lepton
+      const Jet* closestJet = getClosestJet(elecs_D0.at(ielec), jets_D0);	
+      //recalc sign of d0 wrt closest jet
+      D0_recalc = recalc_D0(unbiased, elecs_D0.at(ielec), closestJet);
+
+      float sD0Signif_recalc = D0_recalc / D0err_branch;
+
+      if(elecs_D0.at(ielec)->truthType == PR){  
+	h_D0Signif_recalc_PR_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
+	h_D0_recalc_PR_elec->Fill(D0_recalc, weight_ALL_EE);
+      }
+      
+      else if(elecs_D0.at(ielec)->truthType == HF){ 
+	h_D0Signif_recalc_HF_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
+	h_D0_recalc_HF_elec->Fill(D0_recalc, weight_ALL_EE);
+	h_jetTruthInfo_elec->Fill(closestJet->truthLabel, weight_ALL_EE);
+      }
+      
+      if(elecs_D0.at(ielec)->truthType == LF){ 
+	h_D0Signif_recalc_LF_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
+	h_D0_recalc_LF_elec->Fill(D0_recalc, weight_ALL_EE);
+	
+      }
+    }
+    
+    for (int imu = 0; imu < muons_D0.size(); imu ++){
+      
+      bool unbiased = true;
+      float D0_branch = 0.;
+      float D0err_branch = 0.;
+      float D0_recalc = 0.;
+      //read d0 and errd0 from ntuple (d0Sig = d0 / errD0)
+      if(unbiased){
+	D0_branch = muons_D0.at(imu)->d0Unbiased;
+	D0err_branch = muons_D0.at(imu)->errD0Unbiased;
+      }
+      else{
+	D0_branch = muons_D0.at(imu)->d0;
+	D0err_branch = muons_D0.at(imu)->errD0;
+      }
+    
+      //calc closest jet for lepton
+      const Jet* closestJet = getClosestJet(muons_D0.at(imu), jets_D0);	
+      //recalc sign of d0 wrt closest jet
+      D0_recalc = recalc_D0(unbiased, muons_D0.at(imu), closestJet);
+
+      float sD0Signif_recalc = D0_recalc / D0err_branch;
+
+      if(muons_D0.at(imu)->truthType == PR){  
+	h_D0Signif_recalc_PR_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
+	h_D0_recalc_PR_muon->Fill(D0_recalc, weight_ALL_MM);
+      }
+      
+      else if(muons_D0.at(imu)->truthType == HF){ 
+	h_D0Signif_recalc_HF_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
+	h_D0_recalc_HF_muon->Fill(D0_recalc, weight_ALL_MM);
+	h_jetTruthInfo_muon->Fill(closestJet->truthLabel, weight_ALL_MM);
+      }
+      
+      if(muons_D0.at(imu)->truthType == LF){ 
+	h_D0Signif_recalc_LF_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
+	h_D0_recalc_LF_muon->Fill(D0_recalc, weight_ALL_MM);
+	
+      }
+    }
+  }
+  
+  
+//     bool isConv = m_baseLeptons.at(ilep)->truthType == CONV;
+//     bool isqFlip = false;
+// 
+//     if(isConv){      
+//       if(m_baseLeptons.at(ilep)->isEle()){
+// 	for(int iel = 0; iel < m_baseElectrons.size(); iel ++){
+// 	  if(m_baseLeptons.at(ilep)->Pt() == m_baseElectrons.at(iel)->Pt()){
+// 	    isqFlip = m_baseElectrons.at(iel)->isChargeFlip;
+// 	    break;
+// 	  }
+// 	}
+//       }
+//     }
+//     if(isConv && !isqFlip){
+//       if(m_baseLeptons.at(ilep)->isEle()){
+// 	h_D0Signif_recalc_l0_elec->Fill(sD0Signif_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_EE);
+// 	h_D0_recalc_l0_elec->Fill(D0_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_EE);
+//       }
+//       else{
+// 	h_D0Signif_recalc_l0_muon->Fill(sD0Signif_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_MM);
+// 	h_D0_recalc_l0_muon->Fill(D0_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_MM);
+//       }
+//     }
+  //............................................................................................................
+  
+  selectObjects(NtSys_NOM, false, TauID_medium);
+    
   float cutnumber = 0.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); // all events in the sample
 
   if( !(flag & ECut_GRL) ) return false;
@@ -1098,12 +1222,9 @@ float TSelector_SusyNtuple::getFakeWeight(const LeptonVector &baseLeps,
 const Jet* TSelector_SusyNtuple::getClosestJet(const Lepton* lep, const JetVector &jets)
 {
   const Jet* closestJet_el0;
-  float mindR=999;
-  float mindPhiJMet=999;
+  float mindR=0.2;
   for(uint j=0; j<jets.size(); j++){
     const Jet* cj = jets.at(j);
-    float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-    if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
     if(lep->DeltaR(*cj)>mindR) continue;
     mindR = lep->DeltaR(*cj);
     closestJet_el0 = cj;

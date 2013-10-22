@@ -46,6 +46,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
 
 
   setSelectTaus(true);
+  setDoIP(false);
 
 
   m_trigObjWithoutRU = new DilTrigLogic("Moriond",false/*No Reweight Utils!*/);
@@ -105,6 +106,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 
   runWithPoD = false;
   
+  // only needed when running with proof on demand: recalculate sumw map. Otherwise use  susyAna->buildSumwMap(ch) in runSelector.C
   if(runWithPoD && !m_kIsData && (m_chainEntry==0 || (mcid_of_first_entry != mcid))){
 // float recalc_sumw = 0.;
 // map<unsigned int, float>::const_iterator sumwMapIter = m_sumwMap.find(mcid);
@@ -119,16 +121,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       cout << "sumw_from_histo= " << sumw_from_histo << " = " << h_storeSumwMcid_out->GetBinContent(mcid+1) << endl;
       pFileIn_sumw->Close();
     }
-    
-  
-   
-
-// select objects
-//   cout << 
-//   " evt " << nt.evt()->event <<
-//   " selectObjects: " << endl;
-
-  selectObjects(NtSys_NOM, false, TauID_medium);
 
   int flag = nt.evt()->cutFlags[NtSys_NOM];
   // charge flip background contribution in SS channels: for the e^pm e^pm and e^pm mu^pm channels, processes that are opposite-sign in truth but where one electron has undergone a “charge flip”. Contributions from WW, ttbar, Z/gamma* and single top are via charge-flip
@@ -137,6 +129,143 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   float weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
   float weight_ALL_EM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
   
+  //............................................................................................................
+  //Fill d0 histos for validation purpose:     
+// Don't cut on d0sig to plot these (I'm assuming you do looking at these plots)
+// You can also drop the iso and the dR cuts (overlap w./ jets) for the purpose of validating the var)
+
+//use tight leptons with and without impact parameter cuts
+  selectObjects(NtSys_NOM, false, TauID_medium);
+  
+// Truth flavour of reconstructed jet(s) - only identifies b-type (5), c-type (4) , or tau-type jets (15) 
+
+//   ElectronVector elecs_D0 = getPreElectrons(&nt, NtSys_NOM);
+//   MuonVector muons_D0 = getPreMuons(&nt, NtSys_NOM);
+//   JetVector jets_D0 = getPreJets(&nt, NtSys_NOM);
+  ElectronVector elecs_D0 = m_signalElectrons;
+  MuonVector muons_D0 = m_signalMuons;
+  JetVector jets_D0 = m_signalJets2Lep;
+  
+//   if(m_signalLeptons.size() == 2 && (m_signalLeptons.at(0)->q*m_signalLeptons.at(1)->q)>0.){	
+  
+    if(nt.evt()->isMC && jets_D0.size() > 0){
+      
+      for (int ielec = 0; ielec < elecs_D0.size(); ielec ++){
+	
+	bool unbiased = true;
+	float D0_branch = 0.;
+	float D0err_branch = 0.;
+	float D0_recalc = 0.;
+	//read d0 and errd0 from ntuple (d0Sig = d0 / errD0)
+	if(unbiased){
+	  D0_branch = elecs_D0.at(ielec)->d0Unbiased;
+	  D0err_branch = elecs_D0.at(ielec)->errD0Unbiased;
+	}
+	else{
+	  D0_branch = elecs_D0.at(ielec)->d0;
+	  D0err_branch = elecs_D0.at(ielec)->errD0;
+	}
+      
+	//calc closest jet for lepton
+	const Jet* closestJet = getClosestJet(elecs_D0.at(ielec), jets_D0);	
+	//recalc sign of d0 wrt closest jet
+	D0_recalc = recalc_D0(unbiased, elecs_D0.at(ielec), closestJet);
+
+	float sD0Signif_recalc = D0_recalc / D0err_branch;
+
+	if(elecs_D0.at(ielec)->truthType == PR){  
+	  h_D0Signif_recalc_PR_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
+	  h_D0_recalc_PR_elec->Fill(D0_recalc, weight_ALL_EE);
+	}
+	
+	else if(elecs_D0.at(ielec)->truthType == HF){ 
+	  h_D0Signif_recalc_HF_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
+	  h_D0_recalc_HF_elec->Fill(D0_recalc, weight_ALL_EE);
+	  h_jetTruthInfo_elec->Fill(closestJet->truthLabel, weight_ALL_EE);
+	}
+	
+	if(elecs_D0.at(ielec)->truthType == LF){ 
+	  h_D0Signif_recalc_LF_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
+	  h_D0_recalc_LF_elec->Fill(D0_recalc, weight_ALL_EE);
+	  
+	}
+	h_D0Signif_recalc_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
+	h_D0_recalc_elec->Fill(D0_recalc, weight_ALL_EE);
+      }
+      
+      for (int imu = 0; imu < muons_D0.size(); imu ++){
+	
+	bool unbiased = true;
+	float D0_branch = 0.;
+	float D0err_branch = 0.;
+	float D0_recalc = 0.;
+	//read d0 and errd0 from ntuple (d0Sig = d0 / errD0)
+	if(unbiased){
+	  D0_branch = muons_D0.at(imu)->d0Unbiased;
+	  D0err_branch = muons_D0.at(imu)->errD0Unbiased;
+	}
+	else{
+	  D0_branch = muons_D0.at(imu)->d0;
+	  D0err_branch = muons_D0.at(imu)->errD0;
+	}
+      
+	//calc closest jet for lepton
+	const Jet* closestJet = getClosestJet(muons_D0.at(imu), jets_D0);	
+	//recalc sign of d0 wrt closest jet
+	D0_recalc = recalc_D0(unbiased, muons_D0.at(imu), closestJet);
+
+	float sD0Signif_recalc = D0_recalc / D0err_branch;
+
+	if(muons_D0.at(imu)->truthType == PR){  
+	  h_D0Signif_recalc_PR_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
+	  h_D0_recalc_PR_muon->Fill(D0_recalc, weight_ALL_MM);
+	}
+	
+	else if(muons_D0.at(imu)->truthType == HF){ 
+	  h_D0Signif_recalc_HF_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
+	  h_D0_recalc_HF_muon->Fill(D0_recalc, weight_ALL_MM);
+	  h_jetTruthInfo_muon->Fill(closestJet->truthLabel, weight_ALL_MM);
+	}
+	
+	if(muons_D0.at(imu)->truthType == LF){ 
+	  h_D0Signif_recalc_LF_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
+	  h_D0_recalc_LF_muon->Fill(D0_recalc, weight_ALL_MM);
+	  
+	}
+	h_D0Signif_recalc_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
+	h_D0_recalc_muon->Fill(D0_recalc, weight_ALL_MM);
+      }
+    }
+    
+    
+  //     bool isConv = m_baseLeptons.at(ilep)->truthType == CONV;
+  //     bool isqFlip = false;
+  // 
+  //     if(isConv){      
+  //       if(m_baseLeptons.at(ilep)->isEle()){
+  // 	for(int iel = 0; iel < m_baseElectrons.size(); iel ++){
+  // 	  if(m_baseLeptons.at(ilep)->Pt() == m_baseElectrons.at(iel)->Pt()){
+  // 	    isqFlip = m_baseElectrons.at(iel)->isChargeFlip;
+  // 	    break;
+  // 	  }
+  // 	}
+  //       }
+  //     }
+  //     if(isConv && !isqFlip){
+  //       if(m_baseLeptons.at(ilep)->isEle()){
+  // 	h_D0Signif_recalc_l0_elec->Fill(sD0Signif_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_EE);
+  // 	h_D0_recalc_l0_elec->Fill(D0_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_EE);
+  //       }
+  //       else{
+  // 	h_D0Signif_recalc_l0_muon->Fill(sD0Signif_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_MM);
+  // 	h_D0_recalc_l0_muon->Fill(D0_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_MM);
+  //       }
+  //     }
+//   }
+  //............................................................................................................
+
+//   selectObjects(NtSys_NOM, false, TauID_medium);
+    
   float cutnumber = 0.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); // all events in the sample
 
   if( !(flag & ECut_GRL) ) return false;
@@ -365,261 +494,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      }
 		    }
 		  }
-//===============================================================================================================================		  
-		  
-		  
-		  // 1 or 2 jets?
-		  // 
-		  // try different cuts on lepton pT later in cutflow
-		  // 
-		  // same for mll: later
-		  // 
-		  // try mTWW with 130, 140, 150, 160, 170, 180 GeV (150 already very good value)
-		  // 
-		  // HT: not meaningful. Remove!
-		  // 
-		  // METrel >= 50 GeV important. Try higher values: 60, 70, 80 GeV
-		  // 
-		  // min(mT(l0), mT(l1)) >= 60 GeV important cut. Try higher: 70, 80, 90
-		  // 
-		  // meff >= 50 GeV is good. Try 60, 70 GeV (80 is too high)
-		  // 
-		  // forget mjj, pTjj
-		  //   
-		  // try DeltaPhi(MET, ll) <= 5.0
-		  // try DeltaPhi(ll, jj) <= 3.0, 2.8
-		  // try DeltaPhi(l0, jj) <= 3.0, 2.8
-		  // try DeltaPhi(l1, jj) <= 3.0, 2.8
-		  // 
-		  // 
-		  // 
-		  // pTll >= 50 GeV is good. Try 60, 70 GeV
-		  // 
-		  // DeltaPhi(MET, jj) <= 2.8 is good. Try also 3.0, 2.9. 2.7 ?
-		  // 
-		  // fabs(etal0), fabs(etal1) <= 2.0 is good. Try also 1.7, 1.8, 1.9, 2.1, 2.2
-		  // 
-		  // 
-		  // mT(l0, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV.
-		  // 
-		  // mT(l1, MET) >= 60 GeV is good. Try 70, 80, 90, 100 GeV.
-		  // 
-		  // mT(ll, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV
-		  // 
-		  // m(MET, ll) >= 190 GeV is good. Try 200, 210, 220, 230 GeV
-		  // 
-		  // mT2 >= 70 GeV is good. Try 40, 50 GeV.
-			      
-		    //play with cuts:
-		    // try mTWW with 130, 140, 150, 160, 170, 180 GeV (150 already very good value)
-		    if(mTWW_EE >= 130.){
-		      cutnumber = 69.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    }
-		    if(mTWW_EE >= 140.){
-		      cutnumber = 70.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    }
-		    if(mTWW_EE >= 160.){
-		      cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    }
-		    if(mTWW_EE >= 170.){
-		      cutnumber = 33.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    }
-		    if(mTWW_EE >= 180.){
-		      cutnumber = 34.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		    }			      
-		    if(mTWW_EE >= 150.){	
-		      cutnumber = 35.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      
-		    
-		    if(mTWW_EE >= 150.){	
-		      cutnumber = 36.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      // METrel >= 50 GeV important. Try higher values: 60, 70, 80 GeV
-		      if(METrelee >= 60.){
-			cutnumber = 37.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      }
-		      if(METrelee >= 70.){
-			cutnumber = 38.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      }
-		      if(METrelee >= 80.){
-			cutnumber = 39.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-		      }
-		      if(METrelee >= 50.){				
-			cutnumber = 40.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			
-			// try different cuts on lepton pT later in cutflow
-			if(ptel1>=20. && ptel1 >= 30.){
-			  cutnumber = 41.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			  // same for mll: later
-			  if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
-			    cutnumber = 42.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			    // min(mT(l0), mT(l1)) >= 60 GeV important cut. Try higher: 70, 80, 90
-			    if(mTemin>= 70.){
-			      cutnumber = 43.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			    }
-			    if(mTemin>= 80.){
-			      cutnumber = 44.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			    }
-			    if(mTemin>= 90.){
-			      cutnumber = 45.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			    }
-			    if(mTemin>= 60.){			
-			      cutnumber = 46.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      // meff >= 50 GeV is good. Try 60, 70 GeV (80 is too high)
-			      if(meff >= 60.){
-				cutnumber = 47.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(meff >= 70.){
-				cutnumber = 48.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(meff >= 50.){
-				cutnumber = 49.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				// try DeltaPhi(MET, ll) <= 5.0
-				if(DeltaPhiMETee<= 3.0){
-				  cutnumber = 50.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(DeltaPhiMETee<= 2.8){
-				  cutnumber = 51.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				// try DeltaPhi(l0, jj) <= 3.0, 2.8
-				if(DeltaPhiel0jj <= 3.0){
-				  cutnumber = 52.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(DeltaPhiel0jj <= 2.8){
-				  cutnumber = 53.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}					  
-				// try DeltaPhi(l1, jj) <= 3.0, 2.8
-				if(DeltaPhiel1jj <= 3.0){
-				  cutnumber = 54.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(DeltaPhiel1jj <= 2.8){
-				  cutnumber = 55.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}		
-// 					  pTll >= 50 GeV is good. Try 60, 70 GeV
-				if(pTee>= 60.){
-				  cutnumber = 56.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(pTee>= 70.){
-				  cutnumber = 57.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				}					  
-				if(pTee>= 50.){	
-				  cutnumber = 58.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  // DeltaPhi(MET, jj) <= 2.8 is good. Try also 3.0, 2.9. 2.7 ?
-				  if(DeltaPhiMETjj <= 3.0){
-				    cutnumber = 59.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(DeltaPhiMETjj <= 2.9){
-				    cutnumber = 60.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(DeltaPhiMETjj <= 2.7){
-				    cutnumber = 61.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				  }
-				  if(DeltaPhiMETjj <= 2.8){
-				    cutnumber = 62.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    
-				    // fabs(etal0), fabs(etal1) <= 2.0 is good. Try also 1.7, 1.8, 1.9, 2.1, 2.2					      
-				    if(fabs(eta_el0) <= 2.2 && fabs(eta_el1) <= 2.2){
-				      cutnumber = 63.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(fabs(eta_el0) <= 2.1 && fabs(eta_el1) <= 2.1){
-				      cutnumber = 64.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(fabs(eta_el0) <= 1.9 && fabs(eta_el1) <= 1.9){
-				      cutnumber = 65.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(fabs(eta_el0) <= 1.8 && fabs(eta_el1) <= 1.8){
-				      cutnumber = 66.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(fabs(eta_el0) <= 1.7 && fabs(eta_el1) <= 1.7){
-				      cutnumber = 67.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    }					      
-				    if(fabs(eta_el0) <= 2.0 && fabs(eta_el1) <= 2.0){
-				      cutnumber = 68.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				  }
-				}
-			      }
-			    }
-			    
-			    // mT(l0, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV.
-			    if(mTel0MET >= 80.){
-			      cutnumber = 30.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			    }
-			    if(mTel0MET >= 100.){
-			      cutnumber = 31.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			    }
-			    if(mTel0MET >= 110.){
-			      cutnumber = 32.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			    }
-			    if(mTel0MET >= 120.){
-			      cutnumber = 33.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			    }
-			    if(mTel0MET >= 90.){		      
-			      cutnumber = 34.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			      // mT(l1, MET) >= 60 GeV is good. Try 70, 80, 90, 100 GeV.
-			      if(mTel0MET >= 70.){	
-				cutnumber = 35.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTel0MET >= 80.){	
-				cutnumber = 36.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTel0MET >= 90.){	
-				cutnumber = 37.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTel0MET >= 100.){	
-				cutnumber = 38.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-			      }
-			      if(mTel0MET >= 60.){	
-				cutnumber = 39.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				// mT(ll, MET) >= 90 GeV is good. Try 80, 100, 110, 120 GeV
-				if(mTee>= 80.){
-				  cutnumber = 40.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(mTee>= 100.){
-				  cutnumber = 41.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(mTee>= 110.){
-				  cutnumber = 42.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(mTee>= 120.){
-				  cutnumber = 43.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				}
-				if(mTee>= 90.){
-				  cutnumber = 44.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				    // m(MET, ll) >= 190 GeV is good. Try 200, 210, 220, 230 GeV
-				    if(mMETee>= 200.){
-				      cutnumber = 45.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(mMETee>= 210.){
-				      cutnumber = 46.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(mMETee>= 220.){
-				      cutnumber = 47.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(mMETee>= 230.){
-				      cutnumber = 48.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				    }
-				    if(mMETee>= 190.){
-				      cutnumber = 49.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      // mT2 >= 70 GeV is good. Try 40, 50 GeV.
-				      if(mt2_ee>= 40.){
-					cutnumber = 50.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mt2_ee>= 50.){
-					cutnumber = 51.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				      if(mt2_ee>= 70.){
-					cutnumber = 52.; fillHistos_EE_SRSS2(cutnumber, mcid, weight_ALL_SS_EE);
-				      }
-				    }
-				}
-			      }
-			    }
-			  }
-			}
-		      }
-		    }
-		  }		  
-//===============================================================================================================================		  
 		}
 	      }
 	    }
@@ -669,7 +543,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  }
 		}
 	      }
-//================================================
 	    }
 	  }
 	}
@@ -772,125 +645,10 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      }
 			    }
 			  }
-//===============================================================================================================================		  
-			  // 1 or 2 jets?  
-			  // try ptl0, 1 >= 30 GeV, mll >= 50, 60 GeV, METrel >= 30, 100, 110, 120, 130 GeV
-			  // HT >= 160 - 250 GeV, mTWW >= 60 - 210 GeV
-			  // min(mt) >= 40 - 120 GeV, meff >= 120 GeV
-			  
-			  //eta l0, eta l1 for point in the middle
-			  //DeltaRjj, DeltaRlljj for left lower points
-			  //mT2 >= 30 - 100 GeV, pTjj >= 60 GeV, pTll >= 20, 30 GeV, 
-			  //mT(l0,MET)>= 70, ..., 180 GeV, mT(l1, MET) >= 40, ..., 130 GeV
-			  //DeltaEtall <= 3, ..., 1.5 (important)
-			  //mTll >= 80, ..., 220 GeV, mMETll >= 110, ..., 340 GeV
-			  //pTj0 >= 40, pTj1 >= 30 GeV
-			  
-			  //highest sensitiviy for points in the middle area (and elsewhere): 
-			  // mTWW >= 140, METrel >= 50, HT >= 200, |etal0|, |etal1| <= 2.2, mT(l0,MET) >= 120, DeltaR(jj) <= 2.6, DeltaR(ll,jj) <= 2.0, DeltaEta(l,l) <= 1.9
-			  if(mTWW_MM >= 140.){
-			    cutnumber = 32.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-			    if(METrelmm >= 50.){
-			      cutnumber = 33.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-				if(HT_MM >= 200.){
-				  cutnumber = 34.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-				  if(fabs(eta_mu0)<= 2.2 && fabs(eta_mu1) <= 2.2){
-				    cutnumber = 35.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-				    if(mTmu0MET >= 120.){
-				      cutnumber = 36.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-				      if(DeltaRjj <= 2.6){
-					cutnumber = 37.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-					if(DeltaRmmjj <= 2.0){
-					  cutnumber = 38.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-					  if(DeltaEtamm <= 1.9){
-					    cutnumber = 39.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);		
-					  }
-					}
-				      }
-				    }
-				  }
-				}
-			      }
-			    }
-			    
-			    
-			    if(mTWW_MM >= 140.){
-			      cutnumber = 40.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-			      if(METrelmm >= 100.){
-				cutnumber = 41.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-				if(DeltaRjj <= 2.9){
-				  cutnumber = 42.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-				  if(DeltaRmmjj <= 1.9){
-				    cutnumber = 43.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-				    if(DeltaEtamm <= 1.75){
-				      cutnumber = 44.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-				      if(mTmu1MET >= 40.){
-					cutnumber = 45.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-					if(mt2_mm >= 60.){
-					  cutnumber = 46.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-					}
-				      }
-				      if(mt2_mm >= 60.){
-					cutnumber = 47.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-				      }
-				      if(mTmmin >= 100.){
-					cutnumber = 48.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-					if(mt2_mm >= 60.){
-					  cutnumber = 49.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-					}
-				      }
-				    }
-				  }
-				}
-			      }
-			    }
-				 
-			    
-			    
-			    //middle
-			    if(mTWW_MM >= 180.){
-			      cutnumber = 40.; fillHistos_MM_SRSS2(cutnumber, mcid, weight_ALL_MM);	
-			      if(METrelmm >= 80.){
-				cutnumber = 41.; fillHistos_MM_SRSS2(cutnumber, mcid, weight_ALL_MM);	
-				if(DeltaRjj <= 2.9){
-				  cutnumber = 42.; fillHistos_MM_SRSS2(cutnumber, mcid, weight_ALL_MM);	
-				  if(DeltaEtamm <= 1.85){
-				    cutnumber = 43.; fillHistos_MM_SRSS2(cutnumber, mcid, weight_ALL_MM);	
-				    if(mTmu1MET >= 95.){
-				      cutnumber = 44.; fillHistos_MM_SRSS2(cutnumber, mcid, weight_ALL_MM);	
-				    }
-				  }
-				}
-			      }
-			    }
-				    
-				  
-			  
-			    			    
-			    //upper right
-			    if(mTWW_MM >= 180.){
-			      cutnumber = 40.; fillHistos_MM_SRSS3(cutnumber, mcid, weight_ALL_MM);		
-			      if(METrelmm >= 100.){
-				cutnumber = 41.; fillHistos_MM_SRSS3(cutnumber, mcid, weight_ALL_MM);		
-				if(mTmu1MET >= 105.){
-				  cutnumber = 42.; fillHistos_MM_SRSS3(cutnumber, mcid, weight_ALL_MM);
-				  if(DeltaRmmjj <= 4.0){
-				      cutnumber = 43.; fillHistos_MM_SRSS3(cutnumber, mcid, weight_ALL_MM);
-				      if(ptmu0 >= 50.){
-				        cutnumber = 44.; fillHistos_MM_SRSS3(cutnumber, mcid, weight_ALL_MM);
-					if(fabs(eta_mu0) <= 2.1 && fabs(eta_mu1) <= 2.1){
-					  cutnumber = 45.; fillHistos_MM_SRSS3(cutnumber, mcid, weight_ALL_MM);
-				      }
-				    }
-				  }
-				}
-			      }
-			    }    
-//===============================================================================================================================		  
-			  }
 			}
 		      }
 		    }
+		}
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-OS-MM------------------------------------------
 		//------------------------------------------------------------------------------------
@@ -937,8 +695,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    }
 		  }
 		}
-		
-//================================================
 	      }
 	    }
 	  }
@@ -1478,12 +1234,9 @@ float TSelector_SusyNtuple::getFakeWeight(const LeptonVector &baseLeps,
 const Jet* TSelector_SusyNtuple::getClosestJet(const Lepton* lep, const JetVector &jets)
 {
   const Jet* closestJet_el0;
-  float mindR=999;
-  float mindPhiJMet=999;
+  float mindR=0.8;
   for(uint j=0; j<jets.size(); j++){
     const Jet* cj = jets.at(j);
-    float dPhi = fabs(TVector2::Phi_mpi_pi(cj->phi-m_met->lv().Phi()))*TMath::RadToDeg();
-    if(dPhi<mindPhiJMet) mindPhiJMet=dPhi;
     if(lep->DeltaR(*cj)>mindR) continue;
     mindR = lep->DeltaR(*cj);
     closestJet_el0 = cj;
@@ -1552,36 +1305,39 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_version15.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_version15.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_version15.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_version15.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_version15.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_version15.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_version15.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WW_version7.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_version7.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WZ_version7.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_ZZ_version7.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_version7_DeltaRClosestJet06.root";
+    if(sample_identifier == 105200)outputfile="histos_ZN_ttbar_validate_d0_WOSSrequirement_DeltaRClosestJet08.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_version7.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_version7.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_version15.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_version15.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_version15.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_version15.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_version15.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_version15.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_version15.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_version15.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_version15.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_version15.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_version15.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_version15.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_version15.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_version15.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_version15.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_version15.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_version15.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_version15.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_version7.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_version7.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_version7.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_version7.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_version7.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_version7.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_version7.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_version7.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_version7.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_version7.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_version7.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_version7.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_version7.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_version7.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_version7.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_version7.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_version7.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_version7.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_version15_2.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_version7_2.root";
+
+
     
 // if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_HT20_Davide.root";
 //     if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_periodA.root";

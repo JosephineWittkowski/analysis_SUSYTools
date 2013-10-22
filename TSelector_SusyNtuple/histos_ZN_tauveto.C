@@ -14,17 +14,24 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_D0Signif_recalc_PR_elec = new TH1F("h_D0Signif_recalc_PR_elec", "h_D0Signif_recalc_PR_elec", 8000, -40, 40);  h_D0Signif_recalc_PR_elec->Sumw2();
   h_D0Signif_recalc_HF_elec = new TH1F("h_D0Signif_recalc_HF_elec", "h_D0Signif_recalc_HF_elec", 8000, -40, 40);  h_D0Signif_recalc_HF_elec->Sumw2();
   h_D0Signif_recalc_LF_elec = new TH1F("h_D0Signif_recalc_LF_elec", "h_D0Signif_recalc_LF_elec", 8000, -40, 40);  h_D0Signif_recalc_LF_elec->Sumw2();
+  h_D0Signif_recalc_elec = new TH1F("h_D0Signif_recalc_elec", "h_D0Signif_recalc_elec", 8000, -40, 40);  h_D0Signif_recalc_elec->Sumw2();
+  
+  
   h_D0Signif_recalc_PR_muon = new TH1F("h_D0Signif_recalc_PR_muon", "h_D0Signif_recalc_PR_muon", 8000, -40, 40);  h_D0Signif_recalc_PR_muon->Sumw2();
   h_D0Signif_recalc_HF_muon = new TH1F("h_D0Signif_recalc_HF_muon", "h_D0Signif_recalc_HF_muon", 8000, -40, 40);  h_D0Signif_recalc_HF_muon->Sumw2();
   h_D0Signif_recalc_LF_muon = new TH1F("h_D0Signif_recalc_LF_muon", "h_D0Signif_recalc_LF_muon", 8000, -40, 40);  h_D0Signif_recalc_LF_muon->Sumw2();
+  h_D0Signif_recalc_muon = new TH1F("h_D0Signif_recalc_muon", "h_D0Signif_recalc_muon", 8000, -40, 40);  h_D0Signif_recalc_muon->Sumw2();
   
   
   h_D0_recalc_PR_elec = new TH1F("h_D0_recalc_PR_elec", "h_D0_recalc_PR_elec", 1200, -1.5, 1.5);  h_D0_recalc_PR_elec->Sumw2();
   h_D0_recalc_HF_elec = new TH1F("h_D0_recalc_HF_elec", "h_D0_recalc_HF_elec", 1200, -1.5, 1.5);  h_D0_recalc_HF_elec->Sumw2();
   h_D0_recalc_LF_elec = new TH1F("h_D0_recalc_LF_elec", "h_D0_recalc_LF_elec", 1200, -1.5, 1.5);  h_D0_recalc_LF_elec->Sumw2();
+  h_D0_recalc_elec = new TH1F("h_D0_recalc_elec", "h_D0_recalc_elec", 1200, -1.5, 1.5);  h_D0_recalc_elec->Sumw2();
+  
   h_D0_recalc_PR_muon = new TH1F("h_D0_recalc_PR_muon", "h_D0_recalc_PR_muon", 1200, -1.5, 1.5);  h_D0_recalc_PR_muon->Sumw2();
   h_D0_recalc_HF_muon = new TH1F("h_D0_recalc_HF_muon", "h_D0_recalc_HF_muon", 1200, -1.5, 1.5);  h_D0_recalc_HF_muon->Sumw2();
   h_D0_recalc_LF_muon = new TH1F("h_D0_recalc_LF_muon", "h_D0_recalc_LF_muon", 1200, -1.5, 1.5);  h_D0_recalc_LF_muon->Sumw2();
+  h_D0_recalc_muon = new TH1F("h_D0_recalc_muon", "h_D0_recalc_muon", 1200, -1.5, 1.5);  h_D0_recalc_muon->Sumw2();
   
   h_jetTruthInfo_elec = new TH1F("h_jetTruthInfo_elec", "h_jetTruthInfo_elec", 16, 0, 16); h_jetTruthInfo_elec->Sumw2();
   h_jetTruthInfo_muon = new TH1F("h_jetTruthInfo_muon", "h_jetTruthInfo_muon", 16, 0, 16); h_jetTruthInfo_muon->Sumw2();
@@ -1405,17 +1412,24 @@ bool TSelector_SusyNtuple::writeHistos(){
  h_D0Signif_recalc_PR_elec->Write();
  h_D0Signif_recalc_HF_elec->Write();
  h_D0Signif_recalc_LF_elec->Write();
+ h_D0Signif_recalc_elec->Write();
+ 
  h_D0Signif_recalc_PR_muon->Write();
  h_D0Signif_recalc_HF_muon->Write();
  h_D0Signif_recalc_LF_muon->Write();
+ h_D0Signif_recalc_muon->Write();
  
  
  h_D0_recalc_PR_elec->Write();
  h_D0_recalc_HF_elec->Write();
  h_D0_recalc_LF_elec->Write();
+ h_D0_recalc_elec->Write();
+ 
  h_D0_recalc_PR_muon->Write();
  h_D0_recalc_HF_muon->Write();
  h_D0_recalc_LF_muon->Write();
+ h_D0_recalc_muon->Write();
+ 
  h_jetTruthInfo_elec->Write();
  h_jetTruthInfo_muon->Write();
     
@@ -2105,18 +2119,25 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( h_D0Signif_recalc_PR_elec);
   fOutput->Add( h_D0Signif_recalc_HF_elec);
   fOutput->Add( h_D0Signif_recalc_LF_elec);
+  fOutput->Add( h_D0Signif_recalc_elec);
+  
   fOutput->Add( h_D0Signif_recalc_PR_muon);
   fOutput->Add( h_D0Signif_recalc_HF_muon);
   fOutput->Add( h_D0Signif_recalc_LF_muon);
+  fOutput->Add( h_D0Signif_recalc_muon);
  
   
   
   fOutput->Add( h_D0_recalc_PR_elec);
   fOutput->Add( h_D0_recalc_HF_elec);
   fOutput->Add( h_D0_recalc_LF_elec);
+  fOutput->Add( h_D0_recalc_elec);
+  
   fOutput->Add( h_D0_recalc_PR_muon);
   fOutput->Add( h_D0_recalc_HF_muon);
   fOutput->Add( h_D0_recalc_LF_muon);
+  fOutput->Add( h_D0_recalc_muon);
+  
   fOutput->Add( h_jetTruthInfo_elec);
   fOutput->Add( h_jetTruthInfo_muon);
   
