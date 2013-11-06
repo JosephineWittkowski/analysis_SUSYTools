@@ -42,12 +42,9 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   m_susyObj.initialize(nt.evt()->isMC);
 
   SusyNtAna::Begin(0);
-//   setAnaType(Ana_2LepWH);
-
 
   setSelectTaus(true);
-  setDoIP(false);
-
+  setDoIP(true);
 
   m_trigObjWithoutRU = new DilTrigLogic("Moriond",false/*No Reweight Utils!*/);
   
@@ -106,14 +103,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 
   runWithPoD = false;
   
-  // only needed when running with proof on demand: recalculate sumw map. Otherwise use  susyAna->buildSumwMap(ch) in runSelector.C
+ //needed only when running with Proof on Demand (calling buildSumwMap() method in runSelector not working when parallel processing) :
   if(runWithPoD && !m_kIsData && (m_chainEntry==0 || (mcid_of_first_entry != mcid))){
 // float recalc_sumw = 0.;
 // map<unsigned int, float>::const_iterator sumwMapIter = m_sumwMap.find(mcid);
 // if(sumwMapIter != m_sumwMap.end()) recalc_sumw = sumwMapIter->second;
 // h_storeSumwMcid->Fill(mcid, recalc_sumw);
       mcid_of_first_entry = mcid;
-// cout << "recalc_sumw= " << recalc_sumw << endl;
       
       TFile *pFileIn_sumw = new TFile("/data/etp3/jwittkow/analysis_SUSYTools_03_04/sumw_file_mcid126892.root");
       TH1F *h_storeSumwMcid_out = (TH1F*)pFileIn_sumw->Get("h_storeSumwMcid_merged");
@@ -121,209 +117,24 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       cout << "sumw_from_histo= " << sumw_from_histo << " = " << h_storeSumwMcid_out->GetBinContent(mcid+1) << endl;
       pFileIn_sumw->Close();
     }
+ 
 
-  int flag = nt.evt()->cutFlags[NtSys_NOM];
+
   // charge flip background contribution in SS channels: for the e^pm e^pm and e^pm mu^pm channels, processes that are opposite-sign in truth but where one electron has undergone a “charge flip”. Contributions from WW, ttbar, Z/gamma* and single top are via charge-flip
   // In previous analysis, it has been observed that the charge flip rate in data is lower than that in the simulation by about 20%. Because of this disagreement, the electron charge flip rate is measured in data as a function of |eta| and combined with the smaller dependence on pT taken from simulation.
   float weight_ALL_EE = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
   float weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
   float weight_ALL_EM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) : 1.;
   
-  //............................................................................................................
-  //Fill d0 histos for validation purpose:     
-// Don't cut on d0sig to plot these (I'm assuming you do looking at these plots)
-// You can also drop the iso and the dR cuts (overlap w./ jets) for the purpose of validating the var)
-
-//use tight leptons with and without impact parameter cuts
+  //select Leptons, Jets, ... automatically with SusyNt methods:
   selectObjects(NtSys_NOM, false, TauID_medium);
+  int flag = nt.evt()->cutFlags[NtSys_NOM];  
   
-// Truth flavour of reconstructed jet(s) - only identifies b-type (5), c-type (4) , or tau-type jets (15) 
-
-//   ElectronVector elecs_D0 = getPreElectrons(&nt, NtSys_NOM);
-//   MuonVector muons_D0 = getPreMuons(&nt, NtSys_NOM);
-//   JetVector jets_D0 = getPreJets(&nt, NtSys_NOM);
-  ElectronVector elecs_D0 = m_signalElectrons;
-  MuonVector muons_D0 = m_signalMuons;
-  JetVector jets_D0 = m_signalJets2Lep;
+  //event cleaning doesn't need to be changed after agreement on cutflow:
+  if (!doEventCleaning_andFillHistos( flag, weight_ALL_EE, weight_ALL_MM, weight_ALL_EM)) return false;
   
-//   if(m_signalLeptons.size() == 2 && (m_signalLeptons.at(0)->q*m_signalLeptons.at(1)->q)>0.){	
   
-    if(nt.evt()->isMC && jets_D0.size() > 0){
-      
-      for (int ielec = 0; ielec < elecs_D0.size(); ielec ++){
-	
-	bool unbiased = true;
-	float D0_branch = 0.;
-	float D0err_branch = 0.;
-	float D0_recalc = 0.;
-	//read d0 and errd0 from ntuple (d0Sig = d0 / errD0)
-	if(unbiased){
-	  D0_branch = elecs_D0.at(ielec)->d0Unbiased;
-	  D0err_branch = elecs_D0.at(ielec)->errD0Unbiased;
-	}
-	else{
-	  D0_branch = elecs_D0.at(ielec)->d0;
-	  D0err_branch = elecs_D0.at(ielec)->errD0;
-	}
-      
-	//calc closest jet for lepton
-	const Jet* closestJet = getClosestJet(elecs_D0.at(ielec), jets_D0);	
-	//recalc sign of d0 wrt closest jet
-	D0_recalc = recalc_D0(unbiased, elecs_D0.at(ielec), closestJet);
-
-	float sD0Signif_recalc = D0_recalc / D0err_branch;
-
-	if(elecs_D0.at(ielec)->truthType == PR){  
-	  h_D0Signif_recalc_PR_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
-	  h_D0_recalc_PR_elec->Fill(D0_recalc, weight_ALL_EE);
-	}
-	
-	else if(elecs_D0.at(ielec)->truthType == HF){ 
-	  h_D0Signif_recalc_HF_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
-	  h_D0_recalc_HF_elec->Fill(D0_recalc, weight_ALL_EE);
-	  h_jetTruthInfo_elec->Fill(closestJet->truthLabel, weight_ALL_EE);
-	}
-	
-	if(elecs_D0.at(ielec)->truthType == LF){ 
-	  h_D0Signif_recalc_LF_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
-	  h_D0_recalc_LF_elec->Fill(D0_recalc, weight_ALL_EE);
-	  
-	}
-	h_D0Signif_recalc_elec->Fill(sD0Signif_recalc, weight_ALL_EE);
-	h_D0_recalc_elec->Fill(D0_recalc, weight_ALL_EE);
-      }
-      
-      for (int imu = 0; imu < muons_D0.size(); imu ++){
-	
-	bool unbiased = true;
-	float D0_branch = 0.;
-	float D0err_branch = 0.;
-	float D0_recalc = 0.;
-	//read d0 and errd0 from ntuple (d0Sig = d0 / errD0)
-	if(unbiased){
-	  D0_branch = muons_D0.at(imu)->d0Unbiased;
-	  D0err_branch = muons_D0.at(imu)->errD0Unbiased;
-	}
-	else{
-	  D0_branch = muons_D0.at(imu)->d0;
-	  D0err_branch = muons_D0.at(imu)->errD0;
-	}
-      
-	//calc closest jet for lepton
-	const Jet* closestJet = getClosestJet(muons_D0.at(imu), jets_D0);	
-	//recalc sign of d0 wrt closest jet
-	D0_recalc = recalc_D0(unbiased, muons_D0.at(imu), closestJet);
-
-	float sD0Signif_recalc = D0_recalc / D0err_branch;
-
-	if(muons_D0.at(imu)->truthType == PR){  
-	  h_D0Signif_recalc_PR_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
-	  h_D0_recalc_PR_muon->Fill(D0_recalc, weight_ALL_MM);
-	}
-	
-	else if(muons_D0.at(imu)->truthType == HF){ 
-	  h_D0Signif_recalc_HF_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
-	  h_D0_recalc_HF_muon->Fill(D0_recalc, weight_ALL_MM);
-	  h_jetTruthInfo_muon->Fill(closestJet->truthLabel, weight_ALL_MM);
-	}
-	
-	if(muons_D0.at(imu)->truthType == LF){ 
-	  h_D0Signif_recalc_LF_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
-	  h_D0_recalc_LF_muon->Fill(D0_recalc, weight_ALL_MM);
-	  
-	}
-	h_D0Signif_recalc_muon->Fill(sD0Signif_recalc, weight_ALL_MM);
-	h_D0_recalc_muon->Fill(D0_recalc, weight_ALL_MM);
-      }
-    }
-    
-    
-  //     bool isConv = m_baseLeptons.at(ilep)->truthType == CONV;
-  //     bool isqFlip = false;
-  // 
-  //     if(isConv){      
-  //       if(m_baseLeptons.at(ilep)->isEle()){
-  // 	for(int iel = 0; iel < m_baseElectrons.size(); iel ++){
-  // 	  if(m_baseLeptons.at(ilep)->Pt() == m_baseElectrons.at(iel)->Pt()){
-  // 	    isqFlip = m_baseElectrons.at(iel)->isChargeFlip;
-  // 	    break;
-  // 	  }
-  // 	}
-  //       }
-  //     }
-  //     if(isConv && !isqFlip){
-  //       if(m_baseLeptons.at(ilep)->isEle()){
-  // 	h_D0Signif_recalc_l0_elec->Fill(sD0Signif_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_EE);
-  // 	h_D0_recalc_l0_elec->Fill(D0_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_EE);
-  //       }
-  //       else{
-  // 	h_D0Signif_recalc_l0_muon->Fill(sD0Signif_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_MM);
-  // 	h_D0_recalc_l0_muon->Fill(D0_recalc, m_baseLeptons.at(ilep)->truthType, weight_ALL_MM);
-  //       }
-  //     }
-//   }
-  //............................................................................................................
-
-//   selectObjects(NtSys_NOM, false, TauID_medium);
-    
-  float cutnumber = 0.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); // all events in the sample
-
-  if( !(flag & ECut_GRL) ) return false;
-  cutnumber = 1.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //grl Cut
-
-  if( !(ECut_TileTrip & flag) ) return false;
-  cutnumber = 2.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //TileTripReader
-
-// if ( !(flag & ECut_TTC)) return false;
-  cutnumber = 3.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//IncompleteEvents Veto
-
-  if(!(ECut_LarErr & flag) || !(ECut_TileErr & flag)) return false;
-  cutnumber = 4.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //LAr/TileError
-
-// if( !(flag & ECut_HotSpot)) return false; //remove event where a jet points into hot TileCal module
-  cutnumber = 5.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //TileCalHotSpot
-
-  // remove event with VeryLooseBad jets with pT>20 GeV. No eta cut. Only consider jets which are not overlapping with electrons or taus:
-  if(hasBadJet(m_baseJets))return kFALSE;
-  cutnumber = 6.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//BadJets
-    
-  //on top of smart veto, veto event with >=1 jets before electron-jet overlap removal with pT>40 GeV, BCH_CORR_JET > 0.05, DeltaPhi(met,jet)<0.3 (Anyes)
-  JetVector prejets = getPreJets(&nt, NtSys_NOM);
-  if(!passDeadRegions(prejets, m_met, nt.evt()->run, nt.evt()->isMC)/* || !(flag & ECut_SmartVeto)*/) return false; // SusyNtTools: passDeadRegions(...)
-  cutnumber = 7.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //CaloJets
-
-  if( !(flag & ECut_GoodVtx)) return false;
-  cutnumber = 8.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//PrimaryVertex
-
-  MuonVector preMuons = getPreMuons(&nt, NtSys_NOM);
-  if( hasBadMuon(preMuons)) return false;
-  cutnumber = 9.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//BadMuons
-    
-  if(hasCosmicMuon(m_baseMuons)) return false; // !(flag & ECut_Cosmic) - no longer guarantee the event flags that are stored :-(
-  preMuons.clear();
-  cutnumber = 10.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//Cosmic Muons
-
-
-  // Sherpa WW fix, remove radiative b-quark processes that overlap with single top: already done upstream in SusyCommon SusyNtMaker
-
-  if(nt.evt()->hfor == 4) return false; //remove events where same heavy flavor final states arise in multiple samples when combining ALPGEN samples
-  cutnumber = 11.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//hfor veto
-
-  if(m_baseLeptons.size() < 2) return false;
-  cutnumber = 12.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//at least 2 base leptons
-
-  if( !(m_baseLeptons.size()==2) ) return false;
-  cutnumber = 13.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//exactly 2 base leptons
-
-
-// if(!(m_baseElectrons.size()==2 || m_baseMuons.size()==2 || (m_baseElectrons.size()+m_baseMuons.size())==2)) return false; //only count leptons where no Mll < 20 GeV. Mll < 12 GeV veto ALREADY DONE FOR SELECTING BASELINE LEPTONS in performOverlapRemoval()
-
-
-  // discard any SFOS baseline lepton pair with M_ll < 12 GeV unnecessary: already done when skimming/slimming ntuples
-  // Any lepton pairs are required to have an invariant mass, m``, above 20 GeV such that to remove low-mass dilepton resonances
-  if( Mll(m_baseLeptons[0], m_baseLeptons[1]) < 20 )return false;
-  cutnumber = 14.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//Mll
-  
+  //retrieve signal jets as base for many variables:
   Jet* jet0;
   Jet* jet1;
   TLorentzVector signalJet0_TLV, signalJet1_TLV;
@@ -339,12 +150,14 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       
     }
   }
+  
+//   from MET, calculate METrel
   bool useForwardJets = true;
   float METrel = getMetRel(m_met, m_signalLeptons, m_signalJets2Lep, useForwardJets);
   
   calcJet_variables(signalJet0_TLV, signalJet1_TLV, m_met->lv());
  
-
+  float cutnumber;
  //////////////////////////// EE //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
@@ -414,7 +227,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 
 	//make a copy of electrons and MET which will eventually be changed by ChargeFlip tool:
 	ElectronVector electrons_SS;
-	electrons_SS = electrons;
 	Electron* el0_SS;
 	Electron* el1_SS;
 	el0_SS = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(0) : electrons.at(1);
@@ -436,7 +248,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	  m_chargeFlip.setSeed(nt.evt()->event);
 	  chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
 	  chargeFlipWeight*= m_chargeFlip.overlapFrac().first;	
-
 	  //get changed MET and fill in TLorentzVector:
 	  met_SS_TLV.SetPx(met_SS_TVector2.Px());
 	  met_SS_TLV.SetPy(met_SS_TVector2.Py());	
@@ -448,6 +259,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	
 	//------------------------------------------------------------------------------------
 	calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
+	
 	//if running on data for fake bg, instead of weights (pileup, xsec, eventweight, trigger, SF, btag, ...) use fakeWeight from SusyMatrixMethod
 	float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
 	if(!nt.evt()->isMC && calcFakeContribution){
@@ -469,7 +281,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	    if(numberOfCBJets(m_signalJets2Lep) == 0){
 	      cutnumber = 25.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
 	      if(numberOfCLJets(m_signalJets2Lep) >=1){
-		cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);
+		cutnumber = 26.; fillHistos_EE_SRSS1(cutnumber, mcid, weight_ALL_SS_EE);	
 
 		if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
 
@@ -494,6 +306,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      }
 		    }
 		  }
+//===============================================================================================================================		  
+		  
+//===============================================================================================================================		  
 		}
 	      }
 	    }
@@ -543,6 +358,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  }
 		}
 	      }
+//================================================
 	    }
 	  }
 	}
@@ -576,7 +392,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       mu1_TLV.SetPtEtaPhiE(mu1->pt, mu1->eta ,mu1->phi, mu1->pt*cosh(mu1->eta));
       }
       
-// calculate fake bg contribution with m_baseMuons, don't use info about m_signalElectrons
+// calculate fake bg contribution with m_baseMuons, don't use info about m_signalMuons
     if(calcFakeContribution && m_baseMuons.size()==2 ){
       
       passMM = true;
@@ -631,6 +447,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
 			  cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
+		
 			  if(mu0->pt >= 30.){
 			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    cutnumber = 28.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //ZVeto
@@ -645,10 +462,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      }
 			    }
 			  }
+//===============================================================================================================================		  
+	
+//===============================================================================================================================		  
+			  }
 			}
 		      }
 		    }
-		}
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-OS-MM------------------------------------------
 		//------------------------------------------------------------------------------------
@@ -695,6 +515,8 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    }
 		  }
 		}
+		
+//================================================
 	      }
 	    }
 	  }
@@ -798,14 +620,12 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
 	      }
 	      float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
-// 	      cout << "weight_ALL_EM= " << weight_ALL_EM;
 	      //------------------------------------------------------------------------------------
 	      float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 	      calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
 	      if(!nt.evt()->isMC && calcFakeContribution){
 		weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
 		weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
-// 		cout << " " << weight_ALL_EM << endl;
 	      }
 
 //------------------------------------------------------------------------------------
@@ -821,26 +641,29 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		if(numberOfCBJets(m_signalJets2Lep) == 0){
 		  cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		  if(numberOfCLJets(m_signalJets2Lep) >=1){
-		  cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		  float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
-		  if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
-		    cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		    cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
-		    
-		    //SRSS1
-		    if(mTWW_EM >= 140.){
-		      cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-		      float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
-		      if(HT_EM >= 200.){
-			cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			if(METrel_SS>=30.){
-			  cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-			}
-			if(METrel_SS>=50.){
-			  cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		    cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+
+		    float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
+		    if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+		      cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+		      cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM); //ZVeto
+		      //------------------------------------------------------------------------------------
+		      //SRSS1
+		      if(mTWW_EM >= 140.){
+			cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
+			if(HT_EM >= 200.){
+			  cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			  if(METrel_SS>=30.){
+			    cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			  }
+			  if(METrel_SS>=50.){
+			    cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			  }
 			}
 		      }
-		    }
+		  //------------------------------------------------------------------------------------    
+
 		  }
 		}
 	      }
@@ -1230,38 +1053,7 @@ float TSelector_SusyNtuple::getFakeWeight(const LeptonVector &baseLeps,
   return weight;
 
 }
-/*--------------------------------------------------------------------------------*/
-const Jet* TSelector_SusyNtuple::getClosestJet(const Lepton* lep, const JetVector &jets)
-{
-  const Jet* closestJet_el0;
-  float mindR=0.8;
-  for(uint j=0; j<jets.size(); j++){
-    const Jet* cj = jets.at(j);
-    if(lep->DeltaR(*cj)>mindR) continue;
-    mindR = lep->DeltaR(*cj);
-    closestJet_el0 = cj;
-  }
-  return closestJet_el0;
-}	
 
-/*--------------------------------------------------------------------------------*/
-float TSelector_SusyNtuple::recalc_D0(bool unbiased, const Lepton* lep, const Jet* closestJet_lep)
-{
-  float d0_branch;
-  
-  if(unbiased){
-    d0_branch = lep->d0Unbiased;
-  }
-  else{
-    d0_branch = lep->d0;
-  }
-
-  float qd0 =d0_branch/fabs(d0_branch);
-  float m_sPhi = lep->phi + qd0 * TMath::Pi()/2.;
-  float dPhi_lep = m_sPhi- closestJet_lep->phi;
-  float signIP_lep = fabs(cos(dPhi_lep))/(cos(dPhi_lep)+1e-32) * fabs(d0_branch);
-  return signIP_lep;
-}
 
 /*--------------------------------------------------------------------------------*/
 float TSelector_SusyNtuple::calc_D0(bool unbiased, const Lepton* lep)
@@ -1277,6 +1069,103 @@ float TSelector_SusyNtuple::calc_D0(bool unbiased, const Lepton* lep)
   
   return d0_branch;
 }
+
+/*--------------------------------------------------------------------------------*/
+ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector el0_TLV, TLorentzVector el1_TLV)
+{
+  
+  ElectronVector elecs;
+  for(uint ie=0; ie<susyNt->ele()->size(); ie++){
+    Electron* e = & susyNt->ele()->at(ie);
+    e->setState(sys);
+    bool dontUseSoftLepton = false;
+    if(e->pt == el0_TLV.Pt() || e->pt == el1_TLV.Pt()) dontUseSoftLepton = true;
+    if(!dontUseSoftLepton) elecs.push_back(e);
+  }
+  return elecs;
+}
+
+/*--------------------------------------------------------------------------------*/
+MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV)
+{
+  MuonVector muons;
+  for(uint im=0; im<susyNt->muo()->size(); im++){
+    Muon* mu = & susyNt->muo()->at(im);
+    mu->setState(sys);
+    bool dontUseSoftLepton = false;
+//     for(uint ism = 0; ism < signal_muons.size(); ism ++){
+    if(mu->pt == mu0_TLV.Pt() || mu->pt == mu1_TLV.Pt()) dontUseSoftLepton = true;
+//     }
+    if(!dontUseSoftLepton) muons.push_back(mu);
+  }
+
+  return muons;
+}
+
+/*--------------------------------------------------------------------------------*/
+bool TSelector_SusyNtuple::doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM)
+{
+  float cutnumber = 0.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); // all events in the sample
+
+  if( !(flag & ECut_GRL) ) return false;
+  cutnumber = 1.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //grl Cut
+
+  if( !(ECut_TileTrip & flag) ) return false;
+  cutnumber = 2.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //TileTripReader
+
+// if ( !(flag & ECut_TTC)) return false;
+  cutnumber = 3.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//IncompleteEvents Veto
+
+  if(!(ECut_LarErr & flag) || !(ECut_TileErr & flag)) return false;
+  cutnumber = 4.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //LAr/TileError
+
+// if( !(flag & ECut_HotSpot)) return false; //remove event where a jet points into hot TileCal module
+  cutnumber = 5.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //TileCalHotSpot
+
+  // remove event with VeryLooseBad jets with pT>20 GeV. No eta cut. Only consider jets which are not overlapping with electrons or taus:
+  if(hasBadJet(m_baseJets))return kFALSE;
+  cutnumber = 6.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//BadJets
+    
+  //on top of smart veto, veto event with >=1 jets before electron-jet overlap removal with pT>40 GeV, BCH_CORR_JET > 0.05, DeltaPhi(met,jet)<0.3 (Anyes)
+  JetVector prejets = getPreJets(&nt, NtSys_NOM);
+  if(!passDeadRegions(prejets, m_met, nt.evt()->run, nt.evt()->isMC)/* || !(flag & ECut_SmartVeto)*/) return false; // SusyNtTools: passDeadRegions(...)
+  cutnumber = 7.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); //CaloJets
+
+  if( !(flag & ECut_GoodVtx)) return false;
+  cutnumber = 8.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//PrimaryVertex
+
+  MuonVector preMuons = getPreMuons(&nt, NtSys_NOM);
+  if( hasBadMuon(preMuons)) return false;
+  cutnumber = 9.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//BadMuons
+    
+  if(hasCosmicMuon(m_baseMuons)) return false; // !(flag & ECut_Cosmic) - no longer guarantee the event flags that are stored :-(
+  preMuons.clear();
+  cutnumber = 10.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//Cosmic Muons
+
+
+  // Sherpa WW fix, remove radiative b-quark processes that overlap with single top: already done upstream in SusyCommon SusyNtMaker
+
+  if(nt.evt()->hfor == 4) return false; //remove events where same heavy flavor final states arise in multiple samples when combining ALPGEN samples
+  cutnumber = 11.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//hfor veto
+
+  if(m_baseLeptons.size() < 2) return false;
+  cutnumber = 12.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//at least 2 base leptons
+
+  if( !(m_baseLeptons.size()==2) ) return false;
+  cutnumber = 13.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//exactly 2 base leptons
+
+
+// if(!(m_baseElectrons.size()==2 || m_baseMuons.size()==2 || (m_baseElectrons.size()+m_baseMuons.size())==2)) return false; //only count leptons where no Mll < 20 GeV. Mll < 12 GeV veto ALREADY DONE FOR SELECTING BASELINE LEPTONS in performOverlapRemoval()
+
+
+  // discard any SFOS baseline lepton pair with M_ll < 12 GeV unnecessary: already done when skimming/slimming ntuples
+  // Any lepton pairs are required to have an invariant mass, m``, above 20 GeV such that to remove low-mass dilepton resonances
+  if( Mll(m_baseLeptons[0], m_baseLeptons[1]) < 20 )return false;
+  cutnumber = 14.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM);//Mll
+  
+  return true;
+}
+
 /*--------------------------------------------------------------------------------*/
 // Debug event
 /*--------------------------------------------------------------------------------*/
@@ -1305,48 +1194,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 126988)outputfile="histos_ZN_WW_version7.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_version7.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WZ_version7.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_ZZ_version7.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_version7_DeltaRClosestJet06.root";
-    if(sample_identifier == 105200)outputfile="histos_ZN_ttbar_validate_d0_WOSSrequirement_DeltaRClosestJet08.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_version7.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_version7.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_softLeptonCheck.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_softLeptonCheck.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_softLeptonCheck.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_softLeptonCheck.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_softLeptonCheck.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_softLeptonCheck.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_softLeptonCheck.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_version7.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_version7.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_version7.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_version7.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_version7.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_version7.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_version7.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_version7.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_version7.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_version7.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_version7.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_version7.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_version7.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_version7.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_version7.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_version7.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_version7.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_version7.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_softLeptonCheck.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_softLeptonCheck.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_softLeptonCheck.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_softLeptonCheck.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_softLeptonCheck.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_softLeptonCheck.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_softLeptonCheck.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_softLeptonCheck.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_softLeptonCheck.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_softLeptonCheck.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_softLeptonCheck.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_softLeptonCheck.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_softLeptonCheck.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_softLeptonCheck.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_softLeptonCheck.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_softLeptonCheck.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_softLeptonCheck.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_softLeptonCheck.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_softLeptonCheck.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_softLeptonCheck.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_softLeptonCheck.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_softLeptonCheck.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_softLeptonCheck.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_softLeptonCheck.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_softLeptonCheck.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_softLeptonCheck.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_softLeptonCheck.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_version7_2.root";
-
-
-    
-// if(sample_identifier == 111111)outputfile="histos_ZN_Muons_fakebg_2_HT20_Davide.root";
-//     if(sample_identifier == 111111) outputfile="histos_cutflow_fake_Muons_periodA.root";
-// if(sample_identifier == 111111)outputfile="histos_ZN_Egamma_fakebg_HT20_Davide.root";
-// outputfile = "histo_test_SusyMatrixMethodDavide.root";
-/* if(sample_identifier == 110813)outputfile="histos_cutflow_110813_HT20_Davide.root";
-if(sample_identifier == 110814)outputfile="histos_cutflow_110814_HT20_Davide.root";
-if(sample_identifier == 110815)outputfile="histos_cutflow_110815_HT20_Davide.root";
-if(sample_identifier == 110816)outputfile="histos_cutflow_110816_HT20_Davide.root"*/;
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_softLeptonCheck_1.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];

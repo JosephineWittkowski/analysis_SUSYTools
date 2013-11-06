@@ -27,7 +27,7 @@
 #include "mmc/mmc.cpp"
 
 #ifndef __CINT__
-#include "ChargeFlip/ChargeFlip.h"
+#include "ChargeFlip/chargeFlip.h"
 #else
 class chargeFlip ;
 #endif
@@ -52,28 +52,67 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* cutflow_ME;
     TH1F* cutflow_ME_ALL;
     
-    TH1F* h_D0Signif_recalc_PR_elec;
-    TH1F* h_D0Signif_recalc_HF_elec;
-    TH1F* h_D0Signif_recalc_LF_elec;
-    TH1F* h_D0Signif_recalc_elec;
+    TH2F* h_ml0lsoft_EE_SRSS1;
+    TH2F* h_ml0lsoft_EE_SRSS2;
+    TH2F* h_ml0lsoft_MM_SRSS1;
+    TH2F* h_ml0lsoft_MM_SRSS2;
+    TH2F* h_ml0lsoft_MM_SRSS3;
+    TH2F* h_ml0lsoft_MM_SRSS4;
+    TH2F* h_ml0lsoft_EM_SRSS1;
+    TH2F* h_ml0lsoft_EM_SRSS2;
+    TH2F* h_ml0lsoft_EE_SROS1;
+    TH2F* h_ml0lsoft_MM_SROS1;
+    TH2F* h_ml0lsoft_EM_SROS1;
     
-    TH1F* h_D0Signif_recalc_PR_muon;
-    TH1F* h_D0Signif_recalc_HF_muon;
-    TH1F* h_D0Signif_recalc_LF_muon;  
-    TH1F* h_D0Signif_recalc_muon;  
+    TH2F* h_ml1lsoft_EE_SRSS1;
+    TH2F* h_ml1lsoft_EE_SRSS2;
+    TH2F* h_ml1lsoft_MM_SRSS1;
+    TH2F* h_ml1lsoft_MM_SRSS2;
+    TH2F* h_ml1lsoft_MM_SRSS3;
+    TH2F* h_ml1lsoft_MM_SRSS4;
+    TH2F* h_ml1lsoft_EM_SRSS1;
+    TH2F* h_ml1lsoft_EM_SRSS2;
+    TH2F* h_ml1lsoft_EE_SROS1;
+    TH2F* h_ml1lsoft_MM_SROS1;
+    TH2F* h_ml1lsoft_EM_SROS1;
     
-    TH1F* h_D0_recalc_PR_elec;
-    TH1F* h_D0_recalc_HF_elec;
-    TH1F* h_D0_recalc_LF_elec;
-    TH1F* h_D0_recalc_elec;
     
-    TH1F* h_D0_recalc_PR_muon;
-    TH1F* h_D0_recalc_HF_muon;
-    TH1F* h_D0_recalc_LF_muon;
-    TH1F* h_D0_recalc_muon;
+    TH2F* h_mTl0lsoft_EE_SRSS1;
+    TH2F* h_mTl0lsoft_EE_SRSS2;
+    TH2F* h_mTl0lsoft_MM_SRSS1;
+    TH2F* h_mTl0lsoft_MM_SRSS2;
+    TH2F* h_mTl0lsoft_MM_SRSS3;
+    TH2F* h_mTl0lsoft_MM_SRSS4;
+    TH2F* h_mTl0lsoft_EM_SRSS1;
+    TH2F* h_mTl0lsoft_EM_SRSS2;
+    TH2F* h_mTl0lsoft_EE_SROS1;
+    TH2F* h_mTl0lsoft_MM_SROS1;
+    TH2F* h_mTl0lsoft_EM_SROS1;
     
-    TH1F* h_jetTruthInfo_elec;
-    TH1F* h_jetTruthInfo_muon;
+    TH2F* h_mTl1lsoft_EE_SRSS1;
+    TH2F* h_mTl1lsoft_EE_SRSS2;
+    TH2F* h_mTl1lsoft_MM_SRSS1;    
+    TH2F* h_mTl1lsoft_MM_SRSS2;
+    TH2F* h_mTl1lsoft_MM_SRSS3;
+    TH2F* h_mTl1lsoft_MM_SRSS4;    
+    TH2F* h_mTl1lsoft_EM_SRSS1;
+    TH2F* h_mTl1lsoft_EM_SRSS2;
+    TH2F* h_mTl1lsoft_EE_SROS1;    
+    TH2F* h_mTl1lsoft_MM_SROS1;
+    TH2F* h_mTl1lsoft_EM_SROS1;
+    
+    
+    TH2F* h_Mljj_EE_SRSS1;
+    TH2F* h_Mljj_EE_SRSS2;
+    TH2F* h_Mljj_MM_SRSS1;
+    TH2F* h_Mljj_MM_SRSS2;
+    TH2F* h_Mljj_MM_SRSS3;
+    TH2F* h_Mljj_MM_SRSS4;
+    TH2F* h_Mljj_EM_SRSS1;
+    TH2F* h_Mljj_EM_SRSS2;
+    TH2F* h_Mljj_EE_SROS1;
+    TH2F* h_Mljj_MM_SROS1;
+    TH2F* h_Mljj_EM_SROS1;
     
     TH2F* h_DeltaRLeptons_EE_SRSS1;
     TH2F* h_DeltaRLeptons_EE_SRSS2;
@@ -663,32 +702,6 @@ class TSelector_SusyNtuple : public SusyNtAna
   TH2F* h_D0_branch_l1_EM_SROS1;
   
   /*--------------------------------------------------------------------------------*/ 
-  TH2F* h_D0_recalc_l0_EE_SRSS1;
-  TH2F* h_D0_recalc_l0_EE_SRSS2;
-  TH2F* h_D0_recalc_l0_MM_SRSS1;  
-  TH2F* h_D0_recalc_l0_MM_SRSS2;
-  TH2F* h_D0_recalc_l0_MM_SRSS3;
-  TH2F* h_D0_recalc_l0_MM_SRSS4;
-  TH2F* h_D0_recalc_l0_EM_SRSS1;
-  TH2F* h_D0_recalc_l0_EM_SRSS2;
-  TH2F* h_D0_recalc_l0_EE_SROS1;
-  TH2F* h_D0_recalc_l0_MM_SROS1;
-  TH2F* h_D0_recalc_l0_EM_SROS1;
-  
-  /*--------------------------------------------------------------------------------*/ 
-  TH2F* h_D0_recalc_l1_EE_SRSS1;
-  TH2F* h_D0_recalc_l1_EE_SRSS2;
-  TH2F* h_D0_recalc_l1_MM_SRSS1;  
-  TH2F* h_D0_recalc_l1_MM_SRSS2;
-  TH2F* h_D0_recalc_l1_MM_SRSS3;
-  TH2F* h_D0_recalc_l1_MM_SRSS4;
-  TH2F* h_D0_recalc_l1_EM_SRSS1;
-  TH2F* h_D0_recalc_l1_EM_SRSS2;
-  TH2F* h_D0_recalc_l1_EE_SROS1;
-  TH2F* h_D0_recalc_l1_MM_SROS1;
-  TH2F* h_D0_recalc_l1_EM_SROS1;
-  
-  /*--------------------------------------------------------------------------------*/ 
   TH2F* h_D0Signif_branch_l0_EE_SRSS1;
   TH2F* h_D0Signif_branch_l0_EE_SRSS2;
   TH2F* h_D0Signif_branch_l0_MM_SRSS1;  
@@ -714,33 +727,6 @@ class TSelector_SusyNtuple : public SusyNtAna
   TH2F* h_D0Signif_branch_l1_MM_SROS1;
   TH2F* h_D0Signif_branch_l1_EM_SROS1;
   
-  /*--------------------------------------------------------------------------------*/ 
-  TH2F* h_D0Signif_recalc_l0_EE_SRSS1;
-  TH2F* h_D0Signif_recalc_l0_EE_SRSS2;
-  TH2F* h_D0Signif_recalc_l0_MM_SRSS1;  
-  TH2F* h_D0Signif_recalc_l0_MM_SRSS2;
-  TH2F* h_D0Signif_recalc_l0_MM_SRSS3;
-  TH2F* h_D0Signif_recalc_l0_MM_SRSS4;
-  TH2F* h_D0Signif_recalc_l0_EM_SRSS1;
-  TH2F* h_D0Signif_recalc_l0_EM_SRSS2;
-  TH2F* h_D0Signif_recalc_l0_EE_SROS1;
-  TH2F* h_D0Signif_recalc_l0_MM_SROS1;
-  TH2F* h_D0Signif_recalc_l0_EM_SROS1;
-  
-  /*--------------------------------------------------------------------------------*/ 
-  TH2F* h_D0Signif_recalc_l1_EE_SRSS1;
-  TH2F* h_D0Signif_recalc_l1_EE_SRSS2;
-  TH2F* h_D0Signif_recalc_l1_MM_SRSS1;  
-  TH2F* h_D0Signif_recalc_l1_MM_SRSS2;
-  TH2F* h_D0Signif_recalc_l1_MM_SRSS3;
-  TH2F* h_D0Signif_recalc_l1_MM_SRSS4;
-  TH2F* h_D0Signif_recalc_l1_EM_SRSS1;
-  TH2F* h_D0Signif_recalc_l1_EM_SRSS2;
-  TH2F* h_D0Signif_recalc_l1_EE_SROS1;
-  TH2F* h_D0Signif_recalc_l1_MM_SROS1;
-  TH2F* h_D0Signif_recalc_l1_EM_SROS1;
-  
-
     
     SUSYObjDef m_susyObj;      // SUSY object definitions
     
@@ -803,9 +789,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     float getFakeWeight(const LeptonVector &baseLeps, SusyMatrixMethod::FAKE_REGION region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
     
-    const Jet* getClosestJet(const Lepton* lep, const JetVector &jets);
-    float recalc_D0(bool unbiased, const Lepton* lep, const Jet* closestJet_lep);
     float calc_D0(bool unbiased, const Lepton* lep);
+    ElectronVector getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector el0_TLV, TLorentzVector el1_TLV);
+    MuonVector getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV);
+    bool doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM);
 
     // Selection region
     void setSelection(std::string s) { m_sel = s; }
@@ -863,6 +850,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhiel0jj;
     float DeltaPhiel1jj;
     float DeltaReejj;
+    float Mljj_EE;
     float DeltaEtaee;
     
     float D0_branch_el0;
@@ -870,13 +858,14 @@ class TSelector_SusyNtuple : public SusyNtAna
     float D0err_branch_el0;
     float D0err_branch_el1;
     
-    float D0_recalc_el0;
-    float D0_recalc_el1;
-    
     float sD0Signif_branch_el0;
     float sD0Signif_branch_el1;
-    float sD0Signif_recalc_el0;
-    float sD0Signif_recalc_el1;
+    
+    float ml0lsoft_EE;
+    float ml1lsoft_EE;
+    float mTl0lsoft_EE;
+    float mTl1lsoft_EE;
+
     //#####################################
     
     float ptmu0;
@@ -905,6 +894,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhimu0jj;
     float DeltaPhimu1jj;
     float DeltaRmmjj;
+    float Mljj_MM;
     float DeltaEtamm;
 
     float D0_branch_mu0;
@@ -912,13 +902,13 @@ class TSelector_SusyNtuple : public SusyNtAna
     float D0err_branch_mu0;
     float D0err_branch_mu1;
     
-    float D0_recalc_mu0;
-    float D0_recalc_mu1;
-    
     float sD0Signif_branch_mu0;
     float sD0Signif_branch_mu1;
-    float sD0Signif_recalc_mu0;
-    float sD0Signif_recalc_mu1;
+    
+    float ml0lsoft_MM;
+    float ml1lsoft_MM;
+    float mTl0lsoft_MM;
+    float mTl1lsoft_MM;
     //#####################################
     
     float ptl0;
@@ -947,20 +937,21 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhil0jj;
     float DeltaPhil1jj;
     float DeltaRemjj;
+    float Mljj_EM;
     float DeltaEtaem;
 
     float D0_branch_l0;
     float D0_branch_l1;
     float D0err_branch_l0;
-    float D0err_branch_l1;
-    
-    float D0_recalc_l0;
-    float D0_recalc_l1;
+    float D0err_branch_l1;   
     
     float sD0Signif_branch_l0;
     float sD0Signif_branch_l1;
-    float sD0Signif_recalc_l0;
-    float sD0Signif_recalc_l1;
+    
+    float ml0lsoft_EM;
+    float ml1lsoft_EM;
+    float mTl0lsoft_EM;
+    float mTl1lsoft_EM;
     //#####################################
     
     ClassDef(TSelector_SusyNtuple, 1);

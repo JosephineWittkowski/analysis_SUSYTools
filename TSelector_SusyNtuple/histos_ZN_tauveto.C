@@ -11,33 +11,66 @@ bool TSelector_SusyNtuple::defineHistos(){
   cutflow_EM = new TH1F("cutflow_EM", "cutflow_EM" ,130, 0, 129);
   cutflow_EM_ALL = new TH1F("cutflow_EM_ALL", "cutflow_EM_ALL" ,130, 0, 129);  
   
-  h_D0Signif_recalc_PR_elec = new TH1F("h_D0Signif_recalc_PR_elec", "h_D0Signif_recalc_PR_elec", 8000, -40, 40);  h_D0Signif_recalc_PR_elec->Sumw2();
-  h_D0Signif_recalc_HF_elec = new TH1F("h_D0Signif_recalc_HF_elec", "h_D0Signif_recalc_HF_elec", 8000, -40, 40);  h_D0Signif_recalc_HF_elec->Sumw2();
-  h_D0Signif_recalc_LF_elec = new TH1F("h_D0Signif_recalc_LF_elec", "h_D0Signif_recalc_LF_elec", 8000, -40, 40);  h_D0Signif_recalc_LF_elec->Sumw2();
-  h_D0Signif_recalc_elec = new TH1F("h_D0Signif_recalc_elec", "h_D0Signif_recalc_elec", 8000, -40, 40);  h_D0Signif_recalc_elec->Sumw2();
+  h_ml0lsoft_EE_SRSS1 = new TH2F("h_ml0lsoft_EE_SRSS1", "h_ml0lsoft_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_EE_SRSS1->Sumw2();
+  h_ml0lsoft_EE_SRSS2 = new TH2F("h_ml0lsoft_EE_SRSS2", "h_ml0lsoft_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_EE_SRSS2->Sumw2();
+  h_ml0lsoft_MM_SRSS1 = new TH2F("h_ml0lsoft_MM_SRSS1", "h_ml0lsoft_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_MM_SRSS1->Sumw2();
+  h_ml0lsoft_MM_SRSS2 = new TH2F("h_ml0lsoft_MM_SRSS2", "h_ml0lsoft_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_MM_SRSS2->Sumw2();
+  h_ml0lsoft_MM_SRSS3 = new TH2F("h_ml0lsoft_MM_SRSS3", "h_ml0lsoft_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_MM_SRSS3->Sumw2();
+  h_ml0lsoft_MM_SRSS4 = new TH2F("h_ml0lsoft_MM_SRSS4", "h_ml0lsoft_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_MM_SRSS4->Sumw2();
+  h_ml0lsoft_EM_SRSS1 = new TH2F("h_ml0lsoft_EM_SRSS1", "h_ml0lsoft_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_EM_SRSS1->Sumw2();
+  h_ml0lsoft_EM_SRSS2 = new TH2F("h_ml0lsoft_EM_SRSS2", "h_ml0lsoft_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_EM_SRSS2->Sumw2();
+  h_ml0lsoft_EE_SROS1 = new TH2F("h_ml0lsoft_EE_SROS1", "h_ml0lsoft_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_EE_SROS1->Sumw2();
+  h_ml0lsoft_MM_SROS1 = new TH2F("h_ml0lsoft_MM_SROS1", "h_ml0lsoft_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_MM_SROS1->Sumw2();
+  h_ml0lsoft_EM_SROS1 = new TH2F("h_ml0lsoft_EM_SROS1", "h_ml0lsoft_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0lsoft_EM_SROS1->Sumw2();
+  
+  h_ml1lsoft_EE_SRSS1 = new TH2F("h_ml1lsoft_EE_SRSS1", "h_ml1lsoft_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_EE_SRSS1->Sumw2();
+  h_ml1lsoft_EE_SRSS2 = new TH2F("h_ml1lsoft_EE_SRSS2", "h_ml1lsoft_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_EE_SRSS2->Sumw2();
+  h_ml1lsoft_MM_SRSS1 = new TH2F("h_ml1lsoft_MM_SRSS1", "h_ml1lsoft_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_MM_SRSS1->Sumw2();
+  h_ml1lsoft_MM_SRSS2 = new TH2F("h_ml1lsoft_MM_SRSS2", "h_ml1lsoft_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_MM_SRSS2->Sumw2();
+  h_ml1lsoft_MM_SRSS3 = new TH2F("h_ml1lsoft_MM_SRSS3", "h_ml1lsoft_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_MM_SRSS3->Sumw2();
+  h_ml1lsoft_MM_SRSS4 = new TH2F("h_ml1lsoft_MM_SRSS4", "h_ml1lsoft_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_MM_SRSS4->Sumw2();
+  h_ml1lsoft_EM_SRSS1 = new TH2F("h_ml1lsoft_EM_SRSS1", "h_ml1lsoft_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_EM_SRSS1->Sumw2();
+  h_ml1lsoft_EM_SRSS2 = new TH2F("h_ml1lsoft_EM_SRSS2", "h_ml1lsoft_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_EM_SRSS2->Sumw2();
+  h_ml1lsoft_EE_SROS1 = new TH2F("h_ml1lsoft_EE_SROS1", "h_ml1lsoft_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_EE_SROS1->Sumw2();
+  h_ml1lsoft_MM_SROS1 = new TH2F("h_ml1lsoft_MM_SROS1", "h_ml1lsoft_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_MM_SROS1->Sumw2();
+  h_ml1lsoft_EM_SROS1 = new TH2F("h_ml1lsoft_EM_SROS1", "h_ml1lsoft_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1lsoft_EM_SROS1->Sumw2();
   
   
-  h_D0Signif_recalc_PR_muon = new TH1F("h_D0Signif_recalc_PR_muon", "h_D0Signif_recalc_PR_muon", 8000, -40, 40);  h_D0Signif_recalc_PR_muon->Sumw2();
-  h_D0Signif_recalc_HF_muon = new TH1F("h_D0Signif_recalc_HF_muon", "h_D0Signif_recalc_HF_muon", 8000, -40, 40);  h_D0Signif_recalc_HF_muon->Sumw2();
-  h_D0Signif_recalc_LF_muon = new TH1F("h_D0Signif_recalc_LF_muon", "h_D0Signif_recalc_LF_muon", 8000, -40, 40);  h_D0Signif_recalc_LF_muon->Sumw2();
-  h_D0Signif_recalc_muon = new TH1F("h_D0Signif_recalc_muon", "h_D0Signif_recalc_muon", 8000, -40, 40);  h_D0Signif_recalc_muon->Sumw2();
+  h_mTl0lsoft_EE_SRSS1 = new TH2F("h_mTl0lsoft_EE_SRSS1", "h_mTl0lsoft_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_EE_SRSS1->Sumw2();
+  h_mTl0lsoft_EE_SRSS2 = new TH2F("h_mTl0lsoft_EE_SRSS2", "h_mTl0lsoft_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_EE_SRSS2->Sumw2();
+  h_mTl0lsoft_MM_SRSS1 = new TH2F("h_mTl0lsoft_MM_SRSS1", "h_mTl0lsoft_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_MM_SRSS1->Sumw2();
+  h_mTl0lsoft_MM_SRSS2 = new TH2F("h_mTl0lsoft_MM_SRSS2", "h_mTl0lsoft_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_MM_SRSS2->Sumw2();
+  h_mTl0lsoft_MM_SRSS3 = new TH2F("h_mTl0lsoft_MM_SRSS3", "h_mTl0lsoft_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_MM_SRSS3->Sumw2();
+  h_mTl0lsoft_MM_SRSS4 = new TH2F("h_mTl0lsoft_MM_SRSS4", "h_mTl0lsoft_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_MM_SRSS4->Sumw2();
+  h_mTl0lsoft_EM_SRSS1 = new TH2F("h_mTl0lsoft_EM_SRSS1", "h_mTl0lsoft_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_EM_SRSS1->Sumw2();
+  h_mTl0lsoft_EM_SRSS2 = new TH2F("h_mTl0lsoft_EM_SRSS2", "h_mTl0lsoft_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_EM_SRSS2->Sumw2();
+  h_mTl0lsoft_EE_SROS1 = new TH2F("h_mTl0lsoft_EE_SROS1", "h_mTl0lsoft_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_EE_SROS1->Sumw2();
+  h_mTl0lsoft_MM_SROS1 = new TH2F("h_mTl0lsoft_MM_SROS1", "h_mTl0lsoft_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_MM_SROS1->Sumw2();
+  h_mTl0lsoft_EM_SROS1 = new TH2F("h_mTl0lsoft_EM_SROS1", "h_mTl0lsoft_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lsoft_EM_SROS1->Sumw2();
   
+  h_mTl1lsoft_EE_SRSS1 = new TH2F("h_mTl1lsoft_EE_SRSS1", "h_mTl1lsoft_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_EE_SRSS1->Sumw2();
+  h_mTl1lsoft_EE_SRSS2 = new TH2F("h_mTl1lsoft_EE_SRSS2", "h_mTl1lsoft_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_EE_SRSS2->Sumw2();
+  h_mTl1lsoft_MM_SRSS1 = new TH2F("h_mTl1lsoft_MM_SRSS1", "h_mTl1lsoft_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_MM_SRSS1->Sumw2(); 
+  h_mTl1lsoft_MM_SRSS2 = new TH2F("h_mTl1lsoft_MM_SRSS2", "h_mTl1lsoft_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_MM_SRSS2->Sumw2();
+  h_mTl1lsoft_MM_SRSS3 = new TH2F("h_mTl1lsoft_MM_SRSS3", "h_mTl1lsoft_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_MM_SRSS3->Sumw2();
+  h_mTl1lsoft_MM_SRSS4 = new TH2F("h_mTl1lsoft_MM_SRSS4", "h_mTl1lsoft_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_MM_SRSS4->Sumw2(); 
+  h_mTl1lsoft_EM_SRSS1 = new TH2F("h_mTl1lsoft_EM_SRSS1", "h_mTl1lsoft_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_EM_SRSS1->Sumw2();
+  h_mTl1lsoft_EM_SRSS2 = new TH2F("h_mTl1lsoft_EM_SRSS2", "h_mTl1lsoft_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_EM_SRSS2->Sumw2();
+  h_mTl1lsoft_EE_SROS1 = new TH2F("h_mTl1lsoft_EE_SROS1", "h_mTl1lsoft_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_EE_SROS1->Sumw2(); 
+  h_mTl1lsoft_MM_SROS1 = new TH2F("h_mTl1lsoft_MM_SROS1", "h_mTl1lsoft_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_MM_SROS1->Sumw2();
+  h_mTl1lsoft_EM_SROS1 = new TH2F("h_mTl1lsoft_EM_SROS1", "h_mTl1lsoft_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_EM_SROS1->Sumw2();
   
-  h_D0_recalc_PR_elec = new TH1F("h_D0_recalc_PR_elec", "h_D0_recalc_PR_elec", 1200, -1.5, 1.5);  h_D0_recalc_PR_elec->Sumw2();
-  h_D0_recalc_HF_elec = new TH1F("h_D0_recalc_HF_elec", "h_D0_recalc_HF_elec", 1200, -1.5, 1.5);  h_D0_recalc_HF_elec->Sumw2();
-  h_D0_recalc_LF_elec = new TH1F("h_D0_recalc_LF_elec", "h_D0_recalc_LF_elec", 1200, -1.5, 1.5);  h_D0_recalc_LF_elec->Sumw2();
-  h_D0_recalc_elec = new TH1F("h_D0_recalc_elec", "h_D0_recalc_elec", 1200, -1.5, 1.5);  h_D0_recalc_elec->Sumw2();
-  
-  h_D0_recalc_PR_muon = new TH1F("h_D0_recalc_PR_muon", "h_D0_recalc_PR_muon", 1200, -1.5, 1.5);  h_D0_recalc_PR_muon->Sumw2();
-  h_D0_recalc_HF_muon = new TH1F("h_D0_recalc_HF_muon", "h_D0_recalc_HF_muon", 1200, -1.5, 1.5);  h_D0_recalc_HF_muon->Sumw2();
-  h_D0_recalc_LF_muon = new TH1F("h_D0_recalc_LF_muon", "h_D0_recalc_LF_muon", 1200, -1.5, 1.5);  h_D0_recalc_LF_muon->Sumw2();
-  h_D0_recalc_muon = new TH1F("h_D0_recalc_muon", "h_D0_recalc_muon", 1200, -1.5, 1.5);  h_D0_recalc_muon->Sumw2();
-  
-  h_jetTruthInfo_elec = new TH1F("h_jetTruthInfo_elec", "h_jetTruthInfo_elec", 16, 0, 16); h_jetTruthInfo_elec->Sumw2();
-  h_jetTruthInfo_muon = new TH1F("h_jetTruthInfo_muon", "h_jetTruthInfo_muon", 16, 0, 16); h_jetTruthInfo_muon->Sumw2();
-  
-  
-
+  h_Mljj_EE_SRSS1 = new TH2F("h_Mljj_EE_SRSS1", "h_Mljj_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SRSS1->Sumw2();
+  h_Mljj_EE_SRSS2 = new TH2F("h_Mljj_EE_SRSS2", "h_Mljj_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SRSS2->Sumw2();
+  h_Mljj_MM_SRSS1 = new TH2F("h_Mljj_MM_SRSS1", "h_Mljj_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SRSS1->Sumw2();
+  h_Mljj_MM_SRSS2 = new TH2F("h_Mljj_MM_SRSS2", "h_Mljj_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SRSS2->Sumw2();
+  h_Mljj_MM_SRSS3 = new TH2F("h_Mljj_MM_SRSS3", "h_Mljj_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SRSS3->Sumw2();
+  h_Mljj_MM_SRSS4 = new TH2F("h_Mljj_MM_SRSS4", "h_Mljj_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SRSS4->Sumw2();
+  h_Mljj_EM_SRSS1 = new TH2F("h_Mljj_EM_SRSS1", "h_Mljj_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EM_SRSS1->Sumw2();
+  h_Mljj_EM_SRSS2 = new TH2F("h_Mljj_EM_SRSS2", "h_Mljj_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_Mljj_EM_SRSS2->Sumw2();
+  h_Mljj_EE_SROS1 = new TH2F("h_Mljj_EE_SROS1", "h_Mljj_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SROS1->Sumw2();
+  h_Mljj_MM_SROS1 = new TH2F("h_Mljj_MM_SROS1", "h_Mljj_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SROS1->Sumw2();
+  h_Mljj_EM_SROS1 = new TH2F("h_Mljj_EM_SROS1", "h_Mljj_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EM_SROS1->Sumw2();
    /*--------------------------------------------------------------------------------*/ 
   h_DeltaRLeptons_EE_SRSS1 = new TH2F("h_DeltaRLeptons_EE_SRSS1", "h_DeltaRLeptons_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRLeptons_EE_SRSS1->Sumw2();
   h_DeltaRLeptons_EE_SRSS2 = new TH2F("h_DeltaRLeptons_EE_SRSS2", "h_DeltaRLeptons_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRLeptons_EE_SRSS2->Sumw2();
@@ -642,32 +675,6 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_D0_branch_l1_EM_SROS1 = new TH2F("h_D0_branch_l1_EM_SROS1", "h_D0_branch_l1_EM_SROS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_branch_l1_EM_SROS1->Sumw2();
   
   /*--------------------------------------------------------------------------------*/ 
-  h_D0_recalc_l0_EE_SRSS1 = new TH2F("h_D0_recalc_l0_EE_SRSS1", "h_D0_recalc_l0_EE_SRSS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_EE_SRSS1->Sumw2();
-  h_D0_recalc_l0_EE_SRSS2 = new TH2F("h_D0_recalc_l0_EE_SRSS2", "h_D0_recalc_l0_EE_SRSS2", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_EE_SRSS2->Sumw2();
-  h_D0_recalc_l0_MM_SRSS1 = new TH2F("h_D0_recalc_l0_MM_SRSS1", "h_D0_recalc_l0_MM_SRSS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_MM_SRSS1->Sumw2();  
-  h_D0_recalc_l0_MM_SRSS2 = new TH2F("h_D0_recalc_l0_MM_SRSS2", "h_D0_recalc_l0_MM_SRSS2", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_MM_SRSS2->Sumw2();
-  h_D0_recalc_l0_MM_SRSS3 = new TH2F("h_D0_recalc_l0_MM_SRSS3", "h_D0_recalc_l0_MM_SRSS3", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_MM_SRSS3->Sumw2();
-  h_D0_recalc_l0_MM_SRSS4 = new TH2F("h_D0_recalc_l0_MM_SRSS4", "h_D0_recalc_l0_MM_SRSS4", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_MM_SRSS4->Sumw2();
-  h_D0_recalc_l0_EM_SRSS1 = new TH2F("h_D0_recalc_l0_EM_SRSS1", "h_D0_recalc_l0_EM_SRSS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_EM_SRSS1->Sumw2();
-  h_D0_recalc_l0_EM_SRSS2 = new TH2F("h_D0_recalc_l0_EM_SRSS2", "h_D0_recalc_l0_EM_SRSS2", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_EM_SRSS2->Sumw2();
-  h_D0_recalc_l0_EE_SROS1 = new TH2F("h_D0_recalc_l0_EE_SROS1", "h_D0_recalc_l0_EE_SROS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_EE_SROS1->Sumw2();
-  h_D0_recalc_l0_MM_SROS1 = new TH2F("h_D0_recalc_l0_MM_SROS1", "h_D0_recalc_l0_MM_SROS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_MM_SROS1->Sumw2();
-  h_D0_recalc_l0_EM_SROS1 = new TH2F("h_D0_recalc_l0_EM_SROS1", "h_D0_recalc_l0_EM_SROS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l0_EM_SROS1->Sumw2();
-  
-  /*--------------------------------------------------------------------------------*/ 
-  h_D0_recalc_l1_EE_SRSS1 = new TH2F("h_D0_recalc_l1_EE_SRSS1", "h_D0_recalc_l1_EE_SRSS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_EE_SRSS1->Sumw2();
-  h_D0_recalc_l1_EE_SRSS2 = new TH2F("h_D0_recalc_l1_EE_SRSS2", "h_D0_recalc_l1_EE_SRSS2", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_EE_SRSS2->Sumw2();
-  h_D0_recalc_l1_MM_SRSS1 = new TH2F("h_D0_recalc_l1_MM_SRSS1", "h_D0_recalc_l1_MM_SRSS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_MM_SRSS1->Sumw2();  
-  h_D0_recalc_l1_MM_SRSS2 = new TH2F("h_D0_recalc_l1_MM_SRSS2", "h_D0_recalc_l1_MM_SRSS2", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_MM_SRSS2->Sumw2();
-  h_D0_recalc_l1_MM_SRSS3 = new TH2F("h_D0_recalc_l1_MM_SRSS3", "h_D0_recalc_l1_MM_SRSS3", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_MM_SRSS3->Sumw2();
-  h_D0_recalc_l1_MM_SRSS4 = new TH2F("h_D0_recalc_l1_MM_SRSS4", "h_D0_recalc_l1_MM_SRSS4", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_MM_SRSS4->Sumw2();
-  h_D0_recalc_l1_EM_SRSS1 = new TH2F("h_D0_recalc_l1_EM_SRSS1", "h_D0_recalc_l1_EM_SRSS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_EM_SRSS1->Sumw2();
-  h_D0_recalc_l1_EM_SRSS2 = new TH2F("h_D0_recalc_l1_EM_SRSS2", "h_D0_recalc_l1_EM_SRSS2", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_EM_SRSS2->Sumw2();
-  h_D0_recalc_l1_EE_SROS1 = new TH2F("h_D0_recalc_l1_EE_SROS1", "h_D0_recalc_l1_EE_SROS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_EE_SROS1->Sumw2();
-  h_D0_recalc_l1_MM_SROS1 = new TH2F("h_D0_recalc_l1_MM_SROS1", "h_D0_recalc_l1_MM_SROS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_MM_SROS1->Sumw2();
-  h_D0_recalc_l1_EM_SROS1 = new TH2F("h_D0_recalc_l1_EM_SROS1", "h_D0_recalc_l1_EM_SROS1", 1200, -1.5, 1.5 ,130, 0, 129);  h_D0_recalc_l1_EM_SROS1->Sumw2();
-
-  /*--------------------------------------------------------------------------------*/ 
   h_D0Signif_branch_l0_EE_SRSS1 = new TH2F("h_D0Signif_branch_l0_EE_SRSS1", "h_D0Signif_branch_l0_EE_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_branch_l0_EE_SRSS1->Sumw2();
   h_D0Signif_branch_l0_EE_SRSS2 = new TH2F("h_D0Signif_branch_l0_EE_SRSS2", "h_D0Signif_branch_l0_EE_SRSS2", 200, -10, 10 ,130, 0, 129);  h_D0Signif_branch_l0_EE_SRSS2->Sumw2();
   h_D0Signif_branch_l0_MM_SRSS1 = new TH2F("h_D0Signif_branch_l0_MM_SRSS1", "h_D0Signif_branch_l0_MM_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_branch_l0_MM_SRSS1->Sumw2();  
@@ -693,32 +700,6 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_D0Signif_branch_l1_MM_SROS1 = new TH2F("h_D0Signif_branch_l1_MM_SROS1", "h_D0Signif_branch_l1_MM_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_branch_l1_MM_SROS1->Sumw2();
   h_D0Signif_branch_l1_EM_SROS1 = new TH2F("h_D0Signif_branch_l1_EM_SROS1", "h_D0Signif_branch_l1_EM_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_branch_l1_EM_SROS1->Sumw2();
   
-  /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_recalc_l0_EE_SRSS1 = new TH2F("h_D0Signif_recalc_l0_EE_SRSS1", "h_D0Signif_recalc_l0_EE_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_EE_SRSS1->Sumw2();
-  h_D0Signif_recalc_l0_EE_SRSS2 = new TH2F("h_D0Signif_recalc_l0_EE_SRSS2", "h_D0Signif_recalc_l0_EE_SRSS2", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_EE_SRSS2->Sumw2();
-  h_D0Signif_recalc_l0_MM_SRSS1 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS1", "h_D0Signif_recalc_l0_MM_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_MM_SRSS1->Sumw2();  
-  h_D0Signif_recalc_l0_MM_SRSS2 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS2", "h_D0Signif_recalc_l0_MM_SRSS2", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_MM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l0_MM_SRSS3 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS3", "h_D0Signif_recalc_l0_MM_SRSS3", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_MM_SRSS3->Sumw2();
-  h_D0Signif_recalc_l0_MM_SRSS4 = new TH2F("h_D0Signif_recalc_l0_MM_SRSS4", "h_D0Signif_recalc_l0_MM_SRSS4", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_MM_SRSS4->Sumw2();
-  h_D0Signif_recalc_l0_EM_SRSS1 = new TH2F("h_D0Signif_recalc_l0_EM_SRSS1", "h_D0Signif_recalc_l0_EM_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_EM_SRSS1->Sumw2();
-  h_D0Signif_recalc_l0_EM_SRSS2 = new TH2F("h_D0Signif_recalc_l0_EM_SRSS2", "h_D0Signif_recalc_l0_EM_SRSS2", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_EM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l0_EE_SROS1 = new TH2F("h_D0Signif_recalc_l0_EE_SROS1", "h_D0Signif_recalc_l0_EE_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_EE_SROS1->Sumw2();
-  h_D0Signif_recalc_l0_MM_SROS1 = new TH2F("h_D0Signif_recalc_l0_MM_SROS1", "h_D0Signif_recalc_l0_MM_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_MM_SROS1->Sumw2();
-  h_D0Signif_recalc_l0_EM_SROS1 = new TH2F("h_D0Signif_recalc_l0_EM_SROS1", "h_D0Signif_recalc_l0_EM_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l0_EM_SROS1->Sumw2();
-  
-  /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_recalc_l1_EE_SRSS1 = new TH2F("h_D0Signif_recalc_l1_EE_SRSS1", "h_D0Signif_recalc_l1_EE_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_EE_SRSS1->Sumw2();
-  h_D0Signif_recalc_l1_EE_SRSS2 = new TH2F("h_D0Signif_recalc_l1_EE_SRSS2", "h_D0Signif_recalc_l1_EE_SRSS2", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_EE_SRSS2->Sumw2();
-  h_D0Signif_recalc_l1_MM_SRSS1 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS1", "h_D0Signif_recalc_l1_MM_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_MM_SRSS1->Sumw2();  
-  h_D0Signif_recalc_l1_MM_SRSS2 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS2", "h_D0Signif_recalc_l1_MM_SRSS2", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_MM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l1_MM_SRSS3 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS3", "h_D0Signif_recalc_l1_MM_SRSS3", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_MM_SRSS3->Sumw2();
-  h_D0Signif_recalc_l1_MM_SRSS4 = new TH2F("h_D0Signif_recalc_l1_MM_SRSS4", "h_D0Signif_recalc_l1_MM_SRSS4", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_MM_SRSS4->Sumw2();
-  h_D0Signif_recalc_l1_EM_SRSS1 = new TH2F("h_D0Signif_recalc_l1_EM_SRSS1", "h_D0Signif_recalc_l1_EM_SRSS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_EM_SRSS1->Sumw2();
-  h_D0Signif_recalc_l1_EM_SRSS2 = new TH2F("h_D0Signif_recalc_l1_EM_SRSS2", "h_D0Signif_recalc_l1_EM_SRSS2", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_EM_SRSS2->Sumw2();
-  h_D0Signif_recalc_l1_EE_SROS1 = new TH2F("h_D0Signif_recalc_l1_EE_SROS1", "h_D0Signif_recalc_l1_EE_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_EE_SROS1->Sumw2();
-  h_D0Signif_recalc_l1_MM_SROS1 = new TH2F("h_D0Signif_recalc_l1_MM_SROS1", "h_D0Signif_recalc_l1_MM_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_MM_SROS1->Sumw2();
-  h_D0Signif_recalc_l1_EM_SROS1 = new TH2F("h_D0Signif_recalc_l1_EM_SROS1", "h_D0Signif_recalc_l1_EM_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_recalc_l1_EM_SROS1->Sumw2();
-
   /*--------------------------------------------------------------------------------*/ 
 
 
@@ -1299,32 +1280,7 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_DeltaYjj_EE_SROS1->Write(); 
   h_DeltaYjj_MM_SROS1->Write(); 
   h_DeltaYjj_EM_SROS1->Write(); 
-  
-    /*--------------------------------------------------------------------------------*/ 
-  h_D0_recalc_l0_EE_SRSS1->Write();
-  h_D0_recalc_l0_EE_SRSS2->Write();
-  h_D0_recalc_l0_MM_SRSS1->Write();  
-  h_D0_recalc_l0_MM_SRSS2->Write();
-  h_D0_recalc_l0_MM_SRSS3->Write();
-  h_D0_recalc_l0_MM_SRSS4->Write();
-  h_D0_recalc_l0_EM_SRSS1->Write();
-  h_D0_recalc_l0_EM_SRSS2->Write();
-  h_D0_recalc_l0_EE_SROS1->Write();
-  h_D0_recalc_l0_MM_SROS1->Write();
-  h_D0_recalc_l0_EM_SROS1->Write();
 
-    /*--------------------------------------------------------------------------------*/ 
-  h_D0_recalc_l1_EE_SRSS1->Write();
-  h_D0_recalc_l1_EE_SRSS2->Write();
-  h_D0_recalc_l1_MM_SRSS1->Write();  
-  h_D0_recalc_l1_MM_SRSS2->Write();
-  h_D0_recalc_l1_MM_SRSS3->Write();
-  h_D0_recalc_l1_MM_SRSS4->Write();
-  h_D0_recalc_l1_EM_SRSS1->Write();
-  h_D0_recalc_l1_EM_SRSS2->Write();
-  h_D0_recalc_l1_EE_SROS1->Write();
-  h_D0_recalc_l1_MM_SROS1->Write();
-  h_D0_recalc_l1_EM_SROS1->Write();
   /*--------------------------------------------------------------------------------*/ 
   h_D0_branch_l0_EE_SRSS1->Write();
   h_D0_branch_l0_EE_SRSS2->Write();
@@ -1350,32 +1306,7 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_D0_branch_l1_EE_SROS1->Write();
   h_D0_branch_l1_MM_SROS1->Write();
   h_D0_branch_l1_EM_SROS1->Write();
-  
-  /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_recalc_l0_EE_SRSS1->Write();
-  h_D0Signif_recalc_l0_EE_SRSS2->Write();
-  h_D0Signif_recalc_l0_MM_SRSS1->Write();  
-  h_D0Signif_recalc_l0_MM_SRSS2->Write();
-  h_D0Signif_recalc_l0_MM_SRSS3->Write();
-  h_D0Signif_recalc_l0_MM_SRSS4->Write();
-  h_D0Signif_recalc_l0_EM_SRSS1->Write();
-  h_D0Signif_recalc_l0_EM_SRSS2->Write();
-  h_D0Signif_recalc_l0_EE_SROS1->Write();
-  h_D0Signif_recalc_l0_MM_SROS1->Write();
-  h_D0Signif_recalc_l0_EM_SROS1->Write();
 
-    /*--------------------------------------------------------------------------------*/ 
-  h_D0Signif_recalc_l1_EE_SRSS1->Write();
-  h_D0Signif_recalc_l1_EE_SRSS2->Write();
-  h_D0Signif_recalc_l1_MM_SRSS1->Write();  
-  h_D0Signif_recalc_l1_MM_SRSS2->Write();
-  h_D0Signif_recalc_l1_MM_SRSS3->Write();
-  h_D0Signif_recalc_l1_MM_SRSS4->Write();
-  h_D0Signif_recalc_l1_EM_SRSS1->Write();
-  h_D0Signif_recalc_l1_EM_SRSS2->Write();
-  h_D0Signif_recalc_l1_EE_SROS1->Write();
-  h_D0Signif_recalc_l1_MM_SROS1->Write();
-  h_D0Signif_recalc_l1_EM_SROS1->Write();
   /*--------------------------------------------------------------------------------*/ 
   h_D0Signif_branch_l0_EE_SRSS1->Write();
   h_D0Signif_branch_l0_EE_SRSS2->Write();
@@ -1409,29 +1340,67 @@ bool TSelector_SusyNtuple::writeHistos(){
   cutflow_EM->Write();
   cutflow_EM_ALL->Write();
   
- h_D0Signif_recalc_PR_elec->Write();
- h_D0Signif_recalc_HF_elec->Write();
- h_D0Signif_recalc_LF_elec->Write();
- h_D0Signif_recalc_elec->Write();
- 
- h_D0Signif_recalc_PR_muon->Write();
- h_D0Signif_recalc_HF_muon->Write();
- h_D0Signif_recalc_LF_muon->Write();
- h_D0Signif_recalc_muon->Write();
- 
- 
- h_D0_recalc_PR_elec->Write();
- h_D0_recalc_HF_elec->Write();
- h_D0_recalc_LF_elec->Write();
- h_D0_recalc_elec->Write();
- 
- h_D0_recalc_PR_muon->Write();
- h_D0_recalc_HF_muon->Write();
- h_D0_recalc_LF_muon->Write();
- h_D0_recalc_muon->Write();
- 
- h_jetTruthInfo_elec->Write();
- h_jetTruthInfo_muon->Write();
+  h_ml0lsoft_EE_SRSS1->Write(); 
+  h_ml0lsoft_EE_SRSS2->Write();
+  h_ml0lsoft_MM_SRSS1->Write();
+  h_ml0lsoft_MM_SRSS2->Write();
+  h_ml0lsoft_MM_SRSS3->Write();
+  h_ml0lsoft_MM_SRSS4->Write();
+  h_ml0lsoft_EM_SRSS1->Write();
+  h_ml0lsoft_EM_SRSS2->Write();
+  h_ml0lsoft_EE_SROS1->Write();
+  h_ml0lsoft_MM_SROS1->Write();
+  h_ml0lsoft_EM_SROS1->Write();
+  
+  h_ml1lsoft_EE_SRSS1->Write();
+  h_ml1lsoft_EE_SRSS2->Write();
+  h_ml1lsoft_MM_SRSS1->Write();
+  h_ml1lsoft_MM_SRSS2->Write();
+  h_ml1lsoft_MM_SRSS3->Write();
+  h_ml1lsoft_MM_SRSS4->Write();
+  h_ml1lsoft_EM_SRSS1->Write();
+  h_ml1lsoft_EM_SRSS2->Write();
+  h_ml1lsoft_EE_SROS1->Write();
+  h_ml1lsoft_MM_SROS1->Write();
+  h_ml1lsoft_EM_SROS1->Write();
+  
+  
+  h_mTl0lsoft_EE_SRSS1->Write();
+  h_mTl0lsoft_EE_SRSS2->Write();
+  h_mTl0lsoft_MM_SRSS1->Write();
+  h_mTl0lsoft_MM_SRSS2->Write();
+  h_mTl0lsoft_MM_SRSS3->Write();
+  h_mTl0lsoft_MM_SRSS4->Write();
+  h_mTl0lsoft_EM_SRSS1->Write();
+  h_mTl0lsoft_EM_SRSS2->Write();
+  h_mTl0lsoft_EE_SROS1->Write();
+  h_mTl0lsoft_MM_SROS1->Write();
+  h_mTl0lsoft_EM_SROS1->Write();
+  
+  h_mTl1lsoft_EE_SRSS1->Write();
+  h_mTl1lsoft_EE_SRSS2->Write();
+  h_mTl1lsoft_MM_SRSS1->Write();
+  h_mTl1lsoft_MM_SRSS2->Write();
+  h_mTl1lsoft_MM_SRSS3->Write();
+  h_mTl1lsoft_MM_SRSS4->Write();
+  h_mTl1lsoft_EM_SRSS1->Write();
+  h_mTl1lsoft_EM_SRSS2->Write();
+  h_mTl1lsoft_EE_SROS1->Write();
+  h_mTl1lsoft_MM_SROS1->Write();
+  h_mTl1lsoft_EM_SROS1->Write();
+  
+  h_Mljj_EE_SRSS1->Write();
+  h_Mljj_EE_SRSS2->Write();
+  h_Mljj_MM_SRSS1->Write();
+  h_Mljj_MM_SRSS2->Write();
+  h_Mljj_MM_SRSS3->Write();
+  h_Mljj_MM_SRSS4->Write();
+  h_Mljj_EM_SRSS1->Write();
+  h_Mljj_EM_SRSS2->Write();
+  h_Mljj_EE_SROS1->Write();
+  h_Mljj_MM_SROS1->Write();
+  h_Mljj_EM_SROS1->Write();
+  
     
     return true;
 }
@@ -2005,31 +1974,6 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( h_DeltaYjj_EM_SROS1); 
   
   /*--------------------------------------------------------------------------------*/ 
-  fOutput->Add( h_D0_recalc_l0_EE_SRSS1);
-  fOutput->Add( h_D0_recalc_l0_EE_SRSS2);
-  fOutput->Add( h_D0_recalc_l0_MM_SRSS1);  
-  fOutput->Add( h_D0_recalc_l0_MM_SRSS2);
-  fOutput->Add( h_D0_recalc_l0_MM_SRSS3);
-  fOutput->Add( h_D0_recalc_l0_MM_SRSS4);
-  fOutput->Add( h_D0_recalc_l0_EM_SRSS1);
-  fOutput->Add( h_D0_recalc_l0_EM_SRSS2);
-  fOutput->Add( h_D0_recalc_l0_EE_SROS1);
-  fOutput->Add( h_D0_recalc_l0_MM_SROS1);
-  fOutput->Add( h_D0_recalc_l0_EM_SROS1);
-
-  /*--------------------------------------------------------------------------------*/ 
-  fOutput->Add( h_D0_recalc_l1_EE_SRSS1);
-  fOutput->Add( h_D0_recalc_l1_EE_SRSS2);
-  fOutput->Add( h_D0_recalc_l1_MM_SRSS1);  
-  fOutput->Add( h_D0_recalc_l1_MM_SRSS2);
-  fOutput->Add( h_D0_recalc_l1_MM_SRSS3);
-  fOutput->Add( h_D0_recalc_l1_MM_SRSS4);
-  fOutput->Add( h_D0_recalc_l1_EM_SRSS1);
-  fOutput->Add( h_D0_recalc_l1_EM_SRSS2);
-  fOutput->Add( h_D0_recalc_l1_EE_SROS1);
-  fOutput->Add( h_D0_recalc_l1_MM_SROS1);
-  fOutput->Add( h_D0_recalc_l1_EM_SROS1);
-  /*--------------------------------------------------------------------------------*/ 
   fOutput->Add( h_D0_branch_l0_EE_SRSS1);
   fOutput->Add( h_D0_branch_l0_EE_SRSS2);
   fOutput->Add( h_D0_branch_l0_MM_SRSS1);  
@@ -2055,32 +1999,6 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( h_D0_branch_l1_MM_SROS1);
   fOutput->Add( h_D0_branch_l1_EM_SROS1);
   
-  
-  /*--------------------------------------------------------------------------------*/ 
-  fOutput->Add( h_D0Signif_recalc_l0_EE_SRSS1);
-  fOutput->Add( h_D0Signif_recalc_l0_EE_SRSS2);
-  fOutput->Add( h_D0Signif_recalc_l0_MM_SRSS1);  
-  fOutput->Add( h_D0Signif_recalc_l0_MM_SRSS2);
-  fOutput->Add( h_D0Signif_recalc_l0_MM_SRSS3);
-  fOutput->Add( h_D0Signif_recalc_l0_MM_SRSS4);
-  fOutput->Add( h_D0Signif_recalc_l0_EM_SRSS1);
-  fOutput->Add( h_D0Signif_recalc_l0_EM_SRSS2);
-  fOutput->Add( h_D0Signif_recalc_l0_EE_SROS1);
-  fOutput->Add( h_D0Signif_recalc_l0_MM_SROS1);
-  fOutput->Add( h_D0Signif_recalc_l0_EM_SROS1);
-
-  /*--------------------------------------------------------------------------------*/ 
-  fOutput->Add( h_D0Signif_recalc_l1_EE_SRSS1);
-  fOutput->Add( h_D0Signif_recalc_l1_EE_SRSS2);
-  fOutput->Add( h_D0Signif_recalc_l1_MM_SRSS1);  
-  fOutput->Add( h_D0Signif_recalc_l1_MM_SRSS2);
-  fOutput->Add( h_D0Signif_recalc_l1_MM_SRSS3);
-  fOutput->Add( h_D0Signif_recalc_l1_MM_SRSS4);
-  fOutput->Add( h_D0Signif_recalc_l1_EM_SRSS1);
-  fOutput->Add( h_D0Signif_recalc_l1_EM_SRSS2);
-  fOutput->Add( h_D0Signif_recalc_l1_EE_SROS1);
-  fOutput->Add( h_D0Signif_recalc_l1_MM_SROS1);
-  fOutput->Add( h_D0Signif_recalc_l1_EM_SROS1);
   /*--------------------------------------------------------------------------------*/ 
   fOutput->Add( h_D0Signif_branch_l0_EE_SRSS1);
   fOutput->Add( h_D0Signif_branch_l0_EE_SRSS2);
@@ -2116,30 +2034,66 @@ bool TSelector_SusyNtuple::addHistos(){
   fOutput->Add( cutflow_ME);
   fOutput->Add( cutflow_ME_ALL);
   
-  fOutput->Add( h_D0Signif_recalc_PR_elec);
-  fOutput->Add( h_D0Signif_recalc_HF_elec);
-  fOutput->Add( h_D0Signif_recalc_LF_elec);
-  fOutput->Add( h_D0Signif_recalc_elec);
+  fOutput->Add( h_ml0lsoft_EE_SRSS1); 
+  fOutput->Add( h_ml0lsoft_EE_SRSS2);
+  fOutput->Add( h_ml0lsoft_MM_SRSS1);
+  fOutput->Add( h_ml0lsoft_MM_SRSS2);
+  fOutput->Add( h_ml0lsoft_MM_SRSS3);
+  fOutput->Add( h_ml0lsoft_MM_SRSS4);
+  fOutput->Add( h_ml0lsoft_EM_SRSS1);
+  fOutput->Add( h_ml0lsoft_EM_SRSS2);
+  fOutput->Add( h_ml0lsoft_EE_SROS1);
+  fOutput->Add( h_ml0lsoft_MM_SROS1);
+  fOutput->Add( h_ml0lsoft_EM_SROS1);
   
-  fOutput->Add( h_D0Signif_recalc_PR_muon);
-  fOutput->Add( h_D0Signif_recalc_HF_muon);
-  fOutput->Add( h_D0Signif_recalc_LF_muon);
-  fOutput->Add( h_D0Signif_recalc_muon);
- 
+  fOutput->Add( h_ml1lsoft_EE_SRSS1);
+  fOutput->Add( h_ml1lsoft_EE_SRSS2);
+  fOutput->Add( h_ml1lsoft_MM_SRSS1);
+  fOutput->Add( h_ml1lsoft_MM_SRSS2);
+  fOutput->Add( h_ml1lsoft_MM_SRSS3);
+  fOutput->Add( h_ml1lsoft_MM_SRSS4);
+  fOutput->Add( h_ml1lsoft_EM_SRSS1);
+  fOutput->Add( h_ml1lsoft_EM_SRSS2);
+  fOutput->Add( h_ml1lsoft_EE_SROS1);
+  fOutput->Add( h_ml1lsoft_MM_SROS1);
+  fOutput->Add( h_ml1lsoft_EM_SROS1);
   
   
-  fOutput->Add( h_D0_recalc_PR_elec);
-  fOutput->Add( h_D0_recalc_HF_elec);
-  fOutput->Add( h_D0_recalc_LF_elec);
-  fOutput->Add( h_D0_recalc_elec);
+  fOutput->Add( h_mTl0lsoft_EE_SRSS1);
+  fOutput->Add( h_mTl0lsoft_EE_SRSS2);
+  fOutput->Add( h_mTl0lsoft_MM_SRSS1);
+  fOutput->Add( h_mTl0lsoft_MM_SRSS2);
+  fOutput->Add( h_mTl0lsoft_MM_SRSS3);
+  fOutput->Add( h_mTl0lsoft_MM_SRSS4);
+  fOutput->Add( h_mTl0lsoft_EM_SRSS1);
+  fOutput->Add( h_mTl0lsoft_EM_SRSS2);
+  fOutput->Add( h_mTl0lsoft_EE_SROS1);
+  fOutput->Add( h_mTl0lsoft_MM_SROS1);
+  fOutput->Add( h_mTl0lsoft_EM_SROS1);
   
-  fOutput->Add( h_D0_recalc_PR_muon);
-  fOutput->Add( h_D0_recalc_HF_muon);
-  fOutput->Add( h_D0_recalc_LF_muon);
-  fOutput->Add( h_D0_recalc_muon);
+  fOutput->Add( h_mTl1lsoft_EE_SRSS1);
+  fOutput->Add( h_mTl1lsoft_EE_SRSS2);
+  fOutput->Add( h_mTl1lsoft_MM_SRSS1);
+  fOutput->Add( h_mTl1lsoft_MM_SRSS2);
+  fOutput->Add( h_mTl1lsoft_MM_SRSS3);
+  fOutput->Add( h_mTl1lsoft_MM_SRSS4);
+  fOutput->Add( h_mTl1lsoft_EM_SRSS1);
+  fOutput->Add( h_mTl1lsoft_EM_SRSS2);
+  fOutput->Add( h_mTl1lsoft_EE_SROS1);
+  fOutput->Add( h_mTl1lsoft_MM_SROS1);
+  fOutput->Add( h_mTl1lsoft_EM_SROS1);
   
-  fOutput->Add( h_jetTruthInfo_elec);
-  fOutput->Add( h_jetTruthInfo_muon);
+  fOutput->Add( h_Mljj_EE_SRSS1);
+  fOutput->Add( h_Mljj_EE_SRSS2);
+  fOutput->Add( h_Mljj_MM_SRSS1);
+  fOutput->Add( h_Mljj_MM_SRSS2);
+  fOutput->Add( h_Mljj_MM_SRSS3);
+  fOutput->Add( h_Mljj_MM_SRSS4);
+  fOutput->Add( h_Mljj_EM_SRSS1);
+  fOutput->Add( h_Mljj_EM_SRSS2);
+  fOutput->Add( h_Mljj_EE_SROS1);
+  fOutput->Add( h_Mljj_MM_SROS1);
+  fOutput->Add( h_Mljj_EM_SROS1);
   
   return true;
     
@@ -2152,24 +2106,25 @@ void TSelector_SusyNtuple::calcJet_variables(TLorentzVector signalJet0_TLV, TLor
   if(nSignalJets>1) jet1_TLV.SetPtEtaPhiE(m_signalJets2Lep.at(1)->pt, m_signalJets2Lep.at(1)->eta ,m_signalJets2Lep.at(1)->phi, m_signalJets2Lep.at(1)->pt*cosh(m_signalJets2Lep.at(1)->eta));
   
   MET = met_TLV.Pt();
-  
-  pTj0 = (nSignalJets>0) ? jet0_TLV.Pt() : 0.;
-  pTj1 = (nSignalJets>1) ? jet1_TLV.Pt() : 0.;
-  eta_j0 = (nSignalJets>0) ? jet0_TLV.Eta() : 0.;
-  eta_j1 = (nSignalJets>1) ? jet1_TLV.Eta() : 0.;
-  mjj = (nSignalJets>1) ? (jet0_TLV + jet1_TLV).M() : 0.;
-  DeltaPhijj = (nSignalJets>1) ? fabs(jet0_TLV.DeltaPhi(jet1_TLV)) : 0.;
-  pTjj = (nSignalJets>1) ? (jet0_TLV + jet1_TLV).Pt() : 0.;
-  DeltaPhiMETj0 = fabs(jet0_TLV.DeltaPhi(met_TLV));
-  DeltaPhiMETj1 = (nSignalJets>1) ? fabs(jet1_TLV.DeltaPhi(met_TLV)) : 0.;
-  DeltaRjj = (nSignalJets>1) ?  fabs(jet0_TLV.DeltaR(jet1_TLV)) : 0.;
-  DeltaEtajj = (nSignalJets>1) ? fabs(jet0_TLV.Eta() - jet1_TLV.Eta()) : 0.;
-  DeltaYjj = (nSignalJets>1) ? fabs(jet0_TLV.Rapidity() - jet1_TLV.Rapidity()) : 0.;
-  DeltaPhiMETjj = (nSignalJets>1) ? fabs((jet0_TLV+ jet1_TLV).DeltaPhi(met_TLV)) : 0.;
-  NBJets = numberOfCBJets(m_signalJets2Lep);
-  NCJets = numberOfCLJets(m_signalJets2Lep);
-  NFJets = numberOfFJets(m_signalJets2Lep);
-  meff = calcMeff(met_TLV, m_signalJets2Lep);
+  if(nSignalJets>0){
+    pTj0 = jet0_TLV.Pt();
+    pTj1 = (nSignalJets>1) ? jet1_TLV.Pt() : 0.;
+    eta_j0 = jet0_TLV.Eta();
+    eta_j1 = (nSignalJets>1) ? jet1_TLV.Eta() : 0.;
+    mjj = (nSignalJets>1) ? (jet0_TLV + jet1_TLV).M() : jet0_TLV.M();
+    DeltaPhijj = (nSignalJets>1) ? fabs(jet0_TLV.DeltaPhi(jet1_TLV)) : 0.;
+    pTjj = (nSignalJets>1) ? (jet0_TLV + jet1_TLV).Pt() : jet0_TLV.Pt();
+    DeltaPhiMETj0 = fabs(jet0_TLV.DeltaPhi(met_TLV));
+    DeltaPhiMETj1 = (nSignalJets>1) ? fabs(jet1_TLV.DeltaPhi(met_TLV)) : 0.;
+    DeltaRjj = (nSignalJets>1) ?  fabs(jet0_TLV.DeltaR(jet1_TLV)) : 0.;
+    DeltaEtajj = (nSignalJets>1) ? fabs(jet0_TLV.Eta() - jet1_TLV.Eta()) : 0.;
+    DeltaYjj = (nSignalJets>1) ? fabs(jet0_TLV.Rapidity() - jet1_TLV.Rapidity()) : 0.;
+    DeltaPhiMETjj = (nSignalJets>1) ? fabs((jet0_TLV+ jet1_TLV).DeltaPhi(met_TLV)) : fabs(jet0_TLV.DeltaPhi(met_TLV));
+    NBJets = numberOfCBJets(m_signalJets2Lep);
+    NCJets = numberOfCLJets(m_signalJets2Lep);
+    NFJets = numberOfFJets(m_signalJets2Lep);
+    meff = calcMeff(met_TLV, m_signalJets2Lep);
+  }
     
 }
 void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets ){
@@ -2194,13 +2149,44 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   DeltaPhiMETel0 = fabs(el0_TLV.DeltaPhi(met_TLV));
   DeltaPhiMETel1 = fabs(el1_TLV.DeltaPhi(met_TLV));
   DeltaPhiMETee = fabs((el0_TLV + el1_TLV).DeltaPhi(met_TLV));
-  DeltaPhieejj = (nSignalJets>1) ? fabs((el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
+  if(nSignalJets>0){
+    DeltaPhieejj = (nSignalJets>1) ? fabs((el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhieejj = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : 0.;
+    
+    DeltaPhiel0jj = (nSignalJets>1) ? ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhiel1jj= (nSignalJets>1) ?  ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaReejj = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV);
+  }
+  
+  //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
+  Mljj_EE = 0.;
+  if(nSignalJets>1){
+    //find dijet axis:
+    double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
+    double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
+    double DeltaRDijetLep0 = sqrt(pow(fabs(etaDijetAxis - el0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el0_TLV.Phi()),2));
+    double DeltaRDijetLep1 = sqrt(pow(fabs(etaDijetAxis - el1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el1_TLV.Phi()),2));
+    TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetLep0 > DeltaRDijetLep1) ? el1_TLV : el0_TLV;
+    /*cout << " phi j 0= " << signalJet0_TLV.Phi()  << endl;	  
+    cout << " phi j 1= " << signalJet1_TLV.Phi() << endl;
+    cout << " phiDijetAxis= " << phiDijetAxis << endl;
+    cout << " eta j 0= " << signalJet0_TLV.Eta() <<  endl;
+    cout << " eta j 1= " << signalJet1_TLV.Eta() <<  endl;
+    cout << " etaDijetAxis= " << etaDijetAxis << endl;
+    cout << " phi e 0=" << el0_TLV.Phi() <<  endl;
+    cout << " phi e 1=" << el1_TLV.Phi() <<  endl;
+    cout << " eta e 0=" << el0_TLV.Eta() <<  endl;
+    cout << " eta e 1=" << el1_TLV.Eta() <<  endl;
+    cout << " DeltaRDijetLep0= " << DeltaRDijetLep0 <<  endl;
+    cout << " DeltaRDijetLep1= " << DeltaRDijetLep1 <<  endl;
+    cout << " phi closestElecDijetAxis= " << closestElecDijetAxis->phi << endl;*/
+    Mljj_EE = (signalJet0_TLV + signalJet1_TLV + closestElecDijetAxis_TLV).M();
+//     cout << "Mljj_EE= " << Mljj_EE << endl;
+  }
+  
   mt2_ee = calcMT2(met_TLV, el0_TLV, el1_TLV);
   
-  DeltaPhieejj = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : 0.;
-  DeltaPhiel0jj = (nSignalJets>1) ? ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
-  DeltaPhiel1jj= (nSignalJets>1) ?  ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
-  DeltaReejj = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : 0.;
+
   DeltaEtaee = fabs(el0_TLV.Eta() - el1_TLV.Eta());
     
   bool unbiased = true;
@@ -2217,17 +2203,24 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
     D0err_branch_el1 = el1->errD0;
   }
   
-  if(nSignalJets>0){
-    const Jet* closestJet_el0 = getClosestJet(leptons.at(0), m_signalJets2Lep);	
-    const Jet* closestJet_el1 = getClosestJet(leptons.at(1), m_signalJets2Lep);
-    D0_recalc_el0 = recalc_D0(unbiased, leptons.at(0), closestJet_el0);
-    D0_recalc_el1 = recalc_D0(unbiased, leptons.at(1), closestJet_el1);
-  }
+  
   sD0Signif_branch_el0 = calc_D0(unbiased, leptons.at(0)) / D0err_branch_el0;
   sD0Signif_branch_el1 = calc_D0(unbiased, leptons.at(1)) / D0err_branch_el1;
-//   cout << "sD0Signif_branch_el0= " << sD0Signif_branch_el0 << " sD0Signif_branch_el1= " << sD0Signif_branch_el1 << endl;
-  sD0Signif_recalc_el0 = D0_recalc_el0 / D0err_branch_el0;
-  sD0Signif_recalc_el1 = D0_recalc_el1 / D0err_branch_el1;
+
+  		
+  //get all electrons which are not signal electrons
+  ElectronVector softElectrons = getSoftElectrons(&nt, NtSys_NOM, el0_TLV, el1_TLV);
+  //check for 3rd soft lepton for WZ bg
+  for(int i_es = 0; i_es < softElectrons.size(); i_es++){
+    Electron* el_soft = softElectrons.at(i_es);
+    TLorentzVector el_soft_TLV;
+    el_soft_TLV.SetPtEtaPhiE(el_soft->pt, el_soft->eta ,el_soft->phi, el_soft->pt*cosh(el_soft->eta));
+    if((softElectrons.at(i_es)->q * el0->q)<0.) ml0lsoft_EE = (el0_TLV + el_soft_TLV).M();
+    if((softElectrons.at(i_es)->q * el1->q)<0.) ml1lsoft_EE = (el1_TLV + el_soft_TLV).M(); 
+    mTl0lsoft_EE = calcMt(el0_TLV, el_soft_TLV);
+    mTl1lsoft_EE = calcMt(el1_TLV, el_soft_TLV);
+    
+  }
   
    mZTT_coll = calcMZTauTau_coll(el0_TLV, el1_TLV, met_TLV); 
 }
@@ -2259,13 +2252,42 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   DeltaPhiMETmu0 = fabs(mu0_TLV.DeltaPhi(met_TLV));
   DeltaPhiMETmu1 = fabs(mu1_TLV.DeltaPhi(met_TLV));
   DeltaPhiMETmm = fabs((mu0_TLV + mu1_TLV).DeltaPhi(met_TLV));
-  DeltaPhimmjj = (nSignalJets>1) ? fabs((mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
+  if(nSignalJets>0){
+    DeltaPhimmjj = (nSignalJets>1) ? fabs((mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhimmjj = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV);
+    DeltaPhimu0jj = (nSignalJets>1) ?  ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhimu1jj= (nSignalJets>1) ?  ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaRmmjj = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV);
+  }
+  
+  //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
+  Mljj_MM = 0.;
+  if(nSignalJets>1){
+    //find dijet axis:
+    double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
+    double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
+    double DeltaRDijetLep0 = sqrt(pow(fabs(etaDijetAxis - mu0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu0_TLV.Phi()),2));
+    double DeltaRDijetLep1 = sqrt(pow(fabs(etaDijetAxis - mu1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu1_TLV.Phi()),2));
+    TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetLep0 > DeltaRDijetLep1) ? mu1_TLV : mu0_TLV;
+    /*cout << " phi j 0= " << signalJet0_TLV.Phi()  << endl;	  
+    cout << " phi j 1= " << signalJet1_TLV.Phi() << endl;
+    cout << " phiDijetAxis= " << phiDijetAxis << endl;
+    cout << " eta j 0= " << signalJet0_TLV.Eta() <<  endl;
+    cout << " eta j 1= " << signalJet1_TLV.Eta() <<  endl;
+    cout << " etaDijetAxis= " << etaDijetAxis << endl;
+    cout << " phi mu 0=" << mu0_TLV.Phi() <<  endl;
+    cout << " phi mu 1=" << mu1_TLV.Phi() <<  endl;
+    cout << " eta mu 0=" << mu0_TLV.Eta() <<  endl;
+    cout << " eta mu 1=" << mu1_TLV.Eta() <<  endl;
+    cout << " DeltaRDijetLep0= " << DeltaRDijetLep0 <<  endl;
+    cout << " DeltaRDijetLep1= " << DeltaRDijetLep1 <<  endl;
+    cout << " phi closestElecDijetAxis= " << closestElecDijetAxis->phi << endl;*/
+    Mljj_MM = (signalJet0_TLV + signalJet1_TLV + closestElecDijetAxis_TLV).M();
+//     cout << "Mljj_MM= " << Mljj_MM << endl;
+  }
+  
   mt2_mm = calcMT2(met_TLV, mu0_TLV, mu1_TLV);
   
-  DeltaPhimmjj = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : 0.;
-  DeltaPhimu0jj = (nSignalJets>1) ?  ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
-  DeltaPhimu1jj= (nSignalJets>1) ?  ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
-  DeltaRmmjj = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : 0.;
   DeltaEtamm = fabs(mu0_TLV.Eta() - mu1_TLV.Eta());
   
 bool unbiased = true;
@@ -2282,16 +2304,21 @@ bool unbiased = true;
     D0err_branch_mu1 = mu1->errD0;
   }
   
-  if(nSignalJets>0){
-    const Jet* closestJet_mu0 = getClosestJet(leptons.at(0), m_signalJets2Lep);	
-    const Jet* closestJet_mu1 = getClosestJet(leptons.at(1), m_signalJets2Lep);
-    D0_recalc_mu0 = recalc_D0(unbiased, leptons.at(0), closestJet_mu0);
-    D0_recalc_mu1 = recalc_D0(unbiased, leptons.at(1), closestJet_mu1);
-  }
   sD0Signif_branch_mu0 = calc_D0(unbiased, leptons.at(0)) / D0err_branch_mu0;
   sD0Signif_branch_mu1 = calc_D0(unbiased, leptons.at(1)) / D0err_branch_mu1;
-  sD0Signif_recalc_mu0 = D0_recalc_mu0 / D0err_branch_mu0;
-  sD0Signif_recalc_mu1 = D0_recalc_mu1 / D0err_branch_mu1;
+  
+  //get all muons which are not signal muons
+  MuonVector softMuons = getSoftMuons(&nt, NtSys_NOM, mu0_TLV, mu1_TLV);
+  //check for 3rd soft lepton for WZ bg
+  for(int i_ms = 0; i_ms < softMuons.size(); i_ms++){
+    Muon* mu_soft = softMuons.at(i_ms);
+    TLorentzVector mu_soft_TLV;
+    mu_soft_TLV.SetPtEtaPhiE(mu_soft->pt, mu_soft->eta ,mu_soft->phi, mu_soft->pt*cosh(mu_soft->eta));
+    if((softMuons.at(i_ms)->q * mu0->q)<0.) ml0lsoft_MM = (mu0_TLV + mu_soft_TLV).M();
+    if((softMuons.at(i_ms)->q * mu1->q)<0.) ml1lsoft_MM = (mu1_TLV + mu_soft_TLV).M();
+    mTl0lsoft_MM = calcMt(mu0_TLV, mu_soft_TLV);
+    mTl1lsoft_MM = calcMt(mu1_TLV, mu_soft_TLV);
+  }
   
   mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, met_TLV); 
 }
@@ -2318,13 +2345,42 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   DeltaPhiMETl0 = (el_TLV.Pt() > mu_TLV.Pt()) ? fabs(el_TLV.DeltaPhi(met_TLV)) : fabs(mu_TLV.DeltaPhi(met_TLV));
   DeltaPhiMETl1 = (el_TLV.Pt() > mu_TLV.Pt()) ? fabs(mu_TLV.DeltaPhi(met_TLV)) : fabs(el_TLV.DeltaPhi(met_TLV));
   DeltaPhiMETem = fabs((mu_TLV + el_TLV).DeltaPhi(met_TLV));
-  DeltaPhiemjj = (nSignalJets>1) ? fabs((el_TLV + mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
+  if(nSignalJets>0){
+    DeltaPhiemjj = (nSignalJets>1) ? fabs((el_TLV + mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((el_TLV + mu_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhiemjj = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu_TLV + el_TLV).DeltaPhi(signalJet0_TLV);
+    DeltaPhil0jj = (nSignalJets>1) ? ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhil1jj = (nSignalJets>1) ? ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaRemjj = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (mu_TLV + el_TLV).DeltaR(signalJet0_TLV);
+  }
+  
+  //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
+  Mljj_EM = 0.;
+  if(nSignalJets>1){
+    //find dijet axis:
+    double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
+    double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
+    double DeltaRDijetLep0 = sqrt(pow(fabs(etaDijetAxis - mu_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu_TLV.Phi()),2));
+    double DeltaRDijetLep1 = sqrt(pow(fabs(etaDijetAxis - el_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el_TLV.Phi()),2));
+    TLorentzVector closestLepDijetAxis_TLV = (DeltaRDijetLep0 > DeltaRDijetLep1) ? el_TLV : mu_TLV;
+    /*cout << " phi j 0= " << signalJet0_TLV.Phi()  << endl;	  
+    cout << " phi j 1= " << signalJet1_TLV.Phi() << endl;
+    cout << " phiDijetAxis= " << phiDijetAxis << endl;
+    cout << " eta j 0= " << signalJet0_TLV.Eta() <<  endl;
+    cout << " eta j 1= " << signalJet1_TLV.Eta() <<  endl;
+    cout << " etaDijetAxis= " << etaDijetAxis << endl;
+    cout << " phi mu=" << mu_TLV.Phi() <<  endl;
+    cout << " phi el=" << el_TLV.Phi() <<  endl;
+    cout << " eta mu=" << mu_TLV.Eta() <<  endl;
+    cout << " eta el=" << el_TLV.Eta() <<  endl;
+    cout << " DeltaRDijetLep0= " << DeltaRDijetLep0 <<  endl;
+    cout << " DeltaRDijetLep1= " << DeltaRDijetLep1 <<  endl;
+    cout << " phi closestElecDijetAxis= " << closestElecDijetAxis->phi << endl;*/
+    Mljj_EM = (signalJet0_TLV + signalJet1_TLV + closestLepDijetAxis_TLV).M();
+//     cout << "Mljj_EM= " << Mljj_EM << endl;
+  }
+  
   mt2_em = calcMT2(met_TLV, el_TLV, mu_TLV);
   
-  DeltaPhiemjj = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : 0.;
-  DeltaPhil0jj = (nSignalJets>1) ? ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
-  DeltaPhil1jj = (nSignalJets>1) ? ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : 0.;
-  DeltaRemjj = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : 0.;
   DeltaEtaem = fabs(mu_TLV.Eta() - el_TLV.Eta());  
   
 bool unbiased = true;
@@ -2341,16 +2397,31 @@ bool unbiased = true;
     D0err_branch_l1 = leptons.at(1)->errD0;
   }
   
-  if(nSignalJets>0){
-    const Jet* closestJet_l0 = getClosestJet(leptons.at(0), m_signalJets2Lep);	
-    const Jet* closestJet_l1 = getClosestJet(leptons.at(1), m_signalJets2Lep);
-    D0_recalc_l0 = recalc_D0(unbiased, leptons.at(0), closestJet_l0);
-    D0_recalc_l1 = recalc_D0(unbiased, leptons.at(1), closestJet_l1);
-  }
   sD0Signif_branch_l0 = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0;
   sD0Signif_branch_l1 = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1;
-  sD0Signif_recalc_l0 = D0_recalc_l0 / D0err_branch_l0;
-  sD0Signif_recalc_l1 = D0_recalc_l1 / D0err_branch_l1;
+  
+//   get all muons which are not signal muons
+  TLorentzVector empty_TLV;
+  MuonVector softMuons = getSoftMuons(&nt, NtSys_NOM, mu_TLV, empty_TLV);
+  //check for 3rd soft lepton for WZ bg
+  for(int i_ms = 0; i_ms < softMuons.size(); i_ms++){
+    Muon* mu_soft = softMuons.at(i_ms);
+    TLorentzVector mu_soft_TLV;
+    mu_soft_TLV.SetPtEtaPhiE(mu_soft->pt, mu_soft->eta ,mu_soft->phi, mu_soft->pt*cosh(mu_soft->eta));
+    if((softMuons.at(i_ms)->q * mu->q)<0.) (mu->pt > el->pt) ? ml0lsoft_EM = (mu_TLV + mu_soft_TLV).M() : ml1lsoft_EM = (mu_TLV + mu_soft_TLV).M();
+    (mu->pt > el->pt) ? mTl0lsoft_EM = calcMt(mu_TLV, mu_soft_TLV) : mTl1lsoft_EM = calcMt(mu_TLV, mu_soft_TLV);
+  }
+  
+  //get all electrons which are not signal electrons
+  ElectronVector softElectrons = getSoftElectrons(&nt, NtSys_NOM, el_TLV, empty_TLV);
+  //check for 3rd soft lepton for WZ bg
+  for(int i_es = 0; i_es < softElectrons.size(); i_es++){  
+    Electron* el_soft = softElectrons.at(i_es);
+    TLorentzVector el_soft_TLV;
+    el_soft_TLV.SetPtEtaPhiE(el_soft->pt, el_soft->eta ,el_soft->phi, el_soft->pt*cosh(el_soft->eta));
+    if((softElectrons.at(i_es)->q * el->q)<0.) (mu->pt < el->pt) ? ml0lsoft_EM = (el_TLV + el_soft_TLV).M(): ml1lsoft_EM = (el_TLV + el_soft_TLV).M();
+    (mu->pt < el->pt) ? mTl0lsoft_EM = calcMt(el_TLV, el_soft_TLV) : mTl1lsoft_EM = calcMt(el_TLV, el_soft_TLV);
+  }
   
   mZTT_coll = calcMZTauTau_coll(el_TLV, mu_TLV, met_TLV); 
 }
@@ -2390,6 +2461,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float wei
   h_DeltaPhiMETj1_EE_SRSS1->Fill(DeltaPhiMETj1, cut_EE, weight_ALL_EE);  
   h_DeltaPhiMETjj_EE_SRSS1->Fill(DeltaPhiMETjj, cut_EE, weight_ALL_EE);  
   h_DeltaRjj_EE_SRSS1->Fill(DeltaRjj, cut_EE, weight_ALL_EE);  
+  h_Mljj_EE_SRSS1->Fill(Mljj_EE, cut_EE, weight_ALL_EE);
   h_etal0_EE_SRSS1->Fill(fabs(eta_el0), cut_EE, weight_ALL_EE);  
   h_etal1_EE_SRSS1->Fill(fabs(eta_el1), cut_EE, weight_ALL_EE);  
   h_etaj0_EE_SRSS1->Fill(fabs(eta_j0), cut_EE, weight_ALL_EE);  
@@ -2406,15 +2478,15 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float wei
   h_mMETll_EE_SRSS1->Fill(mMETee, cut_EE, weight_ALL_EE);  
   h_DeltaYjj_EE_SRSS1->Fill(DeltaYjj, cut_EE, weight_ALL_EE);  
   
-  h_D0_recalc_l0_EE_SRSS1->Fill(D0_recalc_el0, cut_EE, weight_ALL_EE);  
-  h_D0_recalc_l1_EE_SRSS1->Fill(D0_recalc_el1, cut_EE, weight_ALL_EE);  
   h_D0_branch_l0_EE_SRSS1->Fill(D0_branch_el0, cut_EE, weight_ALL_EE);  
   h_D0_branch_l1_EE_SRSS1->Fill(D0_branch_el1, cut_EE, weight_ALL_EE);  
-  h_D0Signif_recalc_l0_EE_SRSS1->Fill(sD0Signif_recalc_el0, cut_EE, weight_ALL_EE);  
-  h_D0Signif_recalc_l1_EE_SRSS1->Fill(sD0Signif_recalc_el1, cut_EE, weight_ALL_EE);  
   h_D0Signif_branch_l0_EE_SRSS1->Fill(sD0Signif_branch_el0, cut_EE, weight_ALL_EE);  
   h_D0Signif_branch_l1_EE_SRSS1->Fill(sD0Signif_branch_el1, cut_EE, weight_ALL_EE);  
-
+  
+  h_ml0lsoft_EE_SRSS1->Fill(ml0lsoft_EE, cut_EE, weight_ALL_EE);
+  h_ml1lsoft_EE_SRSS1->Fill(ml1lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTl0lsoft_EE_SRSS1->Fill(mTl0lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTl1lsoft_EE_SRSS1->Fill(mTl1lsoft_EE, cut_EE, weight_ALL_EE);
 
 
   
@@ -2455,6 +2527,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS2(float cut_EE, int mcid, float wei
   h_DeltaPhiMETj1_EE_SRSS2->Fill(DeltaPhiMETj1, cut_EE, weight_ALL_EE);  
   h_DeltaPhiMETjj_EE_SRSS2->Fill(DeltaPhiMETjj, cut_EE, weight_ALL_EE);  
   h_DeltaRjj_EE_SRSS2->Fill(DeltaRjj, cut_EE, weight_ALL_EE);  
+  h_Mljj_EE_SRSS2->Fill(Mljj_EE, cut_EE, weight_ALL_EE);
   h_etal0_EE_SRSS2->Fill(fabs(eta_el0), cut_EE, weight_ALL_EE);  
   h_etal1_EE_SRSS2->Fill(fabs(eta_el1), cut_EE, weight_ALL_EE);  
   h_etaj0_EE_SRSS2->Fill(fabs(eta_j0), cut_EE, weight_ALL_EE);  
@@ -2471,15 +2544,15 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS2(float cut_EE, int mcid, float wei
   h_mMETll_EE_SRSS2->Fill(mMETee, cut_EE, weight_ALL_EE);  
   h_DeltaYjj_EE_SRSS2->Fill(DeltaYjj, cut_EE, weight_ALL_EE);  
 
-  h_D0_recalc_l0_EE_SRSS2->Fill(D0_recalc_el0, cut_EE, weight_ALL_EE);  
-  h_D0_recalc_l1_EE_SRSS2->Fill(D0_recalc_el1, cut_EE, weight_ALL_EE);  
   h_D0_branch_l0_EE_SRSS2->Fill(D0_branch_el0, cut_EE, weight_ALL_EE);  
   h_D0_branch_l1_EE_SRSS2->Fill(D0_branch_el1, cut_EE, weight_ALL_EE);  
-  h_D0Signif_recalc_l0_EE_SRSS2->Fill(sD0Signif_recalc_el0, cut_EE, weight_ALL_EE);  
-  h_D0Signif_recalc_l1_EE_SRSS2->Fill(sD0Signif_recalc_el1, cut_EE, weight_ALL_EE);  
   h_D0Signif_branch_l0_EE_SRSS2->Fill(sD0Signif_branch_el0, cut_EE, weight_ALL_EE);  
   h_D0Signif_branch_l1_EE_SRSS2->Fill(sD0Signif_branch_el1, cut_EE, weight_ALL_EE);  
 
+  h_ml0lsoft_EE_SRSS2->Fill(ml0lsoft_EE, cut_EE, weight_ALL_EE);
+  h_ml1lsoft_EE_SRSS2->Fill(ml1lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTl0lsoft_EE_SRSS2->Fill(mTl0lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTl1lsoft_EE_SRSS2->Fill(mTl1lsoft_EE, cut_EE, weight_ALL_EE);
 
   
 }
@@ -2519,6 +2592,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SROS1(float cut_EE, int mcid, float wei
   h_DeltaPhiMETj1_EE_SROS1->Fill(DeltaPhiMETj1, cut_EE, weight_ALL_EE);  
   h_DeltaPhiMETjj_EE_SROS1->Fill(DeltaPhiMETjj, cut_EE, weight_ALL_EE);  
   h_DeltaRjj_EE_SROS1->Fill(DeltaRjj, cut_EE, weight_ALL_EE);  
+  h_Mljj_EE_SROS1->Fill(Mljj_EE, cut_EE, weight_ALL_EE);
   h_etal0_EE_SROS1->Fill(fabs(eta_el0), cut_EE, weight_ALL_EE);  
   h_etal1_EE_SROS1->Fill(fabs(eta_el1), cut_EE, weight_ALL_EE);  
   h_etaj0_EE_SROS1->Fill(fabs(eta_j0), cut_EE, weight_ALL_EE);  
@@ -2535,14 +2609,15 @@ void TSelector_SusyNtuple::fillHistos_EE_SROS1(float cut_EE, int mcid, float wei
   h_mMETll_EE_SROS1->Fill(mMETee, cut_EE, weight_ALL_EE);  
   h_DeltaYjj_EE_SROS1->Fill(DeltaYjj, cut_EE, weight_ALL_EE);  
 
-  h_D0_recalc_l0_EE_SROS1->Fill(D0_recalc_el0, cut_EE, weight_ALL_EE);  
-  h_D0_recalc_l1_EE_SROS1->Fill(D0_recalc_el1, cut_EE, weight_ALL_EE);  
   h_D0_branch_l0_EE_SROS1->Fill(D0_branch_el0, cut_EE, weight_ALL_EE);  
   h_D0_branch_l1_EE_SROS1->Fill(D0_branch_el1, cut_EE, weight_ALL_EE);  
-  h_D0Signif_recalc_l0_EE_SROS1->Fill(sD0Signif_recalc_el0, cut_EE, weight_ALL_EE);  
-  h_D0Signif_recalc_l1_EE_SROS1->Fill(sD0Signif_recalc_el1, cut_EE, weight_ALL_EE);  
   h_D0Signif_branch_l0_EE_SROS1->Fill(sD0Signif_branch_el0, cut_EE, weight_ALL_EE);  
   h_D0Signif_branch_l1_EE_SROS1->Fill(sD0Signif_branch_el1, cut_EE, weight_ALL_EE);  
+  
+  h_ml0lsoft_EE_SROS1->Fill(ml0lsoft_EE, cut_EE, weight_ALL_EE);
+  h_ml1lsoft_EE_SROS1->Fill(ml1lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTl0lsoft_EE_SROS1->Fill(mTl0lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTl1lsoft_EE_SROS1->Fill(mTl1lsoft_EE, cut_EE, weight_ALL_EE);
 }
 
 
@@ -2581,6 +2656,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   h_DeltaPhiMETj1_MM_SRSS1->Fill(DeltaPhiMETj1, cut_MM, weight_ALL_MM);  
   h_DeltaPhiMETjj_MM_SRSS1->Fill(DeltaPhiMETjj, cut_MM, weight_ALL_MM);  
   h_DeltaRjj_MM_SRSS1->Fill(DeltaRjj, cut_MM, weight_ALL_MM);  
+  h_Mljj_MM_SRSS1->Fill(Mljj_MM, cut_MM, weight_ALL_MM);
   h_etal0_MM_SRSS1->Fill(fabs(eta_mu0), cut_MM, weight_ALL_MM);  
   h_etal1_MM_SRSS1->Fill(fabs(eta_mu1), cut_MM, weight_ALL_MM);  
   h_etaj0_MM_SRSS1->Fill(fabs(eta_j0), cut_MM, weight_ALL_MM);  
@@ -2597,14 +2673,15 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   h_mMETll_MM_SRSS1->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS1->Fill(DeltaYjj, cut_MM, weight_ALL_MM);
 
-  h_D0_recalc_l0_MM_SRSS1->Fill(D0_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0_recalc_l1_MM_SRSS1->Fill(D0_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0_branch_l0_MM_SRSS1->Fill(D0_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0_branch_l1_MM_SRSS1->Fill(D0_branch_mu1, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l0_MM_SRSS1->Fill(sD0Signif_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l1_MM_SRSS1->Fill(sD0Signif_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l0_MM_SRSS1->Fill(sD0Signif_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l1_MM_SRSS1->Fill(sD0Signif_branch_mu1, cut_MM, weight_ALL_MM);  
+  
+  h_ml0lsoft_MM_SRSS1->Fill(ml0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_ml1lsoft_MM_SRSS1->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl0lsoft_MM_SRSS1->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl1lsoft_MM_SRSS1->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -2643,6 +2720,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS2(float cut_MM, int mcid, float wei
   h_DeltaPhiMETj1_MM_SRSS2->Fill(DeltaPhiMETj1, cut_MM, weight_ALL_MM);  
   h_DeltaPhiMETjj_MM_SRSS2->Fill(DeltaPhiMETjj, cut_MM, weight_ALL_MM);  
   h_DeltaRjj_MM_SRSS2->Fill(DeltaRjj, cut_MM, weight_ALL_MM);  
+  h_Mljj_MM_SRSS2->Fill(Mljj_MM, cut_MM, weight_ALL_MM);
   h_etal0_MM_SRSS2->Fill(fabs(eta_mu0), cut_MM, weight_ALL_MM);  
   h_etal1_MM_SRSS2->Fill(fabs(eta_mu1), cut_MM, weight_ALL_MM);  
   h_etaj0_MM_SRSS2->Fill(fabs(eta_j0), cut_MM, weight_ALL_MM);  
@@ -2659,14 +2737,15 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS2(float cut_MM, int mcid, float wei
   h_mMETll_MM_SRSS2->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS2->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
 
-  h_D0_recalc_l0_MM_SRSS2->Fill(D0_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0_recalc_l1_MM_SRSS2->Fill(D0_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0_branch_l0_MM_SRSS2->Fill(D0_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0_branch_l1_MM_SRSS2->Fill(D0_branch_mu1, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l0_MM_SRSS2->Fill(sD0Signif_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l1_MM_SRSS2->Fill(sD0Signif_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l0_MM_SRSS2->Fill(sD0Signif_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l1_MM_SRSS2->Fill(sD0Signif_branch_mu1, cut_MM, weight_ALL_MM);  
+  
+  h_ml0lsoft_MM_SRSS2->Fill(ml0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_ml1lsoft_MM_SRSS2->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl0lsoft_MM_SRSS2->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl1lsoft_MM_SRSS2->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -2705,6 +2784,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS3(float cut_MM, int mcid, float wei
   h_DeltaPhiMETj1_MM_SRSS3->Fill(DeltaPhiMETj1, cut_MM, weight_ALL_MM);  
   h_DeltaPhiMETjj_MM_SRSS3->Fill(DeltaPhiMETjj, cut_MM, weight_ALL_MM);  
   h_DeltaRjj_MM_SRSS3->Fill(DeltaRjj, cut_MM, weight_ALL_MM);  
+  h_Mljj_MM_SRSS3->Fill(Mljj_MM, cut_MM, weight_ALL_MM);
   h_etal0_MM_SRSS3->Fill(fabs(eta_mu0), cut_MM, weight_ALL_MM);  
   h_etal1_MM_SRSS3->Fill(fabs(eta_mu1), cut_MM, weight_ALL_MM);  
   h_etaj0_MM_SRSS3->Fill(fabs(eta_j0), cut_MM, weight_ALL_MM);  
@@ -2721,14 +2801,15 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS3(float cut_MM, int mcid, float wei
   h_mMETll_MM_SRSS3->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS3->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
 
-  h_D0_recalc_l0_MM_SRSS3->Fill(D0_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0_recalc_l1_MM_SRSS3->Fill(D0_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0_branch_l0_MM_SRSS3->Fill(D0_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0_branch_l1_MM_SRSS3->Fill(D0_branch_mu1, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l0_MM_SRSS3->Fill(sD0Signif_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l1_MM_SRSS3->Fill(sD0Signif_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l0_MM_SRSS3->Fill(sD0Signif_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l1_MM_SRSS3->Fill(sD0Signif_branch_mu1, cut_MM, weight_ALL_MM);  
+  
+  h_ml0lsoft_MM_SRSS3->Fill(ml0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_ml1lsoft_MM_SRSS3->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl0lsoft_MM_SRSS3->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl1lsoft_MM_SRSS3->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -2767,6 +2848,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS4(float cut_MM, int mcid, float wei
   h_DeltaPhiMETj1_MM_SRSS4->Fill(DeltaPhiMETj1, cut_MM, weight_ALL_MM);  
   h_DeltaPhiMETjj_MM_SRSS4->Fill(DeltaPhiMETjj, cut_MM, weight_ALL_MM);  
   h_DeltaRjj_MM_SRSS4->Fill(DeltaRjj, cut_MM, weight_ALL_MM);  
+  h_Mljj_MM_SRSS4->Fill(Mljj_MM, cut_MM, weight_ALL_MM);
   h_etal0_MM_SRSS4->Fill(fabs(eta_mu0), cut_MM, weight_ALL_MM);  
   h_etal1_MM_SRSS4->Fill(fabs(eta_mu1), cut_MM, weight_ALL_MM);  
   h_etaj0_MM_SRSS4->Fill(fabs(eta_j0), cut_MM, weight_ALL_MM);  
@@ -2783,14 +2865,15 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS4(float cut_MM, int mcid, float wei
   h_mMETll_MM_SRSS4->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS4->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
 
-  h_D0_recalc_l0_MM_SRSS4->Fill(D0_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0_recalc_l1_MM_SRSS4->Fill(D0_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0_branch_l0_MM_SRSS4->Fill(D0_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0_branch_l1_MM_SRSS4->Fill(D0_branch_mu1, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l0_MM_SRSS4->Fill(sD0Signif_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l1_MM_SRSS4->Fill(sD0Signif_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l0_MM_SRSS4->Fill(sD0Signif_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l1_MM_SRSS4->Fill(sD0Signif_branch_mu1, cut_MM, weight_ALL_MM);  
+  
+  h_ml0lsoft_MM_SRSS4->Fill(ml0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_ml1lsoft_MM_SRSS4->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl0lsoft_MM_SRSS4->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl1lsoft_MM_SRSS4->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
 }
 
 void TSelector_SusyNtuple::fillHistos_MM_SROS1(float cut_MM, int mcid, float weight_ALL_MM){
@@ -2828,6 +2911,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SROS1(float cut_MM, int mcid, float wei
   h_DeltaPhiMETj1_MM_SROS1->Fill(DeltaPhiMETj1, cut_MM, weight_ALL_MM);  
   h_DeltaPhiMETjj_MM_SROS1->Fill(DeltaPhiMETjj, cut_MM, weight_ALL_MM);  
   h_DeltaRjj_MM_SROS1->Fill(DeltaRjj, cut_MM, weight_ALL_MM);  
+  h_Mljj_MM_SROS1->Fill(Mljj_MM, cut_MM, weight_ALL_MM);
   h_etal0_MM_SROS1->Fill(fabs(eta_mu0), cut_MM, weight_ALL_MM);  
   h_etal1_MM_SROS1->Fill(fabs(eta_mu1), cut_MM, weight_ALL_MM);  
   h_etaj0_MM_SROS1->Fill(fabs(eta_j0), cut_MM, weight_ALL_MM);  
@@ -2844,14 +2928,15 @@ void TSelector_SusyNtuple::fillHistos_MM_SROS1(float cut_MM, int mcid, float wei
   h_mMETll_MM_SROS1->Fill(mMETmm, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SROS1->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
 
-  h_D0_recalc_l0_MM_SROS1->Fill(D0_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0_recalc_l1_MM_SROS1->Fill(D0_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0_branch_l0_MM_SROS1->Fill(D0_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0_branch_l1_MM_SROS1->Fill(D0_branch_mu1, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l0_MM_SROS1->Fill(sD0Signif_recalc_mu0, cut_MM, weight_ALL_MM);  
-  h_D0Signif_recalc_l1_MM_SROS1->Fill(sD0Signif_recalc_mu1, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l0_MM_SROS1->Fill(sD0Signif_branch_mu0, cut_MM, weight_ALL_MM);  
   h_D0Signif_branch_l1_MM_SROS1->Fill(sD0Signif_branch_mu1, cut_MM, weight_ALL_MM);  
+  
+  h_ml0lsoft_MM_SROS1->Fill(ml0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_ml1lsoft_MM_SROS1->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl0lsoft_MM_SROS1->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTl1lsoft_MM_SROS1->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -2889,6 +2974,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
   h_DeltaPhiMETj1_EM_SRSS1->Fill(DeltaPhiMETj1, cut_EM, weight_ALL_EM);  
   h_DeltaPhiMETjj_EM_SRSS1->Fill(DeltaPhiMETjj, cut_EM, weight_ALL_EM);  
   h_DeltaRjj_EM_SRSS1->Fill(DeltaRjj, cut_EM, weight_ALL_EM);  
+  h_Mljj_EM_SRSS1->Fill(Mljj_EM, cut_EM, weight_ALL_EM);
   h_etal0_EM_SRSS1->Fill(fabs(eta_l0), cut_EM, weight_ALL_EM);  
   h_etal1_EM_SRSS1->Fill(fabs(eta_l1), cut_EM, weight_ALL_EM);  
   h_etaj0_EM_SRSS1->Fill(fabs(eta_j0), cut_EM, weight_ALL_EM);  
@@ -2905,14 +2991,15 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
   h_mMETll_EM_SRSS1->Fill(mMETem, cut_EM, weight_ALL_EM);  
   h_DeltaYjj_EM_SRSS1->Fill(DeltaYjj, cut_EM, weight_ALL_EM);  
 
-  h_D0_recalc_l0_EM_SRSS1->Fill(D0_recalc_l0, cut_EM, weight_ALL_EM);  
-  h_D0_recalc_l1_EM_SRSS1->Fill(D0_recalc_l1, cut_EM, weight_ALL_EM);  
   h_D0_branch_l0_EM_SRSS1->Fill(D0_branch_l0, cut_EM, weight_ALL_EM);  
   h_D0_branch_l1_EM_SRSS1->Fill(D0_branch_l1, cut_EM, weight_ALL_EM);  
-  h_D0Signif_recalc_l0_EM_SRSS1->Fill(sD0Signif_recalc_l0, cut_EM, weight_ALL_EM);  
-  h_D0Signif_recalc_l1_EM_SRSS1->Fill(sD0Signif_recalc_l1, cut_EM, weight_ALL_EM);  
   h_D0Signif_branch_l0_EM_SRSS1->Fill(sD0Signif_branch_l0, cut_EM, weight_ALL_EM);  
   h_D0Signif_branch_l1_EM_SRSS1->Fill(sD0Signif_branch_l1, cut_EM, weight_ALL_EM);  
+  
+  h_ml0lsoft_EM_SRSS1->Fill(ml0lsoft_EM, cut_EM, weight_ALL_EM);
+  h_ml1lsoft_EM_SRSS1->Fill(ml1lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTl0lsoft_EM_SRSS1->Fill(mTl0lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTl1lsoft_EM_SRSS1->Fill(mTl1lsoft_EM, cut_EM, weight_ALL_EM);
 
 
 }
@@ -2951,6 +3038,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS2(float cut_EM, int mcid, float wei
   h_DeltaPhiMETj1_EM_SRSS2->Fill(DeltaPhiMETj1, cut_EM, weight_ALL_EM);  
   h_DeltaPhiMETjj_EM_SRSS2->Fill(DeltaPhiMETjj, cut_EM, weight_ALL_EM);  
   h_DeltaRjj_EM_SRSS2->Fill(DeltaRjj, cut_EM, weight_ALL_EM);  
+  h_Mljj_EM_SRSS2->Fill(Mljj_EM, cut_EM, weight_ALL_EM);
   h_etal0_EM_SRSS2->Fill(fabs(eta_l0), cut_EM, weight_ALL_EM);  
   h_etal1_EM_SRSS2->Fill(fabs(eta_l1), cut_EM, weight_ALL_EM);  
   h_etaj0_EM_SRSS2->Fill(fabs(eta_j0), cut_EM, weight_ALL_EM);  
@@ -2967,15 +3055,15 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS2(float cut_EM, int mcid, float wei
   h_mMETll_EM_SRSS2->Fill(mMETem, cut_EM, weight_ALL_EM);  
   h_DeltaYjj_EM_SRSS2->Fill(DeltaYjj, cut_EM, weight_ALL_EM);  
 
-  h_D0_recalc_l0_EM_SRSS2->Fill(D0_recalc_l0, cut_EM, weight_ALL_EM);  
-  h_D0_recalc_l1_EM_SRSS2->Fill(D0_recalc_l1, cut_EM, weight_ALL_EM);  
   h_D0_branch_l0_EM_SRSS2->Fill(D0_branch_l0, cut_EM, weight_ALL_EM);  
   h_D0_branch_l1_EM_SRSS2->Fill(D0_branch_l1, cut_EM, weight_ALL_EM);  
-  h_D0Signif_recalc_l0_EM_SRSS2->Fill(sD0Signif_recalc_l0, cut_EM, weight_ALL_EM);  
-  h_D0Signif_recalc_l1_EM_SRSS2->Fill(sD0Signif_recalc_l1, cut_EM, weight_ALL_EM);  
   h_D0Signif_branch_l0_EM_SRSS2->Fill(sD0Signif_branch_l0, cut_EM, weight_ALL_EM);  
   h_D0Signif_branch_l1_EM_SRSS2->Fill(sD0Signif_branch_l1, cut_EM, weight_ALL_EM);  
   
+  h_ml0lsoft_EM_SRSS2->Fill(ml0lsoft_EM, cut_EM, weight_ALL_EM);
+  h_ml1lsoft_EM_SRSS2->Fill(ml1lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTl0lsoft_EM_SRSS2->Fill(mTl0lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTl1lsoft_EM_SRSS2->Fill(mTl1lsoft_EM, cut_EM, weight_ALL_EM);
   
 
 
@@ -3016,6 +3104,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SROS1(float cut_EM, int mcid, float wei
   h_DeltaPhiMETj1_EM_SROS1->Fill(DeltaPhiMETj1, cut_EM, weight_ALL_EM);  
   h_DeltaPhiMETjj_EM_SROS1->Fill(DeltaPhiMETjj, cut_EM, weight_ALL_EM);  
   h_DeltaRjj_EM_SROS1->Fill(DeltaRjj, cut_EM, weight_ALL_EM);  
+  h_Mljj_EM_SROS1->Fill(Mljj_EM, cut_EM, weight_ALL_EM);
   h_etal0_EM_SROS1->Fill(fabs(eta_l0), cut_EM, weight_ALL_EM);  
   h_etal1_EM_SROS1->Fill(fabs(eta_l1), cut_EM, weight_ALL_EM);  
   h_etaj0_EM_SROS1->Fill(fabs(eta_j0), cut_EM, weight_ALL_EM);  
@@ -3032,12 +3121,13 @@ void TSelector_SusyNtuple::fillHistos_EM_SROS1(float cut_EM, int mcid, float wei
   h_mMETll_EM_SROS1->Fill(mMETem, cut_EM, weight_ALL_EM);  
   h_DeltaYjj_EM_SROS1->Fill(DeltaYjj, cut_EM, weight_ALL_EM);  
 
-  h_D0_recalc_l0_EM_SROS1->Fill(D0_recalc_l0, cut_EM, weight_ALL_EM);  
-  h_D0_recalc_l1_EM_SROS1->Fill(D0_recalc_l1, cut_EM, weight_ALL_EM);  
   h_D0_branch_l0_EM_SROS1->Fill(D0_branch_l0, cut_EM, weight_ALL_EM);  
   h_D0_branch_l1_EM_SROS1->Fill(D0_branch_l1, cut_EM, weight_ALL_EM);  
-  h_D0Signif_recalc_l0_EM_SROS1->Fill(sD0Signif_recalc_l0, cut_EM, weight_ALL_EM);  
-  h_D0Signif_recalc_l1_EM_SROS1->Fill(sD0Signif_recalc_l1, cut_EM, weight_ALL_EM);  
   h_D0Signif_branch_l0_EM_SROS1->Fill(sD0Signif_branch_l0, cut_EM, weight_ALL_EM);  
   h_D0Signif_branch_l1_EM_SROS1->Fill(sD0Signif_branch_l1, cut_EM, weight_ALL_EM);  
+  
+  h_ml0lsoft_EM_SROS1->Fill(ml0lsoft_EM, cut_EM, weight_ALL_EM);
+  h_ml1lsoft_EM_SROS1->Fill(ml1lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTl0lsoft_EM_SROS1->Fill(mTl0lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTl1lsoft_EM_SROS1->Fill(mTl1lsoft_EM, cut_EM, weight_ALL_EM);
 }
