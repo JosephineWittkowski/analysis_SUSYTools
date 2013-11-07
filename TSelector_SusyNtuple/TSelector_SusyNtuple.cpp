@@ -2,7 +2,7 @@
 #include "TCanvas.h"
 
 #include "TSelector_SusyNtuple.hpp"
-#include "histos_ZN_tauveto.C"
+#include "histos_WH_analysis.C"
 
 using namespace std;
 using namespace Susy;
@@ -1277,7 +1277,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 177526)outputfile="histos_ZN_177526_softLeptonCheck.root";
     if(sample_identifier == 177527)outputfile="histos_ZN_177527_softLeptonCheck.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Muons_softLeptonCheck_3.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_softLeptonCheck_1.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];
