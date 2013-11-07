@@ -101,6 +101,18 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTl1lsoft_MM_SROS1;
     TH2F* h_mTl1lsoft_EM_SROS1;
     
+    TH2F* h_mTlllsoft_EE_SRSS1;
+    TH2F* h_mTlllsoft_EE_SRSS2;
+    TH2F* h_mTlllsoft_MM_SRSS1;    
+    TH2F* h_mTlllsoft_MM_SRSS2;
+    TH2F* h_mTlllsoft_MM_SRSS3;
+    TH2F* h_mTlllsoft_MM_SRSS4;    
+    TH2F* h_mTlllsoft_EM_SRSS1;
+    TH2F* h_mTlllsoft_EM_SRSS2;
+    TH2F* h_mTlllsoft_EE_SROS1;    
+    TH2F* h_mTlllsoft_MM_SROS1;
+    TH2F* h_mTlllsoft_EM_SROS1;
+    
     
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_EE_SRSS2;
@@ -792,6 +804,8 @@ class TSelector_SusyNtuple : public SusyNtAna
     float calc_D0(bool unbiased, const Lepton* lep);
     ElectronVector getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector el0_TLV, TLorentzVector el1_TLV);
     MuonVector getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV);
+    bool isCMSJet(const Susy::Jet* jet);
+    int numberOfCMSJets(const JetVector& jets);    
     bool doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM);
 
     // Selection region
@@ -865,6 +879,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ml1lsoft_EE;
     float mTl0lsoft_EE;
     float mTl1lsoft_EE;
+    float mTlllsoft_EE;
 
     //#####################################
     
@@ -909,6 +924,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ml1lsoft_MM;
     float mTl0lsoft_MM;
     float mTl1lsoft_MM;
+    float mTlllsoft_MM;
     //#####################################
     
     float ptl0;
@@ -952,6 +968,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ml1lsoft_EM;
     float mTl0lsoft_EM;
     float mTl1lsoft_EM;
+    float mTlllsoft_EM;
     //#####################################
     
     ClassDef(TSelector_SusyNtuple, 1);

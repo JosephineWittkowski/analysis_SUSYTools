@@ -60,6 +60,18 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_mTl1lsoft_MM_SROS1 = new TH2F("h_mTl1lsoft_MM_SROS1", "h_mTl1lsoft_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_MM_SROS1->Sumw2();
   h_mTl1lsoft_EM_SROS1 = new TH2F("h_mTl1lsoft_EM_SROS1", "h_mTl1lsoft_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lsoft_EM_SROS1->Sumw2();
   
+  h_mTlllsoft_EE_SRSS1 = new TH2F("h_mTlllsoft_EE_SRSS1", "h_mTlllsoft_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_EE_SRSS1->Sumw2();
+  h_mTlllsoft_EE_SRSS2 = new TH2F("h_mTlllsoft_EE_SRSS2", "h_mTlllsoft_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_EE_SRSS2->Sumw2();
+  h_mTlllsoft_MM_SRSS1 = new TH2F("h_mTlllsoft_MM_SRSS1", "h_mTlllsoft_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_MM_SRSS1->Sumw2(); 
+  h_mTlllsoft_MM_SRSS2 = new TH2F("h_mTlllsoft_MM_SRSS2", "h_mTlllsoft_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_MM_SRSS2->Sumw2();
+  h_mTlllsoft_MM_SRSS3 = new TH2F("h_mTlllsoft_MM_SRSS3", "h_mTlllsoft_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_MM_SRSS3->Sumw2();
+  h_mTlllsoft_MM_SRSS4 = new TH2F("h_mTlllsoft_MM_SRSS4", "h_mTlllsoft_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_MM_SRSS4->Sumw2(); 
+  h_mTlllsoft_EM_SRSS1 = new TH2F("h_mTlllsoft_EM_SRSS1", "h_mTlllsoft_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_EM_SRSS1->Sumw2();
+  h_mTlllsoft_EM_SRSS2 = new TH2F("h_mTlllsoft_EM_SRSS2", "h_mTlllsoft_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_EM_SRSS2->Sumw2();
+  h_mTlllsoft_EE_SROS1 = new TH2F("h_mTlllsoft_EE_SROS1", "h_mTlllsoft_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_EE_SROS1->Sumw2(); 
+  h_mTlllsoft_MM_SROS1 = new TH2F("h_mTlllsoft_MM_SROS1", "h_mTlllsoft_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_MM_SROS1->Sumw2();
+  h_mTlllsoft_EM_SROS1 = new TH2F("h_mTlllsoft_EM_SROS1", "h_mTlllsoft_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTlllsoft_EM_SROS1->Sumw2();
+  
   h_Mljj_EE_SRSS1 = new TH2F("h_Mljj_EE_SRSS1", "h_Mljj_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SRSS1->Sumw2();
   h_Mljj_EE_SRSS2 = new TH2F("h_Mljj_EE_SRSS2", "h_Mljj_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SRSS2->Sumw2();
   h_Mljj_MM_SRSS1 = new TH2F("h_Mljj_MM_SRSS1", "h_Mljj_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SRSS1->Sumw2();
@@ -2162,24 +2174,11 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   Mljj_EE = 0.;
   if(nSignalJets>1){
     //find dijet axis:
-    double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
-    double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
-    double DeltaRDijetLep0 = sqrt(pow(fabs(etaDijetAxis - el0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el0_TLV.Phi()),2));
-    double DeltaRDijetLep1 = sqrt(pow(fabs(etaDijetAxis - el1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el1_TLV.Phi()),2));
-    TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetLep0 > DeltaRDijetLep1) ? el1_TLV : el0_TLV;
-    /*cout << " phi j 0= " << signalJet0_TLV.Phi()  << endl;	  
-    cout << " phi j 1= " << signalJet1_TLV.Phi() << endl;
-    cout << " phiDijetAxis= " << phiDijetAxis << endl;
-    cout << " eta j 0= " << signalJet0_TLV.Eta() <<  endl;
-    cout << " eta j 1= " << signalJet1_TLV.Eta() <<  endl;
-    cout << " etaDijetAxis= " << etaDijetAxis << endl;
-    cout << " phi e 0=" << el0_TLV.Phi() <<  endl;
-    cout << " phi e 1=" << el1_TLV.Phi() <<  endl;
-    cout << " eta e 0=" << el0_TLV.Eta() <<  endl;
-    cout << " eta e 1=" << el1_TLV.Eta() <<  endl;
-    cout << " DeltaRDijetLep0= " << DeltaRDijetLep0 <<  endl;
-    cout << " DeltaRDijetLep1= " << DeltaRDijetLep1 <<  endl;
-    cout << " phi closestElecDijetAxis= " << closestElecDijetAxis->phi << endl;*/
+//     double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
+//     double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
+    double DeltaRDijetEl0 = el0_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el0_TLV.Phi()),2));
+    double DeltaRDijetEl1 = el1_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el1_TLV.Phi()),2));
+    TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetEl0 > DeltaRDijetEl1) ? el1_TLV : el0_TLV;
     Mljj_EE = (signalJet0_TLV + signalJet1_TLV + closestElecDijetAxis_TLV).M();
 //     cout << "Mljj_EE= " << Mljj_EE << endl;
   }
@@ -2215,10 +2214,26 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
     Electron* el_soft = softElectrons.at(i_es);
     TLorentzVector el_soft_TLV;
     el_soft_TLV.SetPtEtaPhiE(el_soft->pt, el_soft->eta ,el_soft->phi, el_soft->pt*cosh(el_soft->eta));
-    if((softElectrons.at(i_es)->q * el0->q)<0.) ml0lsoft_EE = (el0_TLV + el_soft_TLV).M();
-    if((softElectrons.at(i_es)->q * el1->q)<0.) ml1lsoft_EE = (el1_TLV + el_soft_TLV).M(); 
-    mTl0lsoft_EE = calcMt(el0_TLV, el_soft_TLV);
-    mTl1lsoft_EE = calcMt(el1_TLV, el_soft_TLV);
+    ml0lsoft_EE = 0.;
+    mTl0lsoft_EE = 0.;
+    ml1lsoft_EE = 0.;
+    mTl1lsoft_EE = 0.;
+    
+    //only use OS lepton pair:
+    if((softElectrons.at(i_es)->q * el0->q)<0.){
+      ml0lsoft_EE = (el0_TLV + el_soft_TLV).M();
+      mTl0lsoft_EE = calcMt(el0_TLV, el_soft_TLV);
+      mTlllsoft_EE = calcMt(el0_TLV + el1_TLV, el_soft_TLV);
+      break; // only use soft lepton with highest pT
+    }
+    //only use OS lepton pair:
+    if((softElectrons.at(i_es)->q * el1->q)<0.){
+      ml1lsoft_EE = (el1_TLV + el_soft_TLV).M(); 
+      mTl1lsoft_EE = calcMt(el1_TLV, el_soft_TLV);
+      mTlllsoft_EE = calcMt(el0_TLV + el1_TLV, el_soft_TLV);
+      break; // only use soft lepton with highest pT
+    }
+    
     
   }
   
@@ -2264,25 +2279,12 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   Mljj_MM = 0.;
   if(nSignalJets>1){
     //find dijet axis:
-    double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
-    double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
-    double DeltaRDijetLep0 = sqrt(pow(fabs(etaDijetAxis - mu0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu0_TLV.Phi()),2));
-    double DeltaRDijetLep1 = sqrt(pow(fabs(etaDijetAxis - mu1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu1_TLV.Phi()),2));
-    TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetLep0 > DeltaRDijetLep1) ? mu1_TLV : mu0_TLV;
-    /*cout << " phi j 0= " << signalJet0_TLV.Phi()  << endl;	  
-    cout << " phi j 1= " << signalJet1_TLV.Phi() << endl;
-    cout << " phiDijetAxis= " << phiDijetAxis << endl;
-    cout << " eta j 0= " << signalJet0_TLV.Eta() <<  endl;
-    cout << " eta j 1= " << signalJet1_TLV.Eta() <<  endl;
-    cout << " etaDijetAxis= " << etaDijetAxis << endl;
-    cout << " phi mu 0=" << mu0_TLV.Phi() <<  endl;
-    cout << " phi mu 1=" << mu1_TLV.Phi() <<  endl;
-    cout << " eta mu 0=" << mu0_TLV.Eta() <<  endl;
-    cout << " eta mu 1=" << mu1_TLV.Eta() <<  endl;
-    cout << " DeltaRDijetLep0= " << DeltaRDijetLep0 <<  endl;
-    cout << " DeltaRDijetLep1= " << DeltaRDijetLep1 <<  endl;
-    cout << " phi closestElecDijetAxis= " << closestElecDijetAxis->phi << endl;*/
-    Mljj_MM = (signalJet0_TLV + signalJet1_TLV + closestElecDijetAxis_TLV).M();
+//     double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
+//     double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
+    double DeltaRDijetMu0 = mu0_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu0_TLV.Phi()),2));
+    double DeltaRDijetMu1 = mu1_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu1_TLV.Phi()),2));
+    TLorentzVector closestMuonDijetAxis_TLV = (DeltaRDijetMu0 > DeltaRDijetMu1) ? mu1_TLV : mu0_TLV;
+    Mljj_MM = (signalJet0_TLV + signalJet1_TLV + closestMuonDijetAxis_TLV).M();
 //     cout << "Mljj_MM= " << Mljj_MM << endl;
   }
   
@@ -2314,10 +2316,27 @@ bool unbiased = true;
     Muon* mu_soft = softMuons.at(i_ms);
     TLorentzVector mu_soft_TLV;
     mu_soft_TLV.SetPtEtaPhiE(mu_soft->pt, mu_soft->eta ,mu_soft->phi, mu_soft->pt*cosh(mu_soft->eta));
-    if((softMuons.at(i_ms)->q * mu0->q)<0.) ml0lsoft_MM = (mu0_TLV + mu_soft_TLV).M();
-    if((softMuons.at(i_ms)->q * mu1->q)<0.) ml1lsoft_MM = (mu1_TLV + mu_soft_TLV).M();
-    mTl0lsoft_MM = calcMt(mu0_TLV, mu_soft_TLV);
-    mTl1lsoft_MM = calcMt(mu1_TLV, mu_soft_TLV);
+    
+    ml0lsoft_MM = 0.;
+    mTl0lsoft_MM = 0.;
+    ml1lsoft_MM = 0.;
+    mTl1lsoft_MM = 0.;
+    
+    //only use OS lepton pair:
+    if((softMuons.at(i_ms)->q * mu0->q)<0.){
+      ml0lsoft_MM = (mu0_TLV + mu_soft_TLV).M();
+      mTl0lsoft_MM = calcMt(mu0_TLV, mu_soft_TLV);
+      mTlllsoft_MM = calcMt(mu0_TLV + mu1_TLV, mu_soft_TLV);
+      break; // only use soft lepton with highest pT
+    }
+    //only use OS lepton pair:
+    if((softMuons.at(i_ms)->q * mu1->q)<0.){
+      ml1lsoft_MM = (mu1_TLV + mu_soft_TLV).M();
+      mTl1lsoft_MM = calcMt(mu1_TLV, mu_soft_TLV);
+      mTlllsoft_MM = calcMt(mu0_TLV + mu1_TLV, mu_soft_TLV);
+      break; // only use soft lepton with highest pT
+    }
+    
   }
   
   mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, met_TLV); 
@@ -2357,26 +2376,14 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   Mljj_EM = 0.;
   if(nSignalJets>1){
     //find dijet axis:
-    double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
-    double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
-    double DeltaRDijetLep0 = sqrt(pow(fabs(etaDijetAxis - mu_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu_TLV.Phi()),2));
-    double DeltaRDijetLep1 = sqrt(pow(fabs(etaDijetAxis - el_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el_TLV.Phi()),2));
-    TLorentzVector closestLepDijetAxis_TLV = (DeltaRDijetLep0 > DeltaRDijetLep1) ? el_TLV : mu_TLV;
-    /*cout << " phi j 0= " << signalJet0_TLV.Phi()  << endl;	  
-    cout << " phi j 1= " << signalJet1_TLV.Phi() << endl;
-    cout << " phiDijetAxis= " << phiDijetAxis << endl;
-    cout << " eta j 0= " << signalJet0_TLV.Eta() <<  endl;
-    cout << " eta j 1= " << signalJet1_TLV.Eta() <<  endl;
-    cout << " etaDijetAxis= " << etaDijetAxis << endl;
-    cout << " phi mu=" << mu_TLV.Phi() <<  endl;
-    cout << " phi el=" << el_TLV.Phi() <<  endl;
-    cout << " eta mu=" << mu_TLV.Eta() <<  endl;
-    cout << " eta el=" << el_TLV.Eta() <<  endl;
-    cout << " DeltaRDijetLep0= " << DeltaRDijetLep0 <<  endl;
-    cout << " DeltaRDijetLep1= " << DeltaRDijetLep1 <<  endl;
-    cout << " phi closestElecDijetAxis= " << closestElecDijetAxis->phi << endl;*/
+//     double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
+//     double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
+    double DeltaRDijetMu = mu_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu_TLV.Phi()),2));
+    double DeltaRDijetEl = el_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el_TLV.Phi()),2));
+    TLorentzVector closestLepDijetAxis_TLV = (DeltaRDijetMu > DeltaRDijetEl) ? el_TLV : mu_TLV;
+
     Mljj_EM = (signalJet0_TLV + signalJet1_TLV + closestLepDijetAxis_TLV).M();
-//     cout << "Mljj_EM= " << Mljj_EM << endl;
+
   }
   
   mt2_em = calcMT2(met_TLV, el_TLV, mu_TLV);
@@ -2404,12 +2411,23 @@ bool unbiased = true;
   TLorentzVector empty_TLV;
   MuonVector softMuons = getSoftMuons(&nt, NtSys_NOM, mu_TLV, empty_TLV);
   //check for 3rd soft lepton for WZ bg
+  
+  ml0lsoft_EM = 0.;
+  mTl0lsoft_EM = 0.;
+  ml1lsoft_EM = 0.;
+  mTl1lsoft_EM = 0.;
+  
   for(int i_ms = 0; i_ms < softMuons.size(); i_ms++){
     Muon* mu_soft = softMuons.at(i_ms);
     TLorentzVector mu_soft_TLV;
     mu_soft_TLV.SetPtEtaPhiE(mu_soft->pt, mu_soft->eta ,mu_soft->phi, mu_soft->pt*cosh(mu_soft->eta));
-    if((softMuons.at(i_ms)->q * mu->q)<0.) (mu->pt > el->pt) ? ml0lsoft_EM = (mu_TLV + mu_soft_TLV).M() : ml1lsoft_EM = (mu_TLV + mu_soft_TLV).M();
-    (mu->pt > el->pt) ? mTl0lsoft_EM = calcMt(mu_TLV, mu_soft_TLV) : mTl1lsoft_EM = calcMt(mu_TLV, mu_soft_TLV);
+    //only use OS lepton pair:
+    if((softMuons.at(i_ms)->q * mu->q)<0.){
+      (mu->pt > el->pt) ? ml0lsoft_EM = (mu_TLV + mu_soft_TLV).M() : ml1lsoft_EM = (mu_TLV + mu_soft_TLV).M();
+      (mu->pt > el->pt) ? mTl0lsoft_EM = calcMt(mu_TLV, mu_soft_TLV) : mTl1lsoft_EM = calcMt(mu_TLV, mu_soft_TLV);
+      mTlllsoft_EM = calcMt(mu_TLV + el_TLV, mu_soft_TLV);
+      break; // only use soft lepton with highest pT
+    }
   }
   
   //get all electrons which are not signal electrons
@@ -2419,8 +2437,13 @@ bool unbiased = true;
     Electron* el_soft = softElectrons.at(i_es);
     TLorentzVector el_soft_TLV;
     el_soft_TLV.SetPtEtaPhiE(el_soft->pt, el_soft->eta ,el_soft->phi, el_soft->pt*cosh(el_soft->eta));
-    if((softElectrons.at(i_es)->q * el->q)<0.) (mu->pt < el->pt) ? ml0lsoft_EM = (el_TLV + el_soft_TLV).M(): ml1lsoft_EM = (el_TLV + el_soft_TLV).M();
-    (mu->pt < el->pt) ? mTl0lsoft_EM = calcMt(el_TLV, el_soft_TLV) : mTl1lsoft_EM = calcMt(el_TLV, el_soft_TLV);
+    //only use OS lepton pair:
+    if((softElectrons.at(i_es)->q * el->q)<0.){
+      (mu->pt < el->pt) ? ml0lsoft_EM = (el_TLV + el_soft_TLV).M(): ml1lsoft_EM = (el_TLV + el_soft_TLV).M();
+      (mu->pt < el->pt) ? mTl0lsoft_EM = calcMt(el_TLV, el_soft_TLV) : mTl1lsoft_EM = calcMt(el_TLV, el_soft_TLV);
+      mTlllsoft_EM = calcMt(mu_TLV + el_TLV, el_soft_TLV);
+      break; // only use soft lepton with highest pT
+    }
   }
   
   mZTT_coll = calcMZTauTau_coll(el_TLV, mu_TLV, met_TLV); 
@@ -2487,6 +2510,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float wei
   h_ml1lsoft_EE_SRSS1->Fill(ml1lsoft_EE, cut_EE, weight_ALL_EE);
   h_mTl0lsoft_EE_SRSS1->Fill(mTl0lsoft_EE, cut_EE, weight_ALL_EE);
   h_mTl1lsoft_EE_SRSS1->Fill(mTl1lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTlllsoft_EE_SRSS1->Fill(mTlllsoft_EE, cut_EE, weight_ALL_EE);
 
 
   
@@ -2553,6 +2577,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS2(float cut_EE, int mcid, float wei
   h_ml1lsoft_EE_SRSS2->Fill(ml1lsoft_EE, cut_EE, weight_ALL_EE);
   h_mTl0lsoft_EE_SRSS2->Fill(mTl0lsoft_EE, cut_EE, weight_ALL_EE);
   h_mTl1lsoft_EE_SRSS2->Fill(mTl1lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTlllsoft_EE_SRSS2->Fill(mTlllsoft_EE, cut_EE, weight_ALL_EE);
 
   
 }
@@ -2618,6 +2643,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SROS1(float cut_EE, int mcid, float wei
   h_ml1lsoft_EE_SROS1->Fill(ml1lsoft_EE, cut_EE, weight_ALL_EE);
   h_mTl0lsoft_EE_SROS1->Fill(mTl0lsoft_EE, cut_EE, weight_ALL_EE);
   h_mTl1lsoft_EE_SROS1->Fill(mTl1lsoft_EE, cut_EE, weight_ALL_EE);
+  h_mTlllsoft_EE_SROS1->Fill(mTlllsoft_EE, cut_EE, weight_ALL_EE);
 }
 
 
@@ -2682,6 +2708,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   h_ml1lsoft_MM_SRSS1->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl0lsoft_MM_SRSS1->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl1lsoft_MM_SRSS1->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTlllsoft_MM_SRSS1->Fill(mTlllsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -2746,6 +2773,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS2(float cut_MM, int mcid, float wei
   h_ml1lsoft_MM_SRSS2->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl0lsoft_MM_SRSS2->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl1lsoft_MM_SRSS2->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTlllsoft_MM_SRSS2->Fill(mTlllsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -2810,6 +2838,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS3(float cut_MM, int mcid, float wei
   h_ml1lsoft_MM_SRSS3->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl0lsoft_MM_SRSS3->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl1lsoft_MM_SRSS3->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTlllsoft_MM_SRSS3->Fill(mTlllsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -2874,6 +2903,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS4(float cut_MM, int mcid, float wei
   h_ml1lsoft_MM_SRSS4->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl0lsoft_MM_SRSS4->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl1lsoft_MM_SRSS4->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTlllsoft_MM_SRSS4->Fill(mTlllsoft_MM, cut_MM, weight_ALL_MM);
 }
 
 void TSelector_SusyNtuple::fillHistos_MM_SROS1(float cut_MM, int mcid, float weight_ALL_MM){
@@ -2937,6 +2967,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SROS1(float cut_MM, int mcid, float wei
   h_ml1lsoft_MM_SROS1->Fill(ml1lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl0lsoft_MM_SROS1->Fill(mTl0lsoft_MM, cut_MM, weight_ALL_MM);
   h_mTl1lsoft_MM_SROS1->Fill(mTl1lsoft_MM, cut_MM, weight_ALL_MM);
+  h_mTlllsoft_MM_SROS1->Fill(mTlllsoft_MM, cut_MM, weight_ALL_MM);
 
 }
 
@@ -3000,6 +3031,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
   h_ml1lsoft_EM_SRSS1->Fill(ml1lsoft_EM, cut_EM, weight_ALL_EM);
   h_mTl0lsoft_EM_SRSS1->Fill(mTl0lsoft_EM, cut_EM, weight_ALL_EM);
   h_mTl1lsoft_EM_SRSS1->Fill(mTl1lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTlllsoft_EM_SRSS1->Fill(mTlllsoft_EM, cut_EM, weight_ALL_EM);
 
 
 }
@@ -3064,6 +3096,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS2(float cut_EM, int mcid, float wei
   h_ml1lsoft_EM_SRSS2->Fill(ml1lsoft_EM, cut_EM, weight_ALL_EM);
   h_mTl0lsoft_EM_SRSS2->Fill(mTl0lsoft_EM, cut_EM, weight_ALL_EM);
   h_mTl1lsoft_EM_SRSS2->Fill(mTl1lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTlllsoft_EM_SRSS2->Fill(mTlllsoft_EM, cut_EM, weight_ALL_EM);
   
 
 
@@ -3130,4 +3163,5 @@ void TSelector_SusyNtuple::fillHistos_EM_SROS1(float cut_EM, int mcid, float wei
   h_ml1lsoft_EM_SROS1->Fill(ml1lsoft_EM, cut_EM, weight_ALL_EM);
   h_mTl0lsoft_EM_SROS1->Fill(mTl0lsoft_EM, cut_EM, weight_ALL_EM);
   h_mTl1lsoft_EM_SROS1->Fill(mTl1lsoft_EM, cut_EM, weight_ALL_EM);
+  h_mTlllsoft_EM_SROS1->Fill(mTlllsoft_EM, cut_EM, weight_ALL_EM);
 }

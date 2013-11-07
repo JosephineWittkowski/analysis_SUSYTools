@@ -462,6 +462,23 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      }
 			    }
 			  }
+			  
+			  //CMS cuts:
+			  if(mu0->pt >= 20. && mu1->pt >= 20.){
+			    cutnumber = 40.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    if(numberOfCMSJets(m_signalJets2Lep) >=2 && numberOfCMSJets(m_signalJets2Lep) <=3){
+			      cutnumber = 41.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			      if(METrelmm >= 40.){
+				cutnumber = 42.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				if(mTel0MET >= 110. || mTel1MET >= 110.){
+				  cutnumber = 43.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				  if(fabs(mu0_TLV.Eta() - mu1_TLV.Eta()) <= 1.6){
+				    cutnumber = 44.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				  }
+				}
+			      }
+			    }
+			  }
 //===============================================================================================================================		  
 	
 //===============================================================================================================================		  
@@ -1103,6 +1120,34 @@ MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sy
 }
 
 /*--------------------------------------------------------------------------------*/
+bool TSelector_SusyNtuple::isCMSJet(const Susy::Jet* jet)
+{
+  if(jet->Pt() < 30.) return false;
+  //if(fabs(jet->Eta()) > JET_ETA_CUT_2L) return false;
+  if(fabs(jet->detEta) > JET_ETA_CUT_2L) return false;
+  if(jet->Pt() < JET_JVF_PT && 
+     fabs(jet->jvf) - 1e-3 < JET_JVF_CUT_2L) return false;
+  if(jet->mv1 > MV1_80) return false;
+
+  return true;
+}
+/*--------------------------------------------------------------------------------*/
+int TSelector_SusyNtuple::numberOfCMSJets(const JetVector& jets)
+{
+  int ans = 0;
+
+  for(uint ij=0; ij<jets.size(); ++ij){
+    const Jet* j = jets.at(ij);
+    if(isCMSJet(j)){
+      ans++;
+    }
+  }
+
+  return ans;
+}
+
+
+/*--------------------------------------------------------------------------------*/
 bool TSelector_SusyNtuple::doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM)
 {
   float cutnumber = 0.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); // all events in the sample
@@ -1232,7 +1277,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 177526)outputfile="histos_ZN_177526_softLeptonCheck.root";
     if(sample_identifier == 177527)outputfile="histos_ZN_177527_softLeptonCheck.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Muons_softLeptonCheck_1.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_softLeptonCheck_3.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];
