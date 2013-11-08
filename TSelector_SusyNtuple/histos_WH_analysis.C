@@ -3321,6 +3321,58 @@ bool unbiased = true;
     
   }
   
+  //check for 3rd baseline lepton for WZ bg
+  for(int i_ms = 0; i_ms < m_baseMuons.size(); i_ms++){
+    Muon* mu_bl = m_baseMuons.at(i_ms);
+    TLorentzVector mu_bl_TLV;
+    mu_bl_TLV.SetPtEtaPhiE(mu_bl->pt, mu_bl->eta ,mu_bl->phi, mu_bl->pt*cosh(mu_bl->eta));
+    
+    ml0lbl_MM = 0.;
+    mTl0lbl_MM = 0.;
+    ml1lbl_MM = 0.;
+    mTl1lbl_MM = 0.;
+    ml0lblPR_MM = 0.;
+    mTl0lblPR_MM = 0.;
+    ml1lblPR_MM = 0.;
+    mTl1lblPR_MM = 0.;
+    ml0lblHFLF_MM = 0.;
+    mTl0lblHFLF_MM = 0.;
+    ml1lblHFLF_MM = 0.;
+    mTl1lblHFLF_MM = 0.;
+    
+    //only use OS lepton pair:
+    if((mu_bl->q * mu0->q)<0.){
+      ml0lbl_MM = (mu0_TLV + mu_bl_TLV).M();
+      if(mu_bl->truthType == PR)  ml0lblPR_MM = ml0lbl_MM;
+      else if(mu_bl->truthType == HF || mu_bl->truthType == LF) ml0lblPR_MM = ml0lbl_MM;
+      
+      mTl0lbl_MM = calcMt(mu0_TLV, mu_bl_TLV);
+      if(mu_bl->truthType == PR)  mTl0lblPR_MM = mTl0lbl_MM;
+      else if(mu_bl->truthType == HF || mu_bl->truthType == LF) mTl0lblHFLF_MM = mTl0lbl_MM;
+      
+      mTlllbl_MM = calcMt(mu0_TLV + mu1_TLV, mu_bl_TLV);
+      if(mu_bl->truthType == PR)  mTlllblPR_MM = mTlllbl_MM;
+      else if(mu_bl->truthType == HF || mu_bl->truthType == LF) mTlllblPR_MM = mTlllbl_MM;
+      break; // only use bl lepton with highest pT
+    }
+    //only use OS lepton pair:
+    if((mu_bl->q * mu1->q)<0.){
+      ml1lbl_MM = (mu1_TLV + mu_bl_TLV).M();
+      if(mu_bl->truthType == PR)  ml1lblPR_MM = ml1lbl_MM;
+      else if(mu_bl->truthType == HF || mu_bl->truthType == LF) ml1lblPR_MM = ml1lbl_MM;
+      
+      mTl1lbl_MM = calcMt(mu1_TLV, mu_bl_TLV);
+      if(mu_bl->truthType == PR)  mTl1lblPR_MM = mTl1lbl_MM;
+      else if(mu_bl->truthType == HF || mu_bl->truthType == LF) mTl1lblHFLF_MM = mTl1lbl_MM;
+      
+      mTlllbl_MM = calcMt(mu1_TLV + mu1_TLV, mu_bl_TLV);
+      if(mu_bl->truthType == PR)  mTlllblPR_MM = mTlllbl_MM;
+      else if(mu_bl->truthType == HF || mu_bl->truthType == LF) mTlllblPR_MM = mTlllbl_MM;
+      break; // only use bl lepton with highest pT
+    }
+    
+  }
+  
   mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, met_TLV); 
 }
 
