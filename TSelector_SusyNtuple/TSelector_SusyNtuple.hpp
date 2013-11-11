@@ -111,70 +111,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTlllsoft_EM_SRSS2;
     TH2F* h_mTlllsoft_EE_SROS1;    
     TH2F* h_mTlllsoft_MM_SROS1;
-    TH2F* h_mTlllsoft_EM_SROS1;
-    
-    
-    //baseline
-    TH2F* h_ml0lbl_EE_SRSS1;
-    TH2F* h_ml0lbl_EE_SRSS2;
-    TH2F* h_ml0lbl_MM_SRSS1;
-    TH2F* h_ml0lbl_MM_SRSS2;
-    TH2F* h_ml0lbl_MM_SRSS3;
-    TH2F* h_ml0lbl_MM_SRSS4;
-    TH2F* h_ml0lbl_EM_SRSS1;
-    TH2F* h_ml0lbl_EM_SRSS2;
-    TH2F* h_ml0lbl_EE_SROS1;
-    TH2F* h_ml0lbl_MM_SROS1;
-    TH2F* h_ml0lbl_EM_SROS1;
-    
-    TH2F* h_ml1lbl_EE_SRSS1;
-    TH2F* h_ml1lbl_EE_SRSS2;
-    TH2F* h_ml1lbl_MM_SRSS1;
-    TH2F* h_ml1lbl_MM_SRSS2;
-    TH2F* h_ml1lbl_MM_SRSS3;
-    TH2F* h_ml1lbl_MM_SRSS4;
-    TH2F* h_ml1lbl_EM_SRSS1;
-    TH2F* h_ml1lbl_EM_SRSS2;
-    TH2F* h_ml1lbl_EE_SROS1;
-    TH2F* h_ml1lbl_MM_SROS1;
-    TH2F* h_ml1lbl_EM_SROS1;
-    
-    
-    TH2F* h_mTl0lbl_EE_SRSS1;
-    TH2F* h_mTl0lbl_EE_SRSS2;
-    TH2F* h_mTl0lbl_MM_SRSS1;
-    TH2F* h_mTl0lbl_MM_SRSS2;
-    TH2F* h_mTl0lbl_MM_SRSS3;
-    TH2F* h_mTl0lbl_MM_SRSS4;
-    TH2F* h_mTl0lbl_EM_SRSS1;
-    TH2F* h_mTl0lbl_EM_SRSS2;
-    TH2F* h_mTl0lbl_EE_SROS1;
-    TH2F* h_mTl0lbl_MM_SROS1;
-    TH2F* h_mTl0lbl_EM_SROS1;
-    
-    TH2F* h_mTl1lbl_EE_SRSS1;
-    TH2F* h_mTl1lbl_EE_SRSS2;
-    TH2F* h_mTl1lbl_MM_SRSS1;
-    TH2F* h_mTl1lbl_MM_SRSS2;
-    TH2F* h_mTl1lbl_MM_SRSS3;
-    TH2F* h_mTl1lbl_MM_SRSS4;
-    TH2F* h_mTl1lbl_EM_SRSS1;
-    TH2F* h_mTl1lbl_EM_SRSS2;
-    TH2F* h_mTl1lbl_EE_SROS1;
-    TH2F* h_mTl1lbl_MM_SROS1;
-    TH2F* h_mTl1lbl_EM_SROS1;
-    
-    TH2F* h_mTlllbl_EE_SRSS1;
-    TH2F* h_mTlllbl_EE_SRSS2;
-    TH2F* h_mTlllbl_MM_SRSS1;
-    TH2F* h_mTlllbl_MM_SRSS2;
-    TH2F* h_mTlllbl_MM_SRSS3;
-    TH2F* h_mTlllbl_MM_SRSS4;
-    TH2F* h_mTlllbl_EM_SRSS1;
-    TH2F* h_mTlllbl_EM_SRSS2;
-    TH2F* h_mTlllbl_EE_SROS1;
-    TH2F* h_mTlllbl_MM_SROS1;
-    TH2F* h_mTlllbl_EM_SROS1;
+    TH2F* h_mTlllsoft_EM_SROS1;    
     
     //PR
     TH2F* h_ml0lsoftPR_EE_SRSS1;
@@ -299,133 +236,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTlllsoftHFLF_EE_SROS1;
     TH2F* h_mTlllsoftHFLF_MM_SROS1;
     TH2F* h_mTlllsoftHFLF_EM_SROS1;
-    
-    
-    //PR
-    TH2F* h_ml0lblPR_EE_SRSS1;
-    TH2F* h_ml0lblPR_EE_SRSS2;
-    TH2F* h_ml0lblPR_MM_SRSS1;
-    TH2F* h_ml0lblPR_MM_SRSS2;
-    TH2F* h_ml0lblPR_MM_SRSS3;
-    TH2F* h_ml0lblPR_MM_SRSS4;
-    TH2F* h_ml0lblPR_EM_SRSS1;
-    TH2F* h_ml0lblPR_EM_SRSS2;
-    TH2F* h_ml0lblPR_EE_SROS1;
-    TH2F* h_ml0lblPR_MM_SROS1;
-    TH2F* h_ml0lblPR_EM_SROS1;
-    
-    TH2F* h_ml1lblPR_EE_SRSS1;
-    TH2F* h_ml1lblPR_EE_SRSS2;
-    TH2F* h_ml1lblPR_MM_SRSS1;
-    TH2F* h_ml1lblPR_MM_SRSS2;
-    TH2F* h_ml1lblPR_MM_SRSS3;
-    TH2F* h_ml1lblPR_MM_SRSS4;
-    TH2F* h_ml1lblPR_EM_SRSS1;
-    TH2F* h_ml1lblPR_EM_SRSS2;
-    TH2F* h_ml1lblPR_EE_SROS1;
-    TH2F* h_ml1lblPR_MM_SROS1;
-    TH2F* h_ml1lblPR_EM_SROS1;
-    
-    
-    TH2F* h_mTl0lblPR_EE_SRSS1;
-    TH2F* h_mTl0lblPR_EE_SRSS2;
-    TH2F* h_mTl0lblPR_MM_SRSS1;
-    TH2F* h_mTl0lblPR_MM_SRSS2;
-    TH2F* h_mTl0lblPR_MM_SRSS3;
-    TH2F* h_mTl0lblPR_MM_SRSS4;
-    TH2F* h_mTl0lblPR_EM_SRSS1;
-    TH2F* h_mTl0lblPR_EM_SRSS2;
-    TH2F* h_mTl0lblPR_EE_SROS1;
-    TH2F* h_mTl0lblPR_MM_SROS1;
-    TH2F* h_mTl0lblPR_EM_SROS1;
-    
-    TH2F* h_mTl1lblPR_EE_SRSS1;
-    TH2F* h_mTl1lblPR_EE_SRSS2;
-    TH2F* h_mTl1lblPR_MM_SRSS1;
-    TH2F* h_mTl1lblPR_MM_SRSS2;
-    TH2F* h_mTl1lblPR_MM_SRSS3;
-    TH2F* h_mTl1lblPR_MM_SRSS4;
-    TH2F* h_mTl1lblPR_EM_SRSS1;
-    TH2F* h_mTl1lblPR_EM_SRSS2;
-    TH2F* h_mTl1lblPR_EE_SROS1;
-    TH2F* h_mTl1lblPR_MM_SROS1;
-    TH2F* h_mTl1lblPR_EM_SROS1;
-    
-    TH2F* h_mTlllblPR_EE_SRSS1;
-    TH2F* h_mTlllblPR_EE_SRSS2;
-    TH2F* h_mTlllblPR_MM_SRSS1;
-    TH2F* h_mTlllblPR_MM_SRSS2;
-    TH2F* h_mTlllblPR_MM_SRSS3;
-    TH2F* h_mTlllblPR_MM_SRSS4;
-    TH2F* h_mTlllblPR_EM_SRSS1;
-    TH2F* h_mTlllblPR_EM_SRSS2;
-    TH2F* h_mTlllblPR_EE_SROS1;
-    TH2F* h_mTlllblPR_MM_SROS1;
-    TH2F* h_mTlllblPR_EM_SROS1;
-    
-    //HFLF
-    TH2F* h_ml0lblHFLF_EE_SRSS1;
-    TH2F* h_ml0lblHFLF_EE_SRSS2;
-    TH2F* h_ml0lblHFLF_MM_SRSS1;
-    TH2F* h_ml0lblHFLF_MM_SRSS2;
-    TH2F* h_ml0lblHFLF_MM_SRSS3;
-    TH2F* h_ml0lblHFLF_MM_SRSS4;
-    TH2F* h_ml0lblHFLF_EM_SRSS1;
-    TH2F* h_ml0lblHFLF_EM_SRSS2;
-    TH2F* h_ml0lblHFLF_EE_SROS1;
-    TH2F* h_ml0lblHFLF_MM_SROS1;
-    TH2F* h_ml0lblHFLF_EM_SROS1;
-    
-    TH2F* h_ml1lblHFLF_EE_SRSS1;
-    TH2F* h_ml1lblHFLF_EE_SRSS2;
-    TH2F* h_ml1lblHFLF_MM_SRSS1;
-    TH2F* h_ml1lblHFLF_MM_SRSS2;
-    TH2F* h_ml1lblHFLF_MM_SRSS3;
-    TH2F* h_ml1lblHFLF_MM_SRSS4;
-    TH2F* h_ml1lblHFLF_EM_SRSS1;
-    TH2F* h_ml1lblHFLF_EM_SRSS2;
-    TH2F* h_ml1lblHFLF_EE_SROS1;
-    TH2F* h_ml1lblHFLF_MM_SROS1;
-    TH2F* h_ml1lblHFLF_EM_SROS1;
-    
-    
-    TH2F* h_mTl0lblHFLF_EE_SRSS1;
-    TH2F* h_mTl0lblHFLF_EE_SRSS2;
-    TH2F* h_mTl0lblHFLF_MM_SRSS1;
-    TH2F* h_mTl0lblHFLF_MM_SRSS2;
-    TH2F* h_mTl0lblHFLF_MM_SRSS3;
-    TH2F* h_mTl0lblHFLF_MM_SRSS4;
-    TH2F* h_mTl0lblHFLF_EM_SRSS1;
-    TH2F* h_mTl0lblHFLF_EM_SRSS2;
-    TH2F* h_mTl0lblHFLF_EE_SROS1;
-    TH2F* h_mTl0lblHFLF_MM_SROS1;
-    TH2F* h_mTl0lblHFLF_EM_SROS1;
-    
-    TH2F* h_mTl1lblHFLF_EE_SRSS1;
-    TH2F* h_mTl1lblHFLF_EE_SRSS2;
-    TH2F* h_mTl1lblHFLF_MM_SRSS1;
-    TH2F* h_mTl1lblHFLF_MM_SRSS2;
-    TH2F* h_mTl1lblHFLF_MM_SRSS3;
-    TH2F* h_mTl1lblHFLF_MM_SRSS4;
-    TH2F* h_mTl1lblHFLF_EM_SRSS1;
-    TH2F* h_mTl1lblHFLF_EM_SRSS2;
-    TH2F* h_mTl1lblHFLF_EE_SROS1;
-    TH2F* h_mTl1lblHFLF_MM_SROS1;
-    TH2F* h_mTl1lblHFLF_EM_SROS1;
-    
-    TH2F* h_mTlllblHFLF_EE_SRSS1;
-    TH2F* h_mTlllblHFLF_EE_SRSS2;
-    TH2F* h_mTlllblHFLF_MM_SRSS1;
-    TH2F* h_mTlllblHFLF_MM_SRSS2;
-    TH2F* h_mTlllblHFLF_MM_SRSS3;
-    TH2F* h_mTlllblHFLF_MM_SRSS4;
-    TH2F* h_mTlllblHFLF_EM_SRSS1;
-    TH2F* h_mTlllblHFLF_EM_SRSS2;
-    TH2F* h_mTlllblHFLF_EE_SROS1;
-    TH2F* h_mTlllblHFLF_MM_SROS1;
-    TH2F* h_mTlllblHFLF_EM_SROS1;
-  
-    
+        
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_EE_SRSS2;
     TH2F* h_Mljj_MM_SRSS1;
@@ -594,6 +405,18 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTlmin_EE_SROS1;
     TH2F* h_mTlmin_MM_SROS1;
     TH2F* h_mTlmin_EM_SROS1;
+    
+    TH2F* h_mTlmax_EE_SRSS1;
+    TH2F* h_mTlmax_EE_SRSS2;
+    TH2F* h_mTlmax_MM_SRSS1;  
+    TH2F* h_mTlmax_MM_SRSS2;
+    TH2F* h_mTlmax_MM_SRSS3;
+    TH2F* h_mTlmax_MM_SRSS4;
+    TH2F* h_mTlmax_EM_SRSS1;
+    TH2F* h_mTlmax_EM_SRSS2;
+    TH2F* h_mTlmax_EE_SROS1;
+    TH2F* h_mTlmax_MM_SROS1;
+    TH2F* h_mTlmax_EM_SROS1;
 
     TH2F* h_meff_EE_SRSS1;
     TH2F* h_meff_EE_SRSS2;
@@ -1114,6 +937,8 @@ class TSelector_SusyNtuple : public SusyNtAna
     float getFakeWeight(const LeptonVector &baseLeps, SusyMatrixMethod::FAKE_REGION region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
     
     float calc_D0(bool unbiased, const Lepton* lep);
+    static bool compareElecMomentum (Electron* e0, Electron* e1);
+    static bool compareMuonMomentum (Muon* mu0, Muon* mu1);
     ElectronVector getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector el0_TLV, TLorentzVector el1_TLV);
     MuonVector getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV);
     bool isCMSJet(const Susy::Jet* jet);
@@ -1164,6 +989,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTWW_EE;
     float mTee;
     float mTemin;
+    float mTemax;
     float mTel0MET;
     float mTel1MET;
     float mMETee;
@@ -1193,12 +1019,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTl1lsoft_EE;
     float mTlllsoft_EE;
     
-    float ml0lbl_EE;
-    float ml1lbl_EE;
-    float mTl0lbl_EE;
-    float mTl1lbl_EE;
-    float mTlllbl_EE;
-    
     float ml0lsoftPR_EE;
     float ml1lsoftPR_EE;
     float mTl0lsoftPR_EE;
@@ -1211,18 +1031,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTl1lsoftHFLF_EE;
     float mTlllsoftHFLF_EE;
     
-    float ml0lblPR_EE;
-    float ml1lblPR_EE;
-    float mTl0lblPR_EE;
-    float mTl1lblPR_EE;
-    float mTlllblPR_EE;
-    
-    float ml0lblHFLF_EE;
-    float ml1lblHFLF_EE;
-    float mTl0lblHFLF_EE;
-    float mTl1lblHFLF_EE;
-    float mTlllblHFLF_EE;
-
     //#####################################
     
     float ptmu0;
@@ -1238,6 +1046,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float HT_MM;
     float mTWW_MM;
     float mTmmin;
+    float mTmmax;
     float mTmu0MET;
     float mTmu1MET;
     float mMETmm;
@@ -1268,12 +1077,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTl1lsoft_MM;
     float mTlllsoft_MM;
     
-    float ml0lbl_MM;
-    float ml1lbl_MM;
-    float mTl0lbl_MM;
-    float mTl1lbl_MM;
-    float mTlllbl_MM;
-    
     float ml0lsoftPR_MM;
     float ml1lsoftPR_MM;
     float mTl0lsoftPR_MM;
@@ -1286,17 +1089,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTl1lsoftHFLF_MM;
     float mTlllsoftHFLF_MM;
     
-    float ml0lblPR_MM;
-    float ml1lblPR_MM;
-    float mTl0lblPR_MM;
-    float mTl1lblPR_MM;
-    float mTlllblPR_MM;
-    
-    float ml0lblHFLF_MM;
-    float ml1lblHFLF_MM;
-    float mTl0lblHFLF_MM;
-    float mTl1lblHFLF_MM;
-    float mTlllblHFLF_MM;
     //#####################################
     
     float ptl0;
@@ -1312,6 +1104,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float HT_EM;
     float mTWW_EM;
     float mTemmin;
+    float mTemmax;
     float mTl0MET;
     float mTl1MET;
     float mMETem;
@@ -1342,12 +1135,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTl1lsoft_EM;
     float mTlllsoft_EM;
     
-    float ml0lbl_EM;
-    float ml1lbl_EM;
-    float mTl0lbl_EM;
-    float mTl1lbl_EM;
-    float mTlllbl_EM;
-    
     float ml0lsoftPR_EM;
     float ml1lsoftPR_EM;
     float mTl0lsoftPR_EM;
@@ -1360,17 +1147,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTl1lsoftHFLF_EM;
     float mTlllsoftHFLF_EM;
     
-    float ml0lblPR_EM;
-    float ml1lblPR_EM;
-    float mTl0lblPR_EM;
-    float mTl1lblPR_EM;
-    float mTlllblPR_EM;
-    
-    float ml0lblHFLF_EM;
-    float ml1lblHFLF_EM;
-    float mTl0lblHFLF_EM;
-    float mTl1lblHFLF_EM;
-    float mTlllblHFLF_EM;
     //#####################################
     
     ClassDef(TSelector_SusyNtuple, 1);

@@ -468,11 +468,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			    cutnumber = 40.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    if(numberOfCMSJets(m_signalJets2Lep) >=2 && numberOfCMSJets(m_signalJets2Lep) <=3){
 			      cutnumber = 41.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-			      if(METrelmm >= 40.){
+			      if(mTmmax >= 110.){
 				cutnumber = 42.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				if(mTel0MET >= 110. || mTel1MET >= 110.){
+				if(fabs(mu0_TLV.Eta() - mu1_TLV.Eta()) <= 1.6){
 				  cutnumber = 43.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				  if(fabs(mu0_TLV.Eta() - mu1_TLV.Eta()) <= 1.6){
+				  if(METrelmm >= 40.){
 				    cutnumber = 44.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				  }
 				}
@@ -1086,6 +1086,8 @@ float TSelector_SusyNtuple::calc_D0(bool unbiased, const Lepton* lep)
   
   return d0_branch;
 }
+/*--------------------------------------------------------------------------------*/
+bool TSelector_SusyNtuple::compareElecMomentum (Electron* e0, Electron* e1){ return (e0->pt > e1->pt); }
 
 /*--------------------------------------------------------------------------------*/
 ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector el0_TLV, TLorentzVector el1_TLV)
@@ -1099,9 +1101,11 @@ ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, Susy
     if(e->pt == el0_TLV.Pt() || e->pt == el1_TLV.Pt()) dontUseSoftLepton = true;
     if(!dontUseSoftLepton) elecs.push_back(e);
   }
+  std::sort(elecs.begin(), elecs.end(), compareElecMomentum);
   return elecs;
 }
-
+/*--------------------------------------------------------------------------------*/
+bool TSelector_SusyNtuple::compareMuonMomentum (Muon* mu0, Muon* mu1){ return (mu0->pt > mu1->pt); }
 /*--------------------------------------------------------------------------------*/
 MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV)
 {
@@ -1110,12 +1114,11 @@ MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sy
     Muon* mu = & susyNt->muo()->at(im);
     mu->setState(sys);
     bool dontUseSoftLepton = false;
-//     for(uint ism = 0; ism < signal_muons.size(); ism ++){
     if(mu->pt == mu0_TLV.Pt() || mu->pt == mu1_TLV.Pt()) dontUseSoftLepton = true;
-//     }
     if(!dontUseSoftLepton) muons.push_back(mu);
   }
-
+  std::sort(muons.begin(), muons.end(), compareMuonMomentum);
+ 
   return muons;
 }
 
@@ -1239,45 +1242,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_softLeptonCheck.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_softLeptonCheck.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_softLeptonCheck.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_softLeptonCheck.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_softLeptonCheck.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_softLeptonCheck.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_softLeptonCheck.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_softLeptonCheck_SRSS.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_softLeptonCheck_SRSS.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_softLeptonCheck.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_softLeptonCheck.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_softLeptonCheck.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_softLeptonCheck.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_softLeptonCheck.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_softLeptonCheck.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_softLeptonCheck.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_softLeptonCheck.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_softLeptonCheck.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_softLeptonCheck.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_softLeptonCheck.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_softLeptonCheck.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_softLeptonCheck.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_softLeptonCheck.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_softLeptonCheck.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_softLeptonCheck.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_softLeptonCheck.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_softLeptonCheck.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_softLeptonCheck.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_softLeptonCheck.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_softLeptonCheck.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_softLeptonCheck.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_softLeptonCheck.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_softLeptonCheck.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_softLeptonCheck.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_softLeptonCheck.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_softLeptonCheck.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_softLeptonCheck_SRSS.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_softLeptonCheck_3.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_softLeptonCheck_SRSS_2_New.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];
