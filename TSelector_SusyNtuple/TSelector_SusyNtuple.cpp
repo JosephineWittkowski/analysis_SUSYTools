@@ -258,7 +258,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight; //multiply only SS weight by chargeFlipWeight
 	
 	//------------------------------------------------------------------------------------
-	calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
+	calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt);
 	
 	//if running on data for fake bg, instead of weights (pileup, xsec, eventweight, trigger, SF, btag, ...) use fakeWeight from SusyMatrixMethod
 	float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
@@ -428,7 +428,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		//product of all weights:
 		weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) * lep_SF_MM * trigW_MM: 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
 		//------------------------------------------------------------------------------------
-		calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets);
+		calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt);
 		if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
 
 
@@ -639,7 +639,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	      float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
 	      //------------------------------------------------------------------------------------
 	      float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
-	      calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets);
+	      calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt);
 	      if(!nt.evt()->isMC && calcFakeContribution){
 		weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
 		weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
@@ -752,14 +752,14 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 bool TSelector_SusyNtuple::CheckRealLeptons(const ElectronVector& signal_electrons, MuonVector& signal_muons){
 
   for(uint i=0; i<signal_electrons.size(); i++){
-Electron* signal_electron = signal_electrons.at(i);
-if(signal_electron->isChargeFlip) return false;
-if(signal_electron->truthType != RecoTruthMatch::PROMPT) return false;
+    Electron* signal_electron = signal_electrons.at(i);
+    if(signal_electron->isChargeFlip) return false;
+    if(signal_electron->truthType != RecoTruthMatch::PROMPT) return false;
   }
   
     for(uint i=0; i<signal_muons.size(); i++){
-Muon* signal_muon = signal_muons.at(i);
-if(signal_muon->truthType != RecoTruthMatch::PROMPT) return false;
+      Muon* signal_muon = signal_muons.at(i);
+      if(signal_muon->truthType != RecoTruthMatch::PROMPT) return false;
   }
   
   return true;
@@ -1090,36 +1090,132 @@ float TSelector_SusyNtuple::calc_D0(bool unbiased, const Lepton* lep)
 bool TSelector_SusyNtuple::compareElecMomentum (Electron* e0, Electron* e1){ return (e0->pt > e1->pt); }
 
 /*--------------------------------------------------------------------------------*/
-ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector el0_TLV, TLorentzVector el1_TLV)
+ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys)
 {
   
-  ElectronVector elecs;
+//    electrons which are too soft: pT < 10 GeV [susyNt->eleco() but pT < 10 GeV, no signal electron]
+  ElectronVector soft_electrons;
   for(uint ie=0; ie<susyNt->ele()->size(); ie++){
-    Electron* e = & susyNt->ele()->at(ie);
-    e->setState(sys);
-    bool dontUseSoftLepton = false;
-    if(e->pt == el0_TLV.Pt() || e->pt == el1_TLV.Pt()) dontUseSoftLepton = true;
-    if(!dontUseSoftLepton) elecs.push_back(e);
+    Electron* soft_elec = & susyNt->ele()->at(ie);
+    soft_elec->setState(sys);
+    if(soft_elec->pt < 10.) soft_electrons.push_back(soft_elec);
   }
-  std::sort(elecs.begin(), elecs.end(), compareElecMomentum);
-  return elecs;
+  std::sort(soft_electrons.begin(), soft_electrons.end(), compareElecMomentum);
+ 
+  return soft_electrons;
+}
+/*--------------------------------------------------------------------------------*/
+ElectronVector TSelector_SusyNtuple::getPrecarElectrons(SusyNtObject* susyNt, SusyNtSys sys)
+{
+//    electrons which are no getPreElectrons but pT > 10 GeV [bc SUSYObjDef::FillElectrons() not okay]
+ ElectronVector precar_electrons;
+  
+  ElectronVector PreElectrons = getPreElectrons(&nt, NtSys_NOM);    
+  
+  for(uint ie=0; ie<susyNt->ele()->size(); ie++){
+    Electron* precar_el = & susyNt->ele()->at(ie);
+    precar_el->setState(sys);
+    bool noPreEl = true;
+    for(uint ie2=0; ie2<PreElectrons.size(); ie2++){
+      Electron* pre_el = PreElectrons.at(ie2);
+      pre_el->setState(sys);
+      if(pre_el->DeltaR(*precar_el) < 0.0001) noPreEl = false;
+    }
+    if(noPreEl && precar_el->pt >= 10.)	precar_electrons.push_back(precar_el);
+  }
+  std::sort(precar_electrons.begin(), precar_electrons.end(), compareElecMomentum);
+ 
+  return precar_electrons;
+}
+
+/*--------------------------------------------------------------------------------*/
+ElectronVector TSelector_SusyNtuple::getOverlapElectrons(SusyNtObject* susyNt, SusyNtSys sys)
+{
+//overlapElectrons: electrons which are removed in OR [getPreElectrons() but not m_baseElectrons (= no signal elec)]
+  ElectronVector overlap_electrons;
+  
+  ElectronVector PreElectrons = getPreElectrons(&nt, NtSys_NOM);    
+  
+  for(uint ie=0; ie<PreElectrons.size(); ie++){
+    Electron* pre_el = PreElectrons.at(ie);
+    pre_el->setState(sys);
+    bool noBaseEl = true;
+    for(uint ie2=0; ie2<m_baseElectrons.size(); ie2++){
+      Electron* base_el = m_baseElectrons.at(ie2);
+      base_el->setState(sys);
+      if(base_el->DeltaR(*pre_el) < 0.0001) noBaseEl = false;
+    }
+    if(noBaseEl) overlap_electrons.push_back(pre_el);
+  }
+  std::sort(overlap_electrons.begin(), overlap_electrons.end(), compareElecMomentum);
+ 
+  return overlap_electrons;
 }
 /*--------------------------------------------------------------------------------*/
 bool TSelector_SusyNtuple::compareMuonMomentum (Muon* mu0, Muon* mu1){ return (mu0->pt > mu1->pt); }
 /*--------------------------------------------------------------------------------*/
-MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV)
+MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys)
 {
-  MuonVector muons;
+//    muons which are too soft: pT < 10 GeV [susyNt->muo() but pT < 10 GeV, no signal muon]
+  MuonVector soft_muons;
   for(uint im=0; im<susyNt->muo()->size(); im++){
-    Muon* mu = & susyNt->muo()->at(im);
-    mu->setState(sys);
-    bool dontUseSoftLepton = false;
-    if(mu->pt == mu0_TLV.Pt() || mu->pt == mu1_TLV.Pt()) dontUseSoftLepton = true;
-    if(!dontUseSoftLepton) muons.push_back(mu);
+    Muon* soft_mu = & susyNt->muo()->at(im);
+    soft_mu->setState(sys);
+    if(soft_mu->pt < 10.) soft_muons.push_back(soft_mu);
   }
-  std::sort(muons.begin(), muons.end(), compareMuonMomentum);
+  std::sort(soft_muons.begin(), soft_muons.end(), compareMuonMomentum);
  
-  return muons;
+  return soft_muons;
+}
+
+/*--------------------------------------------------------------------------------*/
+MuonVector TSelector_SusyNtuple::getPrecarMuons(SusyNtObject* susyNt, SusyNtSys sys)
+{
+//    muons which are no GetPreMuons but pT > 10 GeV [bc SUSYObjDef::FillMuon() not okay (eta acceptance, muon quality criteria, track quality), no signal muon]
+  MuonVector precar_muons;
+  
+  MuonVector PreMuons = getPreMuons(&nt, NtSys_NOM);    
+  
+  for(uint im=0; im<susyNt->muo()->size(); im++){
+    Muon* precar_mu = & susyNt->muo()->at(im);
+    precar_mu->setState(sys);
+    bool noPreMu = true;
+    for(uint im2=0; im2<PreMuons.size(); im2++){
+      Muon* pre_mu = PreMuons.at(im2);
+      pre_mu->setState(sys);
+      if(pre_mu->DeltaR(*precar_mu) < 0.0001) noPreMu = false;
+    }
+    if(noPreMu && precar_mu->pt >= 10.){
+      precar_muons.push_back(precar_mu);
+    }
+  }
+  std::sort(precar_muons.begin(), precar_muons.end(), compareMuonMomentum);
+ 
+  return precar_muons;
+}
+
+/*--------------------------------------------------------------------------------*/
+MuonVector TSelector_SusyNtuple::getOverlapMuons(SusyNtObject* susyNt, SusyNtSys sys)
+{
+//overlapMuons: muons which are removed in OR [getPreMuons() but not m_baseMuons (= no signal muon)]
+  MuonVector overlap_muons;
+  
+  MuonVector PreMuons = getPreMuons(&nt, NtSys_NOM);    
+  
+  for(uint im=0; im<PreMuons.size(); im++){
+    Muon* pre_mu = PreMuons.at(im);
+    pre_mu->setState(sys);
+    bool noBaseMu = true;
+    for(uint im2=0; im2<m_baseMuons.size(); im2++){
+      Muon* base_mu = m_baseMuons.at(im2);
+      base_mu->setState(sys);
+      if(base_mu->DeltaR(*pre_mu) < 0.0001) noBaseMu = false;
+    }
+    if(noBaseMu) overlap_muons.push_back(pre_mu);
+  }
+  std::sort(overlap_muons.begin(), overlap_muons.end(), compareMuonMomentum);
+ 
+  return overlap_muons;
 }
 
 /*--------------------------------------------------------------------------------*/
@@ -1242,45 +1338,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_softLeptonCheck_SRSS.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_thirdLeptonCheck_DeltaR.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_thirdLeptonCheck_DeltaR.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_softLeptonCheck_SRSS.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_softLeptonCheck_SRSS.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_thirdLeptonCheck_DeltaR.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_softLeptonCheck_SRSS_2_New.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_thirdLeptonCheck_DeltaR_3.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];

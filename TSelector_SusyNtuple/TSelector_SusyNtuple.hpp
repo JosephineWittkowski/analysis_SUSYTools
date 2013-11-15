@@ -51,6 +51,91 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     TH1F* cutflow_ME;
     TH1F* cutflow_ME_ALL;
+
+    TH2F* h_ml0llost_EE_SRSS1;
+    TH2F* h_ml0llost_EE_SRSS2;
+    TH2F* h_ml0llost_MM_SRSS1;
+    TH2F* h_ml0llost_MM_SRSS2;
+    TH2F* h_ml0llost_MM_SRSS3;
+    TH2F* h_ml0llost_MM_SRSS4;
+    TH2F* h_ml0llost_EM_SRSS1;
+    TH2F* h_ml0llost_EM_SRSS2;
+    TH2F* h_ml0llost_EE_SROS1;
+    TH2F* h_ml0llost_MM_SROS1;
+    TH2F* h_ml0llost_EM_SROS1;
+    
+    TH2F* h_ml1llost_EE_SRSS1;
+    TH2F* h_ml1llost_EE_SRSS2;
+    TH2F* h_ml1llost_MM_SRSS1;
+    TH2F* h_ml1llost_MM_SRSS2;
+    TH2F* h_ml1llost_MM_SRSS3;
+    TH2F* h_ml1llost_MM_SRSS4;
+    TH2F* h_ml1llost_EM_SRSS1;
+    TH2F* h_ml1llost_EM_SRSS2;
+    TH2F* h_ml1llost_EE_SROS1;
+    TH2F* h_ml1llost_MM_SROS1;
+    TH2F* h_ml1llost_EM_SROS1;
+    
+    
+    TH2F* h_mTl0llost_EE_SRSS1;
+    TH2F* h_mTl0llost_EE_SRSS2;
+    TH2F* h_mTl0llost_MM_SRSS1;
+    TH2F* h_mTl0llost_MM_SRSS2;
+    TH2F* h_mTl0llost_MM_SRSS3;
+    TH2F* h_mTl0llost_MM_SRSS4;
+    TH2F* h_mTl0llost_EM_SRSS1;
+    TH2F* h_mTl0llost_EM_SRSS2;
+    TH2F* h_mTl0llost_EE_SROS1;
+    TH2F* h_mTl0llost_MM_SROS1;
+    TH2F* h_mTl0llost_EM_SROS1;
+    
+    TH2F* h_mTl1llost_EE_SRSS1;
+    TH2F* h_mTl1llost_EE_SRSS2;
+    TH2F* h_mTl1llost_MM_SRSS1;    
+    TH2F* h_mTl1llost_MM_SRSS2;
+    TH2F* h_mTl1llost_MM_SRSS3;
+    TH2F* h_mTl1llost_MM_SRSS4;    
+    TH2F* h_mTl1llost_EM_SRSS1;
+    TH2F* h_mTl1llost_EM_SRSS2;
+    TH2F* h_mTl1llost_EE_SROS1;    
+    TH2F* h_mTl1llost_MM_SROS1;
+    TH2F* h_mTl1llost_EM_SROS1;
+    
+    TH2F* h_DeltaRl0llost_EE_SRSS1;
+    TH2F* h_DeltaRl0llost_EE_SRSS2;
+    TH2F* h_DeltaRl0llost_MM_SRSS1;
+    TH2F* h_DeltaRl0llost_MM_SRSS2;
+    TH2F* h_DeltaRl0llost_MM_SRSS3;
+    TH2F* h_DeltaRl0llost_MM_SRSS4;
+    TH2F* h_DeltaRl0llost_EM_SRSS1;
+    TH2F* h_DeltaRl0llost_EM_SRSS2;
+    TH2F* h_DeltaRl0llost_EE_SROS1;
+    TH2F* h_DeltaRl0llost_MM_SROS1;
+    TH2F* h_DeltaRl0llost_EM_SROS1;
+    
+    TH2F* h_DeltaRl1llost_EE_SRSS1;
+    TH2F* h_DeltaRl1llost_EE_SRSS2;
+    TH2F* h_DeltaRl1llost_MM_SRSS1;    
+    TH2F* h_DeltaRl1llost_MM_SRSS2;
+    TH2F* h_DeltaRl1llost_MM_SRSS3;
+    TH2F* h_DeltaRl1llost_MM_SRSS4;    
+    TH2F* h_DeltaRl1llost_EM_SRSS1;
+    TH2F* h_DeltaRl1llost_EM_SRSS2;
+    TH2F* h_DeltaRl1llost_EE_SROS1;    
+    TH2F* h_DeltaRl1llost_MM_SROS1;
+    TH2F* h_DeltaRl1llost_EM_SROS1;
+    
+    TH2F* h_mTllllost_EE_SRSS1;
+    TH2F* h_mTllllost_EE_SRSS2;
+    TH2F* h_mTllllost_MM_SRSS1;    
+    TH2F* h_mTllllost_MM_SRSS2;
+    TH2F* h_mTllllost_MM_SRSS3;
+    TH2F* h_mTllllost_MM_SRSS4;    
+    TH2F* h_mTllllost_EM_SRSS1;
+    TH2F* h_mTllllost_EM_SRSS2;
+    TH2F* h_mTllllost_EE_SROS1;    
+    TH2F* h_mTllllost_MM_SROS1;
+    TH2F* h_mTllllost_EM_SROS1;
     
     TH2F* h_ml0lsoft_EE_SRSS1;
     TH2F* h_ml0lsoft_EE_SRSS2;
@@ -101,6 +186,30 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTl1lsoft_MM_SROS1;
     TH2F* h_mTl1lsoft_EM_SROS1;
     
+    TH2F* h_DeltaRl0lsoft_EE_SRSS1;
+    TH2F* h_DeltaRl0lsoft_EE_SRSS2;
+    TH2F* h_DeltaRl0lsoft_MM_SRSS1;
+    TH2F* h_DeltaRl0lsoft_MM_SRSS2;
+    TH2F* h_DeltaRl0lsoft_MM_SRSS3;
+    TH2F* h_DeltaRl0lsoft_MM_SRSS4;
+    TH2F* h_DeltaRl0lsoft_EM_SRSS1;
+    TH2F* h_DeltaRl0lsoft_EM_SRSS2;
+    TH2F* h_DeltaRl0lsoft_EE_SROS1;
+    TH2F* h_DeltaRl0lsoft_MM_SROS1;
+    TH2F* h_DeltaRl0lsoft_EM_SROS1;
+    
+    TH2F* h_DeltaRl1lsoft_EE_SRSS1;
+    TH2F* h_DeltaRl1lsoft_EE_SRSS2;
+    TH2F* h_DeltaRl1lsoft_MM_SRSS1;    
+    TH2F* h_DeltaRl1lsoft_MM_SRSS2;
+    TH2F* h_DeltaRl1lsoft_MM_SRSS3;
+    TH2F* h_DeltaRl1lsoft_MM_SRSS4;    
+    TH2F* h_DeltaRl1lsoft_EM_SRSS1;
+    TH2F* h_DeltaRl1lsoft_EM_SRSS2;
+    TH2F* h_DeltaRl1lsoft_EE_SROS1;    
+    TH2F* h_DeltaRl1lsoft_MM_SROS1;
+    TH2F* h_DeltaRl1lsoft_EM_SROS1;
+    
     TH2F* h_mTlllsoft_EE_SRSS1;
     TH2F* h_mTlllsoft_EE_SRSS2;
     TH2F* h_mTlllsoft_MM_SRSS1;    
@@ -111,131 +220,177 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTlllsoft_EM_SRSS2;
     TH2F* h_mTlllsoft_EE_SROS1;    
     TH2F* h_mTlllsoft_MM_SROS1;
-    TH2F* h_mTlllsoft_EM_SROS1;    
+    TH2F* h_mTlllsoft_EM_SROS1;
     
-    //PR
-    TH2F* h_ml0lsoftPR_EE_SRSS1;
-    TH2F* h_ml0lsoftPR_EE_SRSS2;
-    TH2F* h_ml0lsoftPR_MM_SRSS1;
-    TH2F* h_ml0lsoftPR_MM_SRSS2;
-    TH2F* h_ml0lsoftPR_MM_SRSS3;
-    TH2F* h_ml0lsoftPR_MM_SRSS4;
-    TH2F* h_ml0lsoftPR_EM_SRSS1;
-    TH2F* h_ml0lsoftPR_EM_SRSS2;
-    TH2F* h_ml0lsoftPR_EE_SROS1;
-    TH2F* h_ml0lsoftPR_MM_SROS1;
-    TH2F* h_ml0lsoftPR_EM_SROS1;
+    TH2F* h_ml0lprecar_EE_SRSS1;
+    TH2F* h_ml0lprecar_EE_SRSS2;
+    TH2F* h_ml0lprecar_MM_SRSS1;
+    TH2F* h_ml0lprecar_MM_SRSS2;
+    TH2F* h_ml0lprecar_MM_SRSS3;
+    TH2F* h_ml0lprecar_MM_SRSS4;
+    TH2F* h_ml0lprecar_EM_SRSS1;
+    TH2F* h_ml0lprecar_EM_SRSS2;
+    TH2F* h_ml0lprecar_EE_SROS1;
+    TH2F* h_ml0lprecar_MM_SROS1;
+    TH2F* h_ml0lprecar_EM_SROS1;
     
-    TH2F* h_ml1lsoftPR_EE_SRSS1;
-    TH2F* h_ml1lsoftPR_EE_SRSS2;
-    TH2F* h_ml1lsoftPR_MM_SRSS1;
-    TH2F* h_ml1lsoftPR_MM_SRSS2;
-    TH2F* h_ml1lsoftPR_MM_SRSS3;
-    TH2F* h_ml1lsoftPR_MM_SRSS4;
-    TH2F* h_ml1lsoftPR_EM_SRSS1;
-    TH2F* h_ml1lsoftPR_EM_SRSS2;
-    TH2F* h_ml1lsoftPR_EE_SROS1;
-    TH2F* h_ml1lsoftPR_MM_SROS1;
-    TH2F* h_ml1lsoftPR_EM_SROS1;
-    
-    
-    TH2F* h_mTl0lsoftPR_EE_SRSS1;
-    TH2F* h_mTl0lsoftPR_EE_SRSS2;
-    TH2F* h_mTl0lsoftPR_MM_SRSS1;
-    TH2F* h_mTl0lsoftPR_MM_SRSS2;
-    TH2F* h_mTl0lsoftPR_MM_SRSS3;
-    TH2F* h_mTl0lsoftPR_MM_SRSS4;
-    TH2F* h_mTl0lsoftPR_EM_SRSS1;
-    TH2F* h_mTl0lsoftPR_EM_SRSS2;
-    TH2F* h_mTl0lsoftPR_EE_SROS1;
-    TH2F* h_mTl0lsoftPR_MM_SROS1;
-    TH2F* h_mTl0lsoftPR_EM_SROS1;
-    
-    TH2F* h_mTl1lsoftPR_EE_SRSS1;
-    TH2F* h_mTl1lsoftPR_EE_SRSS2;
-    TH2F* h_mTl1lsoftPR_MM_SRSS1;
-    TH2F* h_mTl1lsoftPR_MM_SRSS2;
-    TH2F* h_mTl1lsoftPR_MM_SRSS3;
-    TH2F* h_mTl1lsoftPR_MM_SRSS4;
-    TH2F* h_mTl1lsoftPR_EM_SRSS1;
-    TH2F* h_mTl1lsoftPR_EM_SRSS2;
-    TH2F* h_mTl1lsoftPR_EE_SROS1;
-    TH2F* h_mTl1lsoftPR_MM_SROS1;
-    TH2F* h_mTl1lsoftPR_EM_SROS1;
-    
-    TH2F* h_mTlllsoftPR_EE_SRSS1;
-    TH2F* h_mTlllsoftPR_EE_SRSS2;
-    TH2F* h_mTlllsoftPR_MM_SRSS1;
-    TH2F* h_mTlllsoftPR_MM_SRSS2;
-    TH2F* h_mTlllsoftPR_MM_SRSS3;
-    TH2F* h_mTlllsoftPR_MM_SRSS4;
-    TH2F* h_mTlllsoftPR_EM_SRSS1;
-    TH2F* h_mTlllsoftPR_EM_SRSS2;
-    TH2F* h_mTlllsoftPR_EE_SROS1;
-    TH2F* h_mTlllsoftPR_MM_SROS1;
-    TH2F* h_mTlllsoftPR_EM_SROS1;
-    
-    //HFLF
-    TH2F* h_ml0lsoftHFLF_EE_SRSS1;
-    TH2F* h_ml0lsoftHFLF_EE_SRSS2;
-    TH2F* h_ml0lsoftHFLF_MM_SRSS1;
-    TH2F* h_ml0lsoftHFLF_MM_SRSS2;
-    TH2F* h_ml0lsoftHFLF_MM_SRSS3;
-    TH2F* h_ml0lsoftHFLF_MM_SRSS4;
-    TH2F* h_ml0lsoftHFLF_EM_SRSS1;
-    TH2F* h_ml0lsoftHFLF_EM_SRSS2;
-    TH2F* h_ml0lsoftHFLF_EE_SROS1;
-    TH2F* h_ml0lsoftHFLF_MM_SROS1;
-    TH2F* h_ml0lsoftHFLF_EM_SROS1;
-    
-    TH2F* h_ml1lsoftHFLF_EE_SRSS1;
-    TH2F* h_ml1lsoftHFLF_EE_SRSS2;
-    TH2F* h_ml1lsoftHFLF_MM_SRSS1;
-    TH2F* h_ml1lsoftHFLF_MM_SRSS2;
-    TH2F* h_ml1lsoftHFLF_MM_SRSS3;
-    TH2F* h_ml1lsoftHFLF_MM_SRSS4;
-    TH2F* h_ml1lsoftHFLF_EM_SRSS1;
-    TH2F* h_ml1lsoftHFLF_EM_SRSS2;
-    TH2F* h_ml1lsoftHFLF_EE_SROS1;
-    TH2F* h_ml1lsoftHFLF_MM_SROS1;
-    TH2F* h_ml1lsoftHFLF_EM_SROS1;
+    TH2F* h_ml1lprecar_EE_SRSS1;
+    TH2F* h_ml1lprecar_EE_SRSS2;
+    TH2F* h_ml1lprecar_MM_SRSS1;
+    TH2F* h_ml1lprecar_MM_SRSS2;
+    TH2F* h_ml1lprecar_MM_SRSS3;
+    TH2F* h_ml1lprecar_MM_SRSS4;
+    TH2F* h_ml1lprecar_EM_SRSS1;
+    TH2F* h_ml1lprecar_EM_SRSS2;
+    TH2F* h_ml1lprecar_EE_SROS1;
+    TH2F* h_ml1lprecar_MM_SROS1;
+    TH2F* h_ml1lprecar_EM_SROS1;
     
     
-    TH2F* h_mTl0lsoftHFLF_EE_SRSS1;
-    TH2F* h_mTl0lsoftHFLF_EE_SRSS2;
-    TH2F* h_mTl0lsoftHFLF_MM_SRSS1;
-    TH2F* h_mTl0lsoftHFLF_MM_SRSS2;
-    TH2F* h_mTl0lsoftHFLF_MM_SRSS3;
-    TH2F* h_mTl0lsoftHFLF_MM_SRSS4;
-    TH2F* h_mTl0lsoftHFLF_EM_SRSS1;
-    TH2F* h_mTl0lsoftHFLF_EM_SRSS2;
-    TH2F* h_mTl0lsoftHFLF_EE_SROS1;
-    TH2F* h_mTl0lsoftHFLF_MM_SROS1;
-    TH2F* h_mTl0lsoftHFLF_EM_SROS1;
+    TH2F* h_mTl0lprecar_EE_SRSS1;
+    TH2F* h_mTl0lprecar_EE_SRSS2;
+    TH2F* h_mTl0lprecar_MM_SRSS1;
+    TH2F* h_mTl0lprecar_MM_SRSS2;
+    TH2F* h_mTl0lprecar_MM_SRSS3;
+    TH2F* h_mTl0lprecar_MM_SRSS4;
+    TH2F* h_mTl0lprecar_EM_SRSS1;
+    TH2F* h_mTl0lprecar_EM_SRSS2;
+    TH2F* h_mTl0lprecar_EE_SROS1;
+    TH2F* h_mTl0lprecar_MM_SROS1;
+    TH2F* h_mTl0lprecar_EM_SROS1;
     
-    TH2F* h_mTl1lsoftHFLF_EE_SRSS1;
-    TH2F* h_mTl1lsoftHFLF_EE_SRSS2;
-    TH2F* h_mTl1lsoftHFLF_MM_SRSS1;
-    TH2F* h_mTl1lsoftHFLF_MM_SRSS2;
-    TH2F* h_mTl1lsoftHFLF_MM_SRSS3;
-    TH2F* h_mTl1lsoftHFLF_MM_SRSS4;
-    TH2F* h_mTl1lsoftHFLF_EM_SRSS1;
-    TH2F* h_mTl1lsoftHFLF_EM_SRSS2;
-    TH2F* h_mTl1lsoftHFLF_EE_SROS1;
-    TH2F* h_mTl1lsoftHFLF_MM_SROS1;
-    TH2F* h_mTl1lsoftHFLF_EM_SROS1;
+    TH2F* h_mTl1lprecar_EE_SRSS1;
+    TH2F* h_mTl1lprecar_EE_SRSS2;
+    TH2F* h_mTl1lprecar_MM_SRSS1;    
+    TH2F* h_mTl1lprecar_MM_SRSS2;
+    TH2F* h_mTl1lprecar_MM_SRSS3;
+    TH2F* h_mTl1lprecar_MM_SRSS4;    
+    TH2F* h_mTl1lprecar_EM_SRSS1;
+    TH2F* h_mTl1lprecar_EM_SRSS2;
+    TH2F* h_mTl1lprecar_EE_SROS1;    
+    TH2F* h_mTl1lprecar_MM_SROS1;
+    TH2F* h_mTl1lprecar_EM_SROS1;
     
-    TH2F* h_mTlllsoftHFLF_EE_SRSS1;
-    TH2F* h_mTlllsoftHFLF_EE_SRSS2;
-    TH2F* h_mTlllsoftHFLF_MM_SRSS1;
-    TH2F* h_mTlllsoftHFLF_MM_SRSS2;
-    TH2F* h_mTlllsoftHFLF_MM_SRSS3;
-    TH2F* h_mTlllsoftHFLF_MM_SRSS4;
-    TH2F* h_mTlllsoftHFLF_EM_SRSS1;
-    TH2F* h_mTlllsoftHFLF_EM_SRSS2;
-    TH2F* h_mTlllsoftHFLF_EE_SROS1;
-    TH2F* h_mTlllsoftHFLF_MM_SROS1;
-    TH2F* h_mTlllsoftHFLF_EM_SROS1;
+    TH2F* h_DeltaRl0lprecar_EE_SRSS1;
+    TH2F* h_DeltaRl0lprecar_EE_SRSS2;
+    TH2F* h_DeltaRl0lprecar_MM_SRSS1;
+    TH2F* h_DeltaRl0lprecar_MM_SRSS2;
+    TH2F* h_DeltaRl0lprecar_MM_SRSS3;
+    TH2F* h_DeltaRl0lprecar_MM_SRSS4;
+    TH2F* h_DeltaRl0lprecar_EM_SRSS1;
+    TH2F* h_DeltaRl0lprecar_EM_SRSS2;
+    TH2F* h_DeltaRl0lprecar_EE_SROS1;
+    TH2F* h_DeltaRl0lprecar_MM_SROS1;
+    TH2F* h_DeltaRl0lprecar_EM_SROS1;
+    
+    TH2F* h_DeltaRl1lprecar_EE_SRSS1;
+    TH2F* h_DeltaRl1lprecar_EE_SRSS2;
+    TH2F* h_DeltaRl1lprecar_MM_SRSS1;    
+    TH2F* h_DeltaRl1lprecar_MM_SRSS2;
+    TH2F* h_DeltaRl1lprecar_MM_SRSS3;
+    TH2F* h_DeltaRl1lprecar_MM_SRSS4;    
+    TH2F* h_DeltaRl1lprecar_EM_SRSS1;
+    TH2F* h_DeltaRl1lprecar_EM_SRSS2;
+    TH2F* h_DeltaRl1lprecar_EE_SROS1;    
+    TH2F* h_DeltaRl1lprecar_MM_SROS1;
+    TH2F* h_DeltaRl1lprecar_EM_SROS1;
+    
+    TH2F* h_mTlllprecar_EE_SRSS1;
+    TH2F* h_mTlllprecar_EE_SRSS2;
+    TH2F* h_mTlllprecar_MM_SRSS1;    
+    TH2F* h_mTlllprecar_MM_SRSS2;
+    TH2F* h_mTlllprecar_MM_SRSS3;
+    TH2F* h_mTlllprecar_MM_SRSS4;    
+    TH2F* h_mTlllprecar_EM_SRSS1;
+    TH2F* h_mTlllprecar_EM_SRSS2;
+    TH2F* h_mTlllprecar_EE_SROS1;    
+    TH2F* h_mTlllprecar_MM_SROS1;
+    TH2F* h_mTlllprecar_EM_SROS1;    
+    
+    TH2F* h_ml0loverlap_EE_SRSS1;
+    TH2F* h_ml0loverlap_EE_SRSS2;
+    TH2F* h_ml0loverlap_MM_SRSS1;
+    TH2F* h_ml0loverlap_MM_SRSS2;
+    TH2F* h_ml0loverlap_MM_SRSS3;
+    TH2F* h_ml0loverlap_MM_SRSS4;
+    TH2F* h_ml0loverlap_EM_SRSS1;
+    TH2F* h_ml0loverlap_EM_SRSS2;
+    TH2F* h_ml0loverlap_EE_SROS1;
+    TH2F* h_ml0loverlap_MM_SROS1;
+    TH2F* h_ml0loverlap_EM_SROS1;
+    
+    TH2F* h_ml1loverlap_EE_SRSS1;
+    TH2F* h_ml1loverlap_EE_SRSS2;
+    TH2F* h_ml1loverlap_MM_SRSS1;
+    TH2F* h_ml1loverlap_MM_SRSS2;
+    TH2F* h_ml1loverlap_MM_SRSS3;
+    TH2F* h_ml1loverlap_MM_SRSS4;
+    TH2F* h_ml1loverlap_EM_SRSS1;
+    TH2F* h_ml1loverlap_EM_SRSS2;
+    TH2F* h_ml1loverlap_EE_SROS1;
+    TH2F* h_ml1loverlap_MM_SROS1;
+    TH2F* h_ml1loverlap_EM_SROS1;
+    
+    
+    TH2F* h_mTl0loverlap_EE_SRSS1;
+    TH2F* h_mTl0loverlap_EE_SRSS2;
+    TH2F* h_mTl0loverlap_MM_SRSS1;
+    TH2F* h_mTl0loverlap_MM_SRSS2;
+    TH2F* h_mTl0loverlap_MM_SRSS3;
+    TH2F* h_mTl0loverlap_MM_SRSS4;
+    TH2F* h_mTl0loverlap_EM_SRSS1;
+    TH2F* h_mTl0loverlap_EM_SRSS2;
+    TH2F* h_mTl0loverlap_EE_SROS1;
+    TH2F* h_mTl0loverlap_MM_SROS1;
+    TH2F* h_mTl0loverlap_EM_SROS1;
+    
+    TH2F* h_mTl1loverlap_EE_SRSS1;
+    TH2F* h_mTl1loverlap_EE_SRSS2;
+    TH2F* h_mTl1loverlap_MM_SRSS1;    
+    TH2F* h_mTl1loverlap_MM_SRSS2;
+    TH2F* h_mTl1loverlap_MM_SRSS3;
+    TH2F* h_mTl1loverlap_MM_SRSS4;    
+    TH2F* h_mTl1loverlap_EM_SRSS1;
+    TH2F* h_mTl1loverlap_EM_SRSS2;
+    TH2F* h_mTl1loverlap_EE_SROS1;    
+    TH2F* h_mTl1loverlap_MM_SROS1;
+    TH2F* h_mTl1loverlap_EM_SROS1;
+    
+    TH2F* h_DeltaRl0loverlap_EE_SRSS1;
+    TH2F* h_DeltaRl0loverlap_EE_SRSS2;
+    TH2F* h_DeltaRl0loverlap_MM_SRSS1;
+    TH2F* h_DeltaRl0loverlap_MM_SRSS2;
+    TH2F* h_DeltaRl0loverlap_MM_SRSS3;
+    TH2F* h_DeltaRl0loverlap_MM_SRSS4;
+    TH2F* h_DeltaRl0loverlap_EM_SRSS1;
+    TH2F* h_DeltaRl0loverlap_EM_SRSS2;
+    TH2F* h_DeltaRl0loverlap_EE_SROS1;
+    TH2F* h_DeltaRl0loverlap_MM_SROS1;
+    TH2F* h_DeltaRl0loverlap_EM_SROS1;
+    
+    TH2F* h_DeltaRl1loverlap_EE_SRSS1;
+    TH2F* h_DeltaRl1loverlap_EE_SRSS2;
+    TH2F* h_DeltaRl1loverlap_MM_SRSS1;    
+    TH2F* h_DeltaRl1loverlap_MM_SRSS2;
+    TH2F* h_DeltaRl1loverlap_MM_SRSS3;
+    TH2F* h_DeltaRl1loverlap_MM_SRSS4;    
+    TH2F* h_DeltaRl1loverlap_EM_SRSS1;
+    TH2F* h_DeltaRl1loverlap_EM_SRSS2;
+    TH2F* h_DeltaRl1loverlap_EE_SROS1;    
+    TH2F* h_DeltaRl1loverlap_MM_SROS1;
+    TH2F* h_DeltaRl1loverlap_EM_SROS1;
+    
+    TH2F* h_mTllloverlap_EE_SRSS1;
+    TH2F* h_mTllloverlap_EE_SRSS2;
+    TH2F* h_mTllloverlap_MM_SRSS1;    
+    TH2F* h_mTllloverlap_MM_SRSS2;
+    TH2F* h_mTllloverlap_MM_SRSS3;
+    TH2F* h_mTllloverlap_MM_SRSS4;    
+    TH2F* h_mTllloverlap_EM_SRSS1;
+    TH2F* h_mTllloverlap_EM_SRSS2;
+    TH2F* h_mTllloverlap_EE_SROS1;    
+    TH2F* h_mTllloverlap_MM_SROS1;
+    TH2F* h_mTllloverlap_EM_SROS1;        
         
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_EE_SRSS2;
@@ -916,9 +1071,9 @@ class TSelector_SusyNtuple : public SusyNtAna
     void fillHistos_EM(int cutnumber, float weight);
     
     void calcJet_variables(TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, TLorentzVector met_TLV);
-    void calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets );
-    void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets);
-    void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets);
+    void calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt);
+    void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt);
+    void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt);
     
     void fillHistos_EE_SRSS1(float cut_EE, int mcid, float weight_ALL_EE);
     void fillHistos_EE_SRSS2(float cut_EE, int mcid, float weight_ALL_EE);
@@ -939,8 +1094,12 @@ class TSelector_SusyNtuple : public SusyNtAna
     float calc_D0(bool unbiased, const Lepton* lep);
     static bool compareElecMomentum (Electron* e0, Electron* e1);
     static bool compareMuonMomentum (Muon* mu0, Muon* mu1);
-    ElectronVector getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector el0_TLV, TLorentzVector el1_TLV);
-    MuonVector getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV);
+    ElectronVector getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys);
+    ElectronVector getPrecarElectrons(SusyNtObject* susyNt, SusyNtSys sys);
+    ElectronVector getOverlapElectrons(SusyNtObject* susyNt, SusyNtSys sys);
+    MuonVector getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys);
+    MuonVector getPrecarMuons(SusyNtObject* susyNt, SusyNtSys sys);
+    MuonVector getOverlapMuons(SusyNtObject* susyNt, SusyNtSys sys);
     bool isCMSJet(const Susy::Jet* jet);
     int numberOfCMSJets(const JetVector& jets);    
     bool doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM);
@@ -1012,25 +1171,38 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     float sD0Signif_branch_el0;
     float sD0Signif_branch_el1;
+
+    float ml0llost_EE;
+    float ml1llost_EE;
+    float mTl0llost_EE;
+    float mTl1llost_EE;
+    float DeltaRl0llost_EE;
+    float DeltaRl1llost_EE;
+    float mTllllost_EE;
     
     float ml0lsoft_EE;
     float ml1lsoft_EE;
     float mTl0lsoft_EE;
     float mTl1lsoft_EE;
+    float DeltaRl0lsoft_EE;
+    float DeltaRl1lsoft_EE;
     float mTlllsoft_EE;
     
-    float ml0lsoftPR_EE;
-    float ml1lsoftPR_EE;
-    float mTl0lsoftPR_EE;
-    float mTl1lsoftPR_EE;
-    float mTlllsoftPR_EE;
+    float ml0lprecar_EE;
+    float ml1lprecar_EE;
+    float mTl0lprecar_EE;
+    float mTl1lprecar_EE;
+    float DeltaRl0lprecar_EE;
+    float DeltaRl1lprecar_EE;
+    float mTlllprecar_EE;
     
-    float ml0lsoftHFLF_EE;
-    float ml1lsoftHFLF_EE;
-    float mTl0lsoftHFLF_EE;
-    float mTl1lsoftHFLF_EE;
-    float mTlllsoftHFLF_EE;
-    
+    float ml0loverlap_EE;
+    float ml1loverlap_EE;
+    float mTl0loverlap_EE;
+    float mTl1loverlap_EE;
+    float DeltaRl0loverlap_EE;
+    float DeltaRl1loverlap_EE;
+    float mTllloverlap_EE;
     //#####################################
     
     float ptmu0;
@@ -1070,24 +1242,38 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     float sD0Signif_branch_mu0;
     float sD0Signif_branch_mu1;
+
+    float ml0llost_MM;
+    float ml1llost_MM;
+    float mTl0llost_MM;
+    float mTl1llost_MM;
+    float DeltaRl0llost_MM;
+    float DeltaRl1llost_MM;    
+    float mTllllost_MM;    
     
     float ml0lsoft_MM;
     float ml1lsoft_MM;
     float mTl0lsoft_MM;
     float mTl1lsoft_MM;
+    float DeltaRl0lsoft_MM;
+    float DeltaRl1lsoft_MM;    
     float mTlllsoft_MM;
+
+    float ml0lprecar_MM;
+    float ml1lprecar_MM;
+    float mTl0lprecar_MM;
+    float mTl1lprecar_MM;
+    float DeltaRl0lprecar_MM;
+    float DeltaRl1lprecar_MM;    
+    float mTlllprecar_MM;
     
-    float ml0lsoftPR_MM;
-    float ml1lsoftPR_MM;
-    float mTl0lsoftPR_MM;
-    float mTl1lsoftPR_MM;
-    float mTlllsoftPR_MM;
-    
-    float ml0lsoftHFLF_MM;
-    float ml1lsoftHFLF_MM;
-    float mTl0lsoftHFLF_MM;
-    float mTl1lsoftHFLF_MM;
-    float mTlllsoftHFLF_MM;
+    float ml0loverlap_MM;
+    float ml1loverlap_MM;
+    float mTl0loverlap_MM;
+    float mTl1loverlap_MM;
+    float DeltaRl0loverlap_MM;
+    float DeltaRl1loverlap_MM;    
+    float mTllloverlap_MM;    
     
     //#####################################
     
@@ -1128,24 +1314,38 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     float sD0Signif_branch_l0;
     float sD0Signif_branch_l1;
+
+    float ml0llost_EM;
+    float ml1llost_EM;
+    float mTl0llost_EM;
+    float mTl1llost_EM;
+    float DeltaRl0llost_EM;
+    float DeltaRl1llost_EM;    
+    float mTllllost_EM;    
     
     float ml0lsoft_EM;
     float ml1lsoft_EM;
     float mTl0lsoft_EM;
     float mTl1lsoft_EM;
+    float DeltaRl0lsoft_EM;
+    float DeltaRl1lsoft_EM;    
     float mTlllsoft_EM;
     
-    float ml0lsoftPR_EM;
-    float ml1lsoftPR_EM;
-    float mTl0lsoftPR_EM;
-    float mTl1lsoftPR_EM;
-    float mTlllsoftPR_EM;
+    float ml0lprecar_EM;
+    float ml1lprecar_EM;
+    float mTl0lprecar_EM;
+    float mTl1lprecar_EM;
+    float DeltaRl0lprecar_EM;
+    float DeltaRl1lprecar_EM;    
+    float mTlllprecar_EM;
     
-    float ml0lsoftHFLF_EM;
-    float ml1lsoftHFLF_EM;
-    float mTl0lsoftHFLF_EM;
-    float mTl1lsoftHFLF_EM;
-    float mTlllsoftHFLF_EM;
+    float ml0loverlap_EM;
+    float ml1loverlap_EM;
+    float mTl0loverlap_EM;
+    float mTl1loverlap_EM;
+    float DeltaRl0loverlap_EM;
+    float DeltaRl1loverlap_EM;    
+    float mTllloverlap_EM;    
     
     //#####################################
     
