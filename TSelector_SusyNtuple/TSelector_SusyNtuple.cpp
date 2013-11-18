@@ -472,8 +472,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 				cutnumber = 42.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				if(fabs(mu0_TLV.Eta() - mu1_TLV.Eta()) <= 1.6){
 				  cutnumber = 43.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				  if(METrelmm >= 40.){
+				  if(mt2J_mm >= 100.){
 				    cutnumber = 44.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				    if(METrelmm >= 40.){
+				      cutnumber = 45.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				    }
 				  }
 				}
 			      }
@@ -908,6 +911,44 @@ float TSelector_SusyNtuple::calcMT2(TLorentzVector metlv, TLorentzVector l0, TLo
   
   return mt2_event.get_mt2();
 }
+
+/*--------------------------------------------------------------------------------*/
+float TSelector_SusyNtuple::calcMT2J(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1, TLorentzVector j0, TLorentzVector j1)
+{
+//   l0 -> l0 + jet_i
+//   l1 -> l1 + jet_j
+//   minimize for jet
+
+  //copied from SusyNtTools.cxx and modified to work with TLorentzVector
+  
+  TLorentzVector alpha_a, alpha_b;
+  //case 1:
+  alpha_a = l0 + j0;
+  alpha_b = l1 + j1;
+
+  double pTMiss1[3] = {0.0, metlv.Px(), metlv.Py()};
+  double pA1[3] = {0.0, alpha_a.Px(), alpha_a.Py()};
+  double pB1[3] = {0.0, alpha_b.Px(), alpha_b.Py()};
+  
+  // Create Mt2 object
+  mt2_bisect::mt2 mt2_event1;
+  mt2_event1.set_momenta(pA1,pB1,pTMiss1);
+  mt2_event1.set_mn(0); // LSP mass = 0 is Generic
+  
+  //case 2:
+  alpha_a = l0 + j1;
+  alpha_b = l1 + j0;
+
+  double pTMiss2[3] = {0.0, metlv.Px(), metlv.Py()};
+  double pA2[3] = {0.0, alpha_a.Px(), alpha_a.Py()};
+  double pB2[3] = {0.0, alpha_b.Px(), alpha_b.Py()};
+  
+  // Create Mt2 object
+  mt2_bisect::mt2 mt2_event2;
+  mt2_event2.set_momenta(pA2,pB2,pTMiss2);
+  mt2_event2.set_mn(0); // LSP mass = 0 is Generic
+  return min(mt2_event1.get_mt2(), mt2_event2.get_mt2());
+}
 /*--------------------------------------------------------------------------------*/
 float TSelector_SusyNtuple::calcMZTauTau_coll(const TLorentzVector &signal_lep_0, const TLorentzVector &signal_lep_1, const TLorentzVector &met)
 {
@@ -1338,45 +1379,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_thirdLeptonCheck_DeltaR.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_mt2J.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_mt2J.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_mt2J.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_mt2J.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_mt2J.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_mt2J_Neu2.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_mt2J.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_thirdLeptonCheck_DeltaR.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_thirdLeptonCheck_DeltaR.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_mt2J.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_mt2J.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_mt2J.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_mt2J.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_mt2J.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_mt2J.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_mt2J.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_mt2J.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_mt2J.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_mt2J.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_mt2J.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_mt2J.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_mt2J.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_mt2J.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_mt2J.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_mt2J.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_mt2J.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_mt2J.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_mt2J.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_mt2J.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_mt2J.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_mt2J.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_mt2J.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_mt2J.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_mt2J.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_mt2J.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_mt2J.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Muons_thirdLeptonCheck_DeltaR_3.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_mt2J_3.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];
