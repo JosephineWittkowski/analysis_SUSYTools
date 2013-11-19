@@ -414,7 +414,411 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_mTllloverlap_EE_SROS1 = new TH2F("h_mTllloverlap_EE_SROS1", "h_mTllloverlap_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlap_EE_SROS1->Sumw2(); 
   h_mTllloverlap_MM_SROS1 = new TH2F("h_mTllloverlap_MM_SROS1", "h_mTllloverlap_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlap_MM_SROS1->Sumw2();
   h_mTllloverlap_EM_SROS1 = new TH2F("h_mTllloverlap_EM_SROS1", "h_mTllloverlap_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlap_EM_SROS1->Sumw2();
+  
+ //overlapWJet
+  h_ml0loverlapWJet_EE_SRSS1 = new TH2F("h_ml0loverlapWJet_EE_SRSS1", "h_ml0loverlapWJet_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_EE_SRSS1->Sumw2();
+  h_ml0loverlapWJet_EE_SRSS2 = new TH2F("h_ml0loverlapWJet_EE_SRSS2", "h_ml0loverlapWJet_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_EE_SRSS2->Sumw2();
+  h_ml0loverlapWJet_MM_SRSS1 = new TH2F("h_ml0loverlapWJet_MM_SRSS1", "h_ml0loverlapWJet_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_MM_SRSS1->Sumw2();
+  h_ml0loverlapWJet_MM_SRSS2 = new TH2F("h_ml0loverlapWJet_MM_SRSS2", "h_ml0loverlapWJet_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_MM_SRSS2->Sumw2();
+  h_ml0loverlapWJet_MM_SRSS3 = new TH2F("h_ml0loverlapWJet_MM_SRSS3", "h_ml0loverlapWJet_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_MM_SRSS3->Sumw2();
+  h_ml0loverlapWJet_MM_SRSS4 = new TH2F("h_ml0loverlapWJet_MM_SRSS4", "h_ml0loverlapWJet_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_MM_SRSS4->Sumw2();
+  h_ml0loverlapWJet_EM_SRSS1 = new TH2F("h_ml0loverlapWJet_EM_SRSS1", "h_ml0loverlapWJet_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_EM_SRSS1->Sumw2();
+  h_ml0loverlapWJet_EM_SRSS2 = new TH2F("h_ml0loverlapWJet_EM_SRSS2", "h_ml0loverlapWJet_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_EM_SRSS2->Sumw2();
+  h_ml0loverlapWJet_EE_SROS1 = new TH2F("h_ml0loverlapWJet_EE_SROS1", "h_ml0loverlapWJet_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_EE_SROS1->Sumw2();
+  h_ml0loverlapWJet_MM_SROS1 = new TH2F("h_ml0loverlapWJet_MM_SROS1", "h_ml0loverlapWJet_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_MM_SROS1->Sumw2();
+  h_ml0loverlapWJet_EM_SROS1 = new TH2F("h_ml0loverlapWJet_EM_SROS1", "h_ml0loverlapWJet_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWJet_EM_SROS1->Sumw2();
+  
+  h_ml1loverlapWJet_EE_SRSS1 = new TH2F("h_ml1loverlapWJet_EE_SRSS1", "h_ml1loverlapWJet_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_EE_SRSS1->Sumw2();
+  h_ml1loverlapWJet_EE_SRSS2 = new TH2F("h_ml1loverlapWJet_EE_SRSS2", "h_ml1loverlapWJet_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_EE_SRSS2->Sumw2();
+  h_ml1loverlapWJet_MM_SRSS1 = new TH2F("h_ml1loverlapWJet_MM_SRSS1", "h_ml1loverlapWJet_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_MM_SRSS1->Sumw2();
+  h_ml1loverlapWJet_MM_SRSS2 = new TH2F("h_ml1loverlapWJet_MM_SRSS2", "h_ml1loverlapWJet_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_MM_SRSS2->Sumw2();
+  h_ml1loverlapWJet_MM_SRSS3 = new TH2F("h_ml1loverlapWJet_MM_SRSS3", "h_ml1loverlapWJet_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_MM_SRSS3->Sumw2();
+  h_ml1loverlapWJet_MM_SRSS4 = new TH2F("h_ml1loverlapWJet_MM_SRSS4", "h_ml1loverlapWJet_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_MM_SRSS4->Sumw2();
+  h_ml1loverlapWJet_EM_SRSS1 = new TH2F("h_ml1loverlapWJet_EM_SRSS1", "h_ml1loverlapWJet_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_EM_SRSS1->Sumw2();
+  h_ml1loverlapWJet_EM_SRSS2 = new TH2F("h_ml1loverlapWJet_EM_SRSS2", "h_ml1loverlapWJet_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_EM_SRSS2->Sumw2();
+  h_ml1loverlapWJet_EE_SROS1 = new TH2F("h_ml1loverlapWJet_EE_SROS1", "h_ml1loverlapWJet_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_EE_SROS1->Sumw2();
+  h_ml1loverlapWJet_MM_SROS1 = new TH2F("h_ml1loverlapWJet_MM_SROS1", "h_ml1loverlapWJet_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_MM_SROS1->Sumw2();
+  h_ml1loverlapWJet_EM_SROS1 = new TH2F("h_ml1loverlapWJet_EM_SROS1", "h_ml1loverlapWJet_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWJet_EM_SROS1->Sumw2();
+  
+  
+  h_mTl0loverlapWJet_EE_SRSS1 = new TH2F("h_mTl0loverlapWJet_EE_SRSS1", "h_mTl0loverlapWJet_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_EE_SRSS1->Sumw2();
+  h_mTl0loverlapWJet_EE_SRSS2 = new TH2F("h_mTl0loverlapWJet_EE_SRSS2", "h_mTl0loverlapWJet_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_EE_SRSS2->Sumw2();
+  h_mTl0loverlapWJet_MM_SRSS1 = new TH2F("h_mTl0loverlapWJet_MM_SRSS1", "h_mTl0loverlapWJet_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_MM_SRSS1->Sumw2();
+  h_mTl0loverlapWJet_MM_SRSS2 = new TH2F("h_mTl0loverlapWJet_MM_SRSS2", "h_mTl0loverlapWJet_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_MM_SRSS2->Sumw2();
+  h_mTl0loverlapWJet_MM_SRSS3 = new TH2F("h_mTl0loverlapWJet_MM_SRSS3", "h_mTl0loverlapWJet_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_MM_SRSS3->Sumw2();
+  h_mTl0loverlapWJet_MM_SRSS4 = new TH2F("h_mTl0loverlapWJet_MM_SRSS4", "h_mTl0loverlapWJet_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_MM_SRSS4->Sumw2();
+  h_mTl0loverlapWJet_EM_SRSS1 = new TH2F("h_mTl0loverlapWJet_EM_SRSS1", "h_mTl0loverlapWJet_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_EM_SRSS1->Sumw2();
+  h_mTl0loverlapWJet_EM_SRSS2 = new TH2F("h_mTl0loverlapWJet_EM_SRSS2", "h_mTl0loverlapWJet_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_EM_SRSS2->Sumw2();
+  h_mTl0loverlapWJet_EE_SROS1 = new TH2F("h_mTl0loverlapWJet_EE_SROS1", "h_mTl0loverlapWJet_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_EE_SROS1->Sumw2();
+  h_mTl0loverlapWJet_MM_SROS1 = new TH2F("h_mTl0loverlapWJet_MM_SROS1", "h_mTl0loverlapWJet_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_MM_SROS1->Sumw2();
+  h_mTl0loverlapWJet_EM_SROS1 = new TH2F("h_mTl0loverlapWJet_EM_SROS1", "h_mTl0loverlapWJet_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWJet_EM_SROS1->Sumw2();
+  
+  h_mTl1loverlapWJet_EE_SRSS1 = new TH2F("h_mTl1loverlapWJet_EE_SRSS1", "h_mTl1loverlapWJet_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_EE_SRSS1->Sumw2();
+  h_mTl1loverlapWJet_EE_SRSS2 = new TH2F("h_mTl1loverlapWJet_EE_SRSS2", "h_mTl1loverlapWJet_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_EE_SRSS2->Sumw2();
+  h_mTl1loverlapWJet_MM_SRSS1 = new TH2F("h_mTl1loverlapWJet_MM_SRSS1", "h_mTl1loverlapWJet_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_MM_SRSS1->Sumw2(); 
+  h_mTl1loverlapWJet_MM_SRSS2 = new TH2F("h_mTl1loverlapWJet_MM_SRSS2", "h_mTl1loverlapWJet_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_MM_SRSS2->Sumw2();
+  h_mTl1loverlapWJet_MM_SRSS3 = new TH2F("h_mTl1loverlapWJet_MM_SRSS3", "h_mTl1loverlapWJet_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_MM_SRSS3->Sumw2();
+  h_mTl1loverlapWJet_MM_SRSS4 = new TH2F("h_mTl1loverlapWJet_MM_SRSS4", "h_mTl1loverlapWJet_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_MM_SRSS4->Sumw2(); 
+  h_mTl1loverlapWJet_EM_SRSS1 = new TH2F("h_mTl1loverlapWJet_EM_SRSS1", "h_mTl1loverlapWJet_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_EM_SRSS1->Sumw2();
+  h_mTl1loverlapWJet_EM_SRSS2 = new TH2F("h_mTl1loverlapWJet_EM_SRSS2", "h_mTl1loverlapWJet_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_EM_SRSS2->Sumw2();
+  h_mTl1loverlapWJet_EE_SROS1 = new TH2F("h_mTl1loverlapWJet_EE_SROS1", "h_mTl1loverlapWJet_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_EE_SROS1->Sumw2(); 
+  h_mTl1loverlapWJet_MM_SROS1 = new TH2F("h_mTl1loverlapWJet_MM_SROS1", "h_mTl1loverlapWJet_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_MM_SROS1->Sumw2();
+  h_mTl1loverlapWJet_EM_SROS1 = new TH2F("h_mTl1loverlapWJet_EM_SROS1", "h_mTl1loverlapWJet_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWJet_EM_SROS1->Sumw2();
+
+  h_DeltaRl0loverlapWJet_EE_SRSS1 = new TH2F("h_DeltaRl0loverlapWJet_EE_SRSS1", "h_DeltaRl0loverlapWJet_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_EE_SRSS1->Sumw2();
+  h_DeltaRl0loverlapWJet_EE_SRSS2 = new TH2F("h_DeltaRl0loverlapWJet_EE_SRSS2", "h_DeltaRl0loverlapWJet_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_EE_SRSS2->Sumw2();
+  h_DeltaRl0loverlapWJet_MM_SRSS1 = new TH2F("h_DeltaRl0loverlapWJet_MM_SRSS1", "h_DeltaRl0loverlapWJet_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_MM_SRSS1->Sumw2();
+  h_DeltaRl0loverlapWJet_MM_SRSS2 = new TH2F("h_DeltaRl0loverlapWJet_MM_SRSS2", "h_DeltaRl0loverlapWJet_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_MM_SRSS2->Sumw2();
+  h_DeltaRl0loverlapWJet_MM_SRSS3 = new TH2F("h_DeltaRl0loverlapWJet_MM_SRSS3", "h_DeltaRl0loverlapWJet_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_MM_SRSS3->Sumw2();
+  h_DeltaRl0loverlapWJet_MM_SRSS4 = new TH2F("h_DeltaRl0loverlapWJet_MM_SRSS4", "h_DeltaRl0loverlapWJet_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_MM_SRSS4->Sumw2();
+  h_DeltaRl0loverlapWJet_EM_SRSS1 = new TH2F("h_DeltaRl0loverlapWJet_EM_SRSS1", "h_DeltaRl0loverlapWJet_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_EM_SRSS1->Sumw2();
+  h_DeltaRl0loverlapWJet_EM_SRSS2 = new TH2F("h_DeltaRl0loverlapWJet_EM_SRSS2", "h_DeltaRl0loverlapWJet_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_EM_SRSS2->Sumw2();
+  h_DeltaRl0loverlapWJet_EE_SROS1 = new TH2F("h_DeltaRl0loverlapWJet_EE_SROS1", "h_DeltaRl0loverlapWJet_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_EE_SROS1->Sumw2();
+  h_DeltaRl0loverlapWJet_MM_SROS1 = new TH2F("h_DeltaRl0loverlapWJet_MM_SROS1", "h_DeltaRl0loverlapWJet_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_MM_SROS1->Sumw2();
+  h_DeltaRl0loverlapWJet_EM_SROS1 = new TH2F("h_DeltaRl0loverlapWJet_EM_SROS1", "h_DeltaRl0loverlapWJet_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWJet_EM_SROS1->Sumw2();
+  
+  h_DeltaRl1loverlapWJet_EE_SRSS1 = new TH2F("h_DeltaRl1loverlapWJet_EE_SRSS1", "h_DeltaRl1loverlapWJet_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_EE_SRSS1->Sumw2();
+  h_DeltaRl1loverlapWJet_EE_SRSS2 = new TH2F("h_DeltaRl1loverlapWJet_EE_SRSS2", "h_DeltaRl1loverlapWJet_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_EE_SRSS2->Sumw2();
+  h_DeltaRl1loverlapWJet_MM_SRSS1 = new TH2F("h_DeltaRl1loverlapWJet_MM_SRSS1", "h_DeltaRl1loverlapWJet_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_MM_SRSS1->Sumw2(); 
+  h_DeltaRl1loverlapWJet_MM_SRSS2 = new TH2F("h_DeltaRl1loverlapWJet_MM_SRSS2", "h_DeltaRl1loverlapWJet_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_MM_SRSS2->Sumw2();
+  h_DeltaRl1loverlapWJet_MM_SRSS3 = new TH2F("h_DeltaRl1loverlapWJet_MM_SRSS3", "h_DeltaRl1loverlapWJet_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_MM_SRSS3->Sumw2();
+  h_DeltaRl1loverlapWJet_MM_SRSS4 = new TH2F("h_DeltaRl1loverlapWJet_MM_SRSS4", "h_DeltaRl1loverlapWJet_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_MM_SRSS4->Sumw2(); 
+  h_DeltaRl1loverlapWJet_EM_SRSS1 = new TH2F("h_DeltaRl1loverlapWJet_EM_SRSS1", "h_DeltaRl1loverlapWJet_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_EM_SRSS1->Sumw2();
+  h_DeltaRl1loverlapWJet_EM_SRSS2 = new TH2F("h_DeltaRl1loverlapWJet_EM_SRSS2", "h_DeltaRl1loverlapWJet_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_EM_SRSS2->Sumw2();
+  h_DeltaRl1loverlapWJet_EE_SROS1 = new TH2F("h_DeltaRl1loverlapWJet_EE_SROS1", "h_DeltaRl1loverlapWJet_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_EE_SROS1->Sumw2(); 
+  h_DeltaRl1loverlapWJet_MM_SROS1 = new TH2F("h_DeltaRl1loverlapWJet_MM_SROS1", "h_DeltaRl1loverlapWJet_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_MM_SROS1->Sumw2();
+  h_DeltaRl1loverlapWJet_EM_SROS1 = new TH2F("h_DeltaRl1loverlapWJet_EM_SROS1", "h_DeltaRl1loverlapWJet_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWJet_EM_SROS1->Sumw2();
+  
+  h_DeltaRZl0loverlapWJet_EE_SRSS1 = new TH2F("h_DeltaRZl0loverlapWJet_EE_SRSS1", "h_DeltaRZl0loverlapWJet_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_EE_SRSS1->Sumw2();
+  h_DeltaRZl0loverlapWJet_EE_SRSS2 = new TH2F("h_DeltaRZl0loverlapWJet_EE_SRSS2", "h_DeltaRZl0loverlapWJet_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_EE_SRSS2->Sumw2();
+  h_DeltaRZl0loverlapWJet_MM_SRSS1 = new TH2F("h_DeltaRZl0loverlapWJet_MM_SRSS1", "h_DeltaRZl0loverlapWJet_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_MM_SRSS1->Sumw2();
+  h_DeltaRZl0loverlapWJet_MM_SRSS2 = new TH2F("h_DeltaRZl0loverlapWJet_MM_SRSS2", "h_DeltaRZl0loverlapWJet_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_MM_SRSS2->Sumw2();
+  h_DeltaRZl0loverlapWJet_MM_SRSS3 = new TH2F("h_DeltaRZl0loverlapWJet_MM_SRSS3", "h_DeltaRZl0loverlapWJet_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_MM_SRSS3->Sumw2();
+  h_DeltaRZl0loverlapWJet_MM_SRSS4 = new TH2F("h_DeltaRZl0loverlapWJet_MM_SRSS4", "h_DeltaRZl0loverlapWJet_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_MM_SRSS4->Sumw2();
+  h_DeltaRZl0loverlapWJet_EM_SRSS1 = new TH2F("h_DeltaRZl0loverlapWJet_EM_SRSS1", "h_DeltaRZl0loverlapWJet_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_EM_SRSS1->Sumw2();
+  h_DeltaRZl0loverlapWJet_EM_SRSS2 = new TH2F("h_DeltaRZl0loverlapWJet_EM_SRSS2", "h_DeltaRZl0loverlapWJet_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_EM_SRSS2->Sumw2();
+  h_DeltaRZl0loverlapWJet_EE_SROS1 = new TH2F("h_DeltaRZl0loverlapWJet_EE_SROS1", "h_DeltaRZl0loverlapWJet_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_EE_SROS1->Sumw2();
+  h_DeltaRZl0loverlapWJet_MM_SROS1 = new TH2F("h_DeltaRZl0loverlapWJet_MM_SROS1", "h_DeltaRZl0loverlapWJet_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_MM_SROS1->Sumw2();
+  h_DeltaRZl0loverlapWJet_EM_SROS1 = new TH2F("h_DeltaRZl0loverlapWJet_EM_SROS1", "h_DeltaRZl0loverlapWJet_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWJet_EM_SROS1->Sumw2();
+  
+  h_DeltaRZl1loverlapWJet_EE_SRSS1 = new TH2F("h_DeltaRZl1loverlapWJet_EE_SRSS1", "h_DeltaRZl1loverlapWJet_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_EE_SRSS1->Sumw2();
+  h_DeltaRZl1loverlapWJet_EE_SRSS2 = new TH2F("h_DeltaRZl1loverlapWJet_EE_SRSS2", "h_DeltaRZl1loverlapWJet_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_EE_SRSS2->Sumw2();
+  h_DeltaRZl1loverlapWJet_MM_SRSS1 = new TH2F("h_DeltaRZl1loverlapWJet_MM_SRSS1", "h_DeltaRZl1loverlapWJet_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_MM_SRSS1->Sumw2(); 
+  h_DeltaRZl1loverlapWJet_MM_SRSS2 = new TH2F("h_DeltaRZl1loverlapWJet_MM_SRSS2", "h_DeltaRZl1loverlapWJet_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_MM_SRSS2->Sumw2();
+  h_DeltaRZl1loverlapWJet_MM_SRSS3 = new TH2F("h_DeltaRZl1loverlapWJet_MM_SRSS3", "h_DeltaRZl1loverlapWJet_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_MM_SRSS3->Sumw2();
+  h_DeltaRZl1loverlapWJet_MM_SRSS4 = new TH2F("h_DeltaRZl1loverlapWJet_MM_SRSS4", "h_DeltaRZl1loverlapWJet_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_MM_SRSS4->Sumw2(); 
+  h_DeltaRZl1loverlapWJet_EM_SRSS1 = new TH2F("h_DeltaRZl1loverlapWJet_EM_SRSS1", "h_DeltaRZl1loverlapWJet_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_EM_SRSS1->Sumw2();
+  h_DeltaRZl1loverlapWJet_EM_SRSS2 = new TH2F("h_DeltaRZl1loverlapWJet_EM_SRSS2", "h_DeltaRZl1loverlapWJet_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_EM_SRSS2->Sumw2();
+  h_DeltaRZl1loverlapWJet_EE_SROS1 = new TH2F("h_DeltaRZl1loverlapWJet_EE_SROS1", "h_DeltaRZl1loverlapWJet_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_EE_SROS1->Sumw2(); 
+  h_DeltaRZl1loverlapWJet_MM_SROS1 = new TH2F("h_DeltaRZl1loverlapWJet_MM_SROS1", "h_DeltaRZl1loverlapWJet_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_MM_SROS1->Sumw2();
+  h_DeltaRZl1loverlapWJet_EM_SROS1 = new TH2F("h_DeltaRZl1loverlapWJet_EM_SROS1", "h_DeltaRZl1loverlapWJet_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWJet_EM_SROS1->Sumw2();  
+  
+  h_DeltaEtaZl0loverlapWJet_EE_SRSS1 = new TH2F("h_DeltaEtaZl0loverlapWJet_EE_SRSS1", "h_DeltaEtaZl0loverlapWJet_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_EE_SRSS1->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_EE_SRSS2 = new TH2F("h_DeltaEtaZl0loverlapWJet_EE_SRSS2", "h_DeltaEtaZl0loverlapWJet_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_EE_SRSS2->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_MM_SRSS1 = new TH2F("h_DeltaEtaZl0loverlapWJet_MM_SRSS1", "h_DeltaEtaZl0loverlapWJet_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_MM_SRSS1->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_MM_SRSS2 = new TH2F("h_DeltaEtaZl0loverlapWJet_MM_SRSS2", "h_DeltaEtaZl0loverlapWJet_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_MM_SRSS2->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_MM_SRSS3 = new TH2F("h_DeltaEtaZl0loverlapWJet_MM_SRSS3", "h_DeltaEtaZl0loverlapWJet_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_MM_SRSS3->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_MM_SRSS4 = new TH2F("h_DeltaEtaZl0loverlapWJet_MM_SRSS4", "h_DeltaEtaZl0loverlapWJet_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_MM_SRSS4->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_EM_SRSS1 = new TH2F("h_DeltaEtaZl0loverlapWJet_EM_SRSS1", "h_DeltaEtaZl0loverlapWJet_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_EM_SRSS1->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_EM_SRSS2 = new TH2F("h_DeltaEtaZl0loverlapWJet_EM_SRSS2", "h_DeltaEtaZl0loverlapWJet_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_EM_SRSS2->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_EE_SROS1 = new TH2F("h_DeltaEtaZl0loverlapWJet_EE_SROS1", "h_DeltaEtaZl0loverlapWJet_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_EE_SROS1->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_MM_SROS1 = new TH2F("h_DeltaEtaZl0loverlapWJet_MM_SROS1", "h_DeltaEtaZl0loverlapWJet_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_MM_SROS1->Sumw2();
+  h_DeltaEtaZl0loverlapWJet_EM_SROS1 = new TH2F("h_DeltaEtaZl0loverlapWJet_EM_SROS1", "h_DeltaEtaZl0loverlapWJet_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWJet_EM_SROS1->Sumw2();
+  
+  h_DeltaEtaZl1loverlapWJet_EE_SRSS1 = new TH2F("h_DeltaEtaZl1loverlapWJet_EE_SRSS1", "h_DeltaEtaZl1loverlapWJet_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_EE_SRSS1->Sumw2();
+  h_DeltaEtaZl1loverlapWJet_EE_SRSS2 = new TH2F("h_DeltaEtaZl1loverlapWJet_EE_SRSS2", "h_DeltaEtaZl1loverlapWJet_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_EE_SRSS2->Sumw2();
+  h_DeltaEtaZl1loverlapWJet_MM_SRSS1 = new TH2F("h_DeltaEtaZl1loverlapWJet_MM_SRSS1", "h_DeltaEtaZl1loverlapWJet_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_MM_SRSS1->Sumw2(); 
+  h_DeltaEtaZl1loverlapWJet_MM_SRSS2 = new TH2F("h_DeltaEtaZl1loverlapWJet_MM_SRSS2", "h_DeltaEtaZl1loverlapWJet_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_MM_SRSS2->Sumw2();
+  h_DeltaEtaZl1loverlapWJet_MM_SRSS3 = new TH2F("h_DeltaEtaZl1loverlapWJet_MM_SRSS3", "h_DeltaEtaZl1loverlapWJet_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_MM_SRSS3->Sumw2();
+  h_DeltaEtaZl1loverlapWJet_MM_SRSS4 = new TH2F("h_DeltaEtaZl1loverlapWJet_MM_SRSS4", "h_DeltaEtaZl1loverlapWJet_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_MM_SRSS4->Sumw2(); 
+  h_DeltaEtaZl1loverlapWJet_EM_SRSS1 = new TH2F("h_DeltaEtaZl1loverlapWJet_EM_SRSS1", "h_DeltaEtaZl1loverlapWJet_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_EM_SRSS1->Sumw2();
+  h_DeltaEtaZl1loverlapWJet_EM_SRSS2 = new TH2F("h_DeltaEtaZl1loverlapWJet_EM_SRSS2", "h_DeltaEtaZl1loverlapWJet_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_EM_SRSS2->Sumw2();
+  h_DeltaEtaZl1loverlapWJet_EE_SROS1 = new TH2F("h_DeltaEtaZl1loverlapWJet_EE_SROS1", "h_DeltaEtaZl1loverlapWJet_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_EE_SROS1->Sumw2(); 
+  h_DeltaEtaZl1loverlapWJet_MM_SROS1 = new TH2F("h_DeltaEtaZl1loverlapWJet_MM_SROS1", "h_DeltaEtaZl1loverlapWJet_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_MM_SROS1->Sumw2();
+  h_DeltaEtaZl1loverlapWJet_EM_SROS1 = new TH2F("h_DeltaEtaZl1loverlapWJet_EM_SROS1", "h_DeltaEtaZl1loverlapWJet_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWJet_EM_SROS1->Sumw2();    
+  
+  h_mTllloverlapWJet_EE_SRSS1 = new TH2F("h_mTllloverlapWJet_EE_SRSS1", "h_mTllloverlapWJet_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_EE_SRSS1->Sumw2();
+  h_mTllloverlapWJet_EE_SRSS2 = new TH2F("h_mTllloverlapWJet_EE_SRSS2", "h_mTllloverlapWJet_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_EE_SRSS2->Sumw2();
+  h_mTllloverlapWJet_MM_SRSS1 = new TH2F("h_mTllloverlapWJet_MM_SRSS1", "h_mTllloverlapWJet_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_MM_SRSS1->Sumw2(); 
+  h_mTllloverlapWJet_MM_SRSS2 = new TH2F("h_mTllloverlapWJet_MM_SRSS2", "h_mTllloverlapWJet_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_MM_SRSS2->Sumw2();
+  h_mTllloverlapWJet_MM_SRSS3 = new TH2F("h_mTllloverlapWJet_MM_SRSS3", "h_mTllloverlapWJet_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_MM_SRSS3->Sumw2();
+  h_mTllloverlapWJet_MM_SRSS4 = new TH2F("h_mTllloverlapWJet_MM_SRSS4", "h_mTllloverlapWJet_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_MM_SRSS4->Sumw2(); 
+  h_mTllloverlapWJet_EM_SRSS1 = new TH2F("h_mTllloverlapWJet_EM_SRSS1", "h_mTllloverlapWJet_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_EM_SRSS1->Sumw2();
+  h_mTllloverlapWJet_EM_SRSS2 = new TH2F("h_mTllloverlapWJet_EM_SRSS2", "h_mTllloverlapWJet_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_EM_SRSS2->Sumw2();
+  h_mTllloverlapWJet_EE_SROS1 = new TH2F("h_mTllloverlapWJet_EE_SROS1", "h_mTllloverlapWJet_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_EE_SROS1->Sumw2(); 
+  h_mTllloverlapWJet_MM_SROS1 = new TH2F("h_mTllloverlapWJet_MM_SROS1", "h_mTllloverlapWJet_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_MM_SROS1->Sumw2();
+  h_mTllloverlapWJet_EM_SROS1 = new TH2F("h_mTllloverlapWJet_EM_SROS1", "h_mTllloverlapWJet_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWJet_EM_SROS1->Sumw2();  
+  
+   //overlapWLepton
+  h_ml0loverlapWLepton_EE_SRSS1 = new TH2F("h_ml0loverlapWLepton_EE_SRSS1", "h_ml0loverlapWLepton_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_EE_SRSS1->Sumw2();
+  h_ml0loverlapWLepton_EE_SRSS2 = new TH2F("h_ml0loverlapWLepton_EE_SRSS2", "h_ml0loverlapWLepton_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_EE_SRSS2->Sumw2();
+  h_ml0loverlapWLepton_MM_SRSS1 = new TH2F("h_ml0loverlapWLepton_MM_SRSS1", "h_ml0loverlapWLepton_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_MM_SRSS1->Sumw2();
+  h_ml0loverlapWLepton_MM_SRSS2 = new TH2F("h_ml0loverlapWLepton_MM_SRSS2", "h_ml0loverlapWLepton_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_MM_SRSS2->Sumw2();
+  h_ml0loverlapWLepton_MM_SRSS3 = new TH2F("h_ml0loverlapWLepton_MM_SRSS3", "h_ml0loverlapWLepton_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_MM_SRSS3->Sumw2();
+  h_ml0loverlapWLepton_MM_SRSS4 = new TH2F("h_ml0loverlapWLepton_MM_SRSS4", "h_ml0loverlapWLepton_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_MM_SRSS4->Sumw2();
+  h_ml0loverlapWLepton_EM_SRSS1 = new TH2F("h_ml0loverlapWLepton_EM_SRSS1", "h_ml0loverlapWLepton_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_EM_SRSS1->Sumw2();
+  h_ml0loverlapWLepton_EM_SRSS2 = new TH2F("h_ml0loverlapWLepton_EM_SRSS2", "h_ml0loverlapWLepton_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_EM_SRSS2->Sumw2();
+  h_ml0loverlapWLepton_EE_SROS1 = new TH2F("h_ml0loverlapWLepton_EE_SROS1", "h_ml0loverlapWLepton_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_EE_SROS1->Sumw2();
+  h_ml0loverlapWLepton_MM_SROS1 = new TH2F("h_ml0loverlapWLepton_MM_SROS1", "h_ml0loverlapWLepton_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_MM_SROS1->Sumw2();
+  h_ml0loverlapWLepton_EM_SROS1 = new TH2F("h_ml0loverlapWLepton_EM_SROS1", "h_ml0loverlapWLepton_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0loverlapWLepton_EM_SROS1->Sumw2();
+  
+  h_ml1loverlapWLepton_EE_SRSS1 = new TH2F("h_ml1loverlapWLepton_EE_SRSS1", "h_ml1loverlapWLepton_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_EE_SRSS1->Sumw2();
+  h_ml1loverlapWLepton_EE_SRSS2 = new TH2F("h_ml1loverlapWLepton_EE_SRSS2", "h_ml1loverlapWLepton_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_EE_SRSS2->Sumw2();
+  h_ml1loverlapWLepton_MM_SRSS1 = new TH2F("h_ml1loverlapWLepton_MM_SRSS1", "h_ml1loverlapWLepton_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_MM_SRSS1->Sumw2();
+  h_ml1loverlapWLepton_MM_SRSS2 = new TH2F("h_ml1loverlapWLepton_MM_SRSS2", "h_ml1loverlapWLepton_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_MM_SRSS2->Sumw2();
+  h_ml1loverlapWLepton_MM_SRSS3 = new TH2F("h_ml1loverlapWLepton_MM_SRSS3", "h_ml1loverlapWLepton_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_MM_SRSS3->Sumw2();
+  h_ml1loverlapWLepton_MM_SRSS4 = new TH2F("h_ml1loverlapWLepton_MM_SRSS4", "h_ml1loverlapWLepton_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_MM_SRSS4->Sumw2();
+  h_ml1loverlapWLepton_EM_SRSS1 = new TH2F("h_ml1loverlapWLepton_EM_SRSS1", "h_ml1loverlapWLepton_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_EM_SRSS1->Sumw2();
+  h_ml1loverlapWLepton_EM_SRSS2 = new TH2F("h_ml1loverlapWLepton_EM_SRSS2", "h_ml1loverlapWLepton_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_EM_SRSS2->Sumw2();
+  h_ml1loverlapWLepton_EE_SROS1 = new TH2F("h_ml1loverlapWLepton_EE_SROS1", "h_ml1loverlapWLepton_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_EE_SROS1->Sumw2();
+  h_ml1loverlapWLepton_MM_SROS1 = new TH2F("h_ml1loverlapWLepton_MM_SROS1", "h_ml1loverlapWLepton_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_MM_SROS1->Sumw2();
+  h_ml1loverlapWLepton_EM_SROS1 = new TH2F("h_ml1loverlapWLepton_EM_SROS1", "h_ml1loverlapWLepton_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1loverlapWLepton_EM_SROS1->Sumw2();
+  
+  
+  h_mTl0loverlapWLepton_EE_SRSS1 = new TH2F("h_mTl0loverlapWLepton_EE_SRSS1", "h_mTl0loverlapWLepton_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_EE_SRSS1->Sumw2();
+  h_mTl0loverlapWLepton_EE_SRSS2 = new TH2F("h_mTl0loverlapWLepton_EE_SRSS2", "h_mTl0loverlapWLepton_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_EE_SRSS2->Sumw2();
+  h_mTl0loverlapWLepton_MM_SRSS1 = new TH2F("h_mTl0loverlapWLepton_MM_SRSS1", "h_mTl0loverlapWLepton_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_MM_SRSS1->Sumw2();
+  h_mTl0loverlapWLepton_MM_SRSS2 = new TH2F("h_mTl0loverlapWLepton_MM_SRSS2", "h_mTl0loverlapWLepton_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_MM_SRSS2->Sumw2();
+  h_mTl0loverlapWLepton_MM_SRSS3 = new TH2F("h_mTl0loverlapWLepton_MM_SRSS3", "h_mTl0loverlapWLepton_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_MM_SRSS3->Sumw2();
+  h_mTl0loverlapWLepton_MM_SRSS4 = new TH2F("h_mTl0loverlapWLepton_MM_SRSS4", "h_mTl0loverlapWLepton_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_MM_SRSS4->Sumw2();
+  h_mTl0loverlapWLepton_EM_SRSS1 = new TH2F("h_mTl0loverlapWLepton_EM_SRSS1", "h_mTl0loverlapWLepton_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_EM_SRSS1->Sumw2();
+  h_mTl0loverlapWLepton_EM_SRSS2 = new TH2F("h_mTl0loverlapWLepton_EM_SRSS2", "h_mTl0loverlapWLepton_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_EM_SRSS2->Sumw2();
+  h_mTl0loverlapWLepton_EE_SROS1 = new TH2F("h_mTl0loverlapWLepton_EE_SROS1", "h_mTl0loverlapWLepton_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_EE_SROS1->Sumw2();
+  h_mTl0loverlapWLepton_MM_SROS1 = new TH2F("h_mTl0loverlapWLepton_MM_SROS1", "h_mTl0loverlapWLepton_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_MM_SROS1->Sumw2();
+  h_mTl0loverlapWLepton_EM_SROS1 = new TH2F("h_mTl0loverlapWLepton_EM_SROS1", "h_mTl0loverlapWLepton_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0loverlapWLepton_EM_SROS1->Sumw2();
+  
+  h_mTl1loverlapWLepton_EE_SRSS1 = new TH2F("h_mTl1loverlapWLepton_EE_SRSS1", "h_mTl1loverlapWLepton_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_EE_SRSS1->Sumw2();
+  h_mTl1loverlapWLepton_EE_SRSS2 = new TH2F("h_mTl1loverlapWLepton_EE_SRSS2", "h_mTl1loverlapWLepton_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_EE_SRSS2->Sumw2();
+  h_mTl1loverlapWLepton_MM_SRSS1 = new TH2F("h_mTl1loverlapWLepton_MM_SRSS1", "h_mTl1loverlapWLepton_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_MM_SRSS1->Sumw2(); 
+  h_mTl1loverlapWLepton_MM_SRSS2 = new TH2F("h_mTl1loverlapWLepton_MM_SRSS2", "h_mTl1loverlapWLepton_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_MM_SRSS2->Sumw2();
+  h_mTl1loverlapWLepton_MM_SRSS3 = new TH2F("h_mTl1loverlapWLepton_MM_SRSS3", "h_mTl1loverlapWLepton_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_MM_SRSS3->Sumw2();
+  h_mTl1loverlapWLepton_MM_SRSS4 = new TH2F("h_mTl1loverlapWLepton_MM_SRSS4", "h_mTl1loverlapWLepton_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_MM_SRSS4->Sumw2(); 
+  h_mTl1loverlapWLepton_EM_SRSS1 = new TH2F("h_mTl1loverlapWLepton_EM_SRSS1", "h_mTl1loverlapWLepton_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_EM_SRSS1->Sumw2();
+  h_mTl1loverlapWLepton_EM_SRSS2 = new TH2F("h_mTl1loverlapWLepton_EM_SRSS2", "h_mTl1loverlapWLepton_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_EM_SRSS2->Sumw2();
+  h_mTl1loverlapWLepton_EE_SROS1 = new TH2F("h_mTl1loverlapWLepton_EE_SROS1", "h_mTl1loverlapWLepton_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_EE_SROS1->Sumw2(); 
+  h_mTl1loverlapWLepton_MM_SROS1 = new TH2F("h_mTl1loverlapWLepton_MM_SROS1", "h_mTl1loverlapWLepton_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_MM_SROS1->Sumw2();
+  h_mTl1loverlapWLepton_EM_SROS1 = new TH2F("h_mTl1loverlapWLepton_EM_SROS1", "h_mTl1loverlapWLepton_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1loverlapWLepton_EM_SROS1->Sumw2();
+
+  h_DeltaRl0loverlapWLepton_EE_SRSS1 = new TH2F("h_DeltaRl0loverlapWLepton_EE_SRSS1", "h_DeltaRl0loverlapWLepton_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_EE_SRSS1->Sumw2();
+  h_DeltaRl0loverlapWLepton_EE_SRSS2 = new TH2F("h_DeltaRl0loverlapWLepton_EE_SRSS2", "h_DeltaRl0loverlapWLepton_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_EE_SRSS2->Sumw2();
+  h_DeltaRl0loverlapWLepton_MM_SRSS1 = new TH2F("h_DeltaRl0loverlapWLepton_MM_SRSS1", "h_DeltaRl0loverlapWLepton_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_MM_SRSS1->Sumw2();
+  h_DeltaRl0loverlapWLepton_MM_SRSS2 = new TH2F("h_DeltaRl0loverlapWLepton_MM_SRSS2", "h_DeltaRl0loverlapWLepton_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_MM_SRSS2->Sumw2();
+  h_DeltaRl0loverlapWLepton_MM_SRSS3 = new TH2F("h_DeltaRl0loverlapWLepton_MM_SRSS3", "h_DeltaRl0loverlapWLepton_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_MM_SRSS3->Sumw2();
+  h_DeltaRl0loverlapWLepton_MM_SRSS4 = new TH2F("h_DeltaRl0loverlapWLepton_MM_SRSS4", "h_DeltaRl0loverlapWLepton_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_MM_SRSS4->Sumw2();
+  h_DeltaRl0loverlapWLepton_EM_SRSS1 = new TH2F("h_DeltaRl0loverlapWLepton_EM_SRSS1", "h_DeltaRl0loverlapWLepton_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_EM_SRSS1->Sumw2();
+  h_DeltaRl0loverlapWLepton_EM_SRSS2 = new TH2F("h_DeltaRl0loverlapWLepton_EM_SRSS2", "h_DeltaRl0loverlapWLepton_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_EM_SRSS2->Sumw2();
+  h_DeltaRl0loverlapWLepton_EE_SROS1 = new TH2F("h_DeltaRl0loverlapWLepton_EE_SROS1", "h_DeltaRl0loverlapWLepton_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_EE_SROS1->Sumw2();
+  h_DeltaRl0loverlapWLepton_MM_SROS1 = new TH2F("h_DeltaRl0loverlapWLepton_MM_SROS1", "h_DeltaRl0loverlapWLepton_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_MM_SROS1->Sumw2();
+  h_DeltaRl0loverlapWLepton_EM_SROS1 = new TH2F("h_DeltaRl0loverlapWLepton_EM_SROS1", "h_DeltaRl0loverlapWLepton_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0loverlapWLepton_EM_SROS1->Sumw2();
+  
+  h_DeltaRl1loverlapWLepton_EE_SRSS1 = new TH2F("h_DeltaRl1loverlapWLepton_EE_SRSS1", "h_DeltaRl1loverlapWLepton_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_EE_SRSS1->Sumw2();
+  h_DeltaRl1loverlapWLepton_EE_SRSS2 = new TH2F("h_DeltaRl1loverlapWLepton_EE_SRSS2", "h_DeltaRl1loverlapWLepton_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_EE_SRSS2->Sumw2();
+  h_DeltaRl1loverlapWLepton_MM_SRSS1 = new TH2F("h_DeltaRl1loverlapWLepton_MM_SRSS1", "h_DeltaRl1loverlapWLepton_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_MM_SRSS1->Sumw2(); 
+  h_DeltaRl1loverlapWLepton_MM_SRSS2 = new TH2F("h_DeltaRl1loverlapWLepton_MM_SRSS2", "h_DeltaRl1loverlapWLepton_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_MM_SRSS2->Sumw2();
+  h_DeltaRl1loverlapWLepton_MM_SRSS3 = new TH2F("h_DeltaRl1loverlapWLepton_MM_SRSS3", "h_DeltaRl1loverlapWLepton_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_MM_SRSS3->Sumw2();
+  h_DeltaRl1loverlapWLepton_MM_SRSS4 = new TH2F("h_DeltaRl1loverlapWLepton_MM_SRSS4", "h_DeltaRl1loverlapWLepton_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_MM_SRSS4->Sumw2(); 
+  h_DeltaRl1loverlapWLepton_EM_SRSS1 = new TH2F("h_DeltaRl1loverlapWLepton_EM_SRSS1", "h_DeltaRl1loverlapWLepton_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_EM_SRSS1->Sumw2();
+  h_DeltaRl1loverlapWLepton_EM_SRSS2 = new TH2F("h_DeltaRl1loverlapWLepton_EM_SRSS2", "h_DeltaRl1loverlapWLepton_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_EM_SRSS2->Sumw2();
+  h_DeltaRl1loverlapWLepton_EE_SROS1 = new TH2F("h_DeltaRl1loverlapWLepton_EE_SROS1", "h_DeltaRl1loverlapWLepton_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_EE_SROS1->Sumw2(); 
+  h_DeltaRl1loverlapWLepton_MM_SROS1 = new TH2F("h_DeltaRl1loverlapWLepton_MM_SROS1", "h_DeltaRl1loverlapWLepton_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_MM_SROS1->Sumw2();
+  h_DeltaRl1loverlapWLepton_EM_SROS1 = new TH2F("h_DeltaRl1loverlapWLepton_EM_SROS1", "h_DeltaRl1loverlapWLepton_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1loverlapWLepton_EM_SROS1->Sumw2();
+  
+  h_DeltaRZl0loverlapWLepton_EE_SRSS1 = new TH2F("h_DeltaRZl0loverlapWLepton_EE_SRSS1", "h_DeltaRZl0loverlapWLepton_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_EE_SRSS1->Sumw2();
+  h_DeltaRZl0loverlapWLepton_EE_SRSS2 = new TH2F("h_DeltaRZl0loverlapWLepton_EE_SRSS2", "h_DeltaRZl0loverlapWLepton_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_EE_SRSS2->Sumw2();
+  h_DeltaRZl0loverlapWLepton_MM_SRSS1 = new TH2F("h_DeltaRZl0loverlapWLepton_MM_SRSS1", "h_DeltaRZl0loverlapWLepton_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_MM_SRSS1->Sumw2();
+  h_DeltaRZl0loverlapWLepton_MM_SRSS2 = new TH2F("h_DeltaRZl0loverlapWLepton_MM_SRSS2", "h_DeltaRZl0loverlapWLepton_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_MM_SRSS2->Sumw2();
+  h_DeltaRZl0loverlapWLepton_MM_SRSS3 = new TH2F("h_DeltaRZl0loverlapWLepton_MM_SRSS3", "h_DeltaRZl0loverlapWLepton_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_MM_SRSS3->Sumw2();
+  h_DeltaRZl0loverlapWLepton_MM_SRSS4 = new TH2F("h_DeltaRZl0loverlapWLepton_MM_SRSS4", "h_DeltaRZl0loverlapWLepton_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_MM_SRSS4->Sumw2();
+  h_DeltaRZl0loverlapWLepton_EM_SRSS1 = new TH2F("h_DeltaRZl0loverlapWLepton_EM_SRSS1", "h_DeltaRZl0loverlapWLepton_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_EM_SRSS1->Sumw2();
+  h_DeltaRZl0loverlapWLepton_EM_SRSS2 = new TH2F("h_DeltaRZl0loverlapWLepton_EM_SRSS2", "h_DeltaRZl0loverlapWLepton_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_EM_SRSS2->Sumw2();
+  h_DeltaRZl0loverlapWLepton_EE_SROS1 = new TH2F("h_DeltaRZl0loverlapWLepton_EE_SROS1", "h_DeltaRZl0loverlapWLepton_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_EE_SROS1->Sumw2();
+  h_DeltaRZl0loverlapWLepton_MM_SROS1 = new TH2F("h_DeltaRZl0loverlapWLepton_MM_SROS1", "h_DeltaRZl0loverlapWLepton_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_MM_SROS1->Sumw2();
+  h_DeltaRZl0loverlapWLepton_EM_SROS1 = new TH2F("h_DeltaRZl0loverlapWLepton_EM_SROS1", "h_DeltaRZl0loverlapWLepton_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0loverlapWLepton_EM_SROS1->Sumw2();
+  
+  h_DeltaRZl1loverlapWLepton_EE_SRSS1 = new TH2F("h_DeltaRZl1loverlapWLepton_EE_SRSS1", "h_DeltaRZl1loverlapWLepton_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_EE_SRSS1->Sumw2();
+  h_DeltaRZl1loverlapWLepton_EE_SRSS2 = new TH2F("h_DeltaRZl1loverlapWLepton_EE_SRSS2", "h_DeltaRZl1loverlapWLepton_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_EE_SRSS2->Sumw2();
+  h_DeltaRZl1loverlapWLepton_MM_SRSS1 = new TH2F("h_DeltaRZl1loverlapWLepton_MM_SRSS1", "h_DeltaRZl1loverlapWLepton_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_MM_SRSS1->Sumw2(); 
+  h_DeltaRZl1loverlapWLepton_MM_SRSS2 = new TH2F("h_DeltaRZl1loverlapWLepton_MM_SRSS2", "h_DeltaRZl1loverlapWLepton_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_MM_SRSS2->Sumw2();
+  h_DeltaRZl1loverlapWLepton_MM_SRSS3 = new TH2F("h_DeltaRZl1loverlapWLepton_MM_SRSS3", "h_DeltaRZl1loverlapWLepton_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_MM_SRSS3->Sumw2();
+  h_DeltaRZl1loverlapWLepton_MM_SRSS4 = new TH2F("h_DeltaRZl1loverlapWLepton_MM_SRSS4", "h_DeltaRZl1loverlapWLepton_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_MM_SRSS4->Sumw2(); 
+  h_DeltaRZl1loverlapWLepton_EM_SRSS1 = new TH2F("h_DeltaRZl1loverlapWLepton_EM_SRSS1", "h_DeltaRZl1loverlapWLepton_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_EM_SRSS1->Sumw2();
+  h_DeltaRZl1loverlapWLepton_EM_SRSS2 = new TH2F("h_DeltaRZl1loverlapWLepton_EM_SRSS2", "h_DeltaRZl1loverlapWLepton_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_EM_SRSS2->Sumw2();
+  h_DeltaRZl1loverlapWLepton_EE_SROS1 = new TH2F("h_DeltaRZl1loverlapWLepton_EE_SROS1", "h_DeltaRZl1loverlapWLepton_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_EE_SROS1->Sumw2(); 
+  h_DeltaRZl1loverlapWLepton_MM_SROS1 = new TH2F("h_DeltaRZl1loverlapWLepton_MM_SROS1", "h_DeltaRZl1loverlapWLepton_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_MM_SROS1->Sumw2();
+  h_DeltaRZl1loverlapWLepton_EM_SROS1 = new TH2F("h_DeltaRZl1loverlapWLepton_EM_SROS1", "h_DeltaRZl1loverlapWLepton_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1loverlapWLepton_EM_SROS1->Sumw2();  
+  
+  h_DeltaEtaZl0loverlapWLepton_EE_SRSS1 = new TH2F("h_DeltaEtaZl0loverlapWLepton_EE_SRSS1", "h_DeltaEtaZl0loverlapWLepton_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_EE_SRSS1->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_EE_SRSS2 = new TH2F("h_DeltaEtaZl0loverlapWLepton_EE_SRSS2", "h_DeltaEtaZl0loverlapWLepton_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_EE_SRSS2->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_MM_SRSS1 = new TH2F("h_DeltaEtaZl0loverlapWLepton_MM_SRSS1", "h_DeltaEtaZl0loverlapWLepton_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_MM_SRSS1->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_MM_SRSS2 = new TH2F("h_DeltaEtaZl0loverlapWLepton_MM_SRSS2", "h_DeltaEtaZl0loverlapWLepton_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_MM_SRSS2->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_MM_SRSS3 = new TH2F("h_DeltaEtaZl0loverlapWLepton_MM_SRSS3", "h_DeltaEtaZl0loverlapWLepton_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_MM_SRSS3->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_MM_SRSS4 = new TH2F("h_DeltaEtaZl0loverlapWLepton_MM_SRSS4", "h_DeltaEtaZl0loverlapWLepton_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_MM_SRSS4->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_EM_SRSS1 = new TH2F("h_DeltaEtaZl0loverlapWLepton_EM_SRSS1", "h_DeltaEtaZl0loverlapWLepton_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_EM_SRSS1->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_EM_SRSS2 = new TH2F("h_DeltaEtaZl0loverlapWLepton_EM_SRSS2", "h_DeltaEtaZl0loverlapWLepton_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_EM_SRSS2->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_EE_SROS1 = new TH2F("h_DeltaEtaZl0loverlapWLepton_EE_SROS1", "h_DeltaEtaZl0loverlapWLepton_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_EE_SROS1->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_MM_SROS1 = new TH2F("h_DeltaEtaZl0loverlapWLepton_MM_SROS1", "h_DeltaEtaZl0loverlapWLepton_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_MM_SROS1->Sumw2();
+  h_DeltaEtaZl0loverlapWLepton_EM_SROS1 = new TH2F("h_DeltaEtaZl0loverlapWLepton_EM_SROS1", "h_DeltaEtaZl0loverlapWLepton_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0loverlapWLepton_EM_SROS1->Sumw2();
+  
+  h_DeltaEtaZl1loverlapWLepton_EE_SRSS1 = new TH2F("h_DeltaEtaZl1loverlapWLepton_EE_SRSS1", "h_DeltaEtaZl1loverlapWLepton_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_EE_SRSS1->Sumw2();
+  h_DeltaEtaZl1loverlapWLepton_EE_SRSS2 = new TH2F("h_DeltaEtaZl1loverlapWLepton_EE_SRSS2", "h_DeltaEtaZl1loverlapWLepton_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_EE_SRSS2->Sumw2();
+  h_DeltaEtaZl1loverlapWLepton_MM_SRSS1 = new TH2F("h_DeltaEtaZl1loverlapWLepton_MM_SRSS1", "h_DeltaEtaZl1loverlapWLepton_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_MM_SRSS1->Sumw2(); 
+  h_DeltaEtaZl1loverlapWLepton_MM_SRSS2 = new TH2F("h_DeltaEtaZl1loverlapWLepton_MM_SRSS2", "h_DeltaEtaZl1loverlapWLepton_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_MM_SRSS2->Sumw2();
+  h_DeltaEtaZl1loverlapWLepton_MM_SRSS3 = new TH2F("h_DeltaEtaZl1loverlapWLepton_MM_SRSS3", "h_DeltaEtaZl1loverlapWLepton_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_MM_SRSS3->Sumw2();
+  h_DeltaEtaZl1loverlapWLepton_MM_SRSS4 = new TH2F("h_DeltaEtaZl1loverlapWLepton_MM_SRSS4", "h_DeltaEtaZl1loverlapWLepton_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_MM_SRSS4->Sumw2(); 
+  h_DeltaEtaZl1loverlapWLepton_EM_SRSS1 = new TH2F("h_DeltaEtaZl1loverlapWLepton_EM_SRSS1", "h_DeltaEtaZl1loverlapWLepton_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_EM_SRSS1->Sumw2();
+  h_DeltaEtaZl1loverlapWLepton_EM_SRSS2 = new TH2F("h_DeltaEtaZl1loverlapWLepton_EM_SRSS2", "h_DeltaEtaZl1loverlapWLepton_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_EM_SRSS2->Sumw2();
+  h_DeltaEtaZl1loverlapWLepton_EE_SROS1 = new TH2F("h_DeltaEtaZl1loverlapWLepton_EE_SROS1", "h_DeltaEtaZl1loverlapWLepton_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_EE_SROS1->Sumw2(); 
+  h_DeltaEtaZl1loverlapWLepton_MM_SROS1 = new TH2F("h_DeltaEtaZl1loverlapWLepton_MM_SROS1", "h_DeltaEtaZl1loverlapWLepton_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_MM_SROS1->Sumw2();
+  h_DeltaEtaZl1loverlapWLepton_EM_SROS1 = new TH2F("h_DeltaEtaZl1loverlapWLepton_EM_SROS1", "h_DeltaEtaZl1loverlapWLepton_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1loverlapWLepton_EM_SROS1->Sumw2();    
+  
+  h_mTllloverlapWLepton_EE_SRSS1 = new TH2F("h_mTllloverlapWLepton_EE_SRSS1", "h_mTllloverlapWLepton_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_EE_SRSS1->Sumw2();
+  h_mTllloverlapWLepton_EE_SRSS2 = new TH2F("h_mTllloverlapWLepton_EE_SRSS2", "h_mTllloverlapWLepton_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_EE_SRSS2->Sumw2();
+  h_mTllloverlapWLepton_MM_SRSS1 = new TH2F("h_mTllloverlapWLepton_MM_SRSS1", "h_mTllloverlapWLepton_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_MM_SRSS1->Sumw2(); 
+  h_mTllloverlapWLepton_MM_SRSS2 = new TH2F("h_mTllloverlapWLepton_MM_SRSS2", "h_mTllloverlapWLepton_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_MM_SRSS2->Sumw2();
+  h_mTllloverlapWLepton_MM_SRSS3 = new TH2F("h_mTllloverlapWLepton_MM_SRSS3", "h_mTllloverlapWLepton_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_MM_SRSS3->Sumw2();
+  h_mTllloverlapWLepton_MM_SRSS4 = new TH2F("h_mTllloverlapWLepton_MM_SRSS4", "h_mTllloverlapWLepton_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_MM_SRSS4->Sumw2(); 
+  h_mTllloverlapWLepton_EM_SRSS1 = new TH2F("h_mTllloverlapWLepton_EM_SRSS1", "h_mTllloverlapWLepton_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_EM_SRSS1->Sumw2();
+  h_mTllloverlapWLepton_EM_SRSS2 = new TH2F("h_mTllloverlapWLepton_EM_SRSS2", "h_mTllloverlapWLepton_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_EM_SRSS2->Sumw2();
+  h_mTllloverlapWLepton_EE_SROS1 = new TH2F("h_mTllloverlapWLepton_EE_SROS1", "h_mTllloverlapWLepton_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_EE_SROS1->Sumw2(); 
+  h_mTllloverlapWLepton_MM_SROS1 = new TH2F("h_mTllloverlapWLepton_MM_SROS1", "h_mTllloverlapWLepton_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_MM_SROS1->Sumw2();
+  h_mTllloverlapWLepton_EM_SROS1 = new TH2F("h_mTllloverlapWLepton_EM_SROS1", "h_mTllloverlapWLepton_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTllloverlapWLepton_EM_SROS1->Sumw2();
      
+  
+   //Mll
+  h_ml0lMll_EE_SRSS1 = new TH2F("h_ml0lMll_EE_SRSS1", "h_ml0lMll_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_EE_SRSS1->Sumw2();
+  h_ml0lMll_EE_SRSS2 = new TH2F("h_ml0lMll_EE_SRSS2", "h_ml0lMll_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_EE_SRSS2->Sumw2();
+  h_ml0lMll_MM_SRSS1 = new TH2F("h_ml0lMll_MM_SRSS1", "h_ml0lMll_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_MM_SRSS1->Sumw2();
+  h_ml0lMll_MM_SRSS2 = new TH2F("h_ml0lMll_MM_SRSS2", "h_ml0lMll_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_MM_SRSS2->Sumw2();
+  h_ml0lMll_MM_SRSS3 = new TH2F("h_ml0lMll_MM_SRSS3", "h_ml0lMll_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_MM_SRSS3->Sumw2();
+  h_ml0lMll_MM_SRSS4 = new TH2F("h_ml0lMll_MM_SRSS4", "h_ml0lMll_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_MM_SRSS4->Sumw2();
+  h_ml0lMll_EM_SRSS1 = new TH2F("h_ml0lMll_EM_SRSS1", "h_ml0lMll_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_EM_SRSS1->Sumw2();
+  h_ml0lMll_EM_SRSS2 = new TH2F("h_ml0lMll_EM_SRSS2", "h_ml0lMll_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_EM_SRSS2->Sumw2();
+  h_ml0lMll_EE_SROS1 = new TH2F("h_ml0lMll_EE_SROS1", "h_ml0lMll_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_EE_SROS1->Sumw2();
+  h_ml0lMll_MM_SROS1 = new TH2F("h_ml0lMll_MM_SROS1", "h_ml0lMll_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_MM_SROS1->Sumw2();
+  h_ml0lMll_EM_SROS1 = new TH2F("h_ml0lMll_EM_SROS1", "h_ml0lMll_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml0lMll_EM_SROS1->Sumw2();
+  
+  h_ml1lMll_EE_SRSS1 = new TH2F("h_ml1lMll_EE_SRSS1", "h_ml1lMll_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_EE_SRSS1->Sumw2();
+  h_ml1lMll_EE_SRSS2 = new TH2F("h_ml1lMll_EE_SRSS2", "h_ml1lMll_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_EE_SRSS2->Sumw2();
+  h_ml1lMll_MM_SRSS1 = new TH2F("h_ml1lMll_MM_SRSS1", "h_ml1lMll_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_MM_SRSS1->Sumw2();
+  h_ml1lMll_MM_SRSS2 = new TH2F("h_ml1lMll_MM_SRSS2", "h_ml1lMll_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_MM_SRSS2->Sumw2();
+  h_ml1lMll_MM_SRSS3 = new TH2F("h_ml1lMll_MM_SRSS3", "h_ml1lMll_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_MM_SRSS3->Sumw2();
+  h_ml1lMll_MM_SRSS4 = new TH2F("h_ml1lMll_MM_SRSS4", "h_ml1lMll_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_MM_SRSS4->Sumw2();
+  h_ml1lMll_EM_SRSS1 = new TH2F("h_ml1lMll_EM_SRSS1", "h_ml1lMll_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_EM_SRSS1->Sumw2();
+  h_ml1lMll_EM_SRSS2 = new TH2F("h_ml1lMll_EM_SRSS2", "h_ml1lMll_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_EM_SRSS2->Sumw2();
+  h_ml1lMll_EE_SROS1 = new TH2F("h_ml1lMll_EE_SROS1", "h_ml1lMll_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_EE_SROS1->Sumw2();
+  h_ml1lMll_MM_SROS1 = new TH2F("h_ml1lMll_MM_SROS1", "h_ml1lMll_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_MM_SROS1->Sumw2();
+  h_ml1lMll_EM_SROS1 = new TH2F("h_ml1lMll_EM_SROS1", "h_ml1lMll_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_ml1lMll_EM_SROS1->Sumw2();
+  
+  
+  h_mTl0lMll_EE_SRSS1 = new TH2F("h_mTl0lMll_EE_SRSS1", "h_mTl0lMll_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_EE_SRSS1->Sumw2();
+  h_mTl0lMll_EE_SRSS2 = new TH2F("h_mTl0lMll_EE_SRSS2", "h_mTl0lMll_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_EE_SRSS2->Sumw2();
+  h_mTl0lMll_MM_SRSS1 = new TH2F("h_mTl0lMll_MM_SRSS1", "h_mTl0lMll_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_MM_SRSS1->Sumw2();
+  h_mTl0lMll_MM_SRSS2 = new TH2F("h_mTl0lMll_MM_SRSS2", "h_mTl0lMll_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_MM_SRSS2->Sumw2();
+  h_mTl0lMll_MM_SRSS3 = new TH2F("h_mTl0lMll_MM_SRSS3", "h_mTl0lMll_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_MM_SRSS3->Sumw2();
+  h_mTl0lMll_MM_SRSS4 = new TH2F("h_mTl0lMll_MM_SRSS4", "h_mTl0lMll_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_MM_SRSS4->Sumw2();
+  h_mTl0lMll_EM_SRSS1 = new TH2F("h_mTl0lMll_EM_SRSS1", "h_mTl0lMll_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_EM_SRSS1->Sumw2();
+  h_mTl0lMll_EM_SRSS2 = new TH2F("h_mTl0lMll_EM_SRSS2", "h_mTl0lMll_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_EM_SRSS2->Sumw2();
+  h_mTl0lMll_EE_SROS1 = new TH2F("h_mTl0lMll_EE_SROS1", "h_mTl0lMll_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_EE_SROS1->Sumw2();
+  h_mTl0lMll_MM_SROS1 = new TH2F("h_mTl0lMll_MM_SROS1", "h_mTl0lMll_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_MM_SROS1->Sumw2();
+  h_mTl0lMll_EM_SROS1 = new TH2F("h_mTl0lMll_EM_SROS1", "h_mTl0lMll_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl0lMll_EM_SROS1->Sumw2();
+  
+  h_mTl1lMll_EE_SRSS1 = new TH2F("h_mTl1lMll_EE_SRSS1", "h_mTl1lMll_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_EE_SRSS1->Sumw2();
+  h_mTl1lMll_EE_SRSS2 = new TH2F("h_mTl1lMll_EE_SRSS2", "h_mTl1lMll_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_EE_SRSS2->Sumw2();
+  h_mTl1lMll_MM_SRSS1 = new TH2F("h_mTl1lMll_MM_SRSS1", "h_mTl1lMll_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_MM_SRSS1->Sumw2(); 
+  h_mTl1lMll_MM_SRSS2 = new TH2F("h_mTl1lMll_MM_SRSS2", "h_mTl1lMll_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_MM_SRSS2->Sumw2();
+  h_mTl1lMll_MM_SRSS3 = new TH2F("h_mTl1lMll_MM_SRSS3", "h_mTl1lMll_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_MM_SRSS3->Sumw2();
+  h_mTl1lMll_MM_SRSS4 = new TH2F("h_mTl1lMll_MM_SRSS4", "h_mTl1lMll_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_MM_SRSS4->Sumw2(); 
+  h_mTl1lMll_EM_SRSS1 = new TH2F("h_mTl1lMll_EM_SRSS1", "h_mTl1lMll_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_EM_SRSS1->Sumw2();
+  h_mTl1lMll_EM_SRSS2 = new TH2F("h_mTl1lMll_EM_SRSS2", "h_mTl1lMll_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_EM_SRSS2->Sumw2();
+  h_mTl1lMll_EE_SROS1 = new TH2F("h_mTl1lMll_EE_SROS1", "h_mTl1lMll_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_EE_SROS1->Sumw2(); 
+  h_mTl1lMll_MM_SROS1 = new TH2F("h_mTl1lMll_MM_SROS1", "h_mTl1lMll_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_MM_SROS1->Sumw2();
+  h_mTl1lMll_EM_SROS1 = new TH2F("h_mTl1lMll_EM_SROS1", "h_mTl1lMll_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTl1lMll_EM_SROS1->Sumw2();
+
+  h_DeltaRl0lMll_EE_SRSS1 = new TH2F("h_DeltaRl0lMll_EE_SRSS1", "h_DeltaRl0lMll_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_EE_SRSS1->Sumw2();
+  h_DeltaRl0lMll_EE_SRSS2 = new TH2F("h_DeltaRl0lMll_EE_SRSS2", "h_DeltaRl0lMll_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_EE_SRSS2->Sumw2();
+  h_DeltaRl0lMll_MM_SRSS1 = new TH2F("h_DeltaRl0lMll_MM_SRSS1", "h_DeltaRl0lMll_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_MM_SRSS1->Sumw2();
+  h_DeltaRl0lMll_MM_SRSS2 = new TH2F("h_DeltaRl0lMll_MM_SRSS2", "h_DeltaRl0lMll_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_MM_SRSS2->Sumw2();
+  h_DeltaRl0lMll_MM_SRSS3 = new TH2F("h_DeltaRl0lMll_MM_SRSS3", "h_DeltaRl0lMll_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_MM_SRSS3->Sumw2();
+  h_DeltaRl0lMll_MM_SRSS4 = new TH2F("h_DeltaRl0lMll_MM_SRSS4", "h_DeltaRl0lMll_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_MM_SRSS4->Sumw2();
+  h_DeltaRl0lMll_EM_SRSS1 = new TH2F("h_DeltaRl0lMll_EM_SRSS1", "h_DeltaRl0lMll_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_EM_SRSS1->Sumw2();
+  h_DeltaRl0lMll_EM_SRSS2 = new TH2F("h_DeltaRl0lMll_EM_SRSS2", "h_DeltaRl0lMll_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_EM_SRSS2->Sumw2();
+  h_DeltaRl0lMll_EE_SROS1 = new TH2F("h_DeltaRl0lMll_EE_SROS1", "h_DeltaRl0lMll_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_EE_SROS1->Sumw2();
+  h_DeltaRl0lMll_MM_SROS1 = new TH2F("h_DeltaRl0lMll_MM_SROS1", "h_DeltaRl0lMll_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_MM_SROS1->Sumw2();
+  h_DeltaRl0lMll_EM_SROS1 = new TH2F("h_DeltaRl0lMll_EM_SROS1", "h_DeltaRl0lMll_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl0lMll_EM_SROS1->Sumw2();
+  
+  h_DeltaRl1lMll_EE_SRSS1 = new TH2F("h_DeltaRl1lMll_EE_SRSS1", "h_DeltaRl1lMll_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_EE_SRSS1->Sumw2();
+  h_DeltaRl1lMll_EE_SRSS2 = new TH2F("h_DeltaRl1lMll_EE_SRSS2", "h_DeltaRl1lMll_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_EE_SRSS2->Sumw2();
+  h_DeltaRl1lMll_MM_SRSS1 = new TH2F("h_DeltaRl1lMll_MM_SRSS1", "h_DeltaRl1lMll_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_MM_SRSS1->Sumw2(); 
+  h_DeltaRl1lMll_MM_SRSS2 = new TH2F("h_DeltaRl1lMll_MM_SRSS2", "h_DeltaRl1lMll_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_MM_SRSS2->Sumw2();
+  h_DeltaRl1lMll_MM_SRSS3 = new TH2F("h_DeltaRl1lMll_MM_SRSS3", "h_DeltaRl1lMll_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_MM_SRSS3->Sumw2();
+  h_DeltaRl1lMll_MM_SRSS4 = new TH2F("h_DeltaRl1lMll_MM_SRSS4", "h_DeltaRl1lMll_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_MM_SRSS4->Sumw2(); 
+  h_DeltaRl1lMll_EM_SRSS1 = new TH2F("h_DeltaRl1lMll_EM_SRSS1", "h_DeltaRl1lMll_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_EM_SRSS1->Sumw2();
+  h_DeltaRl1lMll_EM_SRSS2 = new TH2F("h_DeltaRl1lMll_EM_SRSS2", "h_DeltaRl1lMll_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_EM_SRSS2->Sumw2();
+  h_DeltaRl1lMll_EE_SROS1 = new TH2F("h_DeltaRl1lMll_EE_SROS1", "h_DeltaRl1lMll_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_EE_SROS1->Sumw2(); 
+  h_DeltaRl1lMll_MM_SROS1 = new TH2F("h_DeltaRl1lMll_MM_SROS1", "h_DeltaRl1lMll_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_MM_SROS1->Sumw2();
+  h_DeltaRl1lMll_EM_SROS1 = new TH2F("h_DeltaRl1lMll_EM_SROS1", "h_DeltaRl1lMll_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRl1lMll_EM_SROS1->Sumw2();
+  
+  h_DeltaRZl0lMll_EE_SRSS1 = new TH2F("h_DeltaRZl0lMll_EE_SRSS1", "h_DeltaRZl0lMll_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_EE_SRSS1->Sumw2();
+  h_DeltaRZl0lMll_EE_SRSS2 = new TH2F("h_DeltaRZl0lMll_EE_SRSS2", "h_DeltaRZl0lMll_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_EE_SRSS2->Sumw2();
+  h_DeltaRZl0lMll_MM_SRSS1 = new TH2F("h_DeltaRZl0lMll_MM_SRSS1", "h_DeltaRZl0lMll_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_MM_SRSS1->Sumw2();
+  h_DeltaRZl0lMll_MM_SRSS2 = new TH2F("h_DeltaRZl0lMll_MM_SRSS2", "h_DeltaRZl0lMll_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_MM_SRSS2->Sumw2();
+  h_DeltaRZl0lMll_MM_SRSS3 = new TH2F("h_DeltaRZl0lMll_MM_SRSS3", "h_DeltaRZl0lMll_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_MM_SRSS3->Sumw2();
+  h_DeltaRZl0lMll_MM_SRSS4 = new TH2F("h_DeltaRZl0lMll_MM_SRSS4", "h_DeltaRZl0lMll_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_MM_SRSS4->Sumw2();
+  h_DeltaRZl0lMll_EM_SRSS1 = new TH2F("h_DeltaRZl0lMll_EM_SRSS1", "h_DeltaRZl0lMll_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_EM_SRSS1->Sumw2();
+  h_DeltaRZl0lMll_EM_SRSS2 = new TH2F("h_DeltaRZl0lMll_EM_SRSS2", "h_DeltaRZl0lMll_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_EM_SRSS2->Sumw2();
+  h_DeltaRZl0lMll_EE_SROS1 = new TH2F("h_DeltaRZl0lMll_EE_SROS1", "h_DeltaRZl0lMll_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_EE_SROS1->Sumw2();
+  h_DeltaRZl0lMll_MM_SROS1 = new TH2F("h_DeltaRZl0lMll_MM_SROS1", "h_DeltaRZl0lMll_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_MM_SROS1->Sumw2();
+  h_DeltaRZl0lMll_EM_SROS1 = new TH2F("h_DeltaRZl0lMll_EM_SROS1", "h_DeltaRZl0lMll_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl0lMll_EM_SROS1->Sumw2();
+  
+  h_DeltaRZl1lMll_EE_SRSS1 = new TH2F("h_DeltaRZl1lMll_EE_SRSS1", "h_DeltaRZl1lMll_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_EE_SRSS1->Sumw2();
+  h_DeltaRZl1lMll_EE_SRSS2 = new TH2F("h_DeltaRZl1lMll_EE_SRSS2", "h_DeltaRZl1lMll_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_EE_SRSS2->Sumw2();
+  h_DeltaRZl1lMll_MM_SRSS1 = new TH2F("h_DeltaRZl1lMll_MM_SRSS1", "h_DeltaRZl1lMll_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_MM_SRSS1->Sumw2(); 
+  h_DeltaRZl1lMll_MM_SRSS2 = new TH2F("h_DeltaRZl1lMll_MM_SRSS2", "h_DeltaRZl1lMll_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_MM_SRSS2->Sumw2();
+  h_DeltaRZl1lMll_MM_SRSS3 = new TH2F("h_DeltaRZl1lMll_MM_SRSS3", "h_DeltaRZl1lMll_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_MM_SRSS3->Sumw2();
+  h_DeltaRZl1lMll_MM_SRSS4 = new TH2F("h_DeltaRZl1lMll_MM_SRSS4", "h_DeltaRZl1lMll_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_MM_SRSS4->Sumw2(); 
+  h_DeltaRZl1lMll_EM_SRSS1 = new TH2F("h_DeltaRZl1lMll_EM_SRSS1", "h_DeltaRZl1lMll_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_EM_SRSS1->Sumw2();
+  h_DeltaRZl1lMll_EM_SRSS2 = new TH2F("h_DeltaRZl1lMll_EM_SRSS2", "h_DeltaRZl1lMll_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_EM_SRSS2->Sumw2();
+  h_DeltaRZl1lMll_EE_SROS1 = new TH2F("h_DeltaRZl1lMll_EE_SROS1", "h_DeltaRZl1lMll_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_EE_SROS1->Sumw2(); 
+  h_DeltaRZl1lMll_MM_SROS1 = new TH2F("h_DeltaRZl1lMll_MM_SROS1", "h_DeltaRZl1lMll_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_MM_SROS1->Sumw2();
+  h_DeltaRZl1lMll_EM_SROS1 = new TH2F("h_DeltaRZl1lMll_EM_SROS1", "h_DeltaRZl1lMll_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRZl1lMll_EM_SROS1->Sumw2();  
+  
+  h_DeltaEtaZl0lMll_EE_SRSS1 = new TH2F("h_DeltaEtaZl0lMll_EE_SRSS1", "h_DeltaEtaZl0lMll_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_EE_SRSS1->Sumw2();
+  h_DeltaEtaZl0lMll_EE_SRSS2 = new TH2F("h_DeltaEtaZl0lMll_EE_SRSS2", "h_DeltaEtaZl0lMll_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_EE_SRSS2->Sumw2();
+  h_DeltaEtaZl0lMll_MM_SRSS1 = new TH2F("h_DeltaEtaZl0lMll_MM_SRSS1", "h_DeltaEtaZl0lMll_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_MM_SRSS1->Sumw2();
+  h_DeltaEtaZl0lMll_MM_SRSS2 = new TH2F("h_DeltaEtaZl0lMll_MM_SRSS2", "h_DeltaEtaZl0lMll_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_MM_SRSS2->Sumw2();
+  h_DeltaEtaZl0lMll_MM_SRSS3 = new TH2F("h_DeltaEtaZl0lMll_MM_SRSS3", "h_DeltaEtaZl0lMll_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_MM_SRSS3->Sumw2();
+  h_DeltaEtaZl0lMll_MM_SRSS4 = new TH2F("h_DeltaEtaZl0lMll_MM_SRSS4", "h_DeltaEtaZl0lMll_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_MM_SRSS4->Sumw2();
+  h_DeltaEtaZl0lMll_EM_SRSS1 = new TH2F("h_DeltaEtaZl0lMll_EM_SRSS1", "h_DeltaEtaZl0lMll_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_EM_SRSS1->Sumw2();
+  h_DeltaEtaZl0lMll_EM_SRSS2 = new TH2F("h_DeltaEtaZl0lMll_EM_SRSS2", "h_DeltaEtaZl0lMll_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_EM_SRSS2->Sumw2();
+  h_DeltaEtaZl0lMll_EE_SROS1 = new TH2F("h_DeltaEtaZl0lMll_EE_SROS1", "h_DeltaEtaZl0lMll_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_EE_SROS1->Sumw2();
+  h_DeltaEtaZl0lMll_MM_SROS1 = new TH2F("h_DeltaEtaZl0lMll_MM_SROS1", "h_DeltaEtaZl0lMll_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_MM_SROS1->Sumw2();
+  h_DeltaEtaZl0lMll_EM_SROS1 = new TH2F("h_DeltaEtaZl0lMll_EM_SROS1", "h_DeltaEtaZl0lMll_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl0lMll_EM_SROS1->Sumw2();
+  
+  h_DeltaEtaZl1lMll_EE_SRSS1 = new TH2F("h_DeltaEtaZl1lMll_EE_SRSS1", "h_DeltaEtaZl1lMll_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_EE_SRSS1->Sumw2();
+  h_DeltaEtaZl1lMll_EE_SRSS2 = new TH2F("h_DeltaEtaZl1lMll_EE_SRSS2", "h_DeltaEtaZl1lMll_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_EE_SRSS2->Sumw2();
+  h_DeltaEtaZl1lMll_MM_SRSS1 = new TH2F("h_DeltaEtaZl1lMll_MM_SRSS1", "h_DeltaEtaZl1lMll_MM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_MM_SRSS1->Sumw2(); 
+  h_DeltaEtaZl1lMll_MM_SRSS2 = new TH2F("h_DeltaEtaZl1lMll_MM_SRSS2", "h_DeltaEtaZl1lMll_MM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_MM_SRSS2->Sumw2();
+  h_DeltaEtaZl1lMll_MM_SRSS3 = new TH2F("h_DeltaEtaZl1lMll_MM_SRSS3", "h_DeltaEtaZl1lMll_MM_SRSS3", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_MM_SRSS3->Sumw2();
+  h_DeltaEtaZl1lMll_MM_SRSS4 = new TH2F("h_DeltaEtaZl1lMll_MM_SRSS4", "h_DeltaEtaZl1lMll_MM_SRSS4", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_MM_SRSS4->Sumw2(); 
+  h_DeltaEtaZl1lMll_EM_SRSS1 = new TH2F("h_DeltaEtaZl1lMll_EM_SRSS1", "h_DeltaEtaZl1lMll_EM_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_EM_SRSS1->Sumw2();
+  h_DeltaEtaZl1lMll_EM_SRSS2 = new TH2F("h_DeltaEtaZl1lMll_EM_SRSS2", "h_DeltaEtaZl1lMll_EM_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_EM_SRSS2->Sumw2();
+  h_DeltaEtaZl1lMll_EE_SROS1 = new TH2F("h_DeltaEtaZl1lMll_EE_SROS1", "h_DeltaEtaZl1lMll_EE_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_EE_SROS1->Sumw2(); 
+  h_DeltaEtaZl1lMll_MM_SROS1 = new TH2F("h_DeltaEtaZl1lMll_MM_SROS1", "h_DeltaEtaZl1lMll_MM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_MM_SROS1->Sumw2();
+  h_DeltaEtaZl1lMll_EM_SROS1 = new TH2F("h_DeltaEtaZl1lMll_EM_SROS1", "h_DeltaEtaZl1lMll_EM_SROS1", 70, 0, 7 ,130, 0, 129);  h_DeltaEtaZl1lMll_EM_SROS1->Sumw2();    
+  
+  h_mTlllMll_EE_SRSS1 = new TH2F("h_mTlllMll_EE_SRSS1", "h_mTlllMll_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_EE_SRSS1->Sumw2();
+  h_mTlllMll_EE_SRSS2 = new TH2F("h_mTlllMll_EE_SRSS2", "h_mTlllMll_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_EE_SRSS2->Sumw2();
+  h_mTlllMll_MM_SRSS1 = new TH2F("h_mTlllMll_MM_SRSS1", "h_mTlllMll_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_MM_SRSS1->Sumw2(); 
+  h_mTlllMll_MM_SRSS2 = new TH2F("h_mTlllMll_MM_SRSS2", "h_mTlllMll_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_MM_SRSS2->Sumw2();
+  h_mTlllMll_MM_SRSS3 = new TH2F("h_mTlllMll_MM_SRSS3", "h_mTlllMll_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_MM_SRSS3->Sumw2();
+  h_mTlllMll_MM_SRSS4 = new TH2F("h_mTlllMll_MM_SRSS4", "h_mTlllMll_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_MM_SRSS4->Sumw2(); 
+  h_mTlllMll_EM_SRSS1 = new TH2F("h_mTlllMll_EM_SRSS1", "h_mTlllMll_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_EM_SRSS1->Sumw2();
+  h_mTlllMll_EM_SRSS2 = new TH2F("h_mTlllMll_EM_SRSS2", "h_mTlllMll_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_EM_SRSS2->Sumw2();
+  h_mTlllMll_EE_SROS1 = new TH2F("h_mTlllMll_EE_SROS1", "h_mTlllMll_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_EE_SROS1->Sumw2(); 
+  h_mTlllMll_MM_SROS1 = new TH2F("h_mTlllMll_MM_SROS1", "h_mTlllMll_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_MM_SROS1->Sumw2();
+  h_mTlllMll_EM_SROS1 = new TH2F("h_mTlllMll_EM_SROS1", "h_mTlllMll_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mTlllMll_EM_SROS1->Sumw2();
+
+  
   h_Mljj_EE_SRSS1 = new TH2F("h_Mljj_EE_SRSS1", "h_Mljj_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SRSS1->Sumw2();
   h_Mljj_EE_SRSS2 = new TH2F("h_Mljj_EE_SRSS2", "h_Mljj_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SRSS2->Sumw2();
   h_Mljj_MM_SRSS1 = new TH2F("h_Mljj_MM_SRSS1", "h_Mljj_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SRSS1->Sumw2();
@@ -620,6 +1024,19 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_mt2J_EE_SROS1 = new TH2F("h_mt2J_EE_SROS1", "h_mt2J_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_EE_SROS1->Sumw2();
   h_mt2J_MM_SROS1 = new TH2F("h_mt2J_MM_SROS1", "h_mt2J_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_MM_SROS1->Sumw2();
   h_mt2J_EM_SROS1 = new TH2F("h_mt2J_EM_SROS1", "h_mt2J_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_EM_SROS1->Sumw2();  
+  
+  /*--------------------------------------------------------------------------------*/ 
+  h_mt2J0LepM_EE_SRSS1 = new TH2F("h_mt2J0LepM_EE_SRSS1", "h_mt2J0LepM_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EE_SRSS1->Sumw2();
+  h_mt2J0LepM_EE_SRSS2 = new TH2F("h_mt2J0LepM_EE_SRSS2", "h_mt2J0LepM_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EE_SRSS2->Sumw2();
+  h_mt2J0LepM_MM_SRSS1 = new TH2F("h_mt2J0LepM_MM_SRSS1", "h_mt2J0LepM_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS1->Sumw2();
+  h_mt2J0LepM_MM_SRSS2 = new TH2F("h_mt2J0LepM_MM_SRSS2", "h_mt2J0LepM_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS2->Sumw2();  
+  h_mt2J0LepM_MM_SRSS3 = new TH2F("h_mt2J0LepM_MM_SRSS3", "h_mt2J0LepM_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS3->Sumw2();
+  h_mt2J0LepM_MM_SRSS4 = new TH2F("h_mt2J0LepM_MM_SRSS4", "h_mt2J0LepM_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS4->Sumw2();
+  h_mt2J0LepM_EM_SRSS1 = new TH2F("h_mt2J0LepM_EM_SRSS1", "h_mt2J0LepM_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EM_SRSS1->Sumw2();
+  h_mt2J0LepM_EM_SRSS2 = new TH2F("h_mt2J0LepM_EM_SRSS2", "h_mt2J0LepM_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EM_SRSS2->Sumw2();
+  h_mt2J0LepM_EE_SROS1 = new TH2F("h_mt2J0LepM_EE_SROS1", "h_mt2J0LepM_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EE_SROS1->Sumw2();
+  h_mt2J0LepM_MM_SROS1 = new TH2F("h_mt2J0LepM_MM_SROS1", "h_mt2J0LepM_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SROS1->Sumw2();
+  h_mt2J0LepM_EM_SROS1 = new TH2F("h_mt2J0LepM_EM_SROS1", "h_mt2J0LepM_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EM_SROS1->Sumw2();  
 
   /*--------------------------------------------------------------------------------*/ 
   h_mjj_EE_SRSS1 = new TH2F("h_mjj_EE_SRSS1", "h_mjj_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mjj_EE_SRSS1->Sumw2();
@@ -1292,6 +1709,19 @@ bool TSelector_SusyNtuple::writeHistos(){
     if(EE_SROS1) h_mt2J_EE_SROS1->Write();
     if(MM_SROS1) h_mt2J_MM_SROS1->Write();
     if(EM_SROS1) h_mt2J_EM_SROS1->Write();    
+/*--------------------------------------------------------------------------------*/     
+    
+    if(EE_SRSS1) h_mt2J0LepM_EE_SRSS1->Write();
+    if(EE_SRSS2) h_mt2J0LepM_EE_SRSS2->Write();
+    if(MM_SRSS1) h_mt2J0LepM_MM_SRSS1->Write();
+    if(MM_SRSS2) h_mt2J0LepM_MM_SRSS2->Write();  
+    if(MM_SRSS3) h_mt2J0LepM_MM_SRSS3->Write();
+    if(MM_SRSS4) h_mt2J0LepM_MM_SRSS4->Write();
+    if(EM_SRSS1) h_mt2J0LepM_EM_SRSS1->Write();
+    if(EM_SRSS2) h_mt2J0LepM_EM_SRSS2->Write();
+    if(EE_SROS1) h_mt2J0LepM_EE_SROS1->Write();
+    if(MM_SROS1) h_mt2J0LepM_MM_SROS1->Write();
+    if(EM_SROS1) h_mt2J0LepM_EM_SROS1->Write();        
 /*--------------------------------------------------------------------------------*/ 
     if(EE_SRSS1) h_mjj_EE_SRSS1->Write();
     if(EE_SRSS2) h_mjj_EE_SRSS2->Write();
@@ -2267,17 +2697,15 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   Mljj_EE = 0.;
   if(nSignalJets>1){
     //find dijet axis:
-//     double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
-//     double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
     double DeltaRDijetEl0 = el0_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el0_TLV.Phi()),2));
     double DeltaRDijetEl1 = el1_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el1_TLV.Phi()),2));
     TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetEl0 > DeltaRDijetEl1) ? el1_TLV : el0_TLV;
     Mljj_EE = (signalJet0_TLV + signalJet1_TLV + closestElecDijetAxis_TLV).M();
-//     cout << "Mljj_EE= " << Mljj_EE << endl;
   }
   
   mt2_ee = calcMT2(met_TLV, el0_TLV, el1_TLV);
-  mt2J_ee = calcMT2J(met_TLV, el0_TLV, el1_TLV, signalJet0_TLV, signalJet1_TLV);
+  if(nSignalJets>1) mt2J_ee = calcMT2J(met_TLV, el0_TLV, el1_TLV, signalJet0_TLV, signalJet1_TLV);
+  if(nSignalJets>1) mt2J0LepM_ee = calcMT2J0LepM(met_TLV, el0_TLV, el1_TLV, signalJet0_TLV, signalJet1_TLV);
   
 
   DeltaEtaee = fabs(el0_TLV.Eta() - el1_TLV.Eta());
@@ -2381,7 +2809,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
       mTl1llost_EE = calcMt(el1_TLV, el_lost_TLV);      
       mTllllost_EE = calcMt(el1_TLV + el1_TLV, el_lost_TLV);      
       DeltaRl1llost_EE = el1_TLV.DeltaR(el_lost_TLV);
-      if((el0_TLV + el_lost_TLV).M() > MZ+10. || (el0_TLV + el_lost_TLV).M() < MZ-10.){
+      if((el0_TLV + el_lost_TLV).M() < MZ+10. && (el0_TLV + el_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0llost_EE = el0_TLV.DeltaR(el_lost_TLV);
 	  DeltaRZl1llost_EE = el1_TLV.DeltaR(el_lost_TLV);
 	  DeltaEtaZl0llost_EE = fabs(el0_TLV.Eta() - el_lost_TLV.Eta());
@@ -2402,7 +2830,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	DeltaRl1lsoft_EE = el1_TLV.DeltaR(el_lost_TLV);
 	
 	
-	if((el0_TLV + el_lost_TLV).M() > MZ+10. || (el0_TLV + el_lost_TLV).M() < MZ-10.){
+	if((el0_TLV + el_lost_TLV).M() < MZ+10. && (el0_TLV + el_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0lsoft_EE = el0_TLV.DeltaR(el_lost_TLV);
 	  DeltaRZl1lsoft_EE = el1_TLV.DeltaR(el_lost_TLV);
 	  DeltaEtaZl0lsoft_EE = fabs(el0_TLV.Eta() - el_lost_TLV.Eta());
@@ -2421,7 +2849,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	mTl1loverlap_EE = calcMt(el1_TLV, el_lost_TLV);      
 	mTllloverlap_EE = calcMt(el1_TLV + el1_TLV, el_lost_TLV);      
 	DeltaRl1loverlap_EE = el1_TLV.DeltaR(el_lost_TLV);
-	if((el0_TLV + el_lost_TLV).M() > MZ+10. || (el0_TLV + el_lost_TLV).M() < MZ-10.){
+	if((el0_TLV + el_lost_TLV).M() < MZ+10. && (el0_TLV + el_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0loverlap_EE = el0_TLV.DeltaR(el_lost_TLV);
 	  DeltaRZl1loverlap_EE = el1_TLV.DeltaR(el_lost_TLV);
 	  DeltaEtaZl0loverlap_EE = fabs(el0_TLV.Eta() - el_lost_TLV.Eta());
@@ -2483,7 +2911,8 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   }
   
   mt2_mm = calcMT2(met_TLV, mu0_TLV, mu1_TLV);
-  mt2J_mm = calcMT2J(met_TLV, mu0_TLV, mu1_TLV, signalJet0_TLV, signalJet1_TLV);
+  if(nSignalJets>1) mt2J_mm = calcMT2J(met_TLV, mu0_TLV, mu1_TLV, signalJet0_TLV, signalJet1_TLV);
+  if(nSignalJets>1) mt2J0LepM_mm = calcMT2J0LepM(met_TLV, mu0_TLV, mu1_TLV, signalJet0_TLV, signalJet1_TLV);
   
   DeltaEtamm = fabs(mu0_TLV.Eta() - mu1_TLV.Eta());
   
@@ -2578,11 +3007,9 @@ bool unbiased = true;
       }
       bool isOverlapMuon = false;
       for(uint im1=0; im1<overlapMuons.size(); im1++){
-// 	cout << "mu_lost->DeltaR(*overlapMuons.at(im1))= " << mu_lost->DeltaR(*overlapMuons.at(im1)) << endl;
-	if(mu_lost->DeltaR(*overlapMuons.at(im1)) < 0.0001) isOverlapMuon = true;
-	
+
+	if(mu_lost->DeltaR(*overlapMuons.at(im1)) < 0.0001) isOverlapMuon = true;	
       }
-// 	cout << "in any case: lost" << endl;
 	ml0llost_MM = (mu0_TLV + mu_lost_TLV).M();      
 	mTl0llost_MM = calcMt(mu0_TLV, mu_lost_TLV);      
 	mTllllost_MM = calcMt(mu0_TLV + mu1_TLV, mu_lost_TLV);      
@@ -2593,7 +3020,7 @@ bool unbiased = true;
 	mTllllost_MM = calcMt(mu1_TLV + mu1_TLV, mu_lost_TLV);      
 	DeltaRl1llost_MM = mu1_TLV.DeltaR(mu_lost_TLV);
 	
-	if((mu0_TLV + mu_lost_TLV).M() > MZ+10. || (mu0_TLV + mu_lost_TLV).M() < MZ-10.){
+	if((mu0_TLV + mu_lost_TLV).M() < MZ+10. && (mu0_TLV + mu_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0llost_MM = mu0_TLV.DeltaR(mu_lost_TLV);
 	  DeltaRZl1llost_MM = mu1_TLV.DeltaR(mu_lost_TLV);
 	  DeltaEtaZl0llost_MM = fabs(mu0_TLV.Eta() - mu_lost_TLV.Eta());
@@ -2612,7 +3039,7 @@ bool unbiased = true;
 	mTl1lsoft_MM = calcMt(mu1_TLV, mu_lost_TLV);      
 	mTlllsoft_MM = calcMt(mu1_TLV + mu1_TLV, mu_lost_TLV);      
 	DeltaRl1lsoft_MM = mu1_TLV.DeltaR(mu_lost_TLV);
-	if((mu0_TLV + mu_lost_TLV).M() > MZ+10. || (mu0_TLV + mu_lost_TLV).M() < MZ-10.){
+	if((mu0_TLV + mu_lost_TLV).M() < MZ+10. && (mu0_TLV + mu_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0lsoft_MM = mu0_TLV.DeltaR(mu_lost_TLV);
 	  DeltaRZl1lsoft_MM = mu1_TLV.DeltaR(mu_lost_TLV);
 	  DeltaEtaZl0lsoft_MM = fabs(mu0_TLV.Eta() - mu_lost_TLV.Eta());
@@ -2622,7 +3049,8 @@ bool unbiased = true;
       }
       
       if(isOverlapMuon){
-// 	cout << "overlap" << endl;
+
+	//OR: remove first object type if overlapping with second object type
 	ml0loverlap_MM = (mu0_TLV + mu_lost_TLV).M();      
 	mTl0loverlap_MM = calcMt(mu0_TLV, mu_lost_TLV);      
 	mTllloverlap_MM = calcMt(mu0_TLV + mu1_TLV, mu_lost_TLV);      
@@ -2632,13 +3060,45 @@ bool unbiased = true;
 	mTl1loverlap_MM = calcMt(mu1_TLV, mu_lost_TLV);      
 	mTllloverlap_MM = calcMt(mu1_TLV + mu1_TLV, mu_lost_TLV);      
 	DeltaRl1loverlap_MM = mu1_TLV.DeltaR(mu_lost_TLV);
-	if((mu0_TLV + mu_lost_TLV).M() > MZ+10. || (mu0_TLV + mu_lost_TLV).M() < MZ-10.){
+	if((mu0_TLV + mu_lost_TLV).M() < MZ+10. && (mu0_TLV + mu_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0loverlap_MM = mu0_TLV.DeltaR(mu_lost_TLV);
 	  DeltaRZl1loverlap_MM = mu1_TLV.DeltaR(mu_lost_TLV);
 	  DeltaEtaZl0loverlap_MM = fabs(mu0_TLV.Eta() - mu_lost_TLV.Eta());
 	  DeltaEtaZl1loverlap_MM = fabs(mu1_TLV.Eta() - mu_lost_TLV.Eta());	  
 	  
 	}	
+	
+	//remove muon if DR < 0.4 with jet
+	MuonVector muons_afterORJet = overlap_removal(m_susyObj, *susyNt->muo(), m_baseMuons, *susyNt->jet(), m_preJets, 0.4, false, false);
+	bool overlappingWJet = false;
+	for(uint im1=0; im1<muons_afterORJet.size(); im1++){
+	if(mu_lost->DeltaR(*muons_afterORJet.at(im1)) < 0.0001) overlappingWJet = true;	
+      }
+      if(overlappingWJet){
+	ml0loverlapWJet_MM = (mu0_TLV + mu_lost_TLV).M();      
+	mTl0loverlapWJet_MM = calcMt(mu0_TLV, mu_lost_TLV);      
+	mTllloverlapWJet_MM = calcMt(mu0_TLV + mu1_TLV, mu_lost_TLV);      
+	DeltaRl0loverlapWJet_MM = mu0_TLV.DeltaR(mu_lost_TLV);
+	
+	ml1loverlapWJet_MM = (mu1_TLV + mu_lost_TLV).M();      
+	mTl1loverlapWJet_MM = calcMt(mu1_TLV, mu_lost_TLV);      
+	mTllloverlapWJet_MM = calcMt(mu1_TLV + mu1_TLV, mu_lost_TLV);      
+	DeltaRl1loverlapWJet_MM = mu1_TLV.DeltaR(mu_lost_TLV);
+	if((mu0_TLV + mu_lost_TLV).M() < MZ+10. && (mu0_TLV + mu_lost_TLV).M() > MZ-10.){
+	  DeltaRZl0loverlapWJet_MM = mu0_TLV.DeltaR(mu_lost_TLV);
+	  DeltaRZl1loverlapWJet_MM = mu1_TLV.DeltaR(mu_lost_TLV);
+	  DeltaEtaZl0loverlapWJet_MM = fabs(mu0_TLV.Eta() - mu_lost_TLV.Eta());
+	  DeltaEtaZl1loverlapWJet_MM = fabs(mu1_TLV.Eta() - mu_lost_TLV.Eta());	  
+	  
+	}
+      }
+	//remove muon if deltaR < 0.1 with electron
+	MuonVector muons_afterORElectron = overlap_removal(m_susyObj, *susyNt->muo(), m_baseMuons, *susyNt->ele(), m_baseElectrons, 0.1, false, false);
+	//remove muon if DR < 0.05 with muon
+	MuonVector muons_afterORMuon = overlap_removal(m_susyObj, *susyNt->muo(), m_baseMuons, *susyNt->muo(), m_baseMuons, 0.05, true, false);
+	//remove muon if mll<12 GeV
+	MuonVector muons_afterMll = RemoveSFOSPair(m_susyObj, *susyNt->muo(), m_baseMuons, 12.);
+	
       }      
       
       break; // only use lost OS lepton with highest pT
@@ -2684,8 +3144,6 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   Mljj_EM = 0.;
   if(nSignalJets>1){
     //find dijet axis:
-//     double phiDijetAxis = signalJet1_TLV.Phi() + 0.5*(signalJet0_TLV.Phi() - signalJet1_TLV.Phi());
-//     double etaDijetAxis = signalJet1_TLV.Eta() + 0.5*(signalJet0_TLV.Eta() - signalJet1_TLV.Eta());
     double DeltaRDijetMu = mu_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu_TLV.Phi()),2));
     double DeltaRDijetEl = el_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el_TLV.Phi()),2));
     TLorentzVector closestLepDijetAxis_TLV = (DeltaRDijetMu > DeltaRDijetEl) ? el_TLV : mu_TLV;
@@ -2695,7 +3153,8 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   }
   
   mt2_em = calcMT2(met_TLV, el_TLV, mu_TLV);
-  mt2J_em = calcMT2J(met_TLV, el_TLV, mu_TLV, signalJet0_TLV, signalJet1_TLV);
+  if(nSignalJets>1) mt2J_em = calcMT2J(met_TLV, el_TLV, mu_TLV, signalJet0_TLV, signalJet1_TLV);
+  if(nSignalJets>1) mt2J0LepM_em = calcMT2J0LepM(met_TLV, el_TLV, mu_TLV, signalJet0_TLV, signalJet1_TLV);
   
   DeltaEtaem = fabs(mu_TLV.Eta() - el_TLV.Eta());  
   
@@ -2803,7 +3262,7 @@ bool unbiased = true;
 	mTl0llost_EM = calcMt(mu_TLV, mu_lost_TLV);      
 	mTllllost_EM = calcMt(mu_TLV + el_TLV, mu_lost_TLV);      
 	DeltaRl0llost_EM = mu_TLV.DeltaR(mu_lost_TLV);
-	if((mu_TLV + mu_lost_TLV).M() > MZ+10. || (mu_TLV + mu_lost_TLV).M() < MZ-10.){
+	if((mu_TLV + mu_lost_TLV).M() < MZ+10. && (mu_TLV + mu_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0llost_EM = mu_TLV.DeltaR(mu_lost_TLV);
 	  DeltaEtaZl0llost_EM = fabs(mu_TLV.Eta() - mu_lost_TLV.Eta());
 	}
@@ -2813,7 +3272,7 @@ bool unbiased = true;
 	mTl1llost_EM = calcMt(mu_TLV, mu_lost_TLV);      
 	mTllllost_EM = calcMt(mu_TLV + el_TLV, mu_lost_TLV);      
 	DeltaRl1llost_EM = mu_TLV.DeltaR(mu_lost_TLV);
-	if((mu_TLV + mu_lost_TLV).M() > MZ+10. || (mu_TLV + mu_lost_TLV).M() < MZ-10.){
+	if((mu_TLV + mu_lost_TLV).M() < MZ+10. && (mu_TLV + mu_lost_TLV).M() > MZ-10.){
 	  DeltaRZl1llost_EM = mu_TLV.DeltaR(mu_lost_TLV);
 	  DeltaEtaZl1llost_EM = fabs(mu_TLV.Eta() - mu_lost_TLV.Eta());	  
 	}
@@ -2827,7 +3286,7 @@ bool unbiased = true;
 	  mTl0lsoft_EM = calcMt(mu_TLV, mu_lost_TLV);      
 	  mTlllsoft_EM = calcMt(mu_TLV + el_TLV, mu_lost_TLV);      
 	  DeltaRl0lsoft_EM = mu_TLV.DeltaR(mu_lost_TLV);
-	  if((mu_TLV + mu_lost_TLV).M() > MZ+10. || (mu_TLV + mu_lost_TLV).M() < MZ-10.){
+	  if((mu_TLV + mu_lost_TLV).M() < MZ+10. && (mu_TLV + mu_lost_TLV).M() > MZ-10.){
 	    DeltaRZl0lsoft_EM = mu_TLV.DeltaR(mu_lost_TLV);
 	    DeltaEtaZl0lsoft_EM = fabs(mu_TLV.Eta() - mu_lost_TLV.Eta());
 	  }
@@ -2837,7 +3296,7 @@ bool unbiased = true;
 	  mTl1lsoft_EM = calcMt(mu_TLV, mu_lost_TLV);      
 	  mTlllsoft_EM = calcMt(mu_TLV + el_TLV, mu_lost_TLV);      
 	  DeltaRl1lsoft_EM = mu_TLV.DeltaR(mu_lost_TLV);
-	  if((mu_TLV + mu_lost_TLV).M() > MZ+10. || (mu_TLV + mu_lost_TLV).M() < MZ-10.){
+	  if((mu_TLV + mu_lost_TLV).M() < MZ+10. && (mu_TLV + mu_lost_TLV).M() > MZ-10.){
 	    DeltaRZl1lsoft_EM = mu_TLV.DeltaR(mu_lost_TLV);
 	    DeltaEtaZl1lsoft_EM = fabs(mu_TLV.Eta() - mu_lost_TLV.Eta());
 	  }
@@ -2851,7 +3310,7 @@ bool unbiased = true;
 	  mTl0loverlap_EM = calcMt(mu_TLV, mu_lost_TLV);      
 	  mTllloverlap_EM = calcMt(mu_TLV + el_TLV, mu_lost_TLV);      
 	  DeltaRl0loverlap_EM = mu_TLV.DeltaR(mu_lost_TLV);
-	  if((mu_TLV + mu_lost_TLV).M() > MZ+10. || (mu_TLV + mu_lost_TLV).M() < MZ-10.){
+	  if((mu_TLV + mu_lost_TLV).M() < MZ+10. && (mu_TLV + mu_lost_TLV).M() > MZ-10.){
 	    DeltaRZl0loverlap_EM = mu_TLV.DeltaR(mu_lost_TLV);
 	    DeltaEtaZl0loverlap_EM = fabs(mu_TLV.Eta() - mu_lost_TLV.Eta());
 	  }
@@ -2861,7 +3320,7 @@ bool unbiased = true;
 	  mTl1loverlap_EM = calcMt(mu_TLV, mu_lost_TLV);      
 	  mTllloverlap_EM = calcMt(mu_TLV + el_TLV, mu_lost_TLV);      
 	  DeltaRl1loverlap_EM = mu_TLV.DeltaR(mu_lost_TLV);
-	  if((mu_TLV + mu_lost_TLV).M() > MZ+10. || (mu_TLV + mu_lost_TLV).M() < MZ-10.){
+	  if((mu_TLV + mu_lost_TLV).M() < MZ+10. && (mu_TLV + mu_lost_TLV).M() > MZ-10.){
 	    DeltaRZl1loverlap_EM = mu_TLV.DeltaR(mu_lost_TLV);
 	    DeltaEtaZl1loverlap_EM = fabs(mu_TLV.Eta() - mu_lost_TLV.Eta());
 	  }
@@ -2893,7 +3352,7 @@ bool unbiased = true;
 	mTl0llost_EM = calcMt(el_TLV, el_lost_TLV);            
 	mTllllost_EM = calcMt(el_TLV + mu_TLV, el_lost_TLV);           
 	DeltaRl0llost_EM = el_TLV.DeltaR(el_lost_TLV);
-	if((el_TLV + el_lost_TLV).M() > MZ+10. || (el_TLV + el_lost_TLV).M() < MZ-10.){
+	if((el_TLV + el_lost_TLV).M() < MZ+10. && (el_TLV + el_lost_TLV).M() > MZ-10.){
 	  DeltaRZl0llost_EM = el_TLV.DeltaR(el_lost_TLV);
 	  DeltaEtaZl0llost_EM = fabs(el_TLV.Eta() - el_lost_TLV.Eta());
 	}
@@ -2903,7 +3362,7 @@ bool unbiased = true;
 	mTl1llost_EM = calcMt(el_TLV, el_lost_TLV);      
 	mTllllost_EM = calcMt(el_TLV + mu_TLV, el_lost_TLV);                 
 	DeltaRl1llost_EM = el_TLV.DeltaR(el_lost_TLV);
-	if((el_TLV + el_lost_TLV).M() > MZ+10. || (el_TLV + el_lost_TLV).M() < MZ-10.){
+	if((el_TLV + el_lost_TLV).M() < MZ+10. && (el_TLV + el_lost_TLV).M() > MZ-10.){
 	  DeltaRZl1llost_EM = el_TLV.DeltaR(el_lost_TLV);
 	  DeltaEtaZl1llost_EM = fabs(el_TLV.Eta() - el_lost_TLV.Eta());
 	}
@@ -2916,7 +3375,7 @@ bool unbiased = true;
 	  mTl0lsoft_EM = calcMt(el_TLV, el_lost_TLV);      
 	  mTlllsoft_EM = calcMt(el_TLV + mu_TLV, el_lost_TLV);                
 	  DeltaRl0lsoft_EM = el_TLV.DeltaR(el_lost_TLV);
-	  if((el_TLV + el_lost_TLV).M() > MZ+10. || (el_TLV + el_lost_TLV).M() < MZ-10.){
+	  if((el_TLV + el_lost_TLV).M() < MZ+10. && (el_TLV + el_lost_TLV).M() > MZ-10.){
 	    DeltaRZl0lsoft_EM = el_TLV.DeltaR(el_lost_TLV);
 	    DeltaEtaZl0lsoft_EM = fabs(el_TLV.Eta() - el_lost_TLV.Eta());	    
 	  }
@@ -2926,7 +3385,7 @@ bool unbiased = true;
 	  mTl1lsoft_EM = calcMt(el_TLV, el_lost_TLV);      
 	  mTlllsoft_EM = calcMt(el_TLV + mu_TLV, el_lost_TLV);           
 	  DeltaRl1lsoft_EM = el_TLV.DeltaR(el_lost_TLV);
-	  if((el_TLV + el_lost_TLV).M() > MZ+10. || (el_TLV + el_lost_TLV).M() < MZ-10.){
+	  if((el_TLV + el_lost_TLV).M() < MZ+10. && (el_TLV + el_lost_TLV).M() > MZ-10.){
 	    DeltaRZl1lsoft_EM = el_TLV.DeltaR(el_lost_TLV);
 	    DeltaEtaZl1lsoft_EM = fabs(el_TLV.Eta() - el_lost_TLV.Eta());
 	  }
@@ -2940,7 +3399,7 @@ bool unbiased = true;
 	  mTl0loverlap_EM = calcMt(el_TLV, el_lost_TLV);      
 	  mTllloverlap_EM = calcMt(el_TLV + mu_TLV, el_lost_TLV);           
 	  DeltaRl0loverlap_EM = el_TLV.DeltaR(el_lost_TLV);
-	  if((el_TLV + el_lost_TLV).M() > MZ+10. || (el_TLV + el_lost_TLV).M() < MZ-10.){
+	  if((el_TLV + el_lost_TLV).M() < MZ+10. && (el_TLV + el_lost_TLV).M() > MZ-10.){
 	    DeltaRZl0loverlap_EM = el_TLV.DeltaR(el_lost_TLV);
 	    DeltaEtaZl0loverlap_EM = fabs(el_TLV.Eta() - el_lost_TLV.Eta());
 	  } 
@@ -2950,7 +3409,7 @@ bool unbiased = true;
 	  mTl1loverlap_EM = calcMt(el_TLV, el_lost_TLV);      
 	  mTllloverlap_EM = calcMt(el_TLV + mu_TLV, el_lost_TLV);                
 	  DeltaRl1loverlap_EM = el_TLV.DeltaR(el_lost_TLV);
-	  if((el_TLV + el_lost_TLV).M() > MZ+10. || (el_TLV + el_lost_TLV).M() < MZ-10.){
+	  if((el_TLV + el_lost_TLV).M() < MZ+10. && (el_TLV + el_lost_TLV).M() > MZ-10.){
 	    DeltaRZl1loverlap_EM = el_TLV.DeltaR(el_lost_TLV);
 	    DeltaEtaZl1loverlap_EM = fabs(el_TLV.Eta() - el_lost_TLV.Eta());
 	  }
@@ -2983,6 +3442,8 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float wei
   h_mTlmax_EE_SRSS1->Fill(mTemax, cut_EE, weight_ALL_EE); 
   h_meff_EE_SRSS1->Fill(meff, cut_EE, weight_ALL_EE); 
   h_mt2_EE_SRSS1->Fill(mt2_ee, cut_EE, weight_ALL_EE); 
+  h_mt2J_EE_SRSS1->Fill(mt2J_ee, cut_EE, weight_ALL_EE); 
+  h_mt2J0LepM_EE_SRSS1->Fill(mt2J0LepM_ee, cut_EE, weight_ALL_EE); 
   h_mjj_EE_SRSS1->Fill(mjj, cut_EE, weight_ALL_EE); 
   h_DeltaPhiMETll_EE_SRSS1->Fill(DeltaRee, cut_EE, weight_ALL_EE); 
   h_DeltaPhill_EE_SRSS1->Fill(DeltaPhiEE, cut_EE, weight_ALL_EE); 
@@ -3082,6 +3543,8 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS2(float cut_EE, int mcid, float wei
   h_mTlmax_EE_SRSS2->Fill(mTemax, cut_EE, weight_ALL_EE); 
   h_meff_EE_SRSS2->Fill(meff, cut_EE, weight_ALL_EE); 
   h_mt2_EE_SRSS2->Fill(mt2_ee, cut_EE, weight_ALL_EE); 
+  h_mt2J_EE_SRSS2->Fill(mt2J_ee, cut_EE, weight_ALL_EE); 
+  h_mt2J0LepM_EE_SRSS2->Fill(mt2J0LepM_ee, cut_EE, weight_ALL_EE); 
   h_mjj_EE_SRSS2->Fill(mjj, cut_EE, weight_ALL_EE); 
   h_DeltaPhiMETll_EE_SRSS2->Fill(DeltaRee, cut_EE, weight_ALL_EE); 
   h_DeltaPhill_EE_SRSS2->Fill(DeltaPhiEE, cut_EE, weight_ALL_EE); 
@@ -3181,6 +3644,8 @@ void TSelector_SusyNtuple::fillHistos_EE_SROS1(float cut_EE, int mcid, float wei
   h_mTlmax_EE_SROS1->Fill(mTemax, cut_EE, weight_ALL_EE); 
   h_meff_EE_SROS1->Fill(meff, cut_EE, weight_ALL_EE); 
   h_mt2_EE_SROS1->Fill(mt2_ee, cut_EE, weight_ALL_EE); 
+  h_mt2J_EE_SROS1->Fill(mt2J_ee, cut_EE, weight_ALL_EE); 
+  h_mt2J0LepM_EE_SROS1->Fill(mt2J0LepM_ee, cut_EE, weight_ALL_EE); 
   h_mjj_EE_SROS1->Fill(mjj, cut_EE, weight_ALL_EE); 
   h_DeltaPhiMETll_EE_SROS1->Fill(DeltaRee, cut_EE, weight_ALL_EE); 
   h_DeltaPhill_EE_SROS1->Fill(DeltaPhiEE, cut_EE, weight_ALL_EE); 
@@ -3280,6 +3745,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   h_meff_MM_SRSS1->Fill(meff, cut_MM, weight_ALL_MM); 
   h_mt2_MM_SRSS1->Fill(mt2_mm, cut_MM, weight_ALL_MM); 
   h_mt2J_MM_SRSS1->Fill(mt2J_mm, cut_MM, weight_ALL_MM);   
+  h_mt2J0LepM_MM_SRSS1->Fill(mt2J0LepM_mm, cut_MM, weight_ALL_MM);   
   h_mjj_MM_SRSS1->Fill(mjj, cut_MM, weight_ALL_MM); 
   h_DeltaPhiMETll_MM_SRSS1->Fill(DeltaRmm, cut_MM, weight_ALL_MM); 
   h_DeltaPhill_MM_SRSS1->Fill(DeltaPhiMM, cut_MM, weight_ALL_MM); 
@@ -3378,6 +3844,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS2(float cut_MM, int mcid, float wei
   h_meff_MM_SRSS2->Fill(meff, cut_MM, weight_ALL_MM); 
   h_mt2_MM_SRSS2->Fill(mt2_mm, cut_MM, weight_ALL_MM); 
   h_mt2J_MM_SRSS2->Fill(mt2J_mm, cut_MM, weight_ALL_MM);   
+  h_mt2J0LepM_MM_SRSS2->Fill(mt2J0LepM_mm, cut_MM, weight_ALL_MM);   
   h_mjj_MM_SRSS2->Fill(mjj, cut_MM, weight_ALL_MM); 
   h_DeltaPhiMETll_MM_SRSS2->Fill(DeltaRmm, cut_MM, weight_ALL_MM); 
   h_DeltaPhill_MM_SRSS2->Fill(DeltaPhiMM, cut_MM, weight_ALL_MM); 
@@ -3476,6 +3943,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS3(float cut_MM, int mcid, float wei
   h_meff_MM_SRSS3->Fill(meff, cut_MM, weight_ALL_MM); 
   h_mt2_MM_SRSS3->Fill(mt2_mm, cut_MM, weight_ALL_MM); 
   h_mt2J_MM_SRSS3->Fill(mt2J_mm, cut_MM, weight_ALL_MM);   
+  h_mt2J0LepM_MM_SRSS3->Fill(mt2J0LepM_mm, cut_MM, weight_ALL_MM);   
   h_mjj_MM_SRSS3->Fill(mjj, cut_MM, weight_ALL_MM); 
   h_DeltaPhiMETll_MM_SRSS3->Fill(DeltaRmm, cut_MM, weight_ALL_MM); 
   h_DeltaPhill_MM_SRSS3->Fill(DeltaPhiMM, cut_MM, weight_ALL_MM); 
@@ -3574,6 +4042,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS4(float cut_MM, int mcid, float wei
   h_meff_MM_SRSS4->Fill(meff, cut_MM, weight_ALL_MM); 
   h_mt2_MM_SRSS4->Fill(mt2_mm, cut_MM, weight_ALL_MM); 
   h_mt2J_MM_SRSS4->Fill(mt2J_mm, cut_MM, weight_ALL_MM);   
+  h_mt2J0LepM_MM_SRSS4->Fill(mt2J0LepM_mm, cut_MM, weight_ALL_MM);   
   h_mjj_MM_SRSS4->Fill(mjj, cut_MM, weight_ALL_MM); 
   h_DeltaPhiMETll_MM_SRSS4->Fill(DeltaRmm, cut_MM, weight_ALL_MM); 
   h_DeltaPhill_MM_SRSS4->Fill(DeltaPhiMM, cut_MM, weight_ALL_MM); 
@@ -3671,6 +4140,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SROS1(float cut_MM, int mcid, float wei
   h_meff_MM_SROS1->Fill(meff, cut_MM, weight_ALL_MM); 
   h_mt2_MM_SROS1->Fill(mt2_mm, cut_MM, weight_ALL_MM); 
   h_mt2J_MM_SROS1->Fill(mt2J_mm, cut_MM, weight_ALL_MM);   
+  h_mt2J0LepM_MM_SROS1->Fill(mt2J0LepM_mm, cut_MM, weight_ALL_MM);   
   h_mjj_MM_SROS1->Fill(mjj, cut_MM, weight_ALL_MM); 
   h_DeltaPhiMETll_MM_SROS1->Fill(DeltaRmm, cut_MM, weight_ALL_MM); 
   h_DeltaPhill_MM_SROS1->Fill(DeltaPhiMM, cut_MM, weight_ALL_MM); 
@@ -3767,6 +4237,8 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
   h_mTlmax_EM_SRSS1->Fill(mTemmax, cut_EM, weight_ALL_EM); 
   h_meff_EM_SRSS1->Fill(meff, cut_EM, weight_ALL_EM); 
   h_mt2_EM_SRSS1->Fill(mt2_em, cut_EM, weight_ALL_EM); 
+  h_mt2J_EM_SRSS1->Fill(mt2J_em, cut_EM, weight_ALL_EM); 
+  h_mt2J0LepM_EM_SRSS1->Fill(mt2J0LepM_em, cut_EM, weight_ALL_EM); 
   h_mjj_EM_SRSS1->Fill(mjj, cut_EM, weight_ALL_EM); 
   h_DeltaPhiMETll_EM_SRSS1->Fill(DeltaRem, cut_EM, weight_ALL_EM); 
   h_DeltaPhill_EM_SRSS1->Fill(DeltaPhiem, cut_EM, weight_ALL_EM); 
@@ -3864,6 +4336,8 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS2(float cut_EM, int mcid, float wei
   h_mTlmax_EM_SRSS2->Fill(mTemmax, cut_EM, weight_ALL_EM); 
   h_meff_EM_SRSS2->Fill(meff, cut_EM, weight_ALL_EM); 
   h_mt2_EM_SRSS2->Fill(mt2_em, cut_EM, weight_ALL_EM); 
+  h_mt2J_EM_SRSS2->Fill(mt2J_em, cut_EM, weight_ALL_EM); 
+  h_mt2J0LepM_EM_SRSS2->Fill(mt2J0LepM_em, cut_EM, weight_ALL_EM); 
   h_mjj_EM_SRSS2->Fill(mjj, cut_EM, weight_ALL_EM); 
   h_DeltaPhiMETll_EM_SRSS2->Fill(DeltaRem, cut_EM, weight_ALL_EM); 
   h_DeltaPhill_EM_SRSS2->Fill(DeltaPhiem, cut_EM, weight_ALL_EM); 
@@ -3962,6 +4436,8 @@ void TSelector_SusyNtuple::fillHistos_EM_SROS1(float cut_EM, int mcid, float wei
   h_mTlmax_EM_SROS1->Fill(mTemmax, cut_EM, weight_ALL_EM); 
   h_meff_EM_SROS1->Fill(meff, cut_EM, weight_ALL_EM); 
   h_mt2_EM_SROS1->Fill(mt2_em, cut_EM, weight_ALL_EM); 
+  h_mt2J_EM_SROS1->Fill(mt2J_em, cut_EM, weight_ALL_EM); 
+  h_mt2J0LepM_EM_SROS1->Fill(mt2J0LepM_em, cut_EM, weight_ALL_EM); 
   h_mjj_EM_SROS1->Fill(mjj, cut_EM, weight_ALL_EM); 
   h_DeltaPhiMETll_EM_SROS1->Fill(DeltaRem, cut_EM, weight_ALL_EM); 
   h_DeltaPhill_EM_SROS1->Fill(DeltaPhiem, cut_EM, weight_ALL_EM); 

@@ -927,6 +927,46 @@ float TSelector_SusyNtuple::calcMT2J(TLorentzVector metlv, TLorentzVector l0, TL
   alpha_b = l1 + j1;
 
   double pTMiss1[3] = {0.0, metlv.Px(), metlv.Py()};
+  double pA1[3] = {alpha_a.M(), alpha_a.Px(), alpha_a.Py()};
+  double pB1[3] = {alpha_b.M(), alpha_b.Px(), alpha_b.Py()};
+  
+  // Create Mt2 object
+  mt2_bisect::mt2 mt2_event1;
+  mt2_event1.set_momenta(pA1,pB1,pTMiss1);
+  mt2_event1.set_mn(0); // LSP mass = 0 is Generic
+  
+  //case 2:
+  alpha_a = l0 + j1;
+  alpha_b = l1 + j0;
+
+  double pTMiss2[3] = {0.0, metlv.Px(), metlv.Py()};
+  double pA2[3] = {alpha_a.M(), alpha_a.Px(), alpha_a.Py()};
+  double pB2[3] = {alpha_b.M(), alpha_b.Px(), alpha_b.Py()};
+  
+  // Create Mt2 object
+  mt2_bisect::mt2 mt2_event2;
+  mt2_event2.set_momenta(pA2,pB2,pTMiss2);
+  mt2_event2.set_mn(0); // LSP mass = 0 is Generic
+  double min_mt2 = min(mt2_event1.get_mt2(), mt2_event2.get_mt2());
+  double return_value = (min_mt2 > 0.) ? min_mt2 : -1.;
+  return return_value;
+  
+}
+/*--------------------------------------------------------------------------------*/
+float TSelector_SusyNtuple::calcMT2J0LepM(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1, TLorentzVector j0, TLorentzVector j1)
+{
+//   l0 -> l0 + jet_i
+//   l1 -> l1 + jet_j
+//   minimize for jet
+
+  //copied from SusyNtTools.cxx and modified to work with TLorentzVector
+  
+  TLorentzVector alpha_a, alpha_b;
+  //case 1:
+  alpha_a = l0 + j0;
+  alpha_b = l1 + j1;
+
+  double pTMiss1[3] = {0.0, metlv.Px(), metlv.Py()};
   double pA1[3] = {0.0, alpha_a.Px(), alpha_a.Py()};
   double pB1[3] = {0.0, alpha_b.Px(), alpha_b.Py()};
   
@@ -947,7 +987,8 @@ float TSelector_SusyNtuple::calcMT2J(TLorentzVector metlv, TLorentzVector l0, TL
   mt2_bisect::mt2 mt2_event2;
   mt2_event2.set_momenta(pA2,pB2,pTMiss2);
   mt2_event2.set_mn(0); // LSP mass = 0 is Generic
-  return min(mt2_event1.get_mt2(), mt2_event2.get_mt2());
+  double min_mt2 = min(mt2_event1.get_mt2(), mt2_event2.get_mt2());
+  return (min_mt2 > 0.) ? min_mt2 : -1.;
 }
 /*--------------------------------------------------------------------------------*/
 float TSelector_SusyNtuple::calcMZTauTau_coll(const TLorentzVector &signal_lep_0, const TLorentzVector &signal_lep_1, const TLorentzVector &met)
@@ -1134,7 +1175,7 @@ bool TSelector_SusyNtuple::compareElecMomentum (Electron* e0, Electron* e1){ ret
 ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys)
 {
   
-//    electrons which are too soft: pT < 10 GeV [susyNt->eleco() but pT < 10 GeV, no signal electron]
+//    electrons which are too soft: pT < 10 GeV [susyNt->eleco() but pT < 10 GeV]
   ElectronVector soft_electrons;
   for(uint ie=0; ie<susyNt->ele()->size(); ie++){
     Electron* soft_elec = & susyNt->ele()->at(ie);
@@ -1197,7 +1238,7 @@ bool TSelector_SusyNtuple::compareMuonMomentum (Muon* mu0, Muon* mu1){ return (m
 /*--------------------------------------------------------------------------------*/
 MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys)
 {
-//    muons which are too soft: pT < 10 GeV [susyNt->muo() but pT < 10 GeV, no signal muon]
+//    muons which are too soft: pT < 10 GeV [susyNt->muo() but pT < 10 GeV]
   MuonVector soft_muons;
   for(uint im=0; im<susyNt->muo()->size(); im++){
     Muon* soft_mu = & susyNt->muo()->at(im);
@@ -1379,45 +1420,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_mt2J.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_mt2J.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_mt2J.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_mt2J.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_mt2J.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_mt2J_Neu2.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_mt2J.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_DeltaRZ_Neu.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_DeltaRZ_Neu.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_DeltaRZ_Neu.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_DeltaRZ_Neu.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_DeltaRZ_Neu.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_DeltaRZ_Neu2.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_DeltaRZ_Neu.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_mt2J.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_mt2J.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_mt2J.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_mt2J.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_mt2J.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_mt2J.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_mt2J.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_mt2J.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_mt2J.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_mt2J.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_mt2J.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_mt2J.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_mt2J.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_mt2J.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_mt2J.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_mt2J.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_mt2J.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_mt2J.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_mt2J.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_mt2J.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_mt2J.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_mt2J.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_mt2J.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_mt2J.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_mt2J.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_mt2J.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_mt2J.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_DeltaRZ_Neu.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_DeltaRZ_Neu.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_DeltaRZ_Neu.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_DeltaRZ_Neu.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_DeltaRZ_Neu.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_DeltaRZ_Neu.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_DeltaRZ_Neu.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_DeltaRZ_Neu.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_DeltaRZ_Neu.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_DeltaRZ_Neu.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_DeltaRZ_Neu.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_DeltaRZ_Neu.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_DeltaRZ_Neu.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_DeltaRZ_Neu.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_DeltaRZ_Neu.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_DeltaRZ_Neu.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_DeltaRZ_Neu.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_DeltaRZ_Neu.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_DeltaRZ_Neu.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_DeltaRZ_Neu.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_DeltaRZ_Neu.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_DeltaRZ_Neu.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_DeltaRZ_Neu.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_DeltaRZ_Neu.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_DeltaRZ_Neu.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_DeltaRZ_Neu.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_DeltaRZ_Neu.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Muons_mt2J_3.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_DeltaRZ_1_Neu2.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];
