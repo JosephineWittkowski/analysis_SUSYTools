@@ -447,7 +447,8 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
 			  cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
-		
+			  float mtWW_MM = calcMt((mu0_TLV + mu1_TLV), m_met->lv());
+			  if(ml0lMlll_MM != -1.) cout << "ml0lMlll_MM != -1" << endl;
 			  if(mu0->pt >= 30.){
 			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    cutnumber = 28.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //ZVeto
@@ -483,7 +484,18 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			    }
 			  }
 //===============================================================================================================================		  
-	
+			  if(mtWW_MM >= 140.){
+			    cutnumber = 40.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			      if(METrelmm >= 100.){
+				cutnumber = 41.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				if(ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.){
+				  cutnumber = 42.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				}
+				if(ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.){
+				  cutnumber = 43.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				}
+			      }
+			    }
 //===============================================================================================================================		  
 			  }
 			}
@@ -1178,7 +1190,7 @@ ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, Susy
 //    electrons which are too soft: pT < 10 GeV [susyNt->eleco() but pT < 10 GeV]
   ElectronVector soft_electrons;
   for(uint ie=0; ie<susyNt->ele()->size(); ie++){
-    Electron* soft_elec = & susyNt->ele()->at(ie);
+    Electron* soft_elec = &susyNt->ele()->at(ie);
     soft_elec->setState(sys);
     if(soft_elec->pt < 10.) soft_electrons.push_back(soft_elec);
   }
@@ -1195,7 +1207,7 @@ ElectronVector TSelector_SusyNtuple::getPrecarElectrons(SusyNtObject* susyNt, Su
   ElectronVector PreElectrons = getPreElectrons(&nt, NtSys_NOM);    
   
   for(uint ie=0; ie<susyNt->ele()->size(); ie++){
-    Electron* precar_el = & susyNt->ele()->at(ie);
+    Electron* precar_el = &susyNt->ele()->at(ie);
     precar_el->setState(sys);
     bool noPreEl = true;
     for(uint ie2=0; ie2<PreElectrons.size(); ie2++){
@@ -1241,7 +1253,7 @@ MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sy
 //    muons which are too soft: pT < 10 GeV [susyNt->muo() but pT < 10 GeV]
   MuonVector soft_muons;
   for(uint im=0; im<susyNt->muo()->size(); im++){
-    Muon* soft_mu = & susyNt->muo()->at(im);
+    Muon* soft_mu = &susyNt->muo()->at(im);
     soft_mu->setState(sys);
     if(soft_mu->pt < 10.) soft_muons.push_back(soft_mu);
   }
@@ -1259,7 +1271,7 @@ MuonVector TSelector_SusyNtuple::getPrecarMuons(SusyNtObject* susyNt, SusyNtSys 
   MuonVector PreMuons = getPreMuons(&nt, NtSys_NOM);    
   
   for(uint im=0; im<susyNt->muo()->size(); im++){
-    Muon* precar_mu = & susyNt->muo()->at(im);
+    Muon* precar_mu = &susyNt->muo()->at(im);
     precar_mu->setState(sys);
     bool noPreMu = true;
     for(uint im2=0; im2<PreMuons.size(); im2++){
@@ -1329,6 +1341,45 @@ int TSelector_SusyNtuple::numberOfCMSJets(const JetVector& jets)
 
 
 /*--------------------------------------------------------------------------------*/
+vector<TLorentzVector> TSelector_SusyNtuple::overlapRemoval(vector<TLorentzVector> objects_type1, vector<TLorentzVector> objects_type2, double dr, bool sameType, bool removeSoft) 
+{
+  //copied from MultiLep/CutflowTools.h and modified to work simply with vector<TLorentzVector>
+//   cout << "overlapRemoval: dr " << dr << endl;
+    vector<TLorentzVector> survivors;
+    for(unsigned int i=0; i<objects_type1.size(); i++) {
+        bool is_overlap = false;
+        for(unsigned int j=0; j<objects_type2.size(); j++) {
+
+            // Don't remove an object against itself (for electron-electron overlap) 
+            if(sameType && i==j) continue;
+	    
+            if (removeSoft) {
+	      //not needed at the moment
+//                 if ( (object1.E()/cosh(object1.Eta())) > (object2.E()/cosh(object2.Eta()))) {
+//                     continue;    // remove lowest Et
+//                 }
+//                 if(object1.DeltaR(object2) <= dr) {
+//                     is_overlap = true;
+//                 }
+            } else {
+// 		cout << "i " << i << " j " << j << " DeltaR= " << objects_type1.at(i).DeltaR(objects_type2.at(j)) << endl;				
+                if(objects_type1.at(i).DeltaR(objects_type2.at(j)) <= dr) {
+// 		    cout << "DeltaR= " << objects_type1.at(i).DeltaR(objects_type2.at(j))
+                    is_overlap = true;
+// 		    cout << "overlapRemoval: overlapping object" << endl;
+                }
+            }
+        }
+        if(is_overlap) {
+            continue;
+        }
+        survivors.push_back(objects_type1.at(i));
+    }
+    return survivors;
+}
+
+/*--------------------------------------------------------------------------------*/
+
 bool TSelector_SusyNtuple::doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM)
 {
   float cutnumber = 0.; fillHistos_EE(cutnumber, weight_ALL_EE); fillHistos_MM(cutnumber, weight_ALL_MM); fillHistos_EM(cutnumber, weight_ALL_EM); // all events in the sample
@@ -1420,45 +1471,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_DeltaRZ_Neu.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_DeltaRZ_Neu.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_DeltaRZ_Neu.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_DeltaRZ_Neu.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_DeltaRZ_Neu.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_DeltaRZ_Neu2.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_DeltaRZ_Neu.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_ORcategory.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_ORcategory.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_ORcategory.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_ORcategory.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_ORcategory.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_ORcategory2.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_ORcategory.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_DeltaRZ_Neu.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_DeltaRZ_Neu.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_DeltaRZ_Neu.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_DeltaRZ_Neu.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_DeltaRZ_Neu.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_DeltaRZ_Neu.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_DeltaRZ_Neu.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_DeltaRZ_Neu.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_DeltaRZ_Neu.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_DeltaRZ_Neu.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_DeltaRZ_Neu.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_DeltaRZ_Neu.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_DeltaRZ_Neu.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_DeltaRZ_Neu.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_DeltaRZ_Neu.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_DeltaRZ_Neu.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_DeltaRZ_Neu.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_DeltaRZ_Neu.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_DeltaRZ_Neu.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_DeltaRZ_Neu.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_DeltaRZ_Neu.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_DeltaRZ_Neu.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_DeltaRZ_Neu.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_DeltaRZ_Neu.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_DeltaRZ_Neu.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_DeltaRZ_Neu.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_DeltaRZ_Neu.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_ORcategory.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_ORcategory.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_ORcategory.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_ORcategory.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_ORcategory.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_ORcategory.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_ORcategory.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_ORcategory.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_ORcategory.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_ORcategory.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_ORcategory.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_ORcategory.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_ORcategory.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_ORcategory.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_ORcategory.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_ORcategory.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_ORcategory.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_ORcategory.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_ORcategory.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_ORcategory.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_ORcategory.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_ORcategory.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_ORcategory.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_ORcategory.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_ORcategory.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_ORcategory.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_ORcategory.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Egamma_DeltaRZ_1_Neu2.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_ORcategory_3.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];

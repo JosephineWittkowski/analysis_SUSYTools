@@ -27,6 +27,15 @@
 #include "mmc/mmc.cpp"
 #include "MultiLep/CutflowTools.h"
 
+#include "MultiLep/MuonD3PDObject.h"
+#include "MultiLep/ElectronD3PDObject.h"
+#include "MultiLep/VertexD3PDObject.h"
+#include "MultiLep/METD3PDObject.h"
+#include "MultiLep/JetD3PDObject.h"
+#include "MultiLep/TrackD3PDObject.h"
+#include "MultiLep/JetTools.h"
+#include "MultiLep/LeptonInfo.h"
+
 #ifndef __CINT__
 #include "ChargeFlip/chargeFlip.h"
 #else
@@ -718,271 +727,271 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTllloverlapWLepton_MM_SROS1;
     TH2F* h_mTllloverlapWLepton_EM_SROS1;
     
-    TH2F* h_ml0loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_ml0loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_ml0loverlapWOFLepton_MM_SRSS1;
-    TH2F* h_ml0loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_ml0loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_ml0loverlapWOFLepton_MM_SRSS4;
-    TH2F* h_ml0loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_ml0loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_ml0loverlapWOFLepton_EE_SROS1;
-    TH2F* h_ml0loverlapWOFLepton_MM_SROS1;
-    TH2F* h_ml0loverlapWOFLepton_EM_SROS1;
+    TH2F* h_ml0loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_ml0loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_ml0loverlapWSFLepton_MM_SRSS1;
+    TH2F* h_ml0loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_ml0loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_ml0loverlapWSFLepton_MM_SRSS4;
+    TH2F* h_ml0loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_ml0loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_ml0loverlapWSFLepton_EE_SROS1;
+    TH2F* h_ml0loverlapWSFLepton_MM_SROS1;
+    TH2F* h_ml0loverlapWSFLepton_EM_SROS1;
     
-    TH2F* h_ml1loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_ml1loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_ml1loverlapWOFLepton_MM_SRSS1;
-    TH2F* h_ml1loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_ml1loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_ml1loverlapWOFLepton_MM_SRSS4;
-    TH2F* h_ml1loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_ml1loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_ml1loverlapWOFLepton_EE_SROS1;
-    TH2F* h_ml1loverlapWOFLepton_MM_SROS1;
-    TH2F* h_ml1loverlapWOFLepton_EM_SROS1;
-    
-    
-    TH2F* h_mTl0loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_mTl0loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_mTl0loverlapWOFLepton_MM_SRSS1;
-    TH2F* h_mTl0loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_mTl0loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_mTl0loverlapWOFLepton_MM_SRSS4;
-    TH2F* h_mTl0loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_mTl0loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_mTl0loverlapWOFLepton_EE_SROS1;
-    TH2F* h_mTl0loverlapWOFLepton_MM_SROS1;
-    TH2F* h_mTl0loverlapWOFLepton_EM_SROS1;
-    
-    TH2F* h_mTl1loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_mTl1loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_mTl1loverlapWOFLepton_MM_SRSS1;    
-    TH2F* h_mTl1loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_mTl1loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_mTl1loverlapWOFLepton_MM_SRSS4;    
-    TH2F* h_mTl1loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_mTl1loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_mTl1loverlapWOFLepton_EE_SROS1;    
-    TH2F* h_mTl1loverlapWOFLepton_MM_SROS1;
-    TH2F* h_mTl1loverlapWOFLepton_EM_SROS1;
-    
-    TH2F* h_DeltaRl0loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_DeltaRl0loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_DeltaRl0loverlapWOFLepton_MM_SRSS1;
-    TH2F* h_DeltaRl0loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_DeltaRl0loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_DeltaRl0loverlapWOFLepton_MM_SRSS4;
-    TH2F* h_DeltaRl0loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_DeltaRl0loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_DeltaRl0loverlapWOFLepton_EE_SROS1;
-    TH2F* h_DeltaRl0loverlapWOFLepton_MM_SROS1;
-    TH2F* h_DeltaRl0loverlapWOFLepton_EM_SROS1;
-    
-    TH2F* h_DeltaRl1loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_DeltaRl1loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_DeltaRl1loverlapWOFLepton_MM_SRSS1;    
-    TH2F* h_DeltaRl1loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_DeltaRl1loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_DeltaRl1loverlapWOFLepton_MM_SRSS4;    
-    TH2F* h_DeltaRl1loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_DeltaRl1loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_DeltaRl1loverlapWOFLepton_EE_SROS1;    
-    TH2F* h_DeltaRl1loverlapWOFLepton_MM_SROS1;
-    TH2F* h_DeltaRl1loverlapWOFLepton_EM_SROS1;
-    
-    TH2F* h_DeltaRZl0loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_MM_SRSS1;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_MM_SRSS4;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_EE_SROS1;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_MM_SROS1;
-    TH2F* h_DeltaRZl0loverlapWOFLepton_EM_SROS1;
-    
-    TH2F* h_DeltaRZl1loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_DeltaRZl1loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_DeltaRZl1loverlapWOFLepton_MM_SRSS1;    
-    TH2F* h_DeltaRZl1loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_DeltaRZl1loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_DeltaRZl1loverlapWOFLepton_MM_SRSS4;    
-    TH2F* h_DeltaRZl1loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_DeltaRZl1loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_DeltaRZl1loverlapWOFLepton_EE_SROS1;    
-    TH2F* h_DeltaRZl1loverlapWOFLepton_MM_SROS1;
-    TH2F* h_DeltaRZl1loverlapWOFLepton_EM_SROS1;   
-    
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_MM_SRSS1;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_MM_SRSS4;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_EE_SROS1;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_MM_SROS1;
-    TH2F* h_DeltaEtaZl0loverlapWOFLepton_EM_SROS1;
-    
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_EE_SRSS1;
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_EE_SRSS2;
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_MM_SRSS1;    
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_MM_SRSS2;
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_MM_SRSS3;
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_MM_SRSS4;    
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_EM_SRSS1;
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_EM_SRSS2;
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_EE_SROS1;    
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_MM_SROS1;
-    TH2F* h_DeltaEtaZl1loverlapWOFLepton_EM_SROS1;        
-    
-    TH2F* h_mTllloverlapWOFLepton_EE_SRSS1;
-    TH2F* h_mTllloverlapWOFLepton_EE_SRSS2;
-    TH2F* h_mTllloverlapWOFLepton_MM_SRSS1;    
-    TH2F* h_mTllloverlapWOFLepton_MM_SRSS2;
-    TH2F* h_mTllloverlapWOFLepton_MM_SRSS3;
-    TH2F* h_mTllloverlapWOFLepton_MM_SRSS4;    
-    TH2F* h_mTllloverlapWOFLepton_EM_SRSS1;
-    TH2F* h_mTllloverlapWOFLepton_EM_SRSS2;
-    TH2F* h_mTllloverlapWOFLepton_EE_SROS1;    
-    TH2F* h_mTllloverlapWOFLepton_MM_SROS1;
-    TH2F* h_mTllloverlapWOFLepton_EM_SROS1;
-    
-    TH2F* h_ml0lMll_EE_SRSS1;
-    TH2F* h_ml0lMll_EE_SRSS2;
-    TH2F* h_ml0lMll_MM_SRSS1;
-    TH2F* h_ml0lMll_MM_SRSS2;
-    TH2F* h_ml0lMll_MM_SRSS3;
-    TH2F* h_ml0lMll_MM_SRSS4;
-    TH2F* h_ml0lMll_EM_SRSS1;
-    TH2F* h_ml0lMll_EM_SRSS2;
-    TH2F* h_ml0lMll_EE_SROS1;
-    TH2F* h_ml0lMll_MM_SROS1;
-    TH2F* h_ml0lMll_EM_SROS1;
-    
-    TH2F* h_ml1lMll_EE_SRSS1;
-    TH2F* h_ml1lMll_EE_SRSS2;
-    TH2F* h_ml1lMll_MM_SRSS1;
-    TH2F* h_ml1lMll_MM_SRSS2;
-    TH2F* h_ml1lMll_MM_SRSS3;
-    TH2F* h_ml1lMll_MM_SRSS4;
-    TH2F* h_ml1lMll_EM_SRSS1;
-    TH2F* h_ml1lMll_EM_SRSS2;
-    TH2F* h_ml1lMll_EE_SROS1;
-    TH2F* h_ml1lMll_MM_SROS1;
-    TH2F* h_ml1lMll_EM_SROS1;
+    TH2F* h_ml1loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_ml1loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_ml1loverlapWSFLepton_MM_SRSS1;
+    TH2F* h_ml1loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_ml1loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_ml1loverlapWSFLepton_MM_SRSS4;
+    TH2F* h_ml1loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_ml1loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_ml1loverlapWSFLepton_EE_SROS1;
+    TH2F* h_ml1loverlapWSFLepton_MM_SROS1;
+    TH2F* h_ml1loverlapWSFLepton_EM_SROS1;
     
     
-    TH2F* h_mTl0lMll_EE_SRSS1;
-    TH2F* h_mTl0lMll_EE_SRSS2;
-    TH2F* h_mTl0lMll_MM_SRSS1;
-    TH2F* h_mTl0lMll_MM_SRSS2;
-    TH2F* h_mTl0lMll_MM_SRSS3;
-    TH2F* h_mTl0lMll_MM_SRSS4;
-    TH2F* h_mTl0lMll_EM_SRSS1;
-    TH2F* h_mTl0lMll_EM_SRSS2;
-    TH2F* h_mTl0lMll_EE_SROS1;
-    TH2F* h_mTl0lMll_MM_SROS1;
-    TH2F* h_mTl0lMll_EM_SROS1;
+    TH2F* h_mTl0loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_mTl0loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_mTl0loverlapWSFLepton_MM_SRSS1;
+    TH2F* h_mTl0loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_mTl0loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_mTl0loverlapWSFLepton_MM_SRSS4;
+    TH2F* h_mTl0loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_mTl0loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_mTl0loverlapWSFLepton_EE_SROS1;
+    TH2F* h_mTl0loverlapWSFLepton_MM_SROS1;
+    TH2F* h_mTl0loverlapWSFLepton_EM_SROS1;
     
-    TH2F* h_mTl1lMll_EE_SRSS1;
-    TH2F* h_mTl1lMll_EE_SRSS2;
-    TH2F* h_mTl1lMll_MM_SRSS1;    
-    TH2F* h_mTl1lMll_MM_SRSS2;
-    TH2F* h_mTl1lMll_MM_SRSS3;
-    TH2F* h_mTl1lMll_MM_SRSS4;    
-    TH2F* h_mTl1lMll_EM_SRSS1;
-    TH2F* h_mTl1lMll_EM_SRSS2;
-    TH2F* h_mTl1lMll_EE_SROS1;    
-    TH2F* h_mTl1lMll_MM_SROS1;
-    TH2F* h_mTl1lMll_EM_SROS1;
+    TH2F* h_mTl1loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_mTl1loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_mTl1loverlapWSFLepton_MM_SRSS1;    
+    TH2F* h_mTl1loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_mTl1loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_mTl1loverlapWSFLepton_MM_SRSS4;    
+    TH2F* h_mTl1loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_mTl1loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_mTl1loverlapWSFLepton_EE_SROS1;    
+    TH2F* h_mTl1loverlapWSFLepton_MM_SROS1;
+    TH2F* h_mTl1loverlapWSFLepton_EM_SROS1;
     
-    TH2F* h_DeltaRl0lMll_EE_SRSS1;
-    TH2F* h_DeltaRl0lMll_EE_SRSS2;
-    TH2F* h_DeltaRl0lMll_MM_SRSS1;
-    TH2F* h_DeltaRl0lMll_MM_SRSS2;
-    TH2F* h_DeltaRl0lMll_MM_SRSS3;
-    TH2F* h_DeltaRl0lMll_MM_SRSS4;
-    TH2F* h_DeltaRl0lMll_EM_SRSS1;
-    TH2F* h_DeltaRl0lMll_EM_SRSS2;
-    TH2F* h_DeltaRl0lMll_EE_SROS1;
-    TH2F* h_DeltaRl0lMll_MM_SROS1;
-    TH2F* h_DeltaRl0lMll_EM_SROS1;
+    TH2F* h_DeltaRl0loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_DeltaRl0loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_DeltaRl0loverlapWSFLepton_MM_SRSS1;
+    TH2F* h_DeltaRl0loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_DeltaRl0loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_DeltaRl0loverlapWSFLepton_MM_SRSS4;
+    TH2F* h_DeltaRl0loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_DeltaRl0loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_DeltaRl0loverlapWSFLepton_EE_SROS1;
+    TH2F* h_DeltaRl0loverlapWSFLepton_MM_SROS1;
+    TH2F* h_DeltaRl0loverlapWSFLepton_EM_SROS1;
     
-    TH2F* h_DeltaRl1lMll_EE_SRSS1;
-    TH2F* h_DeltaRl1lMll_EE_SRSS2;
-    TH2F* h_DeltaRl1lMll_MM_SRSS1;    
-    TH2F* h_DeltaRl1lMll_MM_SRSS2;
-    TH2F* h_DeltaRl1lMll_MM_SRSS3;
-    TH2F* h_DeltaRl1lMll_MM_SRSS4;    
-    TH2F* h_DeltaRl1lMll_EM_SRSS1;
-    TH2F* h_DeltaRl1lMll_EM_SRSS2;
-    TH2F* h_DeltaRl1lMll_EE_SROS1;    
-    TH2F* h_DeltaRl1lMll_MM_SROS1;
-    TH2F* h_DeltaRl1lMll_EM_SROS1;
+    TH2F* h_DeltaRl1loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_DeltaRl1loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_DeltaRl1loverlapWSFLepton_MM_SRSS1;    
+    TH2F* h_DeltaRl1loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_DeltaRl1loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_DeltaRl1loverlapWSFLepton_MM_SRSS4;    
+    TH2F* h_DeltaRl1loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_DeltaRl1loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_DeltaRl1loverlapWSFLepton_EE_SROS1;    
+    TH2F* h_DeltaRl1loverlapWSFLepton_MM_SROS1;
+    TH2F* h_DeltaRl1loverlapWSFLepton_EM_SROS1;
     
-    TH2F* h_DeltaRZl0lMll_EE_SRSS1;
-    TH2F* h_DeltaRZl0lMll_EE_SRSS2;
-    TH2F* h_DeltaRZl0lMll_MM_SRSS1;
-    TH2F* h_DeltaRZl0lMll_MM_SRSS2;
-    TH2F* h_DeltaRZl0lMll_MM_SRSS3;
-    TH2F* h_DeltaRZl0lMll_MM_SRSS4;
-    TH2F* h_DeltaRZl0lMll_EM_SRSS1;
-    TH2F* h_DeltaRZl0lMll_EM_SRSS2;
-    TH2F* h_DeltaRZl0lMll_EE_SROS1;
-    TH2F* h_DeltaRZl0lMll_MM_SROS1;
-    TH2F* h_DeltaRZl0lMll_EM_SROS1;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_MM_SRSS1;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_MM_SRSS4;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_EE_SROS1;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_MM_SROS1;
+    TH2F* h_DeltaRZl0loverlapWSFLepton_EM_SROS1;
     
-    TH2F* h_DeltaRZl1lMll_EE_SRSS1;
-    TH2F* h_DeltaRZl1lMll_EE_SRSS2;
-    TH2F* h_DeltaRZl1lMll_MM_SRSS1;    
-    TH2F* h_DeltaRZl1lMll_MM_SRSS2;
-    TH2F* h_DeltaRZl1lMll_MM_SRSS3;
-    TH2F* h_DeltaRZl1lMll_MM_SRSS4;    
-    TH2F* h_DeltaRZl1lMll_EM_SRSS1;
-    TH2F* h_DeltaRZl1lMll_EM_SRSS2;
-    TH2F* h_DeltaRZl1lMll_EE_SROS1;    
-    TH2F* h_DeltaRZl1lMll_MM_SROS1;
-    TH2F* h_DeltaRZl1lMll_EM_SROS1;   
+    TH2F* h_DeltaRZl1loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_DeltaRZl1loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_DeltaRZl1loverlapWSFLepton_MM_SRSS1;    
+    TH2F* h_DeltaRZl1loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_DeltaRZl1loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_DeltaRZl1loverlapWSFLepton_MM_SRSS4;    
+    TH2F* h_DeltaRZl1loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_DeltaRZl1loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_DeltaRZl1loverlapWSFLepton_EE_SROS1;    
+    TH2F* h_DeltaRZl1loverlapWSFLepton_MM_SROS1;
+    TH2F* h_DeltaRZl1loverlapWSFLepton_EM_SROS1;   
     
-    TH2F* h_DeltaEtaZl0lMll_EE_SRSS1;
-    TH2F* h_DeltaEtaZl0lMll_EE_SRSS2;
-    TH2F* h_DeltaEtaZl0lMll_MM_SRSS1;
-    TH2F* h_DeltaEtaZl0lMll_MM_SRSS2;
-    TH2F* h_DeltaEtaZl0lMll_MM_SRSS3;
-    TH2F* h_DeltaEtaZl0lMll_MM_SRSS4;
-    TH2F* h_DeltaEtaZl0lMll_EM_SRSS1;
-    TH2F* h_DeltaEtaZl0lMll_EM_SRSS2;
-    TH2F* h_DeltaEtaZl0lMll_EE_SROS1;
-    TH2F* h_DeltaEtaZl0lMll_MM_SROS1;
-    TH2F* h_DeltaEtaZl0lMll_EM_SROS1;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_MM_SRSS1;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_MM_SRSS4;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_EE_SROS1;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_MM_SROS1;
+    TH2F* h_DeltaEtaZl0loverlapWSFLepton_EM_SROS1;
     
-    TH2F* h_DeltaEtaZl1lMll_EE_SRSS1;
-    TH2F* h_DeltaEtaZl1lMll_EE_SRSS2;
-    TH2F* h_DeltaEtaZl1lMll_MM_SRSS1;    
-    TH2F* h_DeltaEtaZl1lMll_MM_SRSS2;
-    TH2F* h_DeltaEtaZl1lMll_MM_SRSS3;
-    TH2F* h_DeltaEtaZl1lMll_MM_SRSS4;    
-    TH2F* h_DeltaEtaZl1lMll_EM_SRSS1;
-    TH2F* h_DeltaEtaZl1lMll_EM_SRSS2;
-    TH2F* h_DeltaEtaZl1lMll_EE_SROS1;    
-    TH2F* h_DeltaEtaZl1lMll_MM_SROS1;
-    TH2F* h_DeltaEtaZl1lMll_EM_SROS1;        
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_EE_SRSS1;
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_EE_SRSS2;
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_MM_SRSS1;    
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_MM_SRSS2;
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_MM_SRSS3;
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_MM_SRSS4;    
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_EM_SRSS1;
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_EM_SRSS2;
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_EE_SROS1;    
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_MM_SROS1;
+    TH2F* h_DeltaEtaZl1loverlapWSFLepton_EM_SROS1;        
     
-    TH2F* h_mTlllMll_EE_SRSS1;
-    TH2F* h_mTlllMll_EE_SRSS2;
-    TH2F* h_mTlllMll_MM_SRSS1;    
-    TH2F* h_mTlllMll_MM_SRSS2;
-    TH2F* h_mTlllMll_MM_SRSS3;
-    TH2F* h_mTlllMll_MM_SRSS4;    
-    TH2F* h_mTlllMll_EM_SRSS1;
-    TH2F* h_mTlllMll_EM_SRSS2;
-    TH2F* h_mTlllMll_EE_SROS1;    
-    TH2F* h_mTlllMll_MM_SROS1;
-    TH2F* h_mTlllMll_EM_SROS1;    
+    TH2F* h_mTllloverlapWSFLepton_EE_SRSS1;
+    TH2F* h_mTllloverlapWSFLepton_EE_SRSS2;
+    TH2F* h_mTllloverlapWSFLepton_MM_SRSS1;    
+    TH2F* h_mTllloverlapWSFLepton_MM_SRSS2;
+    TH2F* h_mTllloverlapWSFLepton_MM_SRSS3;
+    TH2F* h_mTllloverlapWSFLepton_MM_SRSS4;    
+    TH2F* h_mTllloverlapWSFLepton_EM_SRSS1;
+    TH2F* h_mTllloverlapWSFLepton_EM_SRSS2;
+    TH2F* h_mTllloverlapWSFLepton_EE_SROS1;    
+    TH2F* h_mTllloverlapWSFLepton_MM_SROS1;
+    TH2F* h_mTllloverlapWSFLepton_EM_SROS1;
+    
+    TH2F* h_ml0lMlll_EE_SRSS1;
+    TH2F* h_ml0lMlll_EE_SRSS2;
+    TH2F* h_ml0lMlll_MM_SRSS1;
+    TH2F* h_ml0lMlll_MM_SRSS2;
+    TH2F* h_ml0lMlll_MM_SRSS3;
+    TH2F* h_ml0lMlll_MM_SRSS4;
+    TH2F* h_ml0lMlll_EM_SRSS1;
+    TH2F* h_ml0lMlll_EM_SRSS2;
+    TH2F* h_ml0lMlll_EE_SROS1;
+    TH2F* h_ml0lMlll_MM_SROS1;
+    TH2F* h_ml0lMlll_EM_SROS1;
+    
+    TH2F* h_ml1lMlll_EE_SRSS1;
+    TH2F* h_ml1lMlll_EE_SRSS2;
+    TH2F* h_ml1lMlll_MM_SRSS1;
+    TH2F* h_ml1lMlll_MM_SRSS2;
+    TH2F* h_ml1lMlll_MM_SRSS3;
+    TH2F* h_ml1lMlll_MM_SRSS4;
+    TH2F* h_ml1lMlll_EM_SRSS1;
+    TH2F* h_ml1lMlll_EM_SRSS2;
+    TH2F* h_ml1lMlll_EE_SROS1;
+    TH2F* h_ml1lMlll_MM_SROS1;
+    TH2F* h_ml1lMlll_EM_SROS1;
+    
+    
+    TH2F* h_mTl0lMlll_EE_SRSS1;
+    TH2F* h_mTl0lMlll_EE_SRSS2;
+    TH2F* h_mTl0lMlll_MM_SRSS1;
+    TH2F* h_mTl0lMlll_MM_SRSS2;
+    TH2F* h_mTl0lMlll_MM_SRSS3;
+    TH2F* h_mTl0lMlll_MM_SRSS4;
+    TH2F* h_mTl0lMlll_EM_SRSS1;
+    TH2F* h_mTl0lMlll_EM_SRSS2;
+    TH2F* h_mTl0lMlll_EE_SROS1;
+    TH2F* h_mTl0lMlll_MM_SROS1;
+    TH2F* h_mTl0lMlll_EM_SROS1;
+    
+    TH2F* h_mTl1lMlll_EE_SRSS1;
+    TH2F* h_mTl1lMlll_EE_SRSS2;
+    TH2F* h_mTl1lMlll_MM_SRSS1;    
+    TH2F* h_mTl1lMlll_MM_SRSS2;
+    TH2F* h_mTl1lMlll_MM_SRSS3;
+    TH2F* h_mTl1lMlll_MM_SRSS4;    
+    TH2F* h_mTl1lMlll_EM_SRSS1;
+    TH2F* h_mTl1lMlll_EM_SRSS2;
+    TH2F* h_mTl1lMlll_EE_SROS1;    
+    TH2F* h_mTl1lMlll_MM_SROS1;
+    TH2F* h_mTl1lMlll_EM_SROS1;
+    
+    TH2F* h_DeltaRl0lMlll_EE_SRSS1;
+    TH2F* h_DeltaRl0lMlll_EE_SRSS2;
+    TH2F* h_DeltaRl0lMlll_MM_SRSS1;
+    TH2F* h_DeltaRl0lMlll_MM_SRSS2;
+    TH2F* h_DeltaRl0lMlll_MM_SRSS3;
+    TH2F* h_DeltaRl0lMlll_MM_SRSS4;
+    TH2F* h_DeltaRl0lMlll_EM_SRSS1;
+    TH2F* h_DeltaRl0lMlll_EM_SRSS2;
+    TH2F* h_DeltaRl0lMlll_EE_SROS1;
+    TH2F* h_DeltaRl0lMlll_MM_SROS1;
+    TH2F* h_DeltaRl0lMlll_EM_SROS1;
+    
+    TH2F* h_DeltaRl1lMlll_EE_SRSS1;
+    TH2F* h_DeltaRl1lMlll_EE_SRSS2;
+    TH2F* h_DeltaRl1lMlll_MM_SRSS1;    
+    TH2F* h_DeltaRl1lMlll_MM_SRSS2;
+    TH2F* h_DeltaRl1lMlll_MM_SRSS3;
+    TH2F* h_DeltaRl1lMlll_MM_SRSS4;    
+    TH2F* h_DeltaRl1lMlll_EM_SRSS1;
+    TH2F* h_DeltaRl1lMlll_EM_SRSS2;
+    TH2F* h_DeltaRl1lMlll_EE_SROS1;    
+    TH2F* h_DeltaRl1lMlll_MM_SROS1;
+    TH2F* h_DeltaRl1lMlll_EM_SROS1;
+    
+    TH2F* h_DeltaRZl0lMlll_EE_SRSS1;
+    TH2F* h_DeltaRZl0lMlll_EE_SRSS2;
+    TH2F* h_DeltaRZl0lMlll_MM_SRSS1;
+    TH2F* h_DeltaRZl0lMlll_MM_SRSS2;
+    TH2F* h_DeltaRZl0lMlll_MM_SRSS3;
+    TH2F* h_DeltaRZl0lMlll_MM_SRSS4;
+    TH2F* h_DeltaRZl0lMlll_EM_SRSS1;
+    TH2F* h_DeltaRZl0lMlll_EM_SRSS2;
+    TH2F* h_DeltaRZl0lMlll_EE_SROS1;
+    TH2F* h_DeltaRZl0lMlll_MM_SROS1;
+    TH2F* h_DeltaRZl0lMlll_EM_SROS1;
+    
+    TH2F* h_DeltaRZl1lMlll_EE_SRSS1;
+    TH2F* h_DeltaRZl1lMlll_EE_SRSS2;
+    TH2F* h_DeltaRZl1lMlll_MM_SRSS1;    
+    TH2F* h_DeltaRZl1lMlll_MM_SRSS2;
+    TH2F* h_DeltaRZl1lMlll_MM_SRSS3;
+    TH2F* h_DeltaRZl1lMlll_MM_SRSS4;    
+    TH2F* h_DeltaRZl1lMlll_EM_SRSS1;
+    TH2F* h_DeltaRZl1lMlll_EM_SRSS2;
+    TH2F* h_DeltaRZl1lMlll_EE_SROS1;    
+    TH2F* h_DeltaRZl1lMlll_MM_SROS1;
+    TH2F* h_DeltaRZl1lMlll_EM_SROS1;   
+    
+    TH2F* h_DeltaEtaZl0lMlll_EE_SRSS1;
+    TH2F* h_DeltaEtaZl0lMlll_EE_SRSS2;
+    TH2F* h_DeltaEtaZl0lMlll_MM_SRSS1;
+    TH2F* h_DeltaEtaZl0lMlll_MM_SRSS2;
+    TH2F* h_DeltaEtaZl0lMlll_MM_SRSS3;
+    TH2F* h_DeltaEtaZl0lMlll_MM_SRSS4;
+    TH2F* h_DeltaEtaZl0lMlll_EM_SRSS1;
+    TH2F* h_DeltaEtaZl0lMlll_EM_SRSS2;
+    TH2F* h_DeltaEtaZl0lMlll_EE_SROS1;
+    TH2F* h_DeltaEtaZl0lMlll_MM_SROS1;
+    TH2F* h_DeltaEtaZl0lMlll_EM_SROS1;
+    
+    TH2F* h_DeltaEtaZl1lMlll_EE_SRSS1;
+    TH2F* h_DeltaEtaZl1lMlll_EE_SRSS2;
+    TH2F* h_DeltaEtaZl1lMlll_MM_SRSS1;    
+    TH2F* h_DeltaEtaZl1lMlll_MM_SRSS2;
+    TH2F* h_DeltaEtaZl1lMlll_MM_SRSS3;
+    TH2F* h_DeltaEtaZl1lMlll_MM_SRSS4;    
+    TH2F* h_DeltaEtaZl1lMlll_EM_SRSS1;
+    TH2F* h_DeltaEtaZl1lMlll_EM_SRSS2;
+    TH2F* h_DeltaEtaZl1lMlll_EE_SROS1;    
+    TH2F* h_DeltaEtaZl1lMlll_MM_SROS1;
+    TH2F* h_DeltaEtaZl1lMlll_EM_SROS1;        
+    
+    TH2F* h_mTlllMlll_EE_SRSS1;
+    TH2F* h_mTlllMlll_EE_SRSS2;
+    TH2F* h_mTlllMlll_MM_SRSS1;    
+    TH2F* h_mTlllMlll_MM_SRSS2;
+    TH2F* h_mTlllMlll_MM_SRSS3;
+    TH2F* h_mTlllMlll_MM_SRSS4;    
+    TH2F* h_mTlllMlll_EM_SRSS1;
+    TH2F* h_mTlllMlll_EM_SRSS2;
+    TH2F* h_mTlllMlll_EE_SROS1;    
+    TH2F* h_mTlllMlll_MM_SROS1;
+    TH2F* h_mTlllMlll_EM_SROS1;    
         
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_EE_SRSS2;
@@ -1720,6 +1729,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     MuonVector getOverlapMuons(SusyNtObject* susyNt, SusyNtSys sys);
     bool isCMSJet(const Susy::Jet* jet);
     int numberOfCMSJets(const JetVector& jets);    
+    vector<TLorentzVector> overlapRemoval(vector<TLorentzVector> objects_type1, vector<TLorentzVector> indices_2, double dr, bool sameType, bool removeSoft) ;
     bool doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM);
 
     // Selection region
@@ -1855,29 +1865,29 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mTllloverlapWLepton_EE;
     
         
-    float ml0loverlapWOFLepton_EE;
-    float ml1loverlapWOFLepton_EE;
-    float mTl0loverlapWOFLepton_EE;
-    float mTl1loverlapWOFLepton_EE;
-    float DeltaRl0loverlapWOFLepton_EE;
-    float DeltaRl1loverlapWOFLepton_EE;
-    float DeltaRZl0loverlapWOFLepton_EE;
-    float DeltaRZl1loverlapWOFLepton_EE;    
-    float DeltaEtaZl0loverlapWOFLepton_EE;
-    float DeltaEtaZl1loverlapWOFLepton_EE;    
-    float mTllloverlapWOFLepton_EE;
+    float ml0loverlapWSFLepton_EE;
+    float ml1loverlapWSFLepton_EE;
+    float mTl0loverlapWSFLepton_EE;
+    float mTl1loverlapWSFLepton_EE;
+    float DeltaRl0loverlapWSFLepton_EE;
+    float DeltaRl1loverlapWSFLepton_EE;
+    float DeltaRZl0loverlapWSFLepton_EE;
+    float DeltaRZl1loverlapWSFLepton_EE;    
+    float DeltaEtaZl0loverlapWSFLepton_EE;
+    float DeltaEtaZl1loverlapWSFLepton_EE;    
+    float mTllloverlapWSFLepton_EE;
     
-    float ml0loverlapMll_EE;
-    float ml1loverlapMll_EE;
-    float mTl0loverlapMll_EE;
-    float mTl1loverlapMll_EE;
-    float DeltaRl0loverlapMll_EE;
-    float DeltaRl1loverlapMll_EE;
-    float DeltaRZl0loverlapMll_EE;
-    float DeltaRZl1loverlapMll_EE;    
-    float DeltaEtaZl0loverlapMll_EE;
-    float DeltaEtaZl1loverlapMll_EE;    
-    float mTllloverlapMll_EE;
+    float ml0lMlll_EE;
+    float ml1lMlll_EE;
+    float mTl0lMlll_EE;
+    float mTl1lMlll_EE;
+    float DeltaRl0lMlll_EE;
+    float DeltaRl1lMlll_EE;
+    float DeltaRZl0lMlll_EE;
+    float DeltaRZl1lMlll_EE;    
+    float DeltaEtaZl0lMlll_EE;
+    float DeltaEtaZl1lMlll_EE;    
+    float mTlllMlll_EE;
     
     
     //#####################################
@@ -1982,29 +1992,29 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaEtaZl1loverlapWLepton_MM;        
     float mTllloverlapWLepton_MM;    
     
-    float ml0loverlapWOFLepton_MM;
-    float ml1loverlapWOFLepton_MM;
-    float mTl0loverlapWOFLepton_MM;
-    float mTl1loverlapWOFLepton_MM;
-    float DeltaRl0loverlapWOFLepton_MM;
-    float DeltaRl1loverlapWOFLepton_MM;    
-    float DeltaRZl0loverlapWOFLepton_MM;
-    float DeltaRZl1loverlapWOFLepton_MM;    
-    float DeltaEtaZl0loverlapWOFLepton_MM;
-    float DeltaEtaZl1loverlapWOFLepton_MM;        
-    float mTllloverlapWOFLepton_MM; 
+    float ml0loverlapWSFLepton_MM;
+    float ml1loverlapWSFLepton_MM;
+    float mTl0loverlapWSFLepton_MM;
+    float mTl1loverlapWSFLepton_MM;
+    float DeltaRl0loverlapWSFLepton_MM;
+    float DeltaRl1loverlapWSFLepton_MM;    
+    float DeltaRZl0loverlapWSFLepton_MM;
+    float DeltaRZl1loverlapWSFLepton_MM;    
+    float DeltaEtaZl0loverlapWSFLepton_MM;
+    float DeltaEtaZl1loverlapWSFLepton_MM;        
+    float mTllloverlapWSFLepton_MM; 
     
-    float ml0lMll_MM;
-    float ml1lMll_MM;
-    float mTl0lMll_MM;
-    float mTl1lMll_MM;
-    float DeltaRl0lMll_MM;
-    float DeltaRl1lMll_MM;    
-    float DeltaRZl0lMll_MM;
-    float DeltaRZl1lMll_MM;    
-    float DeltaEtaZl0lMll_MM;
-    float DeltaEtaZl1lMll_MM;        
-    float mTlllMll_MM;    
+    float ml0lMlll_MM;
+    float ml1lMlll_MM;
+    float mTl0lMlll_MM;
+    float mTl1lMlll_MM;
+    float DeltaRl0lMlll_MM;
+    float DeltaRl1lMlll_MM;    
+    float DeltaRZl0lMlll_MM;
+    float DeltaRZl1lMlll_MM;    
+    float DeltaEtaZl0lMlll_MM;
+    float DeltaEtaZl1lMlll_MM;        
+    float mTlllMlll_MM;    
     
     //#####################################
     
@@ -2108,29 +2118,29 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaEtaZl1loverlapWLepton_EM;    
     float mTllloverlapWLepton_EM;    
     
-    float ml0loverlapWOFLepton_EM;
-    float ml1loverlapWOFLepton_EM;
-    float mTl0loverlapWOFLepton_EM;
-    float mTl1loverlapWOFLepton_EM;
-    float DeltaRl0loverlapWOFLepton_EM;
-    float DeltaRl1loverlapWOFLepton_EM;    
-    float DeltaRZl0loverlapWOFLepton_EM;
-    float DeltaRZl1loverlapWOFLepton_EM;
-    float DeltaEtaZl0loverlapWOFLepton_EM;
-    float DeltaEtaZl1loverlapWOFLepton_EM;    
-    float mTllloverlapWOFLepton_EM;    
+    float ml0loverlapWSFLepton_EM;
+    float ml1loverlapWSFLepton_EM;
+    float mTl0loverlapWSFLepton_EM;
+    float mTl1loverlapWSFLepton_EM;
+    float DeltaRl0loverlapWSFLepton_EM;
+    float DeltaRl1loverlapWSFLepton_EM;    
+    float DeltaRZl0loverlapWSFLepton_EM;
+    float DeltaRZl1loverlapWSFLepton_EM;
+    float DeltaEtaZl0loverlapWSFLepton_EM;
+    float DeltaEtaZl1loverlapWSFLepton_EM;    
+    float mTllloverlapWSFLepton_EM;    
     
-    float ml0lMll_EM;
-    float ml1lMll_EM;
-    float mTl0lMll_EM;
-    float mTl1lMll_EM;
-    float DeltaRl0lMll_EM;
-    float DeltaRl1lMll_EM;    
-    float DeltaRZl0lMll_EM;
-    float DeltaRZl1lMll_EM;
-    float DeltaEtaZl0lMll_EM;
-    float DeltaEtaZl1lMll_EM;    
-    float mTlllMll_EM;    
+    float ml0lMlll_EM;
+    float ml1lMlll_EM;
+    float mTl0lMlll_EM;
+    float mTl1lMlll_EM;
+    float DeltaRl0lMlll_EM;
+    float DeltaRl1lMlll_EM;    
+    float DeltaRZl0lMlll_EM;
+    float DeltaRZl1lMlll_EM;
+    float DeltaEtaZl0lMlll_EM;
+    float DeltaEtaZl1lMlll_EM;    
+    float mTlllMlll_EM;    
     //#####################################
     
     ClassDef(TSelector_SusyNtuple, 1);
