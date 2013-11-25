@@ -448,7 +448,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
 			  cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
 			  float mtWW_MM = calcMt((mu0_TLV + mu1_TLV), m_met->lv());
-			  if(ml0lMlll_MM != -1.) cout << "ml0lMlll_MM != -1" << endl;
 			  if(mu0->pt >= 30.){
 			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    cutnumber = 28.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM); //ZVeto
@@ -485,14 +484,14 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			  }
 //===============================================================================================================================		  
 			  if(mtWW_MM >= 140.){
-			    cutnumber = 40.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    cutnumber = 50.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			      if(METrelmm >= 100.){
-				cutnumber = 41.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				cutnumber = 51.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				if(ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.){
-				  cutnumber = 42.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				  cutnumber = 52.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				}
 				if(ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.){
-				  cutnumber = 43.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				  cutnumber = 53.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				}
 			      }
 			    }
@@ -1198,29 +1197,6 @@ ElectronVector TSelector_SusyNtuple::getSoftElectrons(SusyNtObject* susyNt, Susy
  
   return soft_electrons;
 }
-/*--------------------------------------------------------------------------------*/
-ElectronVector TSelector_SusyNtuple::getPrecarElectrons(SusyNtObject* susyNt, SusyNtSys sys)
-{
-//    electrons which are no getPreElectrons but pT > 10 GeV [bc SUSYObjDef::FillElectrons() not okay]
- ElectronVector precar_electrons;
-  
-  ElectronVector PreElectrons = getPreElectrons(&nt, NtSys_NOM);    
-  
-  for(uint ie=0; ie<susyNt->ele()->size(); ie++){
-    Electron* precar_el = &susyNt->ele()->at(ie);
-    precar_el->setState(sys);
-    bool noPreEl = true;
-    for(uint ie2=0; ie2<PreElectrons.size(); ie2++){
-      Electron* pre_el = PreElectrons.at(ie2);
-      pre_el->setState(sys);
-      if(pre_el->DeltaR(*precar_el) < 0.0001) noPreEl = false;
-    }
-    if(noPreEl && precar_el->pt >= 10.)	precar_electrons.push_back(precar_el);
-  }
-  std::sort(precar_electrons.begin(), precar_electrons.end(), compareElecMomentum);
- 
-  return precar_electrons;
-}
 
 /*--------------------------------------------------------------------------------*/
 ElectronVector TSelector_SusyNtuple::getOverlapElectrons(SusyNtObject* susyNt, SusyNtSys sys)
@@ -1260,32 +1236,6 @@ MuonVector TSelector_SusyNtuple::getSoftMuons(SusyNtObject* susyNt, SusyNtSys sy
   std::sort(soft_muons.begin(), soft_muons.end(), compareMuonMomentum);
  
   return soft_muons;
-}
-
-/*--------------------------------------------------------------------------------*/
-MuonVector TSelector_SusyNtuple::getPrecarMuons(SusyNtObject* susyNt, SusyNtSys sys)
-{
-//    muons which are no GetPreMuons but pT > 10 GeV [bc SUSYObjDef::FillMuon() not okay (eta acceptance, muon quality criteria, track quality), no signal muon]
-  MuonVector precar_muons;
-  
-  MuonVector PreMuons = getPreMuons(&nt, NtSys_NOM);    
-  
-  for(uint im=0; im<susyNt->muo()->size(); im++){
-    Muon* precar_mu = &susyNt->muo()->at(im);
-    precar_mu->setState(sys);
-    bool noPreMu = true;
-    for(uint im2=0; im2<PreMuons.size(); im2++){
-      Muon* pre_mu = PreMuons.at(im2);
-      pre_mu->setState(sys);
-      if(pre_mu->DeltaR(*precar_mu) < 0.0001) noPreMu = false;
-    }
-    if(noPreMu && precar_mu->pt >= 10.){
-      precar_muons.push_back(precar_mu);
-    }
-  }
-  std::sort(precar_muons.begin(), precar_muons.end(), compareMuonMomentum);
- 
-  return precar_muons;
 }
 
 /*--------------------------------------------------------------------------------*/

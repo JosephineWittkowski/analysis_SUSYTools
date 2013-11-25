@@ -1,10 +1,10 @@
-root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WZ/*\")"
-root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_ZPlusJets/*\")"
+# root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WZ/*\")"
+# root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_ZPlusJets/*\")"
 
 
-# root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/ZZ/*\")"
-# root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/Higgs/*\")"
-# root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/ttbar/*\")"
+root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/ZZ/*\")"
+root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/Higgs/*\")"
+root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/ttbar/*\")"
 # root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WW/*\")"
 # root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WWPlusJets/*\")"
 # 
