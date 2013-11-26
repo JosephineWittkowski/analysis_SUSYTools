@@ -111,78 +111,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTl1llost_MM_SROS1;
     TH2F* h_mTl1llost_EM_SROS1;
     
-    TH2F* h_DeltaRl0llost_EE_SRSS1;
-    TH2F* h_DeltaRl0llost_EE_SRSS2;
-    TH2F* h_DeltaRl0llost_MM_SRSS1;
-    TH2F* h_DeltaRl0llost_MM_SRSS2;
-    TH2F* h_DeltaRl0llost_MM_SRSS3;
-    TH2F* h_DeltaRl0llost_MM_SRSS4;
-    TH2F* h_DeltaRl0llost_EM_SRSS1;
-    TH2F* h_DeltaRl0llost_EM_SRSS2;
-    TH2F* h_DeltaRl0llost_EE_SROS1;
-    TH2F* h_DeltaRl0llost_MM_SROS1;
-    TH2F* h_DeltaRl0llost_EM_SROS1;
-    
-    TH2F* h_DeltaRl1llost_EE_SRSS1;
-    TH2F* h_DeltaRl1llost_EE_SRSS2;
-    TH2F* h_DeltaRl1llost_MM_SRSS1;    
-    TH2F* h_DeltaRl1llost_MM_SRSS2;
-    TH2F* h_DeltaRl1llost_MM_SRSS3;
-    TH2F* h_DeltaRl1llost_MM_SRSS4;    
-    TH2F* h_DeltaRl1llost_EM_SRSS1;
-    TH2F* h_DeltaRl1llost_EM_SRSS2;
-    TH2F* h_DeltaRl1llost_EE_SROS1;    
-    TH2F* h_DeltaRl1llost_MM_SROS1;
-    TH2F* h_DeltaRl1llost_EM_SROS1;
-    
-    TH2F* h_DeltaRZl0llost_EE_SRSS1;
-    TH2F* h_DeltaRZl0llost_EE_SRSS2;
-    TH2F* h_DeltaRZl0llost_MM_SRSS1;
-    TH2F* h_DeltaRZl0llost_MM_SRSS2;
-    TH2F* h_DeltaRZl0llost_MM_SRSS3;
-    TH2F* h_DeltaRZl0llost_MM_SRSS4;
-    TH2F* h_DeltaRZl0llost_EM_SRSS1;
-    TH2F* h_DeltaRZl0llost_EM_SRSS2;
-    TH2F* h_DeltaRZl0llost_EE_SROS1;
-    TH2F* h_DeltaRZl0llost_MM_SROS1;
-    TH2F* h_DeltaRZl0llost_EM_SROS1;
-    
-    TH2F* h_DeltaRZl1llost_EE_SRSS1;
-    TH2F* h_DeltaRZl1llost_EE_SRSS2;
-    TH2F* h_DeltaRZl1llost_MM_SRSS1;    
-    TH2F* h_DeltaRZl1llost_MM_SRSS2;
-    TH2F* h_DeltaRZl1llost_MM_SRSS3;
-    TH2F* h_DeltaRZl1llost_MM_SRSS4;    
-    TH2F* h_DeltaRZl1llost_EM_SRSS1;
-    TH2F* h_DeltaRZl1llost_EM_SRSS2;
-    TH2F* h_DeltaRZl1llost_EE_SROS1;    
-    TH2F* h_DeltaRZl1llost_MM_SROS1;
-    TH2F* h_DeltaRZl1llost_EM_SROS1;
-    
-    TH2F* h_DeltaEtaZl0llost_EE_SRSS1;
-    TH2F* h_DeltaEtaZl0llost_EE_SRSS2;
-    TH2F* h_DeltaEtaZl0llost_MM_SRSS1;
-    TH2F* h_DeltaEtaZl0llost_MM_SRSS2;
-    TH2F* h_DeltaEtaZl0llost_MM_SRSS3;
-    TH2F* h_DeltaEtaZl0llost_MM_SRSS4;
-    TH2F* h_DeltaEtaZl0llost_EM_SRSS1;
-    TH2F* h_DeltaEtaZl0llost_EM_SRSS2;
-    TH2F* h_DeltaEtaZl0llost_EE_SROS1;
-    TH2F* h_DeltaEtaZl0llost_MM_SROS1;
-    TH2F* h_DeltaEtaZl0llost_EM_SROS1;
-    
-    TH2F* h_DeltaEtaZl1llost_EE_SRSS1;
-    TH2F* h_DeltaEtaZl1llost_EE_SRSS2;
-    TH2F* h_DeltaEtaZl1llost_MM_SRSS1;    
-    TH2F* h_DeltaEtaZl1llost_MM_SRSS2;
-    TH2F* h_DeltaEtaZl1llost_MM_SRSS3;
-    TH2F* h_DeltaEtaZl1llost_MM_SRSS4;    
-    TH2F* h_DeltaEtaZl1llost_EM_SRSS1;
-    TH2F* h_DeltaEtaZl1llost_EM_SRSS2;
-    TH2F* h_DeltaEtaZl1llost_EE_SROS1;    
-    TH2F* h_DeltaEtaZl1llost_MM_SROS1;
-    TH2F* h_DeltaEtaZl1llost_EM_SROS1;    
-    
     TH2F* h_ml0lsoft_EE_SRSS1;
     TH2F* h_ml0lsoft_EE_SRSS2;
     TH2F* h_ml0lsoft_MM_SRSS1;
@@ -231,78 +159,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mTl1lsoft_EE_SROS1;    
     TH2F* h_mTl1lsoft_MM_SROS1;
     TH2F* h_mTl1lsoft_EM_SROS1;
-    
-    TH2F* h_DeltaRl0lsoft_EE_SRSS1;
-    TH2F* h_DeltaRl0lsoft_EE_SRSS2;
-    TH2F* h_DeltaRl0lsoft_MM_SRSS1;
-    TH2F* h_DeltaRl0lsoft_MM_SRSS2;
-    TH2F* h_DeltaRl0lsoft_MM_SRSS3;
-    TH2F* h_DeltaRl0lsoft_MM_SRSS4;
-    TH2F* h_DeltaRl0lsoft_EM_SRSS1;
-    TH2F* h_DeltaRl0lsoft_EM_SRSS2;
-    TH2F* h_DeltaRl0lsoft_EE_SROS1;
-    TH2F* h_DeltaRl0lsoft_MM_SROS1;
-    TH2F* h_DeltaRl0lsoft_EM_SROS1;
-    
-    TH2F* h_DeltaRl1lsoft_EE_SRSS1;
-    TH2F* h_DeltaRl1lsoft_EE_SRSS2;
-    TH2F* h_DeltaRl1lsoft_MM_SRSS1;    
-    TH2F* h_DeltaRl1lsoft_MM_SRSS2;
-    TH2F* h_DeltaRl1lsoft_MM_SRSS3;
-    TH2F* h_DeltaRl1lsoft_MM_SRSS4;    
-    TH2F* h_DeltaRl1lsoft_EM_SRSS1;
-    TH2F* h_DeltaRl1lsoft_EM_SRSS2;
-    TH2F* h_DeltaRl1lsoft_EE_SROS1;    
-    TH2F* h_DeltaRl1lsoft_MM_SROS1;
-    TH2F* h_DeltaRl1lsoft_EM_SROS1;
-    
-    TH2F* h_DeltaRZl0lsoft_EE_SRSS1;
-    TH2F* h_DeltaRZl0lsoft_EE_SRSS2;
-    TH2F* h_DeltaRZl0lsoft_MM_SRSS1;
-    TH2F* h_DeltaRZl0lsoft_MM_SRSS2;
-    TH2F* h_DeltaRZl0lsoft_MM_SRSS3;
-    TH2F* h_DeltaRZl0lsoft_MM_SRSS4;
-    TH2F* h_DeltaRZl0lsoft_EM_SRSS1;
-    TH2F* h_DeltaRZl0lsoft_EM_SRSS2;
-    TH2F* h_DeltaRZl0lsoft_EE_SROS1;
-    TH2F* h_DeltaRZl0lsoft_MM_SROS1;
-    TH2F* h_DeltaRZl0lsoft_EM_SROS1;
-    
-    TH2F* h_DeltaRZl1lsoft_EE_SRSS1;
-    TH2F* h_DeltaRZl1lsoft_EE_SRSS2;
-    TH2F* h_DeltaRZl1lsoft_MM_SRSS1;    
-    TH2F* h_DeltaRZl1lsoft_MM_SRSS2;
-    TH2F* h_DeltaRZl1lsoft_MM_SRSS3;
-    TH2F* h_DeltaRZl1lsoft_MM_SRSS4;    
-    TH2F* h_DeltaRZl1lsoft_EM_SRSS1;
-    TH2F* h_DeltaRZl1lsoft_EM_SRSS2;
-    TH2F* h_DeltaRZl1lsoft_EE_SROS1;    
-    TH2F* h_DeltaRZl1lsoft_MM_SROS1;
-    TH2F* h_DeltaRZl1lsoft_EM_SROS1;
-    
-    TH2F* h_DeltaEtaZl0lsoft_EE_SRSS1;
-    TH2F* h_DeltaEtaZl0lsoft_EE_SRSS2;
-    TH2F* h_DeltaEtaZl0lsoft_MM_SRSS1;
-    TH2F* h_DeltaEtaZl0lsoft_MM_SRSS2;
-    TH2F* h_DeltaEtaZl0lsoft_MM_SRSS3;
-    TH2F* h_DeltaEtaZl0lsoft_MM_SRSS4;
-    TH2F* h_DeltaEtaZl0lsoft_EM_SRSS1;
-    TH2F* h_DeltaEtaZl0lsoft_EM_SRSS2;
-    TH2F* h_DeltaEtaZl0lsoft_EE_SROS1;
-    TH2F* h_DeltaEtaZl0lsoft_MM_SROS1;
-    TH2F* h_DeltaEtaZl0lsoft_EM_SROS1;
-    
-    TH2F* h_DeltaEtaZl1lsoft_EE_SRSS1;
-    TH2F* h_DeltaEtaZl1lsoft_EE_SRSS2;
-    TH2F* h_DeltaEtaZl1lsoft_MM_SRSS1;    
-    TH2F* h_DeltaEtaZl1lsoft_MM_SRSS2;
-    TH2F* h_DeltaEtaZl1lsoft_MM_SRSS3;
-    TH2F* h_DeltaEtaZl1lsoft_MM_SRSS4;    
-    TH2F* h_DeltaEtaZl1lsoft_EM_SRSS1;
-    TH2F* h_DeltaEtaZl1lsoft_EM_SRSS2;
-    TH2F* h_DeltaEtaZl1lsoft_EE_SROS1;    
-    TH2F* h_DeltaEtaZl1lsoft_MM_SROS1;
-    TH2F* h_DeltaEtaZl1lsoft_EM_SROS1;   
     
     TH2F* h_ml0loverlap_EE_SRSS1;
     TH2F* h_ml0loverlap_EE_SRSS2;
@@ -1360,79 +1216,38 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ml1llost_EE;
     float mTl0llost_EE;
     float mTl1llost_EE;
-    float DeltaRl0llost_EE;
-    float DeltaRl1llost_EE;
-    float DeltaRZl0llost_EE;
-    float DeltaRZl1llost_EE;
-    float DeltaEtaZl0llost_EE;
-    float DeltaEtaZl1llost_EE;    
+
     
     float ml0lsoft_EE;
     float ml1lsoft_EE;
     float mTl0lsoft_EE;
     float mTl1lsoft_EE;
-    float DeltaRZl0lsoft_EE;
-    float DeltaRZl1lsoft_EE;    
-    float DeltaEtaZl0lsoft_EE;
-    float DeltaEtaZl1lsoft_EE;        
-    float DeltaRl0lsoft_EE;
-    float DeltaRl1lsoft_EE;
     
     float ml0loverlap_EE;
     float ml1loverlap_EE;
     float mTl0loverlap_EE;
     float mTl1loverlap_EE;
-    float DeltaRl0loverlap_EE;
-    float DeltaRl1loverlap_EE;
-    float DeltaRZl0loverlap_EE;
-    float DeltaRZl1loverlap_EE;    
-    float DeltaEtaZl0loverlap_EE;
-    float DeltaEtaZl1loverlap_EE;    
     
         
     float ml0loverlapWJet_EE;
     float ml1loverlapWJet_EE;
     float mTl0loverlapWJet_EE;
     float mTl1loverlapWJet_EE;
-    float DeltaRl0loverlapWJet_EE;
-    float DeltaRl1loverlapWJet_EE;
-    float DeltaRZl0loverlapWJet_EE;
-    float DeltaRZl1loverlapWJet_EE;    
-    float DeltaEtaZl0loverlapWJet_EE;
-    float DeltaEtaZl1loverlapWJet_EE;    
         
     float ml0loverlapWOFLepton_EE;
     float ml1loverlapWOFLepton_EE;
     float mTl0loverlapWOFLepton_EE;
     float mTl1loverlapWOFLepton_EE;
-    float DeltaRl0loverlapWOFLepton_EE;
-    float DeltaRl1loverlapWOFLepton_EE;
-    float DeltaRZl0loverlapWOFLepton_EE;
-    float DeltaRZl1loverlapWOFLepton_EE;    
-    float DeltaEtaZl0loverlapWOFLepton_EE;
-    float DeltaEtaZl1loverlapWOFLepton_EE;    
         
     float ml0loverlapWSFLepton_EE;
     float ml1loverlapWSFLepton_EE;
     float mTl0loverlapWSFLepton_EE;
     float mTl1loverlapWSFLepton_EE;
-    float DeltaRl0loverlapWSFLepton_EE;
-    float DeltaRl1loverlapWSFLepton_EE;
-    float DeltaRZl0loverlapWSFLepton_EE;
-    float DeltaRZl1loverlapWSFLepton_EE;    
-    float DeltaEtaZl0loverlapWSFLepton_EE;
-    float DeltaEtaZl1loverlapWSFLepton_EE;    
     
     float ml0lZcand_EE;
     float ml1lZcand_EE;
     float mTl0lZcand_EE;
     float mTl1lZcand_EE;
-    float DeltaRl0lZcand_EE;
-    float DeltaRl1lZcand_EE;
-    float DeltaRZl0lZcand_EE;
-    float DeltaRZl1lZcand_EE;    
-    float DeltaEtaZl0lZcand_EE;
-    float DeltaEtaZl1lZcand_EE;    
     
     
     //#####################################
@@ -1481,78 +1296,36 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ml1llost_MM;
     float mTl0llost_MM;
     float mTl1llost_MM;
-    float DeltaRl0llost_MM;
-    float DeltaRl1llost_MM;    
-    float DeltaRZl0llost_MM;
-    float DeltaRZl1llost_MM;        
-    float DeltaEtaZl0llost_MM;
-    float DeltaEtaZl1llost_MM;       
     
     float ml0lsoft_MM;
     float ml1lsoft_MM;
     float mTl0lsoft_MM;
     float mTl1lsoft_MM;
-    float DeltaRl0lsoft_MM;
-    float DeltaRl1lsoft_MM;    
-    float DeltaRZl0lsoft_MM;
-    float DeltaRZl1lsoft_MM;   
-    float DeltaEtaZl0lsoft_MM;
-    float DeltaEtaZl1lsoft_MM;       
 
     float ml0loverlap_MM;
     float ml1loverlap_MM;
     float mTl0loverlap_MM;
     float mTl1loverlap_MM;
-    float DeltaRl0loverlap_MM;
-    float DeltaRl1loverlap_MM;    
-    float DeltaRZl0loverlap_MM;
-    float DeltaRZl1loverlap_MM;    
-    float DeltaEtaZl0loverlap_MM;
-    float DeltaEtaZl1loverlap_MM;        
     
     float ml0loverlapWJet_MM;
     float ml1loverlapWJet_MM;
     float mTl0loverlapWJet_MM;
     float mTl1loverlapWJet_MM;
-    float DeltaRl0loverlapWJet_MM;
-    float DeltaRl1loverlapWJet_MM;    
-    float DeltaRZl0loverlapWJet_MM;
-    float DeltaRZl1loverlapWJet_MM;    
-    float DeltaEtaZl0loverlapWJet_MM;
-    float DeltaEtaZl1loverlapWJet_MM;        
     
     float ml0loverlapWOFLepton_MM;
     float ml1loverlapWOFLepton_MM;
     float mTl0loverlapWOFLepton_MM;
     float mTl1loverlapWOFLepton_MM;
-    float DeltaRl0loverlapWOFLepton_MM;
-    float DeltaRl1loverlapWOFLepton_MM;    
-    float DeltaRZl0loverlapWOFLepton_MM;
-    float DeltaRZl1loverlapWOFLepton_MM;    
-    float DeltaEtaZl0loverlapWOFLepton_MM;
-    float DeltaEtaZl1loverlapWOFLepton_MM;        
     
     float ml0loverlapWSFLepton_MM;
     float ml1loverlapWSFLepton_MM;
     float mTl0loverlapWSFLepton_MM;
     float mTl1loverlapWSFLepton_MM;
-    float DeltaRl0loverlapWSFLepton_MM;
-    float DeltaRl1loverlapWSFLepton_MM;    
-    float DeltaRZl0loverlapWSFLepton_MM;
-    float DeltaRZl1loverlapWSFLepton_MM;    
-    float DeltaEtaZl0loverlapWSFLepton_MM;
-    float DeltaEtaZl1loverlapWSFLepton_MM;        
     
     float ml0lZcand_MM;
     float ml1lZcand_MM;
     float mTl0lZcand_MM;
-    float mTl1lZcand_MM;
-    float DeltaRl0lZcand_MM;
-    float DeltaRl1lZcand_MM;    
-    float DeltaRZl0lZcand_MM;
-    float DeltaRZl1lZcand_MM;    
-    float DeltaEtaZl0lZcand_MM;
-    float DeltaEtaZl1lZcand_MM;        
+    float mTl1lZcand_MM;  
     
     //#####################################
     
@@ -1600,78 +1373,36 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ml1llost_EM;
     float mTl0llost_EM;
     float mTl1llost_EM;
-    float DeltaRl0llost_EM;
-    float DeltaRl1llost_EM;    
-    float DeltaRZl0llost_EM;
-    float DeltaRZl1llost_EM;        
-    float DeltaEtaZl0llost_EM;
-    float DeltaEtaZl1llost_EM;       
     
     float ml0lsoft_EM;
     float ml1lsoft_EM;
     float mTl0lsoft_EM;
     float mTl1lsoft_EM;
-    float DeltaRl0lsoft_EM;
-    float DeltaRl1lsoft_EM;    
-    float DeltaRZl0lsoft_EM;
-    float DeltaRZl1lsoft_EM;
-    float DeltaEtaZl0lsoft_EM;
-    float DeltaEtaZl1lsoft_EM;       
     
     float ml0loverlap_EM;
     float ml1loverlap_EM;
     float mTl0loverlap_EM;
     float mTl1loverlap_EM;
-    float DeltaRl0loverlap_EM;
-    float DeltaRl1loverlap_EM;    
-    float DeltaRZl0loverlap_EM;
-    float DeltaRZl1loverlap_EM;
-    float DeltaEtaZl0loverlap_EM;
-    float DeltaEtaZl1loverlap_EM;    
     
     float ml0loverlapWJet_EM;
     float ml1loverlapWJet_EM;
     float mTl0loverlapWJet_EM;
     float mTl1loverlapWJet_EM;
-    float DeltaRl0loverlapWJet_EM;
-    float DeltaRl1loverlapWJet_EM;    
-    float DeltaRZl0loverlapWJet_EM;
-    float DeltaRZl1loverlapWJet_EM;
-    float DeltaEtaZl0loverlapWJet_EM;
-    float DeltaEtaZl1loverlapWJet_EM;    
     
     float ml0loverlapWOFLepton_EM;
     float ml1loverlapWOFLepton_EM;
     float mTl0loverlapWOFLepton_EM;
     float mTl1loverlapWOFLepton_EM;
-    float DeltaRl0loverlapWOFLepton_EM;
-    float DeltaRl1loverlapWOFLepton_EM;    
-    float DeltaRZl0loverlapWOFLepton_EM;
-    float DeltaRZl1loverlapWOFLepton_EM;
-    float DeltaEtaZl0loverlapWOFLepton_EM;
-    float DeltaEtaZl1loverlapWOFLepton_EM;    
     
     float ml0loverlapWSFLepton_EM;
     float ml1loverlapWSFLepton_EM;
     float mTl0loverlapWSFLepton_EM;
     float mTl1loverlapWSFLepton_EM;
-    float DeltaRl0loverlapWSFLepton_EM;
-    float DeltaRl1loverlapWSFLepton_EM;    
-    float DeltaRZl0loverlapWSFLepton_EM;
-    float DeltaRZl1loverlapWSFLepton_EM;
-    float DeltaEtaZl0loverlapWSFLepton_EM;
-    float DeltaEtaZl1loverlapWSFLepton_EM;    
     
     float ml0lZcand_EM;
     float ml1lZcand_EM;
     float mTl0lZcand_EM;
     float mTl1lZcand_EM;
-    float DeltaRl0lZcand_EM;
-    float DeltaRl1lZcand_EM;    
-    float DeltaRZl0lZcand_EM;
-    float DeltaRZl1lZcand_EM;
-    float DeltaEtaZl0lZcand_EM;
-    float DeltaEtaZl1lZcand_EM;    
     //#####################################
     
     ClassDef(TSelector_SusyNtuple, 1);
