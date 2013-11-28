@@ -2436,7 +2436,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   }
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
-  Mljj_EE = 0.;
+  Mljj_EE = -1.;
   if(nSignalJets>1){
     //find dijet axis:
     double DeltaRDijetEl0 = el0_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el0_TLV.Phi()),2));
@@ -2623,7 +2623,7 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   }
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
-  Mljj_MM = 0.;
+  Mljj_MM = -1.;
   if(nSignalJets>1){
     double DeltaRDijetMu0 = mu0_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu0_TLV.Phi()),2));
     double DeltaRDijetMu1 = mu1_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu1_TLV.Phi()),2));
@@ -2689,28 +2689,34 @@ bool unbiased = true;
     mu_lost_vec.push_back(mu_lost);
     //can it be combined to SFOS pair?
     if((mu_lost->q * mu0->q)<0. || (mu_lost->q * mu1->q)<0.){
-      if(fabs(MZ - Mll(mu0, mu_lost)) < DeltaMZ_l0llost){
-	ml0llost_MM = Mll(mu0, mu_lost);      
-	mTl0llost_MM = calcMt(mu0_TLV, mu_lost_TLV);  
-	ICl0llost_MM = mu_lost->isCombined;
-	pTl0llost_MM = mu_lost->pt;
-	etal0llost_MM = fabs(mu_lost->eta);
-	ptcone30l0llost_MM = mu_lost->ptcone30ElStyle/mu_lost->pt;
-	d0Sigl0llost_MM = mu_lost->d0Sig(true);
-	z0SinThetal0llost_MM = mu_lost->z0SinTheta(true);	
-	DeltaMZ_l0llost = fabs(MZ - Mll(mu0, mu_lost));
+      //only combine it with the signal lepton where DeltaMZ is smallest.      
+      if(fabs(MZ - Mll(mu0, mu_lost)) < fabs(MZ - Mll(mu1, mu_lost))){
+	if(fabs(MZ - Mll(mu0, mu_lost)) < DeltaMZ_l0llost){
+	  ml0llost_MM = Mll(mu0, mu_lost);      
+	  mTl0llost_MM = calcMt(mu0_TLV, mu_lost_TLV);  
+	  ICl0llost_MM = mu_lost->isCombined;
+	  pTl0llost_MM = mu_lost->pt;
+	  etal0llost_MM = fabs(mu_lost->eta);
+	  ptcone30l0llost_MM = mu_lost->ptcone30ElStyle/mu_lost->pt;
+	  d0Sigl0llost_MM = mu_lost->d0Sig(true);
+	  z0SinThetal0llost_MM = mu_lost->z0SinTheta(true);	
+	  DeltaMZ_l0llost = fabs(MZ - Mll(mu0, mu_lost));
+	}
       }
-      if(fabs(MZ - Mll(mu1, mu_lost)) < DeltaMZ_l1llost){
-	ml1llost_MM = (mu1_TLV + mu_lost_TLV).M();      
-	mTl1llost_MM = calcMt(mu1_TLV, mu_lost_TLV);  
-	ICl1llost_MM = mu_lost->isCombined;
-	pTl1llost_MM = mu_lost->pt;
-	etal1llost_MM = fabs(mu_lost->eta);
-	ptcone30l1llost_MM = mu_lost->ptcone30ElStyle/mu_lost->pt;
-	d0Sigl1llost_MM = mu_lost->d0Sig(true);
-	z0SinThetal1llost_MM = mu_lost->z0SinTheta(true);	
-	DeltaMZ_l1llost = fabs(MZ - Mll(mu1, mu_lost));
-      }      
+      else{
+	if(fabs(MZ - Mll(mu1, mu_lost)) < DeltaMZ_l1llost){
+	  ml1llost_MM = (mu1_TLV + mu_lost_TLV).M();      
+	  mTl1llost_MM = calcMt(mu1_TLV, mu_lost_TLV);  
+	  ICl1llost_MM = mu_lost->isCombined;
+	  pTl1llost_MM = mu_lost->pt;
+	  etal1llost_MM = fabs(mu_lost->eta);
+	  ptcone30l1llost_MM = mu_lost->ptcone30ElStyle/mu_lost->pt;
+	  d0Sigl1llost_MM = mu_lost->d0Sig(true);
+	  z0SinThetal1llost_MM = mu_lost->z0SinTheta(true);	
+	  DeltaMZ_l1llost = fabs(MZ - Mll(mu1, mu_lost));
+	}
+      }
+      
     }
   }
   Nleptons_lost_MM = mu_lost_vec.size();
@@ -2746,27 +2752,32 @@ bool unbiased = true;
       softMuons_vec.push_back(soft_mu);
       
       if((soft_mu->q * mu0->q)<0. || (soft_mu->q * mu1->q)<0.){
-	if(fabs(MZ - Mll(mu0, soft_mu)) < DeltaMZ_l0lsoft){
-	  ml0lsoft_MM = Mll(mu0, soft_mu);      
-	  mTl0lsoft_MM = calcMt(mu0_TLV, softMuon_TLV);  
-	  ICl0lsoft_MM = soft_mu->isCombined;
-	  pTl0lsoft_MM = soft_mu->pt;
-	  etal0lsoft_MM = fabs(soft_mu->eta);
-	  ptcone30l0lsoft_MM = soft_mu->ptcone30ElStyle/soft_mu->pt;
-	  d0Sigl0lsoft_MM = soft_mu->d0Sig(true);
-	  z0SinThetal0lsoft_MM = soft_mu->z0SinTheta(true);
-	  DeltaMZ_l0lsoft = fabs(MZ - Mll(mu0, soft_mu));
+  //only combine it with the signal lepton where DeltaMZ is smallest.      
+	if(fabs(MZ - Mll(mu0, soft_mu)) < fabs(MZ - Mll(mu1, soft_mu))){
+	  if(fabs(MZ - Mll(mu0, soft_mu)) < DeltaMZ_l0lsoft){
+	    ml0lsoft_MM = Mll(mu0, soft_mu);      
+	    mTl0lsoft_MM = calcMt(mu0_TLV, softMuon_TLV);  
+	    ICl0lsoft_MM = soft_mu->isCombined;
+	    pTl0lsoft_MM = soft_mu->pt;
+	    etal0lsoft_MM = fabs(soft_mu->eta);
+	    ptcone30l0lsoft_MM = soft_mu->ptcone30ElStyle/soft_mu->pt;
+	    d0Sigl0lsoft_MM = soft_mu->d0Sig(true);
+	    z0SinThetal0lsoft_MM = soft_mu->z0SinTheta(true);	
+	    DeltaMZ_l0lsoft = fabs(MZ - Mll(mu0, soft_mu));
+	  }
 	}
-	if(fabs(MZ - Mll(mu1, soft_mu)) < DeltaMZ_l1lsoft){
-	  ml1lsoft_MM = (mu1_TLV + softMuon_TLV).M();      
-	  mTl1lsoft_MM = calcMt(mu1_TLV, softMuon_TLV);  
-	  ICl1lsoft_MM = soft_mu->isCombined;
-	  pTl1lsoft_MM = soft_mu->pt;
-	  etal1lsoft_MM = fabs(soft_mu->eta);
-	  ptcone30l1lsoft_MM = soft_mu->ptcone30ElStyle/soft_mu->pt;
-	  d0Sigl1lsoft_MM = soft_mu->d0Sig(true);
-	  z0SinThetal1lsoft_MM = soft_mu->z0SinTheta(true);
-	  DeltaMZ_l1lsoft = fabs(MZ - Mll(mu1, soft_mu));
+	else{
+	  if(fabs(MZ - Mll(mu1, soft_mu)) < DeltaMZ_l1lsoft){
+	    ml1lsoft_MM = (mu1_TLV + softMuon_TLV).M();      
+	    mTl1lsoft_MM = calcMt(mu1_TLV, softMuon_TLV);  
+	    ICl1lsoft_MM = soft_mu->isCombined;
+	    pTl1lsoft_MM = soft_mu->pt;
+	    etal1lsoft_MM = fabs(soft_mu->eta);
+	    ptcone30l1lsoft_MM = soft_mu->ptcone30ElStyle/soft_mu->pt;
+	    d0Sigl1lsoft_MM = soft_mu->d0Sig(true);
+	    z0SinThetal1lsoft_MM = soft_mu->z0SinTheta(true);	
+	    DeltaMZ_l1lsoft = fabs(MZ - Mll(mu1, soft_mu));
+	  }
 	}
       }
     }      
@@ -2816,25 +2827,31 @@ bool unbiased = true;
       overlapMuon_vec.push_back(pre_mu);
 //       overlapMuon_TLV_vec.push_back(overlapMuon_TLV);
       if((pre_mu->q * mu0->q)<0. || (pre_mu->q * mu1->q)<0.){
-	if(fabs(MZ - Mll(mu0, pre_mu)) < DeltaMZ_l0loverlap){
-	  ml0loverlap_MM = Mll(mu0, pre_mu);      
-	  mTl0loverlap_MM = calcMt(mu0_TLV, overlapMuon_TLV);  
-	  pTl0loverlap_MM = pre_mu->pt;
-	  etal0loverlap_MM = fabs(pre_mu->eta);
-	  ptcone30l0loverlap_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	  d0Sigl0loverlap_MM = pre_mu->d0Sig(true);
-	  z0SinThetal0loverlap_MM = pre_mu->z0SinTheta(true);
-	  DeltaMZ_l0loverlap = fabs(MZ - Mll(mu0, pre_mu));
+	if(fabs(MZ - Mll(mu0, pre_mu)) < fabs(MZ - Mll(mu1, pre_mu))){
+	  if(fabs(MZ - Mll(mu0, pre_mu)) < DeltaMZ_l0loverlap){
+	    ml0loverlap_MM = Mll(mu0, pre_mu);      
+	    mTl0loverlap_MM = calcMt(mu0_TLV, overlapMuon_TLV);  
+	    ICl0loverlap_MM = pre_mu->isCombined;
+	    pTl0loverlap_MM = pre_mu->pt;
+	    etal0loverlap_MM = fabs(pre_mu->eta);
+	    ptcone30l0loverlap_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
+	    d0Sigl0loverlap_MM = pre_mu->d0Sig(true);
+	    z0SinThetal0loverlap_MM = pre_mu->z0SinTheta(true);	
+	    DeltaMZ_l0loverlap = fabs(MZ - Mll(mu0, pre_mu));
+	  }
 	}
-	if(fabs(MZ - Mll(mu1, pre_mu)) < DeltaMZ_l1loverlap){
-	  ml1loverlap_MM = (mu1_TLV + overlapMuon_TLV).M();      
-	  mTl1loverlap_MM = calcMt(mu1_TLV, overlapMuon_TLV);  
-	  pTl1loverlap_MM = pre_mu->pt;
-	  etal1loverlap_MM = fabs(pre_mu->eta);
-	  ptcone30l1loverlap_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	  d0Sigl1loverlap_MM = pre_mu->d0Sig(true);
-	  z0SinThetal1loverlap_MM = pre_mu->z0SinTheta(true);
-	  DeltaMZ_l1loverlap = fabs(MZ - Mll(mu1, pre_mu));
+	else{
+	  if(fabs(MZ - Mll(mu1, pre_mu)) < DeltaMZ_l1loverlap){
+	    ml1loverlap_MM = (mu1_TLV + overlapMuon_TLV).M();      
+	    mTl1loverlap_MM = calcMt(mu1_TLV, overlapMuon_TLV);  
+	    ICl1loverlap_MM = pre_mu->isCombined;
+	    pTl1loverlap_MM = pre_mu->pt;
+	    etal1loverlap_MM = fabs(pre_mu->eta);
+	    ptcone30l1loverlap_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
+	    d0Sigl1loverlap_MM = pre_mu->d0Sig(true);
+	    z0SinThetal1loverlap_MM = pre_mu->z0SinTheta(true);	
+	    DeltaMZ_l1loverlap = fabs(MZ - Mll(mu1, pre_mu));
+	  }
 	}
       }
     }
@@ -2936,7 +2953,8 @@ bool unbiased = true;
   MuonVector Muon_lostInORWSFLepton;
   
   double DeltaMZ_l0loverlapWJet = 99999.;
-  double DeltaMZ_l1loverlapWJet = 99999.;    
+  double DeltaMZ_l1loverlapWJet = 99999.;  
+  int n_mllMuons = 0;
   for(uint im=0; im<overlapMuon_vec.size(); im++){
     Muon* mu_overlapping = overlapMuon_vec.at(im);
     mu_overlapping->setState(NtSys_NOM);
@@ -2955,25 +2973,31 @@ bool unbiased = true;
       overlapWJetMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
       
       if((mu_overlapping->q * mu0->q)<0. || (mu_overlapping->q * mu1->q)<0.){
-	if(fabs(MZ - Mll(mu0, mu_overlapping)) < DeltaMZ_l0loverlapWJet){
-	  ml0loverlapWJet_MM = Mll(mu0, mu_overlapping);      
-	  mTl0loverlapWJet_MM = calcMt(mu0_TLV, overlapWJetMuon_TLV);   
-	  pTl0loverlapWJet_MM = mu_overlapping->pt;
-	  etal0loverlapWJet_MM = fabs(mu_overlapping->eta);
-	  ptcone30l0loverlapWJet_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	  d0Sigl0loverlapWJet_MM = mu_overlapping->d0Sig(true);
-	  z0SinThetal0loverlapWJet_MM = mu_overlapping->z0SinTheta(true);
-	  DeltaMZ_l0loverlapWJet = fabs(MZ - Mll(mu0, mu_overlapping));
+	if(fabs(MZ - Mll(mu0, mu_overlapping)) < fabs(MZ - Mll(mu1, mu_overlapping))){
+	  if(fabs(MZ - Mll(mu0, mu_overlapping)) < DeltaMZ_l0loverlapWJet){
+	    ml0loverlapWJet_MM = Mll(mu0, mu_overlapping);      
+	    mTl0loverlapWJet_MM = calcMt(mu0_TLV, overlapWJetMuon_TLV);  
+	    ICl0loverlapWJet_MM = mu_overlapping->isCombined;
+	    pTl0loverlapWJet_MM = mu_overlapping->pt;
+	    etal0loverlapWJet_MM = fabs(mu_overlapping->eta);
+	    ptcone30l0loverlapWJet_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
+	    d0Sigl0loverlapWJet_MM = mu_overlapping->d0Sig(true);
+	    z0SinThetal0loverlapWJet_MM = mu_overlapping->z0SinTheta(true);	
+	    DeltaMZ_l0loverlapWJet = fabs(MZ - Mll(mu0, mu_overlapping));
+	  }
 	}
-	if(fabs(MZ - Mll(mu1, mu_overlapping)) < DeltaMZ_l1loverlapWJet){
-	  ml1loverlapWJet_MM = (mu1_TLV + overlapWJetMuon_TLV).M();      
-	  mTl1loverlapWJet_MM = calcMt(mu1_TLV, overlapWJetMuon_TLV);  
-	  pTl1loverlapWJet_MM = mu_overlapping->pt;
-	  etal1loverlapWJet_MM = fabs(mu_overlapping->eta);
-	  ptcone30l1loverlapWJet_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	  d0Sigl1loverlapWJet_MM = mu_overlapping->d0Sig(true);
-	  z0SinThetal1loverlapWJet_MM = mu_overlapping->z0SinTheta(true);
-	  DeltaMZ_l1loverlapWJet = fabs(MZ - Mll(mu1, mu_overlapping));
+	else{
+	  if(fabs(MZ - Mll(mu1, mu_overlapping)) < DeltaMZ_l1loverlapWJet){
+	    ml1loverlapWJet_MM = (mu1_TLV + overlapWJetMuon_TLV).M();      
+	    mTl1loverlapWJet_MM = calcMt(mu1_TLV, overlapWJetMuon_TLV);  
+	    ICl1loverlapWJet_MM = mu_overlapping->isCombined;
+	    pTl1loverlapWJet_MM = mu_overlapping->pt;
+	    etal1loverlapWJet_MM = fabs(mu_overlapping->eta);
+	    ptcone30l1loverlapWJet_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
+	    d0Sigl1loverlapWJet_MM = mu_overlapping->d0Sig(true);
+	    z0SinThetal1loverlapWJet_MM = mu_overlapping->z0SinTheta(true);	
+	    DeltaMZ_l1loverlapWJet = fabs(MZ - Mll(mu1, mu_overlapping));
+	  }
 	}
       }
     }
@@ -2994,25 +3018,31 @@ bool unbiased = true;
 	overlapWOFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
 	
 	if((mu_overlapping->q * mu0->q)<0. || (mu_overlapping->q * mu1->q)<0.){
-	  if(fabs(MZ - Mll(mu0, mu_overlapping)) < DeltaMZ_l0loverlapWOFLepton){
-	    ml0loverlapWOFLepton_MM = Mll(mu0, mu_overlapping);      
-	    mTl0loverlapWOFLepton_MM = calcMt(mu0_TLV, overlapWOFLeptonMuon_TLV);      
-	    pTl0loverlapWOFLepton_MM = mu_overlapping->pt;
-	    etal0loverlapWOFLepton_MM = fabs(mu_overlapping->eta);
-	    ptcone30l0loverlapWOFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	    d0Sigl0loverlapWOFLepton_MM = mu_overlapping->d0Sig(true);
-	    z0SinThetal0loverlapWOFLepton_MM = mu_overlapping->z0SinTheta(true);
-	    DeltaMZ_l0loverlapWOFLepton = fabs(MZ - Mll(mu0, mu_overlapping));
+	  if(fabs(MZ - Mll(mu0, mu_overlapping)) < fabs(MZ - Mll(mu1, mu_overlapping))){
+	    if(fabs(MZ - Mll(mu0, mu_overlapping)) < DeltaMZ_l0loverlapWOFLepton){
+	      ml0loverlapWOFLepton_MM = Mll(mu0, mu_overlapping);      
+	      mTl0loverlapWOFLepton_MM = calcMt(mu0_TLV, overlapWOFLeptonMuon_TLV);  
+	      ICl0loverlapWOFLepton_MM = mu_overlapping->isCombined;
+	      pTl0loverlapWOFLepton_MM = mu_overlapping->pt;
+	      etal0loverlapWOFLepton_MM = fabs(mu_overlapping->eta);
+	      ptcone30l0loverlapWOFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
+	      d0Sigl0loverlapWOFLepton_MM = mu_overlapping->d0Sig(true);
+	      z0SinThetal0loverlapWOFLepton_MM = mu_overlapping->z0SinTheta(true);	
+	      DeltaMZ_l0loverlapWOFLepton = fabs(MZ - Mll(mu0, mu_overlapping));
+	    }
 	  }
-	  if(fabs(MZ - Mll(mu1, mu_overlapping)) < DeltaMZ_l1loverlapWOFLepton){
-	    ml1loverlapWOFLepton_MM = (mu1_TLV + overlapWOFLeptonMuon_TLV).M();      
-	    mTl1loverlapWOFLepton_MM = calcMt(mu1_TLV, overlapWOFLeptonMuon_TLV);  
-	    pTl1loverlapWOFLepton_MM = mu_overlapping->pt;
-	    etal1loverlapWOFLepton_MM = fabs(mu_overlapping->eta);
-	    ptcone30l1loverlapWOFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	    d0Sigl1loverlapWOFLepton_MM = mu_overlapping->d0Sig(true);
-	    z0SinThetal1loverlapWOFLepton_MM = mu_overlapping->z0SinTheta(true);
-	    DeltaMZ_l1loverlapWOFLepton = fabs(MZ - Mll(mu1, mu_overlapping));
+	  else{
+	    if(fabs(MZ - Mll(mu1, mu_overlapping)) < DeltaMZ_l1loverlapWOFLepton){
+	      ml1loverlapWOFLepton_MM = (mu1_TLV + overlapWOFLeptonMuon_TLV).M();      
+	      mTl1loverlapWOFLepton_MM = calcMt(mu1_TLV, overlapWOFLeptonMuon_TLV);  
+	      ICl1loverlapWOFLepton_MM = mu_overlapping->isCombined;
+	      pTl1loverlapWOFLepton_MM = mu_overlapping->pt;
+	      etal1loverlapWOFLepton_MM = fabs(mu_overlapping->eta);
+	      ptcone30l1loverlapWOFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
+	      d0Sigl1loverlapWOFLepton_MM = mu_overlapping->d0Sig(true);
+	      z0SinThetal1loverlapWOFLepton_MM = mu_overlapping->z0SinTheta(true);	
+	      DeltaMZ_l1loverlapWOFLepton = fabs(MZ - Mll(mu1, mu_overlapping));
+	    }
 	  }
 	}
       }
@@ -3035,33 +3065,40 @@ bool unbiased = true;
 	  overlapWSFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
 	  
 	  if((mu_overlapping->q * mu0->q)<0. || (mu_overlapping->q * mu1->q)<0.){
-	    if(fabs(MZ - Mll(mu0, mu_overlapping)) < DeltaMZ_l0loverlapWSFLepton){
-	      ml0loverlapWSFLepton_MM = Mll(mu0, mu_overlapping);      
-	      mTl0loverlapWSFLepton_MM = calcMt(mu0_TLV, overlapWSFLeptonMuon_TLV);     
-	      pTl0loverlapWSFLepton_MM = mu_overlapping->pt;
-	      etal0loverlapWSFLepton_MM = fabs(mu_overlapping->eta);
-	      ptcone30l0loverlapWSFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	      d0Sigl0loverlapWSFLepton_MM = mu_overlapping->d0Sig(true);
-	      z0SinThetal0loverlapWSFLepton_MM = mu_overlapping->z0SinTheta(true);	      
-	      DeltaMZ_l0loverlapWSFLepton = fabs(MZ - Mll(mu0, mu_overlapping));
+	    if(fabs(MZ - Mll(mu0, mu_overlapping)) < fabs(MZ - Mll(mu1, mu_overlapping))){
+	      if(fabs(MZ - Mll(mu0, mu_overlapping)) < DeltaMZ_l0loverlapWSFLepton){
+		ml0loverlapWSFLepton_MM = Mll(mu0, mu_overlapping);      
+		mTl0loverlapWSFLepton_MM = calcMt(mu0_TLV, overlapWSFLeptonMuon_TLV);  
+		ICl0loverlapWSFLepton_MM = mu_overlapping->isCombined;
+		pTl0loverlapWSFLepton_MM = mu_overlapping->pt;
+		etal0loverlapWSFLepton_MM = fabs(mu_overlapping->eta);
+		ptcone30l0loverlapWSFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
+		d0Sigl0loverlapWSFLepton_MM = mu_overlapping->d0Sig(true);
+		z0SinThetal0loverlapWSFLepton_MM = mu_overlapping->z0SinTheta(true);	
+		DeltaMZ_l0loverlapWSFLepton = fabs(MZ - Mll(mu0, mu_overlapping));
+	      }
 	    }
+	  else{
 	    if(fabs(MZ - Mll(mu1, mu_overlapping)) < DeltaMZ_l1loverlapWSFLepton){
 	      ml1loverlapWSFLepton_MM = (mu1_TLV + overlapWSFLeptonMuon_TLV).M();      
 	      mTl1loverlapWSFLepton_MM = calcMt(mu1_TLV, overlapWSFLeptonMuon_TLV);  
+	      ICl1loverlapWSFLepton_MM = mu_overlapping->isCombined;
 	      pTl1loverlapWSFLepton_MM = mu_overlapping->pt;
 	      etal1loverlapWSFLepton_MM = fabs(mu_overlapping->eta);
 	      ptcone30l1loverlapWSFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
 	      d0Sigl1loverlapWSFLepton_MM = mu_overlapping->d0Sig(true);
-	      z0SinThetal1loverlapWSFLepton_MM = mu_overlapping->z0SinTheta(true);		      
+	      z0SinThetal1loverlapWSFLepton_MM = mu_overlapping->z0SinTheta(true);	
 	      DeltaMZ_l1loverlapWSFLepton = fabs(MZ - Mll(mu1, mu_overlapping));
 	    }
 	  }
 	}
-	else{
-	  MuonVector MuonOverlappingWSFLepton_Mll_vec = overlapMuon_vec;
-	  removeSFOSPair(MuonOverlappingWSFLepton_Mll_vec, MLL_MIN);
-	}
       }
+      else{
+	MuonVector MuonOverlappingWSFLepton_Mll_vec = overlapMuon_vec;
+	removeSFOSPair(MuonOverlappingWSFLepton_Mll_vec, MLL_MIN);
+	if(overlapMuon_vec.size() != MuonOverlappingWSFLepton_Mll_vec.size()) n_mllMuons += 1;
+      }
+    }
       
       
     }
@@ -3115,30 +3152,39 @@ bool unbiased = true;
       ZcandMuon_TLV.SetPtEtaPhiE(pre_mu->pt, pre_mu->eta ,pre_mu->phi, pre_mu->pt*cosh(pre_mu->eta));
       Muon_Zcand_vec.push_back(pre_mu);
       if((pre_mu->q * mu0->q)<0. || (pre_mu->q * mu1->q)<0.){
-	if(fabs(MZ - Mll(mu0, pre_mu)) < DeltaMZ_l0lZcand){
-	  ml0lZcand_MM = Mll(mu0, pre_mu);      
-	  mTl0lZcand_MM = calcMt(mu0_TLV, ZcandMuon_TLV);   
-	  pTl0lZcand_MM = pre_mu->pt;
-	  etal0lZcand_MM = fabs(pre_mu->eta);
-	  ptcone30l0lZcand_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	  d0Sigl0lZcand_MM = pre_mu->d0Sig(true);
-	  z0SinThetal0lZcand_MM = pre_mu->z0SinTheta(true);
-	  DeltaMZ_l0lZcand = fabs(MZ - Mll(mu0, pre_mu));
+	if(fabs(MZ - Mll(mu0, pre_mu)) < fabs(MZ - Mll(mu1, pre_mu))){
+	  if(fabs(MZ - Mll(mu0, pre_mu)) < DeltaMZ_l0lZcand){
+	    ml0lZcand_MM = Mll(mu0, pre_mu);      
+	    mTl0lZcand_MM = calcMt(mu0_TLV, ZcandMuon_TLV);  
+	    ICl0lZcand_MM = pre_mu->isCombined;
+	    pTl0lZcand_MM = pre_mu->pt;
+	    etal0lZcand_MM = fabs(pre_mu->eta);
+	    ptcone30l0lZcand_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
+	    d0Sigl0lZcand_MM = pre_mu->d0Sig(true);
+	    z0SinThetal0lZcand_MM = pre_mu->z0SinTheta(true);	
+	    DeltaMZ_l0lZcand = fabs(MZ - Mll(mu0, pre_mu));
+	  }
 	}
-	if(fabs(MZ - Mll(mu1, pre_mu)) < DeltaMZ_l1lZcand){
-	  ml1lZcand_MM = (mu1_TLV + ZcandMuon_TLV).M();      
-	  mTl1lZcand_MM = calcMt(mu1_TLV, ZcandMuon_TLV);  
-	  pTl1lZcand_MM = pre_mu->pt;
-	  etal1lZcand_MM = fabs(pre_mu->eta);
-	  ptcone30l1lZcand_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	  d0Sigl1lZcand_MM = pre_mu->d0Sig(true);
-	  z0SinThetal1lZcand_MM = pre_mu->z0SinTheta(true);
-	  DeltaMZ_l1lZcand = fabs(MZ - Mll(mu1, pre_mu));
+	else{
+	  if(fabs(MZ - Mll(mu1, pre_mu)) < DeltaMZ_l1lZcand){
+	    ml1lZcand_MM = (mu1_TLV + ZcandMuon_TLV).M();      
+	    mTl1lZcand_MM = calcMt(mu1_TLV, ZcandMuon_TLV);  
+	    ICl1lZcand_MM = pre_mu->isCombined;
+	    pTl1lZcand_MM = pre_mu->pt;
+	    etal1lZcand_MM = fabs(pre_mu->eta);
+	    ptcone30l1lZcand_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
+	    d0Sigl1lZcand_MM = pre_mu->d0Sig(true);
+	    z0SinThetal1lZcand_MM = pre_mu->z0SinTheta(true);	
+	    DeltaMZ_l1lZcand = fabs(MZ - Mll(mu1, pre_mu));
+	  }
 	}
       }
     }
   }
   Nleptons_Zcand_MM = Muon_Zcand_vec.size();
+  
+  cout << "mu_lost_vec.size()= " << mu_lost_vec.size() << " overlapMuon_vec.size()= " << overlapMuon_vec.size() << " Muon_lostInORWOFLepton.size()= " << Muon_lostInORWOFLepton.size() <<  " Muon_lostInORWSFLepton.size()= " << Muon_lostInORWSFLepton.size() << " Muon_lostInORWJet.size()= " << Muon_lostInORWJet.size() << " softMuons_vec.size()= " << softMuons_vec.size() << " n_mllMuons= " << n_mllMuons << endl;
+  if(mu_lost_vec.size() != (Muon_lostInORWOFLepton.size() + Muon_lostInORWSFLepton.size() + Muon_lostInORWJet.size() + softMuons_vec.size()) + n_mllMuons) cout << "problem!" << endl;
   
     
   mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, met_TLV); 
@@ -3176,7 +3222,7 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   }
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
-  Mljj_EM = 0.;
+  Mljj_EM = -1.;
   if(nSignalJets>1){
     //find dijet axis:
     double DeltaRDijetMu = mu_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu_TLV.Phi()),2));
@@ -3216,9 +3262,9 @@ bool unbiased = true;
   //Needed for WZ bg suppression:  
 //   l0 <-> mu
 //   l1 <-> el
-  
   ml0llost_EM = -1.;      
   mTl0llost_EM = -1.;
+  ICl0llost_EM = -2.;
   pTl0llost_EM = -1.;
   etal0llost_EM = -1.;
   ptcone30l0llost_EM = -1.;
@@ -3230,6 +3276,7 @@ bool unbiased = true;
   pTl1llost_EM = -1.;
   etal1llost_EM = -1.;
   ptcone30l1llost_EM = -1.;
+  etcone30l1llost_EM = -1.;
   d0Sigl1llost_EM = -1.;
   z0SinThetal1llost_EM = -1.;
   
@@ -3245,7 +3292,8 @@ bool unbiased = true;
     if((mu_lost->q * mu->q)<0.){
       if(fabs(MZ - Mll(mu, mu_lost)) < DeltaMZ_l0llost){
 	ml0llost_EM = Mll(mu, mu_lost);      
-	mTl0llost_EM = calcMt(mu_TLV, mu_lost_TLV);    
+	mTl0llost_EM = calcMt(mu_TLV, mu_lost_TLV);   
+	ICl0llost_EM = mu_lost->isCombined;
 	pTl0llost_EM = mu_lost->pt;
 	etal0llost_EM = fabs(mu_lost->eta);
 	ptcone30l0llost_EM = mu_lost->ptcone30ElStyle/mu_lost->pt;
@@ -3281,11 +3329,34 @@ bool unbiased = true;
       }   
     }
   }
+  //only use the lost lepton with mass of combination closest to Zmass
+  if(DeltaMZ_l0llost < DeltaMZ_l1llost){
+    ml1llost_EM = -1.;
+    mTl1llost_EM = -1.;
+    pTl1llost_EM = -1.;
+    etal1llost_EM = -1.;
+    ptcone30l1llost_EM = -1.;
+    etcone30l1llost_EM = -1.;
+    d0Sigl1llost_EM = -1.;
+    z0SinThetal1llost_EM = -1.;
+  }
+  else{
+    ml0llost_EM = -1.;      
+    mTl0llost_EM = -1.;
+    ICl0llost_EM = -2.;
+    pTl0llost_EM = -1.;
+    etal0llost_EM = -1.;
+    ptcone30l0llost_EM = -1.;
+    d0Sigl0llost_EM = -1.;
+    z0SinThetal0llost_EM = -1.;
+  }
+  
   Nleptons_lost_EM = mu_lost_vec.size() + el_lost_vec.size();
   
   
   ml0lsoft_EM = -1.;      
   mTl0lsoft_EM = -1.;
+  ICl0lsoft_EM = -2;
   pTl0lsoft_EM = -1.;
   etal0lsoft_EM = -1.;
   ptcone30l0lsoft_EM = -1.;
@@ -3297,6 +3368,7 @@ bool unbiased = true;
   pTl1lsoft_EM = -1.;
   etal1lsoft_EM = -1.;
   ptcone30l1lsoft_EM = -1.;
+  etcone30l1lsoft_EM = -1.;
   d0Sigl1lsoft_EM = -1.;
   z0SinThetal1lsoft_EM = -1.;
   
@@ -3315,6 +3387,7 @@ bool unbiased = true;
 	if(fabs(MZ - Mll(mu, soft_mu)) < DeltaMZ_l0lsoft){
 	  ml0lsoft_EM = Mll(mu, soft_mu);      
 	  mTl0lsoft_EM = calcMt(mu_TLV, softMuon_TLV);   
+	  ICl0lsoft_EM = soft_mu->isCombined;
 	  pTl0lsoft_EM = soft_mu->pt;
 	  etal0lsoft_EM = fabs(soft_mu->eta);
 	  ptcone30l0lsoft_EM = soft_mu->ptcone30ElStyle/soft_mu->pt;
@@ -3354,11 +3427,34 @@ bool unbiased = true;
       }
     }      
   }
+  
+  //only use the lost lepton with mass of combination closest to Zmass
+  if(DeltaMZ_l0lsoft < DeltaMZ_l1lsoft){
+  ml1lsoft_EM = -1.;
+  mTl1lsoft_EM = -1.;
+  pTl1lsoft_EM = -1.;
+  etal1lsoft_EM = -1.;
+  ptcone30l1lsoft_EM = -1.;
+  etcone30l1lsoft_EM = -1.;
+  d0Sigl1lsoft_EM = -1.;
+  z0SinThetal1lsoft_EM = -1.;
+  }
+  else{
+    ml0lsoft_EM = -1.;      
+    mTl0lsoft_EM = -1.;
+    ICl0lsoft_EM = -2;
+    pTl0lsoft_EM = -1.;
+    etal0lsoft_EM = -1.;
+    ptcone30l0lsoft_EM = -1.;
+    d0Sigl0lsoft_EM = -1.;
+    z0SinThetal0lsoft_EM = -1.;
+  }
     
   Nleptons_soft_EM = softMuons_vec.size() + softElectrons_vec.size();
   
   ml0loverlap_EM = -1.;      
   mTl0loverlap_EM = -1.;
+  ICl0loverlap_EM = -2;
   pTl0loverlap_EM = -1.;
   etal0loverlap_EM = -1.;
   ptcone30l0loverlap_EM = -1.;
@@ -3370,6 +3466,7 @@ bool unbiased = true;
   pTl1loverlap_EM = -1.;
   etal1loverlap_EM = -1.;
   ptcone30l1loverlap_EM = -1.;
+  etcone30l1loverlap_EM = -1.;
   d0Sigl1loverlap_EM = -1.;
   z0SinThetal1loverlap_EM = -1.;
   
@@ -3402,7 +3499,8 @@ bool unbiased = true;
       if((pre_mu->q * mu->q)<0.){
 	if(fabs(MZ - Mll(mu, pre_mu)) < DeltaMZ_l0loverlap){
 	  ml0loverlap_EM = Mll(mu, pre_mu);      
-	  mTl0loverlap_EM = calcMt(mu_TLV, overlapMuon_TLV);      
+	  mTl0loverlap_EM = calcMt(mu_TLV, overlapMuon_TLV);  
+	  ICl0loverlap_EM = pre_mu->isCombined;
 	  pTl0loverlap_EM = pre_mu->pt;
 	  etal0loverlap_EM = fabs(pre_mu->eta);
 	  ptcone30l0loverlap_EM = pre_mu->ptcone30ElStyle/pre_mu->pt;
@@ -3447,12 +3545,35 @@ bool unbiased = true;
       }
     }
   }
+  
+  if(DeltaMZ_l0loverlap < DeltaMZ_l1loverlap){
+    ml1loverlap_EM = -1.;
+    mTl1loverlap_EM = -1.;
+    pTl1loverlap_EM = -1.;
+    etal1loverlap_EM = -1.;
+    ptcone30l1loverlap_EM = -1.;
+    etcone30l1loverlap_EM = -1.;
+    d0Sigl1loverlap_EM = -1.;
+    z0SinThetal1loverlap_EM = -1.;
+  }
+  else{
+    ml0loverlap_EM = -1.;      
+    mTl0loverlap_EM = -1.;
+    ICl0loverlap_EM = -2;
+    pTl0loverlap_EM = -1.;
+    etal0loverlap_EM = -1.;
+    ptcone30l0loverlap_EM = -1.;
+    d0Sigl0loverlap_EM = -1.;
+    z0SinThetal0loverlap_EM = -1.;
+  }
+  
   Nleptons_overlap_EM = overlapMuon_vec.size() + overlapElectron_vec.size();
   
   //check why muon was removed in OR:
   
   ml0loverlapWJet_EM = -1.;      
   mTl0loverlapWJet_EM = -1.;
+  ICl0loverlapWJet_EM = -2;
   pTl0loverlapWJet_EM = -1.;
   etal0loverlapWJet_EM = -1.;
   ptcone30l0loverlapWJet_EM = -1.;
@@ -3464,11 +3585,13 @@ bool unbiased = true;
   pTl1loverlapWJet_EM = -1.;
   etal1loverlapWJet_EM = -1.;
   ptcone30l1loverlapWJet_EM = -1.;
+  etcone30l1loverlapWJet_EM = -1.;
   d0Sigl1loverlapWJet_EM = -1.;
   z0SinThetal1loverlapWJet_EM = -1.;
   
   ml0loverlapWOFLepton_EM = -1.;      
   mTl0loverlapWOFLepton_EM = -1.;
+  ICl0loverlapWOFLepton_EM = -2;
   pTl0loverlapWOFLepton_EM = -1.;
   etal0loverlapWOFLepton_EM = -1.;
   ptcone30l0loverlapWOFLepton_EM = -1.;
@@ -3480,11 +3603,13 @@ bool unbiased = true;
   pTl1loverlapWOFLepton_EM = -1.;
   etal1loverlapWOFLepton_EM = -1.;
   ptcone30l1loverlapWOFLepton_EM = -1.;
+  etcone30l1loverlapWOFLepton_EM = -1.;
   d0Sigl1loverlapWOFLepton_EM = -1.;
   z0SinThetal1loverlapWOFLepton_EM = -1.;
   
   ml0loverlapWSFLepton_EM = -1.;      
   mTl0loverlapWSFLepton_EM = -1.;
+  ICl0loverlapWSFLepton_EM = -2;
   pTl0loverlapWSFLepton_EM = -1.;
   etal0loverlapWSFLepton_EM = -1.;
   ptcone30l0loverlapWSFLepton_EM = -1.;
@@ -3554,6 +3679,7 @@ bool unbiased = true;
   MuonVector Muon_lostInORWSFLepton;
   
   double DeltaMZ_l0loverlapWJet = 99999.;
+  double DeltaMZ_l0loverlapWOFLepton = 99999.;
   int n_mllMuons = 0;
   for(uint im=0; im<overlapMuon_vec.size(); im++){
     Muon* mu_overlapping = overlapMuon_vec.at(im);
@@ -3587,7 +3713,6 @@ bool unbiased = true;
     }
     else{
       //can a muon which was lost in OR be matched to a muon lost in OR with Electrons?
-      double DeltaMZ_l0loverlapWOFLepton = 99999.;
       bool notOverlappingWOFLepton = false;
       for(uint im2=0; im2<MuonOverlappingWOFLepton_vec.size(); im2++){
 	Muon* overlapWOFLepton_mu = MuonOverlappingWOFLepton_vec.at(im2);
@@ -3654,14 +3779,15 @@ bool unbiased = true;
     }
     
   }
-  
+    
 //   cout << "mu_lost_vec.size()= " << mu_lost_vec.size() << " overlapMuon_vec.size()= " << overlapMuon_vec.size() << " Muon_lostInORWOFLepton.size()= " << Muon_lostInORWOFLepton.size() <<  " Muon_lostInORWSFLepton.size()= " << Muon_lostInORWSFLepton.size() << " Muon_lostInORWJet.size()= " << Muon_lostInORWJet.size() << " softMuons_vec.size()= " << softMuons_vec.size() << " n_mllMuons= " << n_mllMuons << endl;
 //   if(mu_lost_vec.size() != (Muon_lostInORWOFLepton.size() + Muon_lostInORWSFLepton.size() + Muon_lostInORWJet.size() + softMuons_vec.size()) + n_mllMuons) cout << "problem!" << endl;
-  
+//   
   ElectronVector Electron_lostInORWJet;
   ElectronVector Electron_lostInORWOFLepton;
   
   double DeltaMZ_l1loverlapWJet = 99999.;
+  double DeltaMZ_l1loverlapWOFLepton = 99999.;
   int n_mllElectrons = 0;
   for(uint ie=0; ie<overlapElectron_vec.size(); ie++){
     Electron* el_overlapping = overlapElectron_vec.at(ie);
@@ -3698,7 +3824,6 @@ bool unbiased = true;
     }
     else{
       //can an electron which was lost in OR be matched to a electron lost in OR with muons?
-      double DeltaMZ_l1loverlapWOFLepton = 99999.;
       bool notOverlappingWOFLepton = false;
       for(uint ie2=0; ie2<ElectronOverlappingWOFLepton_vec.size(); ie2++){
 	Electron* overlapWOFLepton_el = ElectronOverlappingWOFLepton_vec.at(ie2);
@@ -3744,11 +3869,51 @@ bool unbiased = true;
   
 //   cout << "el_lost_vec.size()= " << el_lost_vec.size() << " overlapElectron_vec.size()= " << overlapElectron_vec.size() << " Electron_lostInORWOFLepton.size()= " << Electron_lostInORWOFLepton.size() <<  " Electron_lostInORWJet.size()= " << Electron_lostInORWJet.size() << " softElectrons_vec.size()= " << softElectrons_vec.size() << " n_mllElectrons= " << n_mllElectrons << endl;
 //   if(el_lost_vec.size() != (Muon_lostInORWOFLepton.size() + Electron_lostInORWJet.size() + softElectrons_vec.size()) + n_mllElectrons) cout << "problem!" << endl;
-  
+  if(DeltaMZ_l0loverlapWJet < DeltaMZ_l1loverlapWJet){
+    ml1loverlapWJet_EM = -1.;
+    mTl1loverlapWJet_EM = -1.;
+    pTl1loverlapWJet_EM = -1.;
+    etal1loverlapWJet_EM = -1.;
+    ptcone30l1loverlapWJet_EM = -1.;
+    etcone30l1loverlapWJet_EM = -1.;
+    d0Sigl1loverlapWJet_EM = -1.;
+    z0SinThetal1loverlapWJet_EM = -1.;
+  }
+  else{
+    ml0loverlapWJet_EM = -1.;      
+    mTl0loverlapWJet_EM = -1.;
+    ICl0loverlapWJet_EM = -2;
+    pTl0loverlapWJet_EM = -1.;
+    etal0loverlapWJet_EM = -1.;
+    ptcone30l0loverlapWJet_EM = -1.;
+    d0Sigl0loverlapWJet_EM = -1.;
+    z0SinThetal0loverlapWJet_EM = -1.;
+  }
+  if(DeltaMZ_l0loverlapWOFLepton < DeltaMZ_l1loverlapWOFLepton){
+    ml1loverlapWOFLepton_EM = -1.;
+    mTl1loverlapWOFLepton_EM = -1.;
+    pTl1loverlapWOFLepton_EM = -1.;
+    etal1loverlapWOFLepton_EM = -1.;
+    ptcone30l1loverlapWOFLepton_EM = -1.;
+    etcone30l1loverlapWOFLepton_EM = -1.;
+    d0Sigl1loverlapWOFLepton_EM = -1.;
+    z0SinThetal1loverlapWOFLepton_EM = -1.;
+  }
+  else{
+    ml0loverlapWOFLepton_EM = -1.;      
+    mTl0loverlapWOFLepton_EM = -1.;
+    ICl0loverlapWOFLepton_EM = -2;
+    pTl0loverlapWOFLepton_EM = -1.;
+    etal0loverlapWOFLepton_EM = -1.;
+    ptcone30l0loverlapWOFLepton_EM = -1.;
+    d0Sigl0loverlapWOFLepton_EM = -1.;
+    z0SinThetal0loverlapWOFLepton_EM = -1.;
+  }
   
   //find muons that were lost in e-m or m-m OR or due to mll cut:
   ml0lZcand_EM = -1.;      
   mTl0lZcand_EM = -1.;
+  ICl0lZcand_EM = -2;
   pTl0lZcand_EM = -1.;
   etal0lZcand_EM = -1.;
   ptcone30l0lZcand_EM = -1.;
@@ -3760,6 +3925,7 @@ bool unbiased = true;
   pTl1lZcand_EM = -1.;
   etal1lZcand_EM = -1.;
   ptcone30l1lZcand_EM = -1.;
+  etcone30l1lZcand_EM = -1.;
   d0Sigl1lZcand_EM = -1.;
   z0SinThetal1lZcand_EM = -1.;
   
@@ -3792,6 +3958,7 @@ bool unbiased = true;
 	if(fabs(MZ - Mll(mu, pre_mu)) < DeltaMZ_l0lZcand){
 	  ml0lZcand_EM = Mll(mu, pre_mu);      
 	  mTl0lZcand_EM = calcMt(mu_TLV, ZcandMuon_TLV);  
+	  ICl0lZcand_EM = pre_mu->isCombined;
 	  pTl0lZcand_EM = pre_mu->pt;
 	  etal0lZcand_EM = fabs(pre_mu->eta);
 	  ptcone30l0lZcand_EM = pre_mu->ptcone30ElStyle/pre_mu->pt;
@@ -3845,6 +4012,28 @@ bool unbiased = true;
       }
     }
   }
+  
+  if(DeltaMZ_l0lZcand < DeltaMZ_l1lZcand){
+    ml1lZcand_EM = -1.;
+    mTl1lZcand_EM = -1.;
+    pTl1lZcand_EM = -1.;
+    etal1lZcand_EM = -1.;
+    ptcone30l1lZcand_EM = -1.;
+    etcone30l1lZcand_EM = -1.;
+    d0Sigl1lZcand_EM = -1.;
+    z0SinThetal1lZcand_EM = -1.;
+  }
+  else{
+    ml0lZcand_EM = -1.;      
+    mTl0lZcand_EM = -1.;
+    ICl0lZcand_EM = -2;
+    pTl0lZcand_EM = -1.;
+    etal0lZcand_EM = -1.;
+    ptcone30l0lZcand_EM = -1.;
+    d0Sigl0lZcand_EM = -1.;
+    z0SinThetal0lZcand_EM = -1.;
+  }
+  
   Nleptons_Zcand_EM = Muon_Zcand_vec.size() + Electron_Zcand_vec.size();
 //   cout << "Electron_Zcand_vec.size()= " << Electron_Zcand_vec.size() << endl;
 //   if(Electron_Zcand_vec.size() > Electron_lostInORWJet.size()) cout << "problem!!" << endl;
