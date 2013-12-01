@@ -66,6 +66,19 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* h_DeltaR_ljOR_MM;
     TH1F* h_DeltaR_ljOR_EM;
     
+    TH2F* h_N_MuonToBeChecked_afterORWJet_MM;
+    TH2F* h_N_MuonToBeChecked_afterORWOFLepton_MM;
+    TH2F* h_N_MuonToBeChecked_afterORWSFLepton_MM;
+    TH2F* h_N_MuonToBeChecked_afterMllCut_MM;
+    
+    TH2F* h_N_MuonToBeChecked_afterORWJet_EM;
+    TH2F* h_N_MuonToBeChecked_afterORWOFLepton_EM;
+    TH2F* h_N_MuonToBeChecked_afterORWSFLepton_EM; 
+    TH2F* h_N_MuonToBeChecked_afterMllCut_EM;
+    TH2F* h_N_ElectronToBeChecked_afterORWJet_EM;
+    TH2F* h_N_ElectronToBeChecked_afterORWOFLepton_EM;
+    TH2F* h_N_ElectronToBeChecked_afterMllCut_EM;
+    
     TH2F* h_etcone30l1llost_EM_SRSS1;
     TH2F* h_etcone30l1lsoft_EM_SRSS1;
     TH2F* h_etcone30l1loverlap_EM_SRSS1;
@@ -1511,7 +1524,11 @@ class TSelector_SusyNtuple : public SusyNtAna
     float sD0Signif_branch_mu0;
     float sD0Signif_branch_mu1;
 
-     int Nleptons_lost_MM;
+    int N_MuonToBeChecked_afterORWJet_MM;
+    int N_MuonToBeChecked_afterORWOFLepton_MM;
+    int N_MuonToBeChecked_afterORWSFLepton_MM;
+    int N_MuonToBeChecked_afterMllCut_MM;
+    int Nleptons_lost_MM;
     float ml0llost_MM;      
     float mTl0llost_MM;
     int ICl0llost_MM;
@@ -1678,6 +1695,14 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     float sD0Signif_branch_l0;
     float sD0Signif_branch_l1;
+    
+    int N_MuonToBeChecked_afterORWJet_EM;
+    int N_MuonToBeChecked_afterORWOFLepton_EM;
+    int N_MuonToBeChecked_afterORWSFLepton_EM;    
+    int N_MuonToBeChecked_afterMllCut_EM; 
+    int N_ElecronToBeChecked_afterORWJet_EM;
+    int N_ElectronToBeChecked_afterORWOFLepton_EM;
+    int N_ElectronToBeChecked_afterMllCut_EM;
 
     int Nleptons_lost_EM;
     float ml0llost_EM;      

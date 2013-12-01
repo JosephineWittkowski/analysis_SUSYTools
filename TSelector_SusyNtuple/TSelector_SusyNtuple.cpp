@@ -453,6 +453,17 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			if(numberOfCLJets(m_signalJets2Lep) >=1){
 			  cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);	
+			  if((ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.) && (ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.)){
+			    cutnumber = 50.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			  }
+			  
+			  if((ml0loverlapWJet_MM > MZ+10. || ml0loverlapWJet_MM < MZ-10.) && (ml1loverlapWJet_MM > MZ+10. || ml1loverlapWJet_MM < MZ-10.)){
+			    cutnumber = 51.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			  }				
+			  
+			  if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
+			    cutnumber = 52.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			  }
 			  float mtWW_MM = calcMt((mu0_TLV + mu1_TLV), m_met->lv());
 			  if(mu0->pt >= 30.){
 			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
@@ -464,6 +475,17 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      float HT_MM = calcHT(mu0_TLV, mu1_TLV, m_met->lv(), m_signalJets2Lep);
 			      if(HT_MM >= 200.){
 				cutnumber = 30.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				if((ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.) && (ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.)){
+				  cutnumber = 53.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				}
+				
+				if((ml0loverlapWJet_MM > MZ+10. || ml0loverlapWJet_MM < MZ-10.) && (ml1loverlapWJet_MM > MZ+10. || ml1loverlapWJet_MM < MZ-10.)){
+				  cutnumber = 54.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				}				
+				
+				if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
+				  cutnumber = 55.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				}
 
 			      }
 			    }
@@ -490,36 +512,34 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			  }
 //===============================================================================================================================		  
 			  if(mtWW_MM >= 140.){
-			    cutnumber = 50.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    cutnumber = 56.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    if((ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.) && (ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.)){
+			      cutnumber = 57.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    }
+			    
+			    if((ml0loverlapWJet_MM > MZ+10. || ml0loverlapWJet_MM < MZ-10.) && (ml1loverlapWJet_MM > MZ+10. || ml1loverlapWJet_MM < MZ-10.)){
+			      cutnumber = 58.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    }				
+			    
+			    if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
+			      cutnumber = 59.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+			    }
+			    
 			      if(METrelmm >= 100.){
-				cutnumber = 51.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				if(ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.){
-				  cutnumber = 52.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				}
-				if(ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.){
-				  cutnumber = 53.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				}
+				cutnumber = 60.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				
 				if((ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.) && (ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.)){
-				  cutnumber = 54.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				  cutnumber = 61.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				}
-				if(ml0loverlapWJet_MM > MZ+10. || ml0loverlapWJet_MM < MZ-10.){
-				  cutnumber = 55.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				}				
-				if(ml1loverlapWJet_MM > MZ+10. || ml1loverlapWJet_MM < MZ-10.){
-				  cutnumber = 56.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				}
+				
 				if((ml0loverlapWJet_MM > MZ+10. || ml0loverlapWJet_MM < MZ-10.) && (ml1loverlapWJet_MM > MZ+10. || ml1loverlapWJet_MM < MZ-10.)){
-				  cutnumber = 57.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				  cutnumber = 62.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				}				
-				if(ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.){
-				  cutnumber = 58.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				}
-				if(ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.){
-				  cutnumber = 59.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				}
+				
 				if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
-				  cutnumber = 60.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
+				  cutnumber = 63.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				}
+				
 			      }
 			    }
 //===============================================================================================================================		  
@@ -700,7 +720,19 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		  if(numberOfCLJets(m_signalJets2Lep) >=1){
 		    cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
-
+// 		    cout << "ICl1llost_EM= " << ICl1llost_EM << endl;
+		      if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
+			cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+		      }
+		      
+		      if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
+			cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+		      }				
+		      
+		      if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
+			cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+		      }
+			  
 		    float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 		    if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
 		      cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
@@ -709,14 +741,47 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      //SRSS1
 		      if(mTWW_EM >= 140.){
 			cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
+			  cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			}
+			
+			if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
+			  cutnumber = 54.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			}				
+		      
+			if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
+			  cutnumber = 55.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			}
 			float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
 			if(HT_EM >= 200.){
 			  cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			  if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
+			    cutnumber = 56.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			  }
+			  
+			  if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
+			    cutnumber = 57.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			  }				
+			
+			  if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
+			    cutnumber = 58.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			  }
 			  if(METrel_SS>=30.){
 			    cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			  }
 			  if(METrel_SS>=50.){
 			    cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
+			    if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
+			      cutnumber = 59.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			    }
+			    
+			    if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
+			      cutnumber = 60.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			    }				
+			  
+			    if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
+			      cutnumber = 61.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			    }
 			  }
 			}
 		      }
@@ -1456,45 +1521,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_woJOR_sign.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_woJOR_sign.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_woJOR_sign.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_woJOR_sign.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_woJOR_sign.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_woJOR_sign_neu.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_woJOR_sign.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_WOJ_fix.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_WOJ_fix.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_WOJ_fix.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_WOJ_fix.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_WOJ_fix.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_WOJ_fix_NEU4.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_WOJ_fix.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_woJOR_sign.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_woJOR_sign.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_woJOR_sign.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_woJOR_sign.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_woJOR_sign.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_woJOR_sign.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_woJOR_sign.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_woJOR_sign.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_woJOR_sign.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_woJOR_sign.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_woJOR_sign.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_woJOR_sign.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_woJOR_sign.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_woJOR_sign.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_woJOR_sign.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_woJOR_sign.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_woJOR_sign.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_woJOR_sign.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_woJOR_sign.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_woJOR_sign.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_woJOR_sign.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_woJOR_sign.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_woJOR_sign.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_woJOR_sign.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_woJOR_sign.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_woJOR_sign.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_woJOR_sign.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_WOJ_fix.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_WOJ_fix.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_WOJ_fix.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_WOJ_fix.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_WOJ_fix.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_WOJ_fix.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_WOJ_fix.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_WOJ_fix.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_WOJ_fix.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_WOJ_fix.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_WOJ_fix.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_WOJ_fix.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_WOJ_fix.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_WOJ_fix.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_WOJ_fix.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_WOJ_fix.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_WOJ_fix.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_WOJ_fix.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_WOJ_fix.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_WOJ_fix.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_WOJ_fix.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_WOJ_fix.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_WOJ_fix.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_WOJ_fix.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_WOJ_fix.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_WOJ_fix.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_WOJ_fix.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Muons_woJOR_sign_1_Neu.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_WOJ_fix_3_NEU.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];

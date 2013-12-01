@@ -14,14 +14,28 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_DeltaR_ljOR_EE = new TH1F("DeltaR_ljOR_EE", "DeltaR_ljOR_EE", 70, 0, 7);
   h_DeltaR_ljOR_MM = new TH1F("DeltaR_ljOR_MM", "DeltaR_ljOR_MM", 70, 0, 7);
   h_DeltaR_ljOR_EM = new TH1F("DeltaR_ljOR_EM", "DeltaR_ljOR_EM", 70, 0, 7);
+  
+  h_N_MuonToBeChecked_afterORWJet_MM = new TH2F("h_N_MuonToBeChecked_afterORWJet_MM", "h_N_MuonToBeChecked_afterORWJet_MM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWJet_MM->Sumw2();
+  h_N_MuonToBeChecked_afterORWOFLepton_MM = new TH2F("h_N_MuonToBeChecked_afterORWOFLepton_MM", "h_N_MuonToBeChecked_afterORWOFLepton_MM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWOFLepton_MM->Sumw2();
+  h_N_MuonToBeChecked_afterORWSFLepton_MM = new TH2F("h_N_MuonToBeChecked_afterORWSFLepton_MM", "h_N_MuonToBeChecked_afterORWSFLepton_MM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWSFLepton_MM->Sumw2();
+  h_N_MuonToBeChecked_afterMllCut_MM = new TH2F("h_N_MuonToBeChecked_afterMllCut_MM", "h_N_MuonToBeChecked_afterMllCut_MM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterMllCut_MM->Sumw2();  
+  
+  h_N_MuonToBeChecked_afterORWJet_EM = new TH2F("h_N_MuonToBeChecked_afterORWJet_EM", "h_N_MuonToBeChecked_afterORWJet_EM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWJet_EM->Sumw2();
+  h_N_MuonToBeChecked_afterORWOFLepton_EM = new TH2F("h_N_MuonToBeChecked_afterORWOFLepton_EM", "h_N_MuonToBeChecked_afterORWOFLepton_EM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWOFLepton_EM->Sumw2();
+  h_N_MuonToBeChecked_afterORWSFLepton_EM = new TH2F("h_N_MuonToBeChecked_afterORWSFLepton_EM", "h_N_MuonToBeChecked_afterORWSFLepton_EM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWSFLepton_EM->Sumw2();
+  h_N_MuonToBeChecked_afterMllCut_EM = new TH2F("h_N_MuonToBeChecked_afterMllCut_EM", "h_N_MuonToBeChecked_afterMllCut_EM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterMllCut_EM->Sumw2(); 
+  
+  h_N_ElectronToBeChecked_afterORWJet_EM = new TH2F("h_N_ElectronToBeChecked_afterORWJet_EM", "h_N_ElectronToBeChecked_afterORWJet_EM", 11, -0.5, 10.5, 130, 0, 129); h_N_ElectronToBeChecked_afterORWJet_EM->Sumw2();
+  h_N_ElectronToBeChecked_afterORWOFLepton_EM = new TH2F("h_N_ElectronToBeChecked_afterORWOFLepton_EM", "h_N_ElectronToBeChecked_afterORWOFLepton_EM", 11, -0.5, 10.5, 130, 0, 129); h_N_ElectronToBeChecked_afterORWOFLepton_EM->Sumw2();  
+  h_N_ElectronToBeChecked_afterMllCut_EM = new TH2F("h_N_ElectronToBeChecked_afterMllCut_EM", "h_N_ElectronToBeChecked_afterMllCut_EM", 11, -0.5, 10.5, 130, 0, 129); h_N_ElectronToBeChecked_afterMllCut_EM->Sumw2(); 
 
-  h_etcone30l1llost_EM_SRSS1 = new TH2F("h_etcone30l1llost_EM_SRSS1", "h_etcone30l1llost_EM_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_etcone30l1llost_EM_SRSS1->Sumw2();
-  h_etcone30l1lsoft_EM_SRSS1 = new TH2F("h_etcone30l1lsoft_EM_SRSS1", "h_etcone30l1lsoft_EM_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_etcone30l1lsoft_EM_SRSS1->Sumw2();
-  h_etcone30l1loverlap_EM_SRSS1 = new TH2F("h_etcone30l1loverlap_EM_SRSS1", "h_etcone30l1loverlap_EM_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_etcone30l1loverlap_EM_SRSS1->Sumw2();
-  h_etcone30l1loverlapWJet_EM_SRSS1 = new TH2F("h_etcone30l1loverlapWJet_EM_SRSS1", "h_etcone30l1loverlapWJet_EM_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_etcone30l1loverlapWJet_EM_SRSS1->Sumw2();
-  h_etcone30l1loverlapWOFLepton_EM_SRSS1 = new TH2F("h_etcone30l1loverlapWOFLepton_EM_SRSS1", "h_etcone30l1loverlapWOFLepton_EM_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_etcone30l1loverlapWOFLepton_EM_SRSS1->Sumw2();
-  h_etcone30l1loverlapWSFLepton_EM_SRSS1 = new TH2F("h_etcone30l1loverlapWSFLepton_EM_SRSS1", "h_etcone30l1loverlapWSFLepton_EM_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_etcone30l1loverlapWSFLepton_EM_SRSS1->Sumw2();
-  h_etcone30l1lZcand_EM_SRSS1 = new TH2F("h_etcone30l1lZcand_EM_SRSS1", "h_etcone30l1lZcand_EM_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_etcone30l1lZcand_EM_SRSS1->Sumw2();
+  h_etcone30l1llost_EM_SRSS1 = new TH2F("h_etcone30l1llost_EM_SRSS1", "h_etcone30l1llost_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30l1llost_EM_SRSS1->Sumw2();
+  h_etcone30l1lsoft_EM_SRSS1 = new TH2F("h_etcone30l1lsoft_EM_SRSS1", "h_etcone30l1lsoft_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30l1lsoft_EM_SRSS1->Sumw2();
+  h_etcone30l1loverlap_EM_SRSS1 = new TH2F("h_etcone30l1loverlap_EM_SRSS1", "h_etcone30l1loverlap_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30l1loverlap_EM_SRSS1->Sumw2();
+  h_etcone30l1loverlapWJet_EM_SRSS1 = new TH2F("h_etcone30l1loverlapWJet_EM_SRSS1", "h_etcone30l1loverlapWJet_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30l1loverlapWJet_EM_SRSS1->Sumw2();
+  h_etcone30l1loverlapWOFLepton_EM_SRSS1 = new TH2F("h_etcone30l1loverlapWOFLepton_EM_SRSS1", "h_etcone30l1loverlapWOFLepton_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30l1loverlapWOFLepton_EM_SRSS1->Sumw2();
+  h_etcone30l1loverlapWSFLepton_EM_SRSS1 = new TH2F("h_etcone30l1loverlapWSFLepton_EM_SRSS1", "h_etcone30l1loverlapWSFLepton_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30l1loverlapWSFLepton_EM_SRSS1->Sumw2();
+  h_etcone30l1lZcand_EM_SRSS1 = new TH2F("h_etcone30l1lZcand_EM_SRSS1", "h_etcone30l1lZcand_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30l1lZcand_EM_SRSS1->Sumw2();
     
   //lost
   h_Nleptons_lost_EE_SRSS1 = new TH2F("h_Nleptons_lost_EE_SRSS1", "h_Nleptons_lost_EE_SRSS1", 11, -0.5, 10.5, 130, 0, 129); h_Nleptons_lost_EE_SRSS1->Sumw2();
@@ -1880,10 +1894,21 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_etcone30l1loverlapWSFLepton_EM_SRSS1->Write();
   h_etcone30l1lZcand_EM_SRSS1->Write();
   
+  h_N_MuonToBeChecked_afterORWJet_MM->Write();
+  h_N_MuonToBeChecked_afterORWOFLepton_MM->Write();
+  h_N_MuonToBeChecked_afterORWSFLepton_MM->Write();
+  h_N_MuonToBeChecked_afterMllCut_MM->Write();
+  h_N_MuonToBeChecked_afterORWJet_EM->Write();
+  h_N_MuonToBeChecked_afterORWOFLepton_EM->Write();
+  h_N_MuonToBeChecked_afterORWSFLepton_EM->Write();
+  h_N_MuonToBeChecked_afterMllCut_EM->Write();
+  h_N_ElectronToBeChecked_afterORWJet_EM->Write();
+  h_N_ElectronToBeChecked_afterORWOFLepton_EM->Write();
+  h_N_ElectronToBeChecked_afterMllCut_EM->Write();
+  
   h_Nleptons_lost_EE_SRSS1->Write();
   h_Nleptons_lost_MM_SRSS1->Write();
   h_Nleptons_lost_EM_SRSS1->Write();
-
   
   h_ml0llost_EE_SRSS1->Write();
   h_ml0llost_MM_SRSS1->Write();
@@ -2662,7 +2687,7 @@ bool unbiased = true;
 //Needed for WZ bg suppression:  
   ml0llost_MM = -1.;      
   mTl0llost_MM = -1.;
-  ICl0llost_MM = -2;
+  ICl0llost_MM = -5;
   pTl0llost_MM = -1.;
   etal0llost_MM = -1.;
   ptcone30l0llost_MM = -1.;
@@ -2671,7 +2696,7 @@ bool unbiased = true;
   
   ml1llost_MM = -1.;
   mTl1llost_MM = -1.;
-  ICl1llost_MM = -2;
+  ICl1llost_MM = -5;
   pTl1llost_MM = -1.;
   etal1llost_MM = -1.;
   ptcone30l1llost_MM = -1.;
@@ -2723,7 +2748,7 @@ bool unbiased = true;
   
   ml0lsoft_MM = -1.;      
   mTl0lsoft_MM = -1.;
-  ICl0lsoft_MM = -2;
+  ICl0lsoft_MM = -5;
   pTl0lsoft_MM = -1.;
   etal0lsoft_MM = -1.;
   ptcone30l0lsoft_MM = -1.;
@@ -2732,7 +2757,7 @@ bool unbiased = true;
   
   ml1lsoft_MM = -1.;
   mTl1lsoft_MM = -1.;
-  ICl1lsoft_MM = -2;
+  ICl1lsoft_MM = -5;
   pTl1lsoft_MM = -1.;
   etal1lsoft_MM = -1.;
   ptcone30l1lsoft_MM = -1.;
@@ -2786,7 +2811,7 @@ bool unbiased = true;
   
   ml0loverlap_MM = -1.;      
   mTl0loverlap_MM = -1.;
-  ICl0loverlap_MM = -2;
+  ICl0loverlap_MM = -5;
   pTl0loverlap_MM = -1.;
   etal0loverlap_MM = -1.;
   ptcone30l0loverlap_MM = -1.;
@@ -2795,7 +2820,7 @@ bool unbiased = true;
   
   ml1loverlap_MM = -1.;
   mTl1loverlap_MM = -1.;
-  ICl1loverlap_MM = -2;
+  ICl1loverlap_MM = -5;
   pTl1loverlap_MM = -1.;
   etal1loverlap_MM = -1.;
   ptcone30l1loverlap_MM = -1.;
@@ -2914,16 +2939,10 @@ bool unbiased = true;
   
   // Remove electrons from electrons
   e_e_overlap(preElectrons, E_E_DR);
+  ElectronVector ElectronsAfterORWSFLepton_vec = preElectrons;
   // Remove jets from electrons
   e_j_overlap(preElectrons, preJets, J_E_DR, true);
-  // Remove taus from electrons
-  TauVector taus;
-  if(m_selectTaus) taus = getPreTaus(&nt, NtSys_NOM);
-  else taus.clear();
-  t_e_overlap(taus, preElectrons, T_E_DR);
-  // Remove taus from muons
-  t_m_overlap(taus, preMuon_vec, T_M_DR);
-//   cout << "preMuon_vec.size()= " << preMuon_vec.size() << endl;
+  
   for (uint im=0; im<preMuon_vec.size(); im++){
     for(uint ij=0; ij<preJets.size(); ij++){
       double DeltaR_ljOR_MM = preMuon_vec.at(im)->DeltaR(*preJets.at(ij));
@@ -2933,24 +2952,24 @@ bool unbiased = true;
   // Remove electrons from jets
   e_j_overlap(preElectrons, preJets, E_J_DR, false);
   // Remove muons from jets
-  MuonVector MuonOverlappingWJet_vec = preMuon_vec;
-  m_j_overlap(MuonOverlappingWJet_vec, preJets, M_J_DR);
+  MuonVector MuonsAfterORWJet_vec = preMuon_vec;
+  m_j_overlap(MuonsAfterORWJet_vec, preJets, M_J_DR);
   
     
-  MuonVector MuonOverlappingWOFLepton_vec = MuonOverlappingWJet_vec;
+  MuonVector MuonsAfterORWOFLepton_vec = MuonsAfterORWJet_vec;
   // Remove electrons and muons that overlap
-  e_m_overlap(preElectrons, MuonOverlappingWOFLepton_vec, E_M_DR);
+  e_m_overlap(preElectrons, MuonsAfterORWOFLepton_vec, E_M_DR);
   
   
     
-  MuonVector MuonOverlappingWSFLepton_vec = MuonOverlappingWOFLepton_vec;
+  MuonVector MuonsAfterORWSFLepton_vec = MuonsAfterORWOFLepton_vec;
   // Remove muons from muons
-  m_m_overlap(MuonOverlappingWSFLepton_vec, M_M_DR);
+  m_m_overlap(MuonsAfterORWSFLepton_vec, M_M_DR);
 
   
-  MuonVector Muon_lostInORWJet;
-  MuonVector Muon_lostInORWOFLepton;
-  MuonVector Muon_lostInORWSFLepton;
+  MuonVector Muon_lostInORWJet_vec;
+  MuonVector Muon_lostInORWOFLepton_vec;
+  MuonVector Muon_lostInORWSFLepton_vec;
   
   double DeltaMZ_l0loverlapWJet = 99999.;
   double DeltaMZ_l1loverlapWJet = 99999.;  
@@ -2961,20 +2980,22 @@ bool unbiased = true;
     
     //can a muon which was lost in OR still be matched to a muon after OR with Jets?
     bool notOverlappingWJet = false;
-    for(uint im2=0; im2<MuonOverlappingWJet_vec.size(); im2++){
-      Muon* overlapWJet_mu = MuonOverlappingWJet_vec.at(im2);
+    for(uint im2=0; im2<MuonsAfterORWJet_vec.size(); im2++){
+      Muon* overlapWJet_mu = MuonsAfterORWJet_vec.at(im2);
       overlapWJet_mu->setState(NtSys_NOM);
       if(overlapWJet_mu->DeltaR(*mu_overlapping) < 0.0001) notOverlappingWJet = true;
     }
     
     if(!notOverlappingWJet){
-      Muon_lostInORWJet.push_back(mu_overlapping);
+      Muon_lostInORWJet_vec.push_back(mu_overlapping);
       TLorentzVector overlapWJetMuon_TLV;
       overlapWJetMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
+//       cout << im << " muon overlappingWJet pt= " << mu_overlapping->pt << endl;
       
       if((mu_overlapping->q * mu0->q)<0. || (mu_overlapping->q * mu1->q)<0.){
 	if(fabs(MZ - Mll(mu0, mu_overlapping)) < fabs(MZ - Mll(mu1, mu_overlapping))){
 	  if(fabs(MZ - Mll(mu0, mu_overlapping)) < DeltaMZ_l0loverlapWJet){
+// 	    cout << "used for combi with l0" << endl;
 	    ml0loverlapWJet_MM = Mll(mu0, mu_overlapping);      
 	    mTl0loverlapWJet_MM = calcMt(mu0_TLV, overlapWJetMuon_TLV);  
 	    ICl0loverlapWJet_MM = mu_overlapping->isCombined;
@@ -2988,6 +3009,7 @@ bool unbiased = true;
 	}
 	else{
 	  if(fabs(MZ - Mll(mu1, mu_overlapping)) < DeltaMZ_l1loverlapWJet){
+// 	    cout << "used for combi with l1" << endl;
 	    ml1loverlapWJet_MM = (mu1_TLV + overlapWJetMuon_TLV).M();      
 	    mTl1loverlapWJet_MM = calcMt(mu1_TLV, overlapWJetMuon_TLV);  
 	    ICl1loverlapWJet_MM = mu_overlapping->isCombined;
@@ -3006,14 +3028,14 @@ bool unbiased = true;
       double DeltaMZ_l0loverlapWOFLepton = 99999.;
       double DeltaMZ_l1loverlapWOFLepton = 99999.;
       bool notOverlappingWOFLepton = false;
-      for(uint im2=0; im2<MuonOverlappingWOFLepton_vec.size(); im2++){
-	Muon* overlapWOFLepton_mu = MuonOverlappingWOFLepton_vec.at(im2);
+      for(uint im2=0; im2<MuonsAfterORWOFLepton_vec.size(); im2++){
+	Muon* overlapWOFLepton_mu = MuonsAfterORWOFLepton_vec.at(im2);
 	overlapWOFLepton_mu->setState(NtSys_NOM);
 	if(overlapWOFLepton_mu->DeltaR(*mu_overlapping) < 0.0001) notOverlappingWOFLepton = true;
       }
     
       if(!notOverlappingWOFLepton){
-	Muon_lostInORWOFLepton.push_back(mu_overlapping);
+	Muon_lostInORWOFLepton_vec.push_back(mu_overlapping);
 	TLorentzVector overlapWOFLeptonMuon_TLV;
 	overlapWOFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
 	
@@ -3053,14 +3075,14 @@ bool unbiased = true;
 	double DeltaMZ_l0loverlapWSFLepton = 99999.;
 	double DeltaMZ_l1loverlapWSFLepton = 99999.;
         bool notOverlappingWSFLepton = false;
-	for(uint im2=0; im2<MuonOverlappingWSFLepton_vec.size(); im2++){
-	  Muon* overlapWSFLepton_mu = MuonOverlappingWSFLepton_vec.at(im2);
+	for(uint im2=0; im2<MuonsAfterORWSFLepton_vec.size(); im2++){
+	  Muon* overlapWSFLepton_mu = MuonsAfterORWSFLepton_vec.at(im2);
 	  overlapWSFLepton_mu->setState(NtSys_NOM);
 	  if(overlapWSFLepton_mu->DeltaR(*mu_overlapping) < 0.0001) notOverlappingWSFLepton = true;
 	}
 	
 	if(!notOverlappingWSFLepton){
-	  Muon_lostInORWSFLepton.push_back(mu_overlapping);
+	  Muon_lostInORWSFLepton_vec.push_back(mu_overlapping);
 	  TLorentzVector overlapWSFLeptonMuon_TLV;
 	  overlapWSFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
 	  
@@ -3104,9 +3126,35 @@ bool unbiased = true;
     }
     
   }
-  Nleptons_overlapWJet_MM = Muon_lostInORWJet.size();
-  Nleptons_overlapWOFLepton_MM = Muon_lostInORWOFLepton.size();
-  Nleptons_overlapWSFLepton_MM = Muon_lostInORWSFLepton.size();
+  Nleptons_overlapWJet_MM = Muon_lostInORWJet_vec.size();
+  Nleptons_overlapWOFLepton_MM = Muon_lostInORWOFLepton_vec.size();
+  Nleptons_overlapWSFLepton_MM = Muon_lostInORWSFLepton_vec.size();
+  
+  //from the muons lost in the OR with jets, which ones would be lost in the following OR steps? How many of them are still there after each step?
+  JetVector preJets_toBeChecked = getPreJets(&nt, NtSys_NOM);
+  ElectronVector preElectrons_toBeChecked = getPreElectrons(&nt, NtSys_NOM);
+  
+  // Remove electrons from electrons
+  e_e_overlap(preElectrons_toBeChecked, E_E_DR);
+  // Remove jets from electrons
+  e_j_overlap(preElectrons_toBeChecked, preJets_toBeChecked, J_E_DR, true);
+  // Remove electrons from jets
+  e_j_overlap(preElectrons_toBeChecked, preJets_toBeChecked, E_J_DR, false);
+  
+  MuonVector muons_toBeChecked_vec = Muon_lostInORWJet_vec;  
+  
+  N_MuonToBeChecked_afterORWJet_MM = muons_toBeChecked_vec.size();
+  
+  e_m_overlap(preElectrons_toBeChecked, muons_toBeChecked_vec, E_M_DR);
+  N_MuonToBeChecked_afterORWOFLepton_MM = muons_toBeChecked_vec.size();
+  // Remove muons from muons
+  m_m_overlap(muons_toBeChecked_vec, M_M_DR);
+  N_MuonToBeChecked_afterORWSFLepton_MM = muons_toBeChecked_vec.size();
+  removeSFOSPair(muons_toBeChecked_vec, MLL_MIN);
+  N_MuonToBeChecked_afterMllCut_MM = muons_toBeChecked_vec.size();
+//   cout << "of the muons lost in ORwJet: " << endl;
+//   cout << "N_MuonToBeChecked_afterORWJet_MM= " << N_MuonToBeChecked_afterORWJet_MM << " N_MuonToBeChecked_afterORWOFLepton_MM= " << N_MuonToBeChecked_afterORWOFLepton_MM << " N_MuonToBeChecked_afterORWSFLepton_MM= " << N_MuonToBeChecked_afterORWSFLepton_MM << " N_MuonToBeChecked_afterMllCut_MM= " << N_MuonToBeChecked_afterMllCut_MM << endl;
+  
   
   //find muons that were lost in e-m or m-m OR or due to mll cut:
   ml0lZcand_MM = -1.;      
@@ -3127,64 +3175,84 @@ bool unbiased = true;
   
   MuonVector MuonWOjOR_vec = preMuon_vec;
   // Remove electrons and muons that overlap
-  e_m_overlap(preElectrons, MuonWOjOR_vec, E_M_DR);
+//   cout << "mu0->pt= " << mu0->pt << " mu1->pt= " << mu1->pt << endl;
+//   cout << "# Zcand: " << endl;
+//   cout << "before e-m oR " << MuonWOjOR_vec.size() << endl;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+//     cout << im << " considered in e-m oR pt= " << mu_WOjOR->pt << endl;
+  }
+  e_m_overlap(ElectronsAfterORWSFLepton_vec, MuonWOjOR_vec, E_M_DR);
+//   cout << "before m-m oR " << MuonWOjOR_vec.size() << endl;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+//     cout << im << " considered in m-m oR pt= " << mu_WOjOR->pt << endl;
+  }
   m_m_overlap(MuonWOjOR_vec, M_M_DR);
-
+//   cout << "before mllcut " << MuonWOjOR_vec.size() << endl;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+//     cout << im << " considered in mllcut pt= " << mu_WOjOR->pt << endl;
+  }
+  
   removeSFOSPair(MuonWOjOR_vec, MLL_MIN);
-  //can a preMuon be matched to a muon after OR except for m-j OR?
+//   cout << "finally       " << MuonWOjOR_vec.size() << endl;
+  
+  //Zcand muons: all muons after the OR w/o m-j OR which are no signal muons
   double DeltaMZ_l0lZcand = 99999.;
   double DeltaMZ_l1lZcand = 99999.;
-  MuonVector Muon_Zcand_vec;
-  
-  for(uint im=0; im<preMuon_vec.size(); im++){
-    Muon* pre_mu = preMuon_vec.at(im);
-    pre_mu->setState(NtSys_NOM);
-    if((pre_mu->DeltaR(*mu0) < 0.0001) || (pre_mu->DeltaR(*mu1) < 0.0001)) continue; //no signal lepton
-    bool notOverlappingWSFOFLeptonMllCut = false;
-    for(uint im2=0; im2<MuonWOjOR_vec.size(); im2++){
-	Muon* MuonWOjOR = MuonWOjOR_vec.at(im2);
-	MuonWOjOR->setState(NtSys_NOM);
-	if(MuonWOjOR->DeltaR(*pre_mu) < 0.0001) notOverlappingWSFOFLeptonMllCut = true;
+  MuonVector Muon_Zcand_vec;  
+  bool ZcandIsSignalMuon = false;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+    mu_WOjOR->setState(NtSys_NOM);
+//     cout << im << " considered as Zcand pt= " << mu_WOjOR->pt << endl;
+    if((mu_WOjOR->DeltaR(*mu0) < 0.0001) || (mu_WOjOR->DeltaR(*mu1) < 0.0001)){
+      ZcandIsSignalMuon = true;
+      continue; //no signal lepton
     }
-	
-    if(!notOverlappingWSFOFLeptonMllCut){
-      TLorentzVector ZcandMuon_TLV;
-      ZcandMuon_TLV.SetPtEtaPhiE(pre_mu->pt, pre_mu->eta ,pre_mu->phi, pre_mu->pt*cosh(pre_mu->eta));
-      Muon_Zcand_vec.push_back(pre_mu);
-      if((pre_mu->q * mu0->q)<0. || (pre_mu->q * mu1->q)<0.){
-	if(fabs(MZ - Mll(mu0, pre_mu)) < fabs(MZ - Mll(mu1, pre_mu))){
-	  if(fabs(MZ - Mll(mu0, pre_mu)) < DeltaMZ_l0lZcand){
-	    ml0lZcand_MM = Mll(mu0, pre_mu);      
-	    mTl0lZcand_MM = calcMt(mu0_TLV, ZcandMuon_TLV);  
-	    ICl0lZcand_MM = pre_mu->isCombined;
-	    pTl0lZcand_MM = pre_mu->pt;
-	    etal0lZcand_MM = fabs(pre_mu->eta);
-	    ptcone30l0lZcand_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	    d0Sigl0lZcand_MM = pre_mu->d0Sig(true);
-	    z0SinThetal0lZcand_MM = pre_mu->z0SinTheta(true);	
-	    DeltaMZ_l0lZcand = fabs(MZ - Mll(mu0, pre_mu));
-	  }
+    TLorentzVector ZcandMuon_TLV;
+    ZcandMuon_TLV.SetPtEtaPhiE(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->pt*cosh(mu_WOjOR->eta));
+    Muon_Zcand_vec.push_back(mu_WOjOR);
+//     cout << im << " is no signal mu" << endl;
+    if((mu_WOjOR->q * mu0->q)<0. || (mu_WOjOR->q * mu1->q)<0.){
+      if(fabs(MZ - Mll(mu0, mu_WOjOR)) < fabs(MZ - Mll(mu1, mu_WOjOR))){
+	if(fabs(MZ - Mll(mu0, mu_WOjOR)) < DeltaMZ_l0lZcand){
+	  ml0lZcand_MM = Mll(mu0, mu_WOjOR);      
+	  mTl0lZcand_MM = calcMt(mu0_TLV, ZcandMuon_TLV);  
+	  ICl0lZcand_MM = mu_WOjOR->isCombined;
+	  pTl0lZcand_MM = mu_WOjOR->pt;
+	  etal0lZcand_MM = fabs(mu_WOjOR->eta);
+	  ptcone30l0lZcand_MM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
+	  d0Sigl0lZcand_MM = mu_WOjOR->d0Sig(true);
+	  z0SinThetal0lZcand_MM = mu_WOjOR->z0SinTheta(true);	
+	  DeltaMZ_l0lZcand = fabs(MZ - Mll(mu0, mu_WOjOR));
 	}
-	else{
-	  if(fabs(MZ - Mll(mu1, pre_mu)) < DeltaMZ_l1lZcand){
-	    ml1lZcand_MM = (mu1_TLV + ZcandMuon_TLV).M();      
-	    mTl1lZcand_MM = calcMt(mu1_TLV, ZcandMuon_TLV);  
-	    ICl1lZcand_MM = pre_mu->isCombined;
-	    pTl1lZcand_MM = pre_mu->pt;
-	    etal1lZcand_MM = fabs(pre_mu->eta);
-	    ptcone30l1lZcand_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	    d0Sigl1lZcand_MM = pre_mu->d0Sig(true);
-	    z0SinThetal1lZcand_MM = pre_mu->z0SinTheta(true);	
-	    DeltaMZ_l1lZcand = fabs(MZ - Mll(mu1, pre_mu));
-	  }
+      }
+      else{
+	if(fabs(MZ - Mll(mu1, mu_WOjOR)) < DeltaMZ_l1lZcand){
+	  ml1lZcand_MM = (mu1_TLV + ZcandMuon_TLV).M();      
+	  mTl1lZcand_MM = calcMt(mu1_TLV, ZcandMuon_TLV);  
+	  ICl1lZcand_MM = mu_WOjOR->isCombined;
+	  pTl1lZcand_MM = mu_WOjOR->pt;
+	  etal1lZcand_MM = fabs(mu_WOjOR->eta);
+	  ptcone30l1lZcand_MM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
+	  d0Sigl1lZcand_MM = mu_WOjOR->d0Sig(true);
+	  z0SinThetal1lZcand_MM = mu_WOjOR->z0SinTheta(true);	
+	  DeltaMZ_l1lZcand = fabs(MZ - Mll(mu1, mu_WOjOR));
 	}
       }
     }
+      
   }
-  Nleptons_Zcand_MM = Muon_Zcand_vec.size();
   
-  cout << "mu_lost_vec.size()= " << mu_lost_vec.size() << " overlapMuon_vec.size()= " << overlapMuon_vec.size() << " Muon_lostInORWOFLepton.size()= " << Muon_lostInORWOFLepton.size() <<  " Muon_lostInORWSFLepton.size()= " << Muon_lostInORWSFLepton.size() << " Muon_lostInORWJet.size()= " << Muon_lostInORWJet.size() << " softMuons_vec.size()= " << softMuons_vec.size() << " n_mllMuons= " << n_mllMuons << endl;
-  if(mu_lost_vec.size() != (Muon_lostInORWOFLepton.size() + Muon_lostInORWSFLepton.size() + Muon_lostInORWJet.size() + softMuons_vec.size()) + n_mllMuons) cout << "problem!" << endl;
+ 
+  Nleptons_Zcand_MM = Muon_Zcand_vec.size();
+//   cout << "Nleptons_Zcand_MM= " << Nleptons_Zcand_MM << endl;
+//   if((Muon_Zcand_vec.size() != Muon_lostInORWJet_vec.size()) && !ZcandIsSignalMuon) cout << "why is there no Zcand?" << endl;
+//   cout << "mu_lost_vec.size()= " << mu_lost_vec.size() << " overlapMuon_vec.size()= " << overlapMuon_vec.size() << " Muon_lostInORWOFLepton_vec.size()= " << Muon_lostInORWOFLepton_vec.size() <<  " Muon_lostInORWSFLepton_vec.size()= " << Muon_lostInORWSFLepton_vec.size() << " Muon_lostInORWJet_vec.size()= " << Muon_lostInORWJet_vec.size() << " softMuons_vec.size()= " << softMuons_vec.size() << " n_mllMuons= " << n_mllMuons << endl;
+//   if(mu_lost_vec.size() != (Muon_lostInORWOFLepton_vec.size() + Muon_lostInORWSFLepton_vec.size() + Muon_lostInORWJet_vec.size() + softMuons_vec.size()) + n_mllMuons) cout << "problem!" << endl;
+//   cout << "---------------------" << endl;
   
     
   mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, met_TLV); 
@@ -3201,7 +3269,7 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   Mem = Mll(mu, el);
   METrelem = recalcMetRel(met_TLV, mu_TLV, el_TLV, m_signalJets2Lep, useForwardJets);
   METem = met_TLV.Pt();
-  HT_EM = calcHT(mu_TLV, el_TLV, met_TLV, m_signalJets2Lep);
+    HT_EM = calcHT(mu_TLV, el_TLV, met_TLV, m_signalJets2Lep);
   mTWW_EM = calcMt((mu_TLV + el_TLV), met_TLV);
   mTem = calcMt((mu_TLV+el_TLV), met_TLV);
   mTemmin = (calcMt(mu_TLV, met_TLV) > calcMt(el_TLV, met_TLV)) ? calcMt(el_TLV, met_TLV) : calcMt(mu_TLV, met_TLV);
@@ -3264,7 +3332,7 @@ bool unbiased = true;
 //   l1 <-> el
   ml0llost_EM = -1.;      
   mTl0llost_EM = -1.;
-  ICl0llost_EM = -2.;
+  ICl0llost_EM = -5.;
   pTl0llost_EM = -1.;
   etal0llost_EM = -1.;
   ptcone30l0llost_EM = -1.;
@@ -3273,6 +3341,7 @@ bool unbiased = true;
   
   ml1llost_EM = -1.;
   mTl1llost_EM = -1.;
+  ICl1llost_EM = -2;
   pTl1llost_EM = -1.;
   etal1llost_EM = -1.;
   ptcone30l1llost_EM = -1.;
@@ -3343,7 +3412,7 @@ bool unbiased = true;
   else{
     ml0llost_EM = -1.;      
     mTl0llost_EM = -1.;
-    ICl0llost_EM = -2.;
+    ICl0llost_EM = -5.;
     pTl0llost_EM = -1.;
     etal0llost_EM = -1.;
     ptcone30l0llost_EM = -1.;
@@ -3356,7 +3425,7 @@ bool unbiased = true;
   
   ml0lsoft_EM = -1.;      
   mTl0lsoft_EM = -1.;
-  ICl0lsoft_EM = -2;
+  ICl0lsoft_EM = -5;
   pTl0lsoft_EM = -1.;
   etal0lsoft_EM = -1.;
   ptcone30l0lsoft_EM = -1.;
@@ -3365,6 +3434,7 @@ bool unbiased = true;
   
   ml1lsoft_EM = -1.;
   mTl1lsoft_EM = -1.;
+  ICl1lsoft_EM = -5;
   pTl1lsoft_EM = -1.;
   etal1lsoft_EM = -1.;
   ptcone30l1lsoft_EM = -1.;
@@ -3442,7 +3512,7 @@ bool unbiased = true;
   else{
     ml0lsoft_EM = -1.;      
     mTl0lsoft_EM = -1.;
-    ICl0lsoft_EM = -2;
+    ICl0lsoft_EM = -5;
     pTl0lsoft_EM = -1.;
     etal0lsoft_EM = -1.;
     ptcone30l0lsoft_EM = -1.;
@@ -3454,7 +3524,7 @@ bool unbiased = true;
   
   ml0loverlap_EM = -1.;      
   mTl0loverlap_EM = -1.;
-  ICl0loverlap_EM = -2;
+  ICl0loverlap_EM = -5;
   pTl0loverlap_EM = -1.;
   etal0loverlap_EM = -1.;
   ptcone30l0loverlap_EM = -1.;
@@ -3463,6 +3533,7 @@ bool unbiased = true;
   
   ml1loverlap_EM = -1.;
   mTl1loverlap_EM = -1.;
+  ICl1loverlap_EM = -5;
   pTl1loverlap_EM = -1.;
   etal1loverlap_EM = -1.;
   ptcone30l1loverlap_EM = -1.;
@@ -3559,7 +3630,7 @@ bool unbiased = true;
   else{
     ml0loverlap_EM = -1.;      
     mTl0loverlap_EM = -1.;
-    ICl0loverlap_EM = -2;
+    ICl0loverlap_EM = -5;
     pTl0loverlap_EM = -1.;
     etal0loverlap_EM = -1.;
     ptcone30l0loverlap_EM = -1.;
@@ -3573,7 +3644,7 @@ bool unbiased = true;
   
   ml0loverlapWJet_EM = -1.;      
   mTl0loverlapWJet_EM = -1.;
-  ICl0loverlapWJet_EM = -2;
+  ICl0loverlapWJet_EM = -5;
   pTl0loverlapWJet_EM = -1.;
   etal0loverlapWJet_EM = -1.;
   ptcone30l0loverlapWJet_EM = -1.;
@@ -3582,6 +3653,7 @@ bool unbiased = true;
   
   ml1loverlapWJet_EM = -1.;
   mTl1loverlapWJet_EM = -1.;
+  ICl1loverlapWJet_EM = -5;
   pTl1loverlapWJet_EM = -1.;
   etal1loverlapWJet_EM = -1.;
   ptcone30l1loverlapWJet_EM = -1.;
@@ -3591,7 +3663,7 @@ bool unbiased = true;
   
   ml0loverlapWOFLepton_EM = -1.;      
   mTl0loverlapWOFLepton_EM = -1.;
-  ICl0loverlapWOFLepton_EM = -2;
+  ICl0loverlapWOFLepton_EM = -5;
   pTl0loverlapWOFLepton_EM = -1.;
   etal0loverlapWOFLepton_EM = -1.;
   ptcone30l0loverlapWOFLepton_EM = -1.;
@@ -3600,6 +3672,7 @@ bool unbiased = true;
   
   ml1loverlapWOFLepton_EM = -1.;
   mTl1loverlapWOFLepton_EM = -1.;
+  ICl1loverlapWOFLepton_EM = -5;
   pTl1loverlapWOFLepton_EM = -1.;
   etal1loverlapWOFLepton_EM = -1.;
   ptcone30l1loverlapWOFLepton_EM = -1.;
@@ -3609,7 +3682,7 @@ bool unbiased = true;
   
   ml0loverlapWSFLepton_EM = -1.;      
   mTl0loverlapWSFLepton_EM = -1.;
-  ICl0loverlapWSFLepton_EM = -2;
+  ICl0loverlapWSFLepton_EM = -5;
   pTl0loverlapWSFLepton_EM = -1.;
   etal0loverlapWSFLepton_EM = -1.;
   ptcone30l0loverlapWSFLepton_EM = -1.;
@@ -3618,6 +3691,7 @@ bool unbiased = true;
   
   ml1loverlapWSFLepton_EM = -1.;
   mTl1loverlapWSFLepton_EM = -1.;
+  ICl1loverlapWSFLepton_EM = -5;
   pTl1loverlapWSFLepton_EM = -1.;
   etal1loverlapWSFLepton_EM = -1.;
   ptcone30l1loverlapWSFLepton_EM = -1.;
@@ -3631,6 +3705,22 @@ bool unbiased = true;
   
   // Remove electrons from electrons
   e_e_overlap(preElectrons, E_E_DR);
+  
+  for (uint im=0; im<preMuon_vec.size(); im++){
+    for(uint ij=0; ij<preJets.size(); ij++){
+      double DeltaR_ljOR_EM = preMuon_vec.at(im)->DeltaR(*preJets.at(ij));
+      h_DeltaR_ljOR_EM->Fill(DeltaR_ljOR_EM, weight_EM);
+    }
+  }
+  
+  for (uint ie=0; ie<preElectrons.size(); ie++){
+    for(uint ij=0; ij<preJets.size(); ij++){
+      double DeltaR_ljOR_EM = preElectrons.at(ie)->DeltaR(*preJets.at(ij));
+      h_DeltaR_ljOR_EM->Fill(DeltaR_ljOR_EM, weight_EM);
+    }
+  }
+  
+  ElectronVector ElectronsAfterORWSFLepton_vec = preElectrons;
   // Remove jets from electrons
   e_j_overlap(preElectrons, preJets, J_E_DR, true);
   // Remove taus from electrons
@@ -3645,41 +3735,30 @@ bool unbiased = true;
   e_j_overlap(preElectrons, preJets, E_J_DR, false);
   ElectronVector ElectronOverlappingWJet_vec = preElectrons; //needed for OR categorization
   // Remove muons from jets
-  MuonVector MuonOverlappingWJet_vec = preMuon_vec; //needed for OR categorization
-  m_j_overlap(MuonOverlappingWJet_vec, preJets, M_J_DR);
+  MuonVector MuonsAfterORWJet_vec = preMuon_vec; //needed for OR categorization
+  m_j_overlap(MuonsAfterORWJet_vec, preJets, M_J_DR);
   
-  for (uint im=0; im<MuonOverlappingWJet_vec.size(); im++){
-    for(uint ij=0; ij<preJets.size(); ij++){
-      double DeltaR_ljOR_EM = MuonOverlappingWJet_vec.at(im)->DeltaR(*preJets.at(ij));
-      h_DeltaR_ljOR_EM->Fill(DeltaR_ljOR_EM, weight_EM);
-    }
-  }
   
-  for (uint ie=0; ie<ElectronsOverlappingWElectrons.size(); ie++){
-    for(uint ij=0; ij<preJets.size(); ij++){
-      double DeltaR_ljOR_EM = ElectronsOverlappingWElectrons.at(ie)->DeltaR(*preJets.at(ij));
-      h_DeltaR_ljOR_EM->Fill(DeltaR_ljOR_EM, weight_EM);
-    }
-  }
   
-  MuonVector MuonOverlappingWOFLepton_vec = MuonOverlappingWJet_vec; //needed for OR categorization
+  MuonVector MuonsAfterORWOFLepton_vec = MuonsAfterORWJet_vec; //needed for OR categorization
   // Remove electrons and muons that overlap
-  e_m_overlap(preElectrons, MuonOverlappingWOFLepton_vec, E_M_DR);
-  ElectronVector ElectronOverlappingWOFLepton_vec = preElectrons; //needed for OR categorization
+  e_m_overlap(preElectrons, MuonsAfterORWOFLepton_vec, E_M_DR);
+  ElectronVector ElectronsAfterORWOFLepton_vec = preElectrons; //needed for OR categorization
   
   
     
-  MuonVector MuonOverlappingWSFLepton_vec = MuonOverlappingWOFLepton_vec; //needed for OR categorization
+  MuonVector MuonsAfterORWSFLepton_vec = MuonsAfterORWOFLepton_vec; //needed for OR categorization
   // Remove muons from muons
-  m_m_overlap(MuonOverlappingWSFLepton_vec, M_M_DR);
+  m_m_overlap(MuonsAfterORWSFLepton_vec, M_M_DR);
 
   
-  MuonVector Muon_lostInORWJet;
-  MuonVector Muon_lostInORWOFLepton;
-  MuonVector Muon_lostInORWSFLepton;
+  MuonVector Muon_lostInORWJet_vec;
+  MuonVector Muon_lostInORWOFLepton_vec;
+  MuonVector Muon_lostInORWSFLepton_vec;
   
   double DeltaMZ_l0loverlapWJet = 99999.;
   double DeltaMZ_l0loverlapWOFLepton = 99999.;
+  double DeltaMZ_l0loverlapWSFLepton = 99999.;
   int n_mllMuons = 0;
   for(uint im=0; im<overlapMuon_vec.size(); im++){
     Muon* mu_overlapping = overlapMuon_vec.at(im);
@@ -3687,14 +3766,15 @@ bool unbiased = true;
     
     //can a muon which was lost in OR still be matched to a muon after OR with Jets?
     bool notOverlappingWJet = false;
-    for(uint im2=0; im2<MuonOverlappingWJet_vec.size(); im2++){
-      Muon* overlapWJet_mu = MuonOverlappingWJet_vec.at(im2);
+    for(uint im2=0; im2<MuonsAfterORWJet_vec.size(); im2++){
+      Muon* overlapWJet_mu = MuonsAfterORWJet_vec.at(im2);
       overlapWJet_mu->setState(NtSys_NOM);
       if(overlapWJet_mu->DeltaR(*mu_overlapping) < 0.0001) notOverlappingWJet = true;
     }
     
     if(!notOverlappingWJet){
-      Muon_lostInORWJet.push_back(mu_overlapping);
+      Muon_lostInORWJet_vec.push_back(mu_overlapping);
+//       cout << "lost in ORWJet cut pt= " << mu_overlapping->pt << endl;
       TLorentzVector overlapWJetMuon_TLV;
       overlapWJetMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
       
@@ -3702,6 +3782,7 @@ bool unbiased = true;
 	if(fabs(MZ - Mll(mu, mu_overlapping)) < DeltaMZ_l0loverlapWJet){
 	  ml0loverlapWJet_EM = Mll(mu, mu_overlapping);      
 	  mTl0loverlapWJet_EM = calcMt(mu_TLV, overlapWJetMuon_TLV); 
+	  ICl0loverlapWJet_EM = mu_overlapping->isCombined;
 	  pTl0loverlapWJet_EM = mu_overlapping->pt;
 	  etal0loverlapWJet_EM = fabs(mu_overlapping->eta);
 	  ptcone30l0loverlapWJet_EM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
@@ -3714,14 +3795,14 @@ bool unbiased = true;
     else{
       //can a muon which was lost in OR be matched to a muon lost in OR with Electrons?
       bool notOverlappingWOFLepton = false;
-      for(uint im2=0; im2<MuonOverlappingWOFLepton_vec.size(); im2++){
-	Muon* overlapWOFLepton_mu = MuonOverlappingWOFLepton_vec.at(im2);
+      for(uint im2=0; im2<MuonsAfterORWOFLepton_vec.size(); im2++){
+	Muon* overlapWOFLepton_mu = MuonsAfterORWOFLepton_vec.at(im2);
 	overlapWOFLepton_mu->setState(NtSys_NOM);
 	if(overlapWOFLepton_mu->DeltaR(*mu_overlapping) < 0.0001) notOverlappingWOFLepton = true;
       }
     
       if(!notOverlappingWOFLepton){
-	Muon_lostInORWOFLepton.push_back(mu_overlapping);
+	Muon_lostInORWOFLepton_vec.push_back(mu_overlapping);
 	TLorentzVector overlapWOFLeptonMuon_TLV;
 	overlapWOFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
 	
@@ -3729,6 +3810,7 @@ bool unbiased = true;
 	  if(fabs(MZ - Mll(mu, mu_overlapping)) < DeltaMZ_l0loverlapWOFLepton){
 	    ml0loverlapWOFLepton_EM = Mll(mu, mu_overlapping);      
 	    mTl0loverlapWOFLepton_EM = calcMt(mu_TLV, overlapWOFLeptonMuon_TLV);      
+	    ICl0loverlapWOFLepton_EM = mu_overlapping->isCombined;
 	    pTl0loverlapWOFLepton_EM = mu_overlapping->pt;
 	    etal0loverlapWOFLepton_EM = fabs(mu_overlapping->eta);
 	    ptcone30l0loverlapWOFLepton_EM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
@@ -3742,16 +3824,15 @@ bool unbiased = true;
       else{
 	
 	//can a muon which was lost in OR be matched to a muon lost in OR with Muons?
-	double DeltaMZ_l0loverlapWSFLepton = 99999.;
         bool notOverlappingWSFLepton = false;
-	for(uint im2=0; im2<MuonOverlappingWSFLepton_vec.size(); im2++){
-	  Muon* overlapWSFLepton_mu = MuonOverlappingWSFLepton_vec.at(im2);
+	for(uint im2=0; im2<MuonsAfterORWSFLepton_vec.size(); im2++){
+	  Muon* overlapWSFLepton_mu = MuonsAfterORWSFLepton_vec.at(im2);
 	  overlapWSFLepton_mu->setState(NtSys_NOM);
 	  if(overlapWSFLepton_mu->DeltaR(*mu_overlapping) < 0.0001) notOverlappingWSFLepton = true;
 	}
 	
 	if(!notOverlappingWSFLepton){
-	  Muon_lostInORWSFLepton.push_back(mu_overlapping);
+	  Muon_lostInORWSFLepton_vec.push_back(mu_overlapping);
 	  TLorentzVector overlapWSFLeptonMuon_TLV;
 	  overlapWSFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
 	  
@@ -3759,6 +3840,7 @@ bool unbiased = true;
 	    if(fabs(MZ - Mll(mu, mu_overlapping)) < DeltaMZ_l0loverlapWSFLepton){
 	      ml0loverlapWSFLepton_EM = Mll(mu, mu_overlapping);      
 	      mTl0loverlapWSFLepton_EM = calcMt(mu_TLV, overlapWSFLeptonMuon_TLV);  
+	      ICl0loverlapWSFLepton_EM = mu_overlapping->isCombined;
 	      pTl0loverlapWSFLepton_EM = mu_overlapping->pt;
 	      etal0loverlapWSFLepton_EM = fabs(mu_overlapping->eta);
 	      ptcone30l0loverlapWSFLepton_EM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
@@ -3780,14 +3862,16 @@ bool unbiased = true;
     
   }
     
-//   cout << "mu_lost_vec.size()= " << mu_lost_vec.size() << " overlapMuon_vec.size()= " << overlapMuon_vec.size() << " Muon_lostInORWOFLepton.size()= " << Muon_lostInORWOFLepton.size() <<  " Muon_lostInORWSFLepton.size()= " << Muon_lostInORWSFLepton.size() << " Muon_lostInORWJet.size()= " << Muon_lostInORWJet.size() << " softMuons_vec.size()= " << softMuons_vec.size() << " n_mllMuons= " << n_mllMuons << endl;
-//   if(mu_lost_vec.size() != (Muon_lostInORWOFLepton.size() + Muon_lostInORWSFLepton.size() + Muon_lostInORWJet.size() + softMuons_vec.size()) + n_mllMuons) cout << "problem!" << endl;
+//   cout << "mu_lost_vec.size()= " << mu_lost_vec.size() << " overlapMuon_vec.size()= " << overlapMuon_vec.size() << " Muon_lostInORWOFLepton_vec.size()= " << Muon_lostInORWOFLepton_vec.size() <<  " Muon_lostInORWSFLepton_vec.size()= " << Muon_lostInORWSFLepton_vec.size() << " Muon_lostInORWJet_vec.size()= " << Muon_lostInORWJet_vec.size() << " softMuons_vec.size()= " << softMuons_vec.size() << " n_mllMuons= " << n_mllMuons << endl;
+//   if(mu_lost_vec.size() != (Muon_lostInORWOFLepton_vec.size() + Muon_lostInORWSFLepton_vec.size() + Muon_lostInORWJet_vec.size() + softMuons_vec.size()) + n_mllMuons) cout << "problem!" << endl;
 //   
-  ElectronVector Electron_lostInORWJet;
-  ElectronVector Electron_lostInORWOFLepton;
+  ElectronVector Electron_lostInORWJet_vec;
+  ElectronVector Electron_lostInORWOFLepton_vec;
+  ElectronVector Electron_lostInORWSFLepton_vec;
   
   double DeltaMZ_l1loverlapWJet = 99999.;
   double DeltaMZ_l1loverlapWOFLepton = 99999.;
+  double DeltaMZ_l1loverlapWSFLepton = 99999.;
   int n_mllElectrons = 0;
   for(uint ie=0; ie<overlapElectron_vec.size(); ie++){
     Electron* el_overlapping = overlapElectron_vec.at(ie);
@@ -3802,7 +3886,7 @@ bool unbiased = true;
     }
     
     if(!notOverlappingWJet){
-      Electron_lostInORWJet.push_back(el_overlapping);
+      Electron_lostInORWJet_vec.push_back(el_overlapping);
       TLorentzVector overlapWJetElectron_TLV;
       overlapWJetElectron_TLV.SetPtEtaPhiE(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->pt*cosh(el_overlapping->eta));
       
@@ -3825,14 +3909,14 @@ bool unbiased = true;
     else{
       //can an electron which was lost in OR be matched to a electron lost in OR with muons?
       bool notOverlappingWOFLepton = false;
-      for(uint ie2=0; ie2<ElectronOverlappingWOFLepton_vec.size(); ie2++){
-	Electron* overlapWOFLepton_el = ElectronOverlappingWOFLepton_vec.at(ie2);
+      for(uint ie2=0; ie2<ElectronsAfterORWOFLepton_vec.size(); ie2++){
+	Electron* overlapWOFLepton_el = ElectronsAfterORWOFLepton_vec.at(ie2);
 	overlapWOFLepton_el->setState(NtSys_NOM);
 	if(overlapWOFLepton_el->DeltaR(*el_overlapping) < 0.0001) notOverlappingWOFLepton = true;
       }
     
       if(!notOverlappingWOFLepton){
-	Electron_lostInORWOFLepton.push_back(el_overlapping);
+	Electron_lostInORWOFLepton_vec.push_back(el_overlapping);
 	TLorentzVector overlapWOFLeptonElectron_TLV;
 	overlapWOFLeptonElectron_TLV.SetPtEtaPhiE(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->pt*cosh(el_overlapping->eta));
 	
@@ -3854,21 +3938,53 @@ bool unbiased = true;
       }
       
       else{
-	ElectronVector ElectronOverlappingWSFLepton_Mll_vec = overlapElectron_vec;
-	removeSFOSPair(ElectronOverlappingWSFLepton_Mll_vec, MLL_MIN);
-	if(overlapElectron_vec.size() != ElectronOverlappingWSFLepton_Mll_vec.size()) n_mllElectrons += 1;
+	
+	//can a muon which was lost in OR be matched to a muon lost in OR with Muons?
+        bool notOverlappingWSFLepton = false;
+	for(uint ie2=0; ie2<ElectronsAfterORWSFLepton_vec.size(); ie2++){
+	  Electron* overlapWSFLepton_el = ElectronsAfterORWSFLepton_vec.at(ie2);
+	  overlapWSFLepton_el->setState(NtSys_NOM);
+	  if(overlapWSFLepton_el->DeltaR(*el_overlapping) < 0.0001) notOverlappingWSFLepton = true;
+	}
+	
+	if(!notOverlappingWSFLepton){
+	  Electron_lostInORWSFLepton_vec.push_back(el_overlapping);
+	  TLorentzVector overlapWSFLeptonElectron_TLV;
+	  overlapWSFLeptonElectron_TLV.SetPtEtaPhiE(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->pt*cosh(el_overlapping->eta));
+	  
+	  if((el_overlapping->q * el->q)<0.){
+	    if(fabs(MZ - Mll(el, el_overlapping)) < DeltaMZ_l1loverlapWSFLepton){
+	      ml1loverlapWSFLepton_EM = Mll(el, el_overlapping);      
+	      mTl1loverlapWSFLepton_EM = calcMt(el_TLV, overlapWSFLeptonElectron_TLV);  
+	      pTl1loverlapWSFLepton_EM = el_overlapping->pt;
+	      etal1loverlapWSFLepton_EM = fabs(el_overlapping->eta);
+	      float ptcone30 = elPtConeCorr(el_overlapping, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
+	      ptcone30l1loverlapWSFLepton_EM = ptcone30/el_overlapping->pt;
+	      float etcone = elEtTopoConeCorr(el_overlapping, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
+	      etcone30l1loverlapWSFLepton_EM = etcone/el_overlapping->pt;	
+	      d0Sigl1loverlapWSFLepton_EM = el_overlapping->d0Sig(true);
+	      z0SinThetal1loverlapWSFLepton_EM = el_overlapping->z0SinTheta(true);		      
+	      DeltaMZ_l1loverlapWSFLepton = fabs(MZ - Mll(el, el_overlapping));
+	    }
+	  }
+	}
+	else{
+	  ElectronVector ElectronOverlappingWSFLepton_Mll_vec = overlapElectron_vec;
+	  removeSFOSPair(ElectronOverlappingWSFLepton_Mll_vec, MLL_MIN);
+	  if(overlapElectron_vec.size() != ElectronOverlappingWSFLepton_Mll_vec.size()) n_mllElectrons += 1;
+	}
       }
       
       
     }
     
   }
-  Nleptons_overlapWJet_EM = Muon_lostInORWJet.size() + Electron_lostInORWJet.size();
-  Nleptons_overlapWOFLepton_EM = Muon_lostInORWOFLepton.size() + Electron_lostInORWOFLepton.size();
-  Nleptons_overlapWSFLepton_EM = Muon_lostInORWSFLepton.size();
+  Nleptons_overlapWJet_EM = Muon_lostInORWJet_vec.size() + Electron_lostInORWJet_vec.size();
+  Nleptons_overlapWOFLepton_EM = Muon_lostInORWOFLepton_vec.size() + Electron_lostInORWOFLepton_vec.size();
+  Nleptons_overlapWSFLepton_EM = Muon_lostInORWSFLepton_vec.size() + Electron_lostInORWSFLepton_vec.size();
   
-//   cout << "el_lost_vec.size()= " << el_lost_vec.size() << " overlapElectron_vec.size()= " << overlapElectron_vec.size() << " Electron_lostInORWOFLepton.size()= " << Electron_lostInORWOFLepton.size() <<  " Electron_lostInORWJet.size()= " << Electron_lostInORWJet.size() << " softElectrons_vec.size()= " << softElectrons_vec.size() << " n_mllElectrons= " << n_mllElectrons << endl;
-//   if(el_lost_vec.size() != (Muon_lostInORWOFLepton.size() + Electron_lostInORWJet.size() + softElectrons_vec.size()) + n_mllElectrons) cout << "problem!" << endl;
+//   cout << "el_lost_vec.size()= " << el_lost_vec.size() << " overlapElectron_vec.size()= " << overlapElectron_vec.size() << " Electron_lostInORWOFLepton_vec.size()= " << Electron_lostInORWOFLepton_vec.size() <<  " Electron_lostInORWJet_vec.size()= " << Electron_lostInORWJet_vec.size() << " softElectrons_vec.size()= " << softElectrons_vec.size() << " n_mllElectrons= " << n_mllElectrons << endl;
+//   if(el_lost_vec.size() != (Muon_lostInORWOFLepton_vec.size() + Electron_lostInORWJet_vec.size() + softElectrons_vec.size()) + n_mllElectrons) cout << "problem!" << endl;
   if(DeltaMZ_l0loverlapWJet < DeltaMZ_l1loverlapWJet){
     ml1loverlapWJet_EM = -1.;
     mTl1loverlapWJet_EM = -1.;
@@ -3882,7 +3998,7 @@ bool unbiased = true;
   else{
     ml0loverlapWJet_EM = -1.;      
     mTl0loverlapWJet_EM = -1.;
-    ICl0loverlapWJet_EM = -2;
+    ICl0loverlapWJet_EM = -5;
     pTl0loverlapWJet_EM = -1.;
     etal0loverlapWJet_EM = -1.;
     ptcone30l0loverlapWJet_EM = -1.;
@@ -3902,18 +4018,74 @@ bool unbiased = true;
   else{
     ml0loverlapWOFLepton_EM = -1.;      
     mTl0loverlapWOFLepton_EM = -1.;
-    ICl0loverlapWOFLepton_EM = -2;
+    ICl0loverlapWOFLepton_EM = -5;
     pTl0loverlapWOFLepton_EM = -1.;
     etal0loverlapWOFLepton_EM = -1.;
     ptcone30l0loverlapWOFLepton_EM = -1.;
     d0Sigl0loverlapWOFLepton_EM = -1.;
     z0SinThetal0loverlapWOFLepton_EM = -1.;
   }
+  if(DeltaMZ_l0loverlapWSFLepton < DeltaMZ_l1loverlapWSFLepton){
+    ml1loverlapWSFLepton_EM = -1.;
+    mTl1loverlapWSFLepton_EM = -1.;
+    pTl1loverlapWSFLepton_EM = -1.;
+    etal1loverlapWSFLepton_EM = -1.;
+    ptcone30l1loverlapWSFLepton_EM = -1.;
+    etcone30l1loverlapWSFLepton_EM = -1.;
+    d0Sigl1loverlapWSFLepton_EM = -1.;
+    z0SinThetal1loverlapWSFLepton_EM = -1.;
+  }
+  else{
+    ml0loverlapWSFLepton_EM = -1.;      
+    mTl0loverlapWSFLepton_EM = -1.;
+    ICl0loverlapWSFLepton_EM = -5;
+    pTl0loverlapWSFLepton_EM = -1.;
+    etal0loverlapWSFLepton_EM = -1.;
+    ptcone30l0loverlapWSFLepton_EM = -1.;
+    d0Sigl0loverlapWSFLepton_EM = -1.;
+    z0SinThetal0loverlapWSFLepton_EM = -1.;
+  }
+  
+  JetVector preJets_toBeChecked = getPreJets(&nt, NtSys_NOM);
+  ElectronVector preElectrons_toBeChecked = getPreElectrons(&nt, NtSys_NOM);
+  
+  // Remove electrons from electrons
+  e_e_overlap(preElectrons_toBeChecked, E_E_DR);
+  // Remove jets from electrons
+  e_j_overlap(preElectrons_toBeChecked, preJets_toBeChecked, J_E_DR, true);
+  // Remove electrons from jets
+  e_j_overlap(preElectrons_toBeChecked, preJets_toBeChecked, E_J_DR, false);
+  
+  MuonVector muons_toBeChecked_vec = Muon_lostInORWJet_vec;  
+  
+  N_MuonToBeChecked_afterORWJet_EM = muons_toBeChecked_vec.size();
+  
+  e_m_overlap(preElectrons_toBeChecked, muons_toBeChecked_vec, E_M_DR);
+  N_MuonToBeChecked_afterORWOFLepton_EM = muons_toBeChecked_vec.size();
+  // Remove muons from muons
+  m_m_overlap(muons_toBeChecked_vec, M_M_DR);
+  N_MuonToBeChecked_afterORWSFLepton_EM = muons_toBeChecked_vec.size();
+  removeSFOSPair(muons_toBeChecked_vec, MLL_MIN);
+  N_MuonToBeChecked_afterMllCut_EM = muons_toBeChecked_vec.size();
+  
+  
+  
+  ElectronVector electrons_toBeChecked_vec = Electron_lostInORWJet_vec;  
+  MuonVector muons_toBeCheckedforElectrons_vec = getPreMuons(&nt, NtSys_NOM);
+  
+  N_ElecronToBeChecked_afterORWJet_EM = electrons_toBeChecked_vec.size();
+  
+  e_m_overlap(Electron_lostInORWJet_vec, muons_toBeCheckedforElectrons_vec, E_M_DR);
+  N_ElectronToBeChecked_afterORWOFLepton_EM = Electron_lostInORWJet_vec.size();
+  removeSFOSPair(Electron_lostInORWJet_vec, MLL_MIN);
+  N_ElectronToBeChecked_afterMllCut_EM = Electron_lostInORWJet_vec.size();
+  
+
   
   //find muons that were lost in e-m or m-m OR or due to mll cut:
   ml0lZcand_EM = -1.;      
   mTl0lZcand_EM = -1.;
-  ICl0lZcand_EM = -2;
+  ICl0lZcand_EM = -5;
   pTl0lZcand_EM = -1.;
   etal0lZcand_EM = -1.;
   ptcone30l0lZcand_EM = -1.;
@@ -3922,6 +4094,7 @@ bool unbiased = true;
   
   ml1lZcand_EM = -1.;
   mTl1lZcand_EM = -1.;
+  ICl1lZcand_EM = -5;
   pTl1lZcand_EM = -1.;
   etal1lZcand_EM = -1.;
   ptcone30l1lZcand_EM = -1.;
@@ -3931,47 +4104,60 @@ bool unbiased = true;
   
   MuonVector MuonWOjOR_vec = preMuon_vec;
   // Remove electrons and muons that overlap
+//     cout << "before e_m_overlap " << MuonWOjOR_vec.size() << endl;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+//     cout << im << " considered in e_m_overlap pt= " << mu_WOjOR->pt << endl;
+  }
   e_m_overlap(ElectronsOverlappingWElectrons, MuonWOjOR_vec, E_M_DR);
+//   cout << "before m_m_overlap " << MuonWOjOR_vec.size() << endl;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+//     cout << im << " considered in m_m_overlap pt= " << mu_WOjOR->pt << endl;
+  }
   m_m_overlap(MuonWOjOR_vec, M_M_DR);
-
+//   cout << "before mllcut " << MuonWOjOR_vec.size() << endl;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+//     cout << im << " considered in mllcut pt= " << mu_WOjOR->pt << endl;
+  }
   removeSFOSPair(MuonWOjOR_vec, MLL_MIN);
-  //can a preMuon be matched to a muon after OR?
+//   cout << "after mllcut " << MuonWOjOR_vec.size() << endl;
+  //Zcand muons: all muons after the OR w/o m-j OR which are no signal muons
   double DeltaMZ_l0lZcand = 99999.;
   MuonVector Muon_Zcand_vec;
-  
-  for(uint im=0; im<preMuon_vec.size(); im++){
-    Muon* pre_mu = preMuon_vec.at(im);
-    pre_mu->setState(NtSys_NOM);
-    if((pre_mu->DeltaR(*mu) < 0.0001)) continue; //no signal lepton
-    bool notOverlappingWSFOFLeptonMllCut = false;
-    for(uint im2=0; im2<MuonWOjOR_vec.size(); im2++){
-	Muon* MuonWOjOR = MuonWOjOR_vec.at(im2);
-	MuonWOjOR->setState(NtSys_NOM);
-	if(MuonWOjOR->DeltaR(*pre_mu) < 0.0001) notOverlappingWSFOFLeptonMllCut = true;
+  bool ZcandIsSignalMuon = false;
+//   cout << "signal mu pt= " << mu->pt << endl;
+  for(uint im=0; im<MuonWOjOR_vec.size(); im++){
+    Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
+//     cout << im << " considered as Zcand pt= " << mu_WOjOR->pt << endl;
+    mu_WOjOR->setState(NtSys_NOM);
+    if((mu_WOjOR->DeltaR(*mu) < 0.0001)){
+//       cout << "is signal mu" << endl;
+      ZcandIsSignalMuon = true;
+      continue; //no signal lepton
     }
-	
-    if(notOverlappingWSFOFLeptonMllCut){
-      TLorentzVector ZcandMuon_TLV;
-      ZcandMuon_TLV.SetPtEtaPhiE(pre_mu->pt, pre_mu->eta ,pre_mu->phi, pre_mu->pt*cosh(pre_mu->eta));
-      Muon_Zcand_vec.push_back(pre_mu);
-      if((pre_mu->q * mu->q)<0.){
-	if(fabs(MZ - Mll(mu, pre_mu)) < DeltaMZ_l0lZcand){
-	  ml0lZcand_EM = Mll(mu, pre_mu);      
-	  mTl0lZcand_EM = calcMt(mu_TLV, ZcandMuon_TLV);  
-	  ICl0lZcand_EM = pre_mu->isCombined;
-	  pTl0lZcand_EM = pre_mu->pt;
-	  etal0lZcand_EM = fabs(pre_mu->eta);
-	  ptcone30l0lZcand_EM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	  d0Sigl0lZcand_EM = pre_mu->d0Sig(true);
-	  z0SinThetal0lZcand_EM = pre_mu->z0SinTheta(true);	  
-	  DeltaMZ_l0lZcand = fabs(MZ - Mll(mu, pre_mu));
-	}
+    TLorentzVector ZcandMuon_TLV;
+    ZcandMuon_TLV.SetPtEtaPhiE(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->pt*cosh(mu_WOjOR->eta));
+    Muon_Zcand_vec.push_back(mu_WOjOR);
+    if((mu_WOjOR->q * mu->q)<0.){
+      if(fabs(MZ - Mll(mu, mu_WOjOR)) < DeltaMZ_l0lZcand){
+	ml0lZcand_EM = Mll(mu, mu_WOjOR);      
+	mTl0lZcand_EM = calcMt(mu_TLV, ZcandMuon_TLV);  
+	ICl0lZcand_EM = mu_WOjOR->isCombined;
+	pTl0lZcand_EM = mu_WOjOR->pt;
+	etal0lZcand_EM = fabs(mu_WOjOR->eta);
+	ptcone30l0lZcand_EM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
+	d0Sigl0lZcand_EM = mu_WOjOR->d0Sig(true);
+	z0SinThetal0lZcand_EM = mu_WOjOR->z0SinTheta(true);	  
+	DeltaMZ_l0lZcand = fabs(MZ - Mll(mu, mu_WOjOR));
       }
     }
   }
   
-//   cout << "Muon_Zcand_vec.size()= " << Muon_Zcand_vec.size() << endl;
-//   if(Muon_Zcand_vec.size() > Muon_lostInORWJet.size()) cout << "problem!!" << endl;
+   
+//   cout << "Muon_Zcand_vec.size()= " << Muon_Zcand_vec.size() << " Muon_lostInORWJet_vec.size()= " << Muon_lostInORWJet_vec.size() << endl;
+//   if(Muon_Zcand_vec.size() > Muon_lostInORWJet_vec.size()) cout << "problem!!" << endl;
   
   ElectronVector ElectronWOjOR_vec = ElectronsOverlappingWElectrons;
 
@@ -3979,36 +4165,31 @@ bool unbiased = true;
   //can a preElectron be matched to an electron after OR?
   double DeltaMZ_l1lZcand = 99999.;
   ElectronVector Electron_Zcand_vec;
-  
-  for(uint ie=0; ie<preElectron_vec.size(); ie++){
-    Electron* pre_el = preElectron_vec.at(ie);
-    pre_el->setState(NtSys_NOM);
-    if((pre_el->DeltaR(*el) < 0.0001)) continue; //no signal lepton
-    bool notOverlappingWSFOFLeptonMllCut = false;
-    for(uint ie2=0; ie2<ElectronWOjOR_vec.size(); ie2++){
-	Electron* ElectronWOjOR = ElectronWOjOR_vec.at(ie2);
-	ElectronWOjOR->setState(NtSys_NOM);
-	if(ElectronWOjOR->DeltaR(*pre_el) < 0.0001) notOverlappingWSFOFLeptonMllCut = true;
+  bool ZcandIsSignalElectron = false;
+  for(uint ie=0; ie<ElectronWOjOR_vec.size(); ie++){
+    Electron* el_WOjOR = ElectronWOjOR_vec.at(ie);
+    el_WOjOR->setState(NtSys_NOM);
+    if((el_WOjOR->DeltaR(*el) < 0.0001)){
+      ZcandIsSignalElectron = true;
+      continue; //no signal lepton
     }
-	
-    if(notOverlappingWSFOFLeptonMllCut){
-      TLorentzVector ZcandElec_TLV;
-      ZcandElec_TLV.SetPtEtaPhiE(pre_el->pt, pre_el->eta ,pre_el->phi, pre_el->pt*cosh(pre_el->eta));
-      Electron_Zcand_vec.push_back(pre_el);
-      if((pre_el->q * el->q)<0.){
-	if(fabs(MZ - Mll(el, pre_el)) < DeltaMZ_l1lZcand){
-	  ml1lZcand_EM = Mll(el, pre_el);      
-	  mTl1lZcand_EM = calcMt(el_TLV, ZcandElec_TLV);      
-	  pTl1lZcand_EM = pre_el->pt;
-	  etal1lZcand_EM = fabs(pre_el->eta);
-	  float ptcone30 = elPtConeCorr(pre_el, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
-	  ptcone30l1lZcand_EM = ptcone30/pre_el->pt;
-	  float etcone = elEtTopoConeCorr(pre_el, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
-	  etcone30l1lZcand_EM = etcone/pre_el->pt;		    	  
-	  d0Sigl1lZcand_EM = pre_el->d0Sig(true);
-	  z0SinThetal1lZcand_EM = pre_el->z0SinTheta(true);	 	  
-	  DeltaMZ_l1lZcand = fabs(MZ - Mll(el, pre_el));
-	}
+    
+    TLorentzVector ZcandElec_TLV;
+    ZcandElec_TLV.SetPtEtaPhiE(el_WOjOR->pt, el_WOjOR->eta ,el_WOjOR->phi, el_WOjOR->pt*cosh(el_WOjOR->eta));
+    Electron_Zcand_vec.push_back(el_WOjOR);
+    if((el_WOjOR->q * el->q)<0.){
+      if(fabs(MZ - Mll(el, el_WOjOR)) < DeltaMZ_l1lZcand){
+	ml1lZcand_EM = Mll(el, el_WOjOR);      
+	mTl1lZcand_EM = calcMt(el_TLV, ZcandElec_TLV);      
+	pTl1lZcand_EM = el_WOjOR->pt;
+	etal1lZcand_EM = fabs(el_WOjOR->eta);
+	float ptcone30 = elPtConeCorr(el_WOjOR, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
+	ptcone30l1lZcand_EM = ptcone30/el_WOjOR->pt;
+	float etcone = elEtTopoConeCorr(el_WOjOR, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
+	etcone30l1lZcand_EM = etcone/el_WOjOR->pt;		    	  
+	d0Sigl1lZcand_EM = el_WOjOR->d0Sig(true);
+	z0SinThetal1lZcand_EM = el_WOjOR->z0SinTheta(true);	 	  
+	DeltaMZ_l1lZcand = fabs(MZ - Mll(el, el_WOjOR));
       }
     }
   }
@@ -4026,7 +4207,7 @@ bool unbiased = true;
   else{
     ml0lZcand_EM = -1.;      
     mTl0lZcand_EM = -1.;
-    ICl0lZcand_EM = -2;
+    ICl0lZcand_EM = -5;
     pTl0lZcand_EM = -1.;
     etal0lZcand_EM = -1.;
     ptcone30l0lZcand_EM = -1.;
@@ -4035,9 +4216,11 @@ bool unbiased = true;
   }
   
   Nleptons_Zcand_EM = Muon_Zcand_vec.size() + Electron_Zcand_vec.size();
+//   if((MuonWOjOR_vec.size() != Muon_lostInORWJet_vec.size()) && !ZcandIsSignalMuon) cout << "mu: why is there no Zcand?" << endl;
+//   if((ElectronWOjOR_vec.size() != Electron_lostInORWJet_vec.size()) && !ZcandIsSignalElectron) cout << "el: why is there no Zcand?" << endl;
 //   cout << "Electron_Zcand_vec.size()= " << Electron_Zcand_vec.size() << endl;
-//   if(Electron_Zcand_vec.size() > Electron_lostInORWJet.size()) cout << "problem!!" << endl;
-  
+//   if(Electron_Zcand_vec.size() > Electron_lostInORWJet_vec.size()) cout << "problem!!" << endl;
+//   cout << "----------------" << endl;
   mZTT_coll = calcMZTauTau_coll(el_TLV, mu_TLV, met_TLV); 
 }
 
@@ -4236,25 +4419,29 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float wei
 void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float weight_ALL_MM){
   
   fillHistos_MM(cut_MM, weight_ALL_MM);
-    
-//   h_DeltaRLeptons_MM_SRSS1->Fill(DeltaRee, cut_MM, weight_ALL_MM); 
+
+    h_N_MuonToBeChecked_afterORWJet_MM->Fill(N_MuonToBeChecked_afterORWJet_MM, cut_MM, weight_ALL_MM); 
+    h_N_MuonToBeChecked_afterORWOFLepton_MM->Fill(N_MuonToBeChecked_afterORWOFLepton_MM, cut_MM, weight_ALL_MM); 
+    h_N_MuonToBeChecked_afterORWSFLepton_MM->Fill(N_MuonToBeChecked_afterORWSFLepton_MM, cut_MM, weight_ALL_MM); 
+    h_N_MuonToBeChecked_afterMllCut_MM->Fill(N_MuonToBeChecked_afterMllCut_MM, cut_MM, weight_ALL_MM); 
+//   ???h_DeltaRLeptons_MM_SRSS1->Fill(DeltaRee, cut_MM, weight_ALL_MM); 
 //   h_pTl0_MM_SRSS1->Fill(ptel0, cut_MM, weight_ALL_MM); 
 //   h_pTl1_MM_SRSS1->Fill(ptel1, cut_MM, weight_ALL_MM); 
 //   h_pTj0_MM_SRSS1->Fill(pTj0, cut_MM, weight_ALL_MM); 
 //   h_pTj1_MM_SRSS1->Fill(pTj1, cut_MM, weight_ALL_MM); 
 //   h_mll_MM_SRSS1->Fill(Mee, cut_MM, weight_ALL_MM); 
 //   h_METrel_MM_SRSS1->Fill(METrelee, cut_MM, weight_ALL_MM); 
-//   h_MET_MM_SRSS1->Fill(METee, cut_MM, weight_ALL_MM); 
+//   controlallthisvariables if correct channel! h_MET_MM_SRSS1->Fill(METee, cut_MM, weight_ALL_MM); 
 //   h_HT_MM_SRSS1->Fill(HT_MM, cut_MM, weight_ALL_MM); 
 //   h_mWWt_MM_SRSS1->Fill(mTWW_MM, cut_MM, weight_ALL_MM); 
 //   h_mTlmin_MM_SRSS1->Fill(mTemin, cut_MM, weight_ALL_MM); 
 //   h_mTlmax_MM_SRSS1->Fill(mTemax, cut_MM, weight_ALL_MM); 
 //   h_meff_MM_SRSS1->Fill(meff, cut_MM, weight_ALL_MM); 
-//   h_mt2_MM_SRSS1->Fill(mt2_ee, cut_MM, weight_ALL_MM); 
+//   ???h_mt2_MM_SRSS1->Fill(mt2_ee, cut_MM, weight_ALL_MM); 
 //   h_mt2J_MM_SRSS1->Fill(mt2J_ee, cut_MM, weight_ALL_MM); 
 //   h_mt2J0LepM_MM_SRSS1->Fill(mt2J0LepM_ee, cut_MM, weight_ALL_MM); 
 //   h_mjj_MM_SRSS1->Fill(mjj, cut_MM, weight_ALL_MM); 
-//   h_DeltaPhiMETll_MM_SRSS1->Fill(DeltaRee, cut_MM, weight_ALL_MM); 
+//   ???h_DeltaPhiMETll_MM_SRSS1->Fill(DeltaRee, cut_MM, weight_ALL_MM); 
 //   h_DeltaPhill_MM_SRSS1->Fill(DeltaPhiMM, cut_MM, weight_ALL_MM); 
 //   h_NBJets_MM_SRSS1->Fill(NBJets, cut_MM, weight_ALL_MM); 
 //   h_NCJets_MM_SRSS1->Fill(NCJets, cut_MM, weight_ALL_MM); 
@@ -4484,6 +4671,14 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
 //   h_D0_branch_l1_EM_SRSS1->Fill(D0_branch_el1, cut_EM, weight_ALL_EM);  
 //   h_D0Signif_branch_l0_EM_SRSS1->Fill(sD0Signif_branch_el0, cut_EM, weight_ALL_EM);  
 //   h_D0Signif_branch_l1_EM_SRSS1->Fill(sD0Signif_branch_el1, cut_EM, weight_ALL_EM);  
+  h_N_MuonToBeChecked_afterORWJet_EM->Fill(N_MuonToBeChecked_afterORWJet_EM, cut_EM, weight_ALL_EM);  
+  h_N_MuonToBeChecked_afterORWOFLepton_EM->Fill(N_MuonToBeChecked_afterORWOFLepton_EM, cut_EM, weight_ALL_EM);  
+  h_N_MuonToBeChecked_afterORWSFLepton_EM->Fill(N_MuonToBeChecked_afterORWSFLepton_EM, cut_EM, weight_ALL_EM);     
+  h_N_MuonToBeChecked_afterMllCut_EM->Fill(N_MuonToBeChecked_afterMllCut_EM, cut_EM, weight_ALL_EM);     
+  h_N_ElectronToBeChecked_afterORWJet_EM->Fill(N_ElecronToBeChecked_afterORWJet_EM, cut_EM, weight_ALL_EM);  
+  h_N_ElectronToBeChecked_afterORWOFLepton_EM->Fill(N_ElectronToBeChecked_afterORWOFLepton_EM, cut_EM, weight_ALL_EM);  
+  h_N_ElectronToBeChecked_afterMllCut_EM->Fill(N_ElectronToBeChecked_afterMllCut_EM, cut_EM, weight_ALL_EM);  
+
   h_Mljj_EM_SRSS1->Fill(Mljj_EM, cut_EM, weight_ALL_EM);  
   h_etcone30l1llost_EM_SRSS1->Fill(etcone30l1llost_EM, cut_EM, weight_ALL_EM);  
   h_etcone30l1lsoft_EM_SRSS1->Fill(etcone30l1lsoft_EM, cut_EM, weight_ALL_EM);  
