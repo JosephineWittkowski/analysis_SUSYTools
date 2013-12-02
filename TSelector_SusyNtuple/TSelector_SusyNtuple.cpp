@@ -259,7 +259,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight; //multiply only SS weight by chargeFlipWeight
 	
 	//------------------------------------------------------------------------------------
-	calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_SS_EE *= getBTagWeight(nt.evt()));
+	calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_SS_EE * getBTagWeight(nt.evt()));
 	if(numberOfCLJets(m_signalJets2Lep) >1){
 // 	  cout << "el0->m= " << el0->m << " el0_SS_TLV.M()= " << el0_SS_TLV.M();
 // 	  cout << "el1->m= " << el1->m << " el1_SS_TLV.M()= " << el1_SS_TLV.M() << endl;
@@ -434,7 +434,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		//product of all weights:
 		weight_ALL_MM = (nt.evt()->isMC) ? getEventWeight(LUMI_A_L, true) * lep_SF_MM * trigW_MM: 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
 		//------------------------------------------------------------------------------------
-		calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_MM *= getBTagWeight(nt.evt()));
+		calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_MM * getBTagWeight(nt.evt()));
 		if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
 
 
@@ -496,13 +496,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			    cutnumber = 40.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    if(numberOfCMSJets(m_signalJets2Lep) >=2 && numberOfCMSJets(m_signalJets2Lep) <=3){
 			      cutnumber = 41.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-			      if(mTmmax >= 110.){
+			      if(mTmax_MM >= 110.){
 				cutnumber = 42.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				if(fabs(mu0_TLV.Eta() - mu1_TLV.Eta()) <= 1.6){
 				  cutnumber = 43.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				  if(mt2J_mm >= 100.){
+				  if(mt2J_MM >= 100.){
 				    cutnumber = 44.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
-				    if(METrelmm >= 40.){
+				    if(METrel_MM >= 40.){
 				      cutnumber = 45.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				    }
 				  }
@@ -525,7 +525,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      cutnumber = 59.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 			    }
 			    
-			      if(METrelmm >= 100.){
+			      if(METrel_MM >= 100.){
 				cutnumber = 60.; fillHistos_MM_SRSS1(cutnumber, mcid, weight_ALL_MM);
 				
 				if((ml0llost_MM > MZ+10. || ml0llost_MM < MZ-10.) && (ml1llost_MM > MZ+10. || ml1llost_MM < MZ-10.)){
@@ -569,11 +569,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 // 			    cutnumber = 55.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 // 			    if(mu0_TLV.Pt() >= 30 && mu1_TLV.Pt() >= 30){
 // 			      cutnumber = 56.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-// 			      float DeltaRmm = fabs(mu0_TLV.DeltaR(mu1_TLV));
-// 			      if(DeltaRmm<1.5){
+// 			      float DeltaR_MM = fabs(mu0_TLV.DeltaR(mu1_TLV));
+// 			      if(DeltaR_MM<1.5){
 // 				cutnumber = 57.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
-// 				float mTmmin = (Mt(mu0, m_met) > Mt(mu1, m_met)) ? Mt(mu1, m_met) : Mt(mu0, m_met);
-// 				if(mTmmin >= 60.){			  
+// 				float mTmin_MM = (Mt(mu0, m_met) > Mt(mu1, m_met)) ? Mt(mu1, m_met) : Mt(mu0, m_met);
+// 				if(mTmin_MM >= 60.){			  
 // 				  cutnumber = 58.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 // 				  float DeltaPhiMETmm = fabs((mu0_TLV + mu1_TLV).DeltaPhi(m_met->lv()));
 // 				  if(DeltaPhiMETmm>=1.5){
@@ -700,7 +700,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	      float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
 	      //------------------------------------------------------------------------------------
 	      float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
-	      calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_SS_EM *= getBTagWeight(nt.evt()));
+	      calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_SS_EM * getBTagWeight(nt.evt()));
 	      if(!nt.evt()->isMC && calcFakeContribution){
 		weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
 		weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
@@ -722,15 +722,15 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 // 		    cout << "ICl1llost_EM= " << ICl1llost_EM << endl;
 		      if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
-			cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		      }
 		      
 		      if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
-			cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		      }				
 		      
 		      if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 		      }
 			  
 		    float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
@@ -742,29 +742,29 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      if(mTWW_EM >= 140.){
 			cutnumber = 29.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
-			  cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			  cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			}
 			
 			if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
-			  cutnumber = 54.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			  cutnumber = 54.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			}				
 		      
 			if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			  cutnumber = 55.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			  cutnumber = 55.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			}
 			float HT_EM = calcHT(el_SS_TLV, mu_TLV, met_SS_TLV, m_signalJets2Lep);
 			if(HT_EM >= 200.){
 			  cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			  if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
-			    cutnumber = 56.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			    cutnumber = 56.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			  }
 			  
 			  if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
-			    cutnumber = 57.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			    cutnumber = 57.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			  }				
 			
 			  if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			    cutnumber = 58.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			    cutnumber = 58.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			  }
 			  if(METrel_SS>=30.){
 			    cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
@@ -772,15 +772,15 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			  if(METrel_SS>=50.){
 			    cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			    if((ml0llost_EM > MZ+10. || ml0llost_EM < MZ-10.) && (ml1llost_EM > MZ+10. || ml1llost_EM < MZ-10.)){
-			      cutnumber = 59.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			      cutnumber = 59.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			    }
 			    
 			    if((ml0loverlapWJet_EM > MZ+10. || ml0loverlapWJet_EM < MZ-10.) && (ml1loverlapWJet_EM > MZ+10. || ml1loverlapWJet_EM < MZ-10.)){
-			      cutnumber = 60.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			      cutnumber = 60.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			    }				
 			  
 			    if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			      cutnumber = 61.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_EM);
+			      cutnumber = 61.; fillHistos_EM_SRSS1(cutnumber, mcid, weight_ALL_SS_EM);
 			    }
 			  }
 			}
@@ -1052,8 +1052,8 @@ float TSelector_SusyNtuple::calcMT2J(TLorentzVector metlv, TLorentzVector l0, TL
   mt2_event2.set_mn(0); // LSP mass = 0 is Generic
   double min_mt2 = min(mt2_event1.get_mt2(), mt2_event2.get_mt2());
   double return_value = (min_mt2 > 0.) ? min_mt2 : -1.;
-//   cout << "m_signalLeptons.at(0)->m= " << m_signalLeptons.at(0)->m << " m_signalLeptons.at(1)->m= " << m_signalLeptons.at(1)->m << endl;
 //   cout << nt.evt()->event << " mt2J= " << return_value << " mt2_event1.get_mt2()= " << mt2_event1.get_mt2() << " mt2_event2.get_mt2()= " << mt2_event2.get_mt2() << endl; 
+//   cout << "m_signalLeptons.at(0)->m= " << m_signalLeptons.at(0)->m << " m_signalLeptons.at(1)->m= " << m_signalLeptons.at(1)->m << endl;
 //   cout << "metlv.Px()= "<< metlv.Px() << " metlv.Py()= " << metlv.Py() << endl;
 //   cout << "l0.Px()= " << l0.Px() << " l0.Py()= " << l0.Py() << " l0.M()= " << l0.M() << endl;
 //   cout << "l1.Px()= " << l1.Px() << " l1.Py()= " << l1.Py() << " l1.M()= " << l1.M() << endl;
@@ -1521,45 +1521,45 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_WOJ_fix.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_WOJ_fix.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_WOJ_fix.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_WOJ_fix.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_WOJ_fix.root";
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_WOJ_fix_NEU4.root";    
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_WOJ_fix.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_WOJ_corrCutflow.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_WOJ_corrCutflow.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_WOJ_corrCutflow.root_NEU";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_WOJ_corrCutflow.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_WOJ_corrCutflow.root";
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_WOJ_corrCutflow_NEU.root";    
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_WOJ_corrCutflow.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_WOJ_fix.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_WOJ_fix.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_WOJ_fix.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_WOJ_fix.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_WOJ_fix.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_WOJ_fix.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_WOJ_fix.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_WOJ_fix.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_WOJ_fix.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_WOJ_fix.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_WOJ_fix.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_WOJ_fix.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_WOJ_fix.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_WOJ_fix.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_WOJ_fix.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_WOJ_fix.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_WOJ_fix.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_WOJ_fix.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_WOJ_fix.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_WOJ_fix.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_WOJ_fix.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_WOJ_fix.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_WOJ_fix.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_WOJ_fix.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_WOJ_fix.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_WOJ_fix.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_WOJ_fix.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_WOJ_corrCutflow.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_WOJ_corrCutflow.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_WOJ_corrCutflow.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_WOJ_corrCutflow.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_WOJ_corrCutflow.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_WOJ_corrCutflow.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_WOJ_corrCutflow.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_WOJ_corrCutflow.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_WOJ_corrCutflow.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_WOJ_corrCutflow.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_WOJ_corrCutflow.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_WOJ_corrCutflow.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_WOJ_corrCutflow.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_WOJ_corrCutflow.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_WOJ_corrCutflow.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_WOJ_corrCutflow.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_WOJ_corrCutflow.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_WOJ_corrCutflow.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_WOJ_corrCutflow.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_WOJ_corrCutflow.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_WOJ_corrCutflow.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_WOJ_corrCutflow.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_WOJ_corrCutflow.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_WOJ_corrCutflow.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_WOJ_corrCutflow.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_WOJ_corrCutflow.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_WOJ_corrCutflow.root";
     
-    if(sample_identifier == 111111) outputfile="histos_fake_Muons_WOJ_fix_3_NEU.root";
+    if(sample_identifier == 111111) outputfile="histos_fake_Muons_WOJ_corrCutflow_3_NEU.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];

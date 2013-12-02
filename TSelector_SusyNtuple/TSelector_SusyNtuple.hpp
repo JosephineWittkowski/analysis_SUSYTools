@@ -570,654 +570,654 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_Mljj_MM_SRSS1;
     TH2F* h_Mljj_EM_SRSS1;
     
-//     TH2F* h_DeltaRLeptons_EE_SRSS1;
-//     TH2F* h_DeltaRLeptons_EE_SRSS2;
-//     TH2F* h_DeltaRLeptons_MM_SRSS1;
-//     TH2F* h_DeltaRLeptons_MM_SRSS2;
-//     TH2F* h_DeltaRLeptons_MM_SRSS3;
-//     TH2F* h_DeltaRLeptons_MM_SRSS4;
-//     TH2F* h_DeltaRLeptons_EM_SRSS1;
-//     TH2F* h_DeltaRLeptons_EM_SRSS2;
-//     TH2F* h_DeltaRLeptons_EE_SROS1;
-//     TH2F* h_DeltaRLeptons_MM_SROS1;
-//     TH2F* h_DeltaRLeptons_EM_SROS1;
-//     
-//     TH2F* h_mZTT_coll_EE_SRSS1;
-//     TH2F* h_mZTT_coll_EE_SRSS2;
-//     TH2F* h_mZTT_coll_MM_SRSS1;
-//     TH2F* h_mZTT_coll_MM_SRSS2;
-//     TH2F* h_mZTT_coll_MM_SRSS3;
-//     TH2F* h_mZTT_coll_MM_SRSS4;
-//     TH2F* h_mZTT_coll_EM_SRSS1;
-//     TH2F* h_mZTT_coll_EM_SRSS2;
-//     TH2F* h_mZTT_coll_EE_SROS1;
-//     TH2F* h_mZTT_coll_MM_SROS1;
-//     TH2F* h_mZTT_coll_EM_SROS1;
-//     
-//     TH2F* h_mZTT_mmc_EE_SRSS1;
-//     TH2F* h_mZTT_mmc_EE_SRSS2;
-//     TH2F* h_mZTT_mmc_MM_SRSS1;
-//     TH2F* h_mZTT_mmc_MM_SRSS2;
-//     TH2F* h_mZTT_mmc_MM_SRSS3;
-//     TH2F* h_mZTT_mmc_MM_SRSS4;
-//     TH2F* h_mZTT_mmc_EM_SRSS1;
-//     TH2F* h_mZTT_mmc_EM_SRSS2;
-//     TH2F* h_mZTT_mmc_EE_SROS1;
-//     TH2F* h_mZTT_mmc_MM_SROS1;
-//     TH2F* h_mZTT_mmc_EM_SROS1;
-//     
-//     TH2F* h_pTl0_EE_SRSS1;
-//     TH2F* h_pTl0_EE_SRSS2;
-//     TH2F* h_pTl0_MM_SRSS1;
-//     TH2F* h_pTl0_MM_SRSS2;
-//     TH2F* h_pTl0_MM_SRSS3;
-//     TH2F* h_pTl0_MM_SRSS4;
-//     TH2F* h_pTl0_EM_SRSS1;
-//     TH2F* h_pTl0_EM_SRSS2;
-//     TH2F* h_pTl0_EE_SROS1;
-//     TH2F* h_pTl0_MM_SROS1;
-//     TH2F* h_pTl0_EM_SROS1;
-//     
-//     TH2F* h_pTl1_EE_SRSS1;
-//     TH2F* h_pTl1_EE_SRSS2;
-//     TH2F* h_pTl1_MM_SRSS1;  
-//     TH2F* h_pTl1_MM_SRSS2;
-//     TH2F* h_pTl1_MM_SRSS3;
-//     TH2F* h_pTl1_MM_SRSS4;
-//     TH2F* h_pTl1_EM_SRSS1;
-//     TH2F* h_pTl1_EM_SRSS2;
-//     TH2F* h_pTl1_EE_SROS1;
-//     TH2F* h_pTl1_MM_SROS1;
-//     TH2F* h_pTl1_EM_SROS1;
-//     
-//     TH2F* h_pTj0_EE_SRSS1;
-//     TH2F* h_pTj0_EE_SRSS2;
-//     TH2F* h_pTj0_MM_SRSS1;
-//     TH2F* h_pTj0_MM_SRSS2;
-//     TH2F* h_pTj0_MM_SRSS3;
-//     TH2F* h_pTj0_MM_SRSS4;
-//     TH2F* h_pTj0_EM_SRSS1;
-//     TH2F* h_pTj0_EM_SRSS2;
-//     TH2F* h_pTj0_EE_SROS1;
-//     TH2F* h_pTj0_MM_SROS1;
-//     TH2F* h_pTj0_EM_SROS1;
-//     
-//     
-//     TH2F* h_pTj1_EE_SRSS1;
-//     TH2F* h_pTj1_EE_SRSS2;
-//     TH2F* h_pTj1_MM_SRSS1;  
-//     TH2F* h_pTj1_MM_SRSS2;
-//     TH2F* h_pTj1_MM_SRSS3;
-//     TH2F* h_pTj1_MM_SRSS4;
-//     TH2F* h_pTj1_EM_SRSS1;
-//     TH2F* h_pTj1_EM_SRSS2;
-//     TH2F* h_pTj1_EE_SROS1;
-//     TH2F* h_pTj1_MM_SROS1;
-//     TH2F* h_pTj1_EM_SROS1;
-//     
-//     TH2F* h_mll_EE_SRSS1;
-//     TH2F* h_mll_EE_SRSS2;
-//     TH2F* h_mll_MM_SRSS1; 
-//     TH2F* h_mll_MM_SRSS2;
-//     TH2F* h_mll_MM_SRSS3;
-//     TH2F* h_mll_MM_SRSS4;
-//     TH2F* h_mll_EM_SRSS1;
-//     TH2F* h_mll_EM_SRSS2;
-//     TH2F* h_mll_EE_SROS1;
-//     TH2F* h_mll_MM_SROS1;
-//     TH2F* h_mll_EM_SROS1;
-//     
-//     TH2F* h_METrel_EE_SRSS1;
-//     TH2F* h_METrel_EE_SRSS2;
-//     TH2F* h_METrel_MM_SRSS1;  
-//     TH2F* h_METrel_MM_SRSS2;  
-//     TH2F* h_METrel_MM_SRSS3;
-//     TH2F* h_METrel_MM_SRSS4;
-//     TH2F* h_METrel_EM_SRSS1;
-//     TH2F* h_METrel_EM_SRSS2;
-//     TH2F* h_METrel_EE_SROS1;
-//     TH2F* h_METrel_MM_SROS1;
-//     TH2F* h_METrel_EM_SROS1;
-//     
-//     TH2F* h_MET_EE_SRSS1;
-//     TH2F* h_MET_EE_SRSS2;
-//     TH2F* h_MET_MM_SRSS1;  
-//     TH2F* h_MET_MM_SRSS2;  
-//     TH2F* h_MET_MM_SRSS3;
-//     TH2F* h_MET_MM_SRSS4;
-//     TH2F* h_MET_EM_SRSS1;
-//     TH2F* h_MET_EM_SRSS2;
-//     TH2F* h_MET_EE_SROS1;
-//     TH2F* h_MET_MM_SROS1;
-//     TH2F* h_MET_EM_SROS1;
-//     
-//     TH2F* h_HT_EE_SRSS1;
-//     TH2F* h_HT_EE_SRSS2;
-//     TH2F* h_HT_MM_SRSS1;  
-//     TH2F* h_HT_MM_SRSS2;
-//     TH2F* h_HT_MM_SRSS3;
-//     TH2F* h_HT_MM_SRSS4;
-//     TH2F* h_HT_EM_SRSS1;
-//     TH2F* h_HT_EM_SRSS2;
-//     TH2F* h_HT_EE_SROS1;
-//     TH2F* h_HT_MM_SROS1;
-//     TH2F* h_HT_EM_SROS1;
-//     
-//     TH2F* h_mWWt_EE_SRSS1;
-//     TH2F* h_mWWt_EE_SRSS2;
-//     TH2F* h_mWWt_MM_SRSS1;  
-//     TH2F* h_mWWt_MM_SRSS2;
-//     TH2F* h_mWWt_MM_SRSS3;
-//     TH2F* h_mWWt_MM_SRSS4;
-//     TH2F* h_mWWt_EM_SRSS1;
-//     TH2F* h_mWWt_EM_SRSS2;
-//     TH2F* h_mWWt_EE_SROS1;
-//     TH2F* h_mWWt_MM_SROS1;
-//     TH2F* h_mWWt_EM_SROS1;
-//     
-//     TH2F* h_mTlmin_EE_SRSS1;
-//     TH2F* h_mTlmin_EE_SRSS2;
-//     TH2F* h_mTlmin_MM_SRSS1;  
-//     TH2F* h_mTlmin_MM_SRSS2;
-//     TH2F* h_mTlmin_MM_SRSS3;
-//     TH2F* h_mTlmin_MM_SRSS4;
-//     TH2F* h_mTlmin_EM_SRSS1;
-//     TH2F* h_mTlmin_EM_SRSS2;
-//     TH2F* h_mTlmin_EE_SROS1;
-//     TH2F* h_mTlmin_MM_SROS1;
-//     TH2F* h_mTlmin_EM_SROS1;
-//     
-//     TH2F* h_mTlmax_EE_SRSS1;
-//     TH2F* h_mTlmax_EE_SRSS2;
-//     TH2F* h_mTlmax_MM_SRSS1;  
-//     TH2F* h_mTlmax_MM_SRSS2;
-//     TH2F* h_mTlmax_MM_SRSS3;
-//     TH2F* h_mTlmax_MM_SRSS4;
-//     TH2F* h_mTlmax_EM_SRSS1;
-//     TH2F* h_mTlmax_EM_SRSS2;
-//     TH2F* h_mTlmax_EE_SROS1;
-//     TH2F* h_mTlmax_MM_SROS1;
-//     TH2F* h_mTlmax_EM_SROS1;
-// 
-//     TH2F* h_meff_EE_SRSS1;
-//     TH2F* h_meff_EE_SRSS2;
-//     TH2F* h_meff_MM_SRSS1;
-//     TH2F* h_meff_MM_SRSS2;
-//     TH2F* h_meff_MM_SRSS3;
-//     TH2F* h_meff_MM_SRSS4;
-//     TH2F* h_meff_EM_SRSS1;
-//     TH2F* h_meff_EM_SRSS2;
-//     TH2F* h_meff_EE_SROS1;
-//     TH2F* h_meff_MM_SROS1;
-//     TH2F* h_meff_EM_SROS1;
-//     
-//     
-//     TH2F* h_mt2_EE_SRSS1;
-//     TH2F* h_mt2_EE_SRSS2;
-//     TH2F* h_mt2_MM_SRSS1;
-//     TH2F* h_mt2_MM_SRSS2;  
-//     TH2F* h_mt2_MM_SRSS3;
-//     TH2F* h_mt2_MM_SRSS4;
-//     TH2F* h_mt2_EM_SRSS1;
-//     TH2F* h_mt2_EM_SRSS2;
-//     TH2F* h_mt2_EE_SROS1;
-//     TH2F* h_mt2_MM_SROS1;
-//     TH2F* h_mt2_EM_SROS1;
-//     
-//     TH2F* h_mt2J_EE_SRSS1;
-//     TH2F* h_mt2J_EE_SRSS2;
-//     TH2F* h_mt2J_MM_SRSS1;
-//     TH2F* h_mt2J_MM_SRSS2;  
-//     TH2F* h_mt2J_MM_SRSS3;
-//     TH2F* h_mt2J_MM_SRSS4;
-//     TH2F* h_mt2J_EM_SRSS1;
-//     TH2F* h_mt2J_EM_SRSS2;
-//     TH2F* h_mt2J_EE_SROS1;
-//     TH2F* h_mt2J_MM_SROS1;
-//     TH2F* h_mt2J_EM_SROS1;    
-//     
-//     TH2F* h_mt2J0LepM_EE_SRSS1;
-//     TH2F* h_mt2J0LepM_EE_SRSS2;
-//     TH2F* h_mt2J0LepM_MM_SRSS1;
-//     TH2F* h_mt2J0LepM_MM_SRSS2;  
-//     TH2F* h_mt2J0LepM_MM_SRSS3;
-//     TH2F* h_mt2J0LepM_MM_SRSS4;
-//     TH2F* h_mt2J0LepM_EM_SRSS1;
-//     TH2F* h_mt2J0LepM_EM_SRSS2;
-//     TH2F* h_mt2J0LepM_EE_SROS1;
-//     TH2F* h_mt2J0LepM_MM_SROS1;
-//     TH2F* h_mt2J0LepM_EM_SROS1;        
-// 
-//     TH2F* h_mjj_EE_SRSS1;
-//     TH2F* h_mjj_EE_SRSS2;
-//     TH2F* h_mjj_MM_SRSS1;  
-//     TH2F* h_mjj_MM_SRSS2;
-//     TH2F* h_mjj_MM_SRSS3;
-//     TH2F* h_mjj_MM_SRSS4;
-//     TH2F* h_mjj_EM_SRSS1;
-//     TH2F* h_mjj_EM_SRSS2;
-//     TH2F* h_mjj_EE_SROS1;
-//     TH2F* h_mjj_MM_SROS1;
-//     TH2F* h_mjj_EM_SROS1;
-//     
-//     TH2F* h_DeltaPhiMETll_EE_SRSS1;
-//     TH2F* h_DeltaPhiMETll_EE_SRSS2;
-//     TH2F* h_DeltaPhiMETll_MM_SRSS1;  
-//     TH2F* h_DeltaPhiMETll_MM_SRSS2;
-//     TH2F* h_DeltaPhiMETll_MM_SRSS3;
-//     TH2F* h_DeltaPhiMETll_MM_SRSS4;
-//     TH2F* h_DeltaPhiMETll_EM_SRSS1;
-//     TH2F* h_DeltaPhiMETll_EM_SRSS2;
-//     TH2F* h_DeltaPhiMETll_EE_SROS1;
-//     TH2F* h_DeltaPhiMETll_MM_SROS1;
-//     TH2F* h_DeltaPhiMETll_EM_SROS1;
-//     
-//     TH2F* h_DeltaPhill_EE_SRSS1;
-//     TH2F* h_DeltaPhill_EE_SRSS2;
-//     TH2F* h_DeltaPhill_MM_SRSS1;  
-//     TH2F* h_DeltaPhill_MM_SRSS2;
-//     TH2F* h_DeltaPhill_MM_SRSS3;
-//     TH2F* h_DeltaPhill_MM_SRSS4;
-//     TH2F* h_DeltaPhill_EM_SRSS1;
-//     TH2F* h_DeltaPhill_EM_SRSS2;
-//     TH2F* h_DeltaPhill_EE_SROS1;
-//     TH2F* h_DeltaPhill_MM_SROS1;
-//     TH2F* h_DeltaPhill_EM_SROS1;
-// 
-//     TH2F* h_NBJets_EE_SRSS1;
-//     TH2F* h_NBJets_EE_SRSS2;
-//     TH2F* h_NBJets_MM_SRSS1;  
-//     TH2F* h_NBJets_MM_SRSS2;
-//     TH2F* h_NBJets_MM_SRSS3;
-//     TH2F* h_NBJets_MM_SRSS4;
-//     TH2F* h_NBJets_EM_SRSS1;
-//     TH2F* h_NBJets_EM_SRSS2;
-//     TH2F* h_NBJets_EE_SROS1;
-//     TH2F* h_NBJets_MM_SROS1;
-//     TH2F* h_NBJets_EM_SROS1;
-// 
-//     TH2F* h_NCJets_EE_SRSS1;
-//     TH2F* h_NCJets_EE_SRSS2;
-//     TH2F* h_NCJets_MM_SRSS1;  
-//     TH2F* h_NCJets_MM_SRSS2;
-//     TH2F* h_NCJets_MM_SRSS3;
-//     TH2F* h_NCJets_MM_SRSS4;
-//     TH2F* h_NCJets_EM_SRSS1;
-//     TH2F* h_NCJets_EM_SRSS2;
-//     TH2F* h_NCJets_EE_SROS1;
-//     TH2F* h_NCJets_MM_SROS1;
-//     TH2F* h_NCJets_EM_SROS1;
-// 
-//     TH2F* h_NFJets_EE_SRSS1;
-//     TH2F* h_NFJets_EE_SRSS2;
-//     TH2F* h_NFJets_MM_SRSS1;  
-//     TH2F* h_NFJets_MM_SRSS2;
-//     TH2F* h_NFJets_MM_SRSS3;
-//     TH2F* h_NFJets_MM_SRSS4;
-//     TH2F* h_NFJets_EM_SRSS1;
-//     TH2F* h_NFJets_EM_SRSS2;
-//     TH2F* h_NFJets_EE_SROS1;
-//     TH2F* h_NFJets_MM_SROS1;
-//     TH2F* h_NFJets_EM_SROS1;
-//     
-//       /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhijj_EE_SRSS1; 
-//   TH2F* h_DeltaPhijj_EE_SRSS2; 
-//   TH2F* h_DeltaPhijj_MM_SRSS1;   
-//   TH2F* h_DeltaPhijj_MM_SRSS2; 
-//   TH2F* h_DeltaPhijj_MM_SRSS3; 
-//   TH2F* h_DeltaPhijj_MM_SRSS4; 
-//   TH2F* h_DeltaPhijj_EM_SRSS1; 
-//   TH2F* h_DeltaPhijj_EM_SRSS2; 
-//   TH2F* h_DeltaPhijj_EE_SROS1; 
-//   TH2F* h_DeltaPhijj_MM_SROS1; 
-//   TH2F* h_DeltaPhijj_EM_SROS1; 
-//   
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_pTjj_EE_SRSS1; 
-//   TH2F* h_pTjj_EE_SRSS2; 
-//   TH2F* h_pTjj_MM_SRSS1; 
-//   TH2F* h_pTjj_MM_SRSS2; 
-//   TH2F* h_pTjj_MM_SRSS3; 
-//   TH2F* h_pTjj_MM_SRSS4; 
-//   TH2F* h_pTjj_EM_SRSS1; 
-//   TH2F* h_pTjj_EM_SRSS2; 
-//   TH2F* h_pTjj_EE_SROS1; 
-//   TH2F* h_pTjj_MM_SROS1; 
-//   TH2F* h_pTjj_EM_SROS1; 
-// 
-//   /*----------------------------------------------------------------------------*/ 
-//   TH2F* h_ptll_EE_SRSS1; 
-//   TH2F* h_ptll_EE_SRSS2; 
-//   TH2F* h_ptll_MM_SRSS1;   
-//   TH2F* h_ptll_MM_SRSS2; 
-//   TH2F* h_ptll_MM_SRSS3; 
-//   TH2F* h_ptll_MM_SRSS4; 
-//   TH2F* h_ptll_EM_SRSS1; 
-//   TH2F* h_ptll_EM_SRSS2; 
-//   TH2F* h_ptll_EE_SROS1; 
-//   TH2F* h_ptll_MM_SROS1; 
-//   TH2F* h_ptll_EM_SROS1; 
-//   
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhiMETl0_EE_SRSS1; 
-//   TH2F* h_DeltaPhiMETl0_EE_SRSS2; 
-//   TH2F* h_DeltaPhiMETl0_MM_SRSS1;   
-//   TH2F* h_DeltaPhiMETl0_MM_SRSS2; 
-//   TH2F* h_DeltaPhiMETl0_MM_SRSS3; 
-//   TH2F* h_DeltaPhiMETl0_MM_SRSS4; 
-//   TH2F* h_DeltaPhiMETl0_EM_SRSS1; 
-//   TH2F* h_DeltaPhiMETl0_EM_SRSS2; 
-//   TH2F* h_DeltaPhiMETl0_EE_SROS1; 
-//   TH2F* h_DeltaPhiMETl0_MM_SROS1; 
-//   TH2F* h_DeltaPhiMETl0_EM_SROS1; 
-// 
-//   /*-------------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhiMETl1_EE_SRSS1; 
-//   TH2F* h_DeltaPhiMETl1_EE_SRSS2; 
-//   TH2F* h_DeltaPhiMETl1_MM_SRSS1;   
-//   TH2F* h_DeltaPhiMETl1_MM_SRSS2; 
-//   TH2F* h_DeltaPhiMETl1_MM_SRSS3; 
-//   TH2F* h_DeltaPhiMETl1_MM_SRSS4; 
-//   TH2F* h_DeltaPhiMETl1_EM_SRSS1; 
-//   TH2F* h_DeltaPhiMETl1_EM_SRSS2; 
-//   TH2F* h_DeltaPhiMETl1_EE_SROS1; 
-//   TH2F* h_DeltaPhiMETl1_MM_SROS1; 
-//   TH2F* h_DeltaPhiMETl1_EM_SROS1; 
-//   
-//     /*-----------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhiMETj0_EE_SRSS1; 
-//   TH2F* h_DeltaPhiMETj0_EE_SRSS2; 
-//   TH2F* h_DeltaPhiMETj0_MM_SRSS1;   
-//   TH2F* h_DeltaPhiMETj0_MM_SRSS2; 
-//   TH2F* h_DeltaPhiMETj0_MM_SRSS3; 
-//   TH2F* h_DeltaPhiMETj0_MM_SRSS4; 
-//   TH2F* h_DeltaPhiMETj0_EM_SRSS1; 
-//   TH2F* h_DeltaPhiMETj0_EM_SRSS2; 
-//   TH2F* h_DeltaPhiMETj0_EE_SROS1; 
-//   TH2F* h_DeltaPhiMETj0_MM_SROS1; 
-//   TH2F* h_DeltaPhiMETj0_EM_SROS1; 
-//   /*-------------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhiMETj1_EE_SRSS1; 
-//   TH2F* h_DeltaPhiMETj1_EE_SRSS2; 
-//   TH2F* h_DeltaPhiMETj1_MM_SRSS1;   
-//   TH2F* h_DeltaPhiMETj1_MM_SRSS2; 
-//   TH2F* h_DeltaPhiMETj1_MM_SRSS3; 
-//   TH2F* h_DeltaPhiMETj1_MM_SRSS4; 
-//   TH2F* h_DeltaPhiMETj1_EM_SRSS1; 
-//   TH2F* h_DeltaPhiMETj1_EM_SRSS2; 
-//   TH2F* h_DeltaPhiMETj1_EE_SROS1; 
-//   TH2F* h_DeltaPhiMETj1_MM_SROS1; 
-//   TH2F* h_DeltaPhiMETj1_EM_SROS1; 
-// 
-//   /*-------------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhiMETjj_EE_SRSS1; 
-//   TH2F* h_DeltaPhiMETjj_EE_SRSS2; 
-//   TH2F* h_DeltaPhiMETjj_MM_SRSS1;   
-//   TH2F* h_DeltaPhiMETjj_MM_SRSS2; 
-//   TH2F* h_DeltaPhiMETjj_MM_SRSS3; 
-//   TH2F* h_DeltaPhiMETjj_MM_SRSS4; 
-//   TH2F* h_DeltaPhiMETjj_EM_SRSS1; 
-//   TH2F* h_DeltaPhiMETjj_EM_SRSS2; 
-//   TH2F* h_DeltaPhiMETjj_EE_SROS1; 
-//   TH2F* h_DeltaPhiMETjj_MM_SROS1; 
-//   TH2F* h_DeltaPhiMETjj_EM_SROS1; 
-// 
-//     /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaRjj_EE_SRSS1; 
-//   TH2F* h_DeltaRjj_EE_SRSS2; 
-//   TH2F* h_DeltaRjj_MM_SRSS1;   
-//   TH2F* h_DeltaRjj_MM_SRSS2; 
-//   TH2F* h_DeltaRjj_MM_SRSS3; 
-//   TH2F* h_DeltaRjj_MM_SRSS4; 
-//   TH2F* h_DeltaRjj_EM_SRSS1; 
-//   TH2F* h_DeltaRjj_EM_SRSS2; 
-//   TH2F* h_DeltaRjj_EE_SROS1; 
-//   TH2F* h_DeltaRjj_MM_SROS1; 
-//   TH2F* h_DeltaRjj_EM_SROS1; 
-// 
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_etal0_EE_SRSS1; 
-//   TH2F* h_etal0_EE_SRSS2; 
-//   TH2F* h_etal0_MM_SRSS1;   
-//   TH2F* h_etal0_MM_SRSS2; 
-//   TH2F* h_etal0_MM_SRSS3; 
-//   TH2F* h_etal0_MM_SRSS4; 
-//   TH2F* h_etal0_EM_SRSS1; 
-//   TH2F* h_etal0_EM_SRSS2; 
-//   TH2F* h_etal0_EE_SROS1; 
-//   TH2F* h_etal0_MM_SROS1; 
-//   TH2F* h_etal0_EM_SROS1; 
-//     /*---------------------------------------------------------------------------*/ 
-//   TH2F* h_etal1_EE_SRSS1; 
-//   TH2F* h_etal1_EE_SRSS2; 
-//   TH2F* h_etal1_MM_SRSS1;   
-//   TH2F* h_etal1_MM_SRSS2; 
-//   TH2F* h_etal1_MM_SRSS3; 
-//   TH2F* h_etal1_MM_SRSS4; 
-//   TH2F* h_etal1_EM_SRSS1; 
-//   TH2F* h_etal1_EM_SRSS2; 
-//   TH2F* h_etal1_EE_SROS1; 
-//   TH2F* h_etal1_MM_SROS1; 
-//   TH2F* h_etal1_EM_SROS1; 
-//     /*---------------------------------------------------------------------------*/ 
-//   TH2F* h_etaj0_EE_SRSS1; 
-//   TH2F* h_etaj0_EE_SRSS2; 
-//   TH2F* h_etaj0_MM_SRSS1;   
-//   TH2F* h_etaj0_MM_SRSS2; 
-//   TH2F* h_etaj0_MM_SRSS3; 
-//   TH2F* h_etaj0_MM_SRSS4; 
-//   TH2F* h_etaj0_EM_SRSS1; 
-//   TH2F* h_etaj0_EM_SRSS2; 
-//   TH2F* h_etaj0_EE_SROS1; 
-//   TH2F* h_etaj0_MM_SROS1; 
-//   TH2F* h_etaj0_EM_SROS1; 
-//     /*---------------------------------------------------------------------------*/ 
-//   TH2F* h_etaj1_EE_SRSS1; 
-//   TH2F* h_etaj1_EE_SRSS2; 
-//   TH2F* h_etaj1_MM_SRSS1;   
-//   TH2F* h_etaj1_MM_SRSS2; 
-//   TH2F* h_etaj1_MM_SRSS3; 
-//   TH2F* h_etaj1_MM_SRSS4; 
-//   TH2F* h_etaj1_EM_SRSS1; 
-//   TH2F* h_etaj1_EM_SRSS2; 
-//   TH2F* h_etaj1_EE_SROS1; 
-//   TH2F* h_etaj1_MM_SROS1; 
-//   TH2F* h_etaj1_EM_SROS1; 
-// 
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_mTl0MET_EE_SRSS1; 
-//   TH2F* h_mTl0MET_EE_SRSS2; 
-//   TH2F* h_mTl0MET_MM_SRSS1;   
-//   TH2F* h_mTl0MET_MM_SRSS2; 
-//   TH2F* h_mTl0MET_MM_SRSS3; 
-//   TH2F* h_mTl0MET_MM_SRSS4; 
-//   TH2F* h_mTl0MET_EM_SRSS1; 
-//   TH2F* h_mTl0MET_EM_SRSS2; 
-//   TH2F* h_mTl0MET_EE_SROS1; 
-//   TH2F* h_mTl0MET_MM_SROS1; 
-//   TH2F* h_mTl0MET_EM_SROS1; 
-//   /*-------------------------------------------------------------------------------*/ 
-//   TH2F* h_mTl1MET_EE_SRSS1; 
-//   TH2F* h_mTl1MET_EE_SRSS2; 
-//   TH2F* h_mTl1MET_MM_SRSS1;   
-//   TH2F* h_mTl1MET_MM_SRSS2; 
-//   TH2F* h_mTl1MET_MM_SRSS3; 
-//   TH2F* h_mTl1MET_MM_SRSS4; 
-//   TH2F* h_mTl1MET_EM_SRSS1; 
-//   TH2F* h_mTl1MET_EM_SRSS2; 
-//   TH2F* h_mTl1MET_EE_SROS1; 
-//   TH2F* h_mTl1MET_MM_SROS1; 
-//   TH2F* h_mTl1MET_EM_SROS1; 
-// 
-//       /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhilljj_EE_SRSS1; 
-//   TH2F* h_DeltaPhilljj_EE_SRSS2; 
-//   TH2F* h_DeltaPhilljj_MM_SRSS1;   
-//   TH2F* h_DeltaPhilljj_MM_SRSS2; 
-//   TH2F* h_DeltaPhilljj_MM_SRSS3; 
-//   TH2F* h_DeltaPhilljj_MM_SRSS4; 
-//   TH2F* h_DeltaPhilljj_EM_SRSS1; 
-//   TH2F* h_DeltaPhilljj_EM_SRSS2; 
-//   TH2F* h_DeltaPhilljj_EE_SROS1; 
-//   TH2F* h_DeltaPhilljj_MM_SROS1; 
-//   TH2F* h_DeltaPhilljj_EM_SROS1; 
-//   /*------------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhil0jj_EE_SRSS1; 
-//   TH2F* h_DeltaPhil0jj_EE_SRSS2; 
-//   TH2F* h_DeltaPhil0jj_MM_SRSS1;   
-//   TH2F* h_DeltaPhil0jj_MM_SRSS2; 
-//   TH2F* h_DeltaPhil0jj_MM_SRSS3; 
-//   TH2F* h_DeltaPhil0jj_MM_SRSS4; 
-//   TH2F* h_DeltaPhil0jj_EM_SRSS1; 
-//   TH2F* h_DeltaPhil0jj_EM_SRSS2; 
-//   TH2F* h_DeltaPhil0jj_EE_SROS1; 
-//   TH2F* h_DeltaPhil0jj_MM_SROS1; 
-//   TH2F* h_DeltaPhil0jj_EM_SROS1; 
-//   /*------------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaPhil1jj_EE_SRSS1; 
-//   TH2F* h_DeltaPhil1jj_EE_SRSS2; 
-//   TH2F* h_DeltaPhil1jj_MM_SRSS1;   
-//   TH2F* h_DeltaPhil1jj_MM_SRSS2; 
-//   TH2F* h_DeltaPhil1jj_MM_SRSS3; 
-//   TH2F* h_DeltaPhil1jj_MM_SRSS4; 
-//   TH2F* h_DeltaPhil1jj_EM_SRSS1; 
-//   TH2F* h_DeltaPhil1jj_EM_SRSS2; 
-//   TH2F* h_DeltaPhil1jj_EE_SROS1; 
-//   TH2F* h_DeltaPhil1jj_MM_SROS1; 
-//   TH2F* h_DeltaPhil1jj_EM_SROS1; 
-// 
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaRlljj_EE_SRSS1; 
-//   TH2F* h_DeltaRlljj_EE_SRSS2; 
-//   TH2F* h_DeltaRlljj_MM_SRSS1;   
-//   TH2F* h_DeltaRlljj_MM_SRSS2; 
-//   TH2F* h_DeltaRlljj_MM_SRSS3; 
-//   TH2F* h_DeltaRlljj_MM_SRSS4; 
-//   TH2F* h_DeltaRlljj_EM_SRSS1; 
-//   TH2F* h_DeltaRlljj_EM_SRSS2; 
-//   TH2F* h_DeltaRlljj_EE_SROS1; 
-//   TH2F* h_DeltaRlljj_MM_SROS1; 
-//   TH2F* h_DeltaRlljj_EM_SROS1; 
-// 
-//     /*--------------------------------------------------------------------------------*/   
-//   TH2F* h_DeltaEtajj_EE_SRSS1; 
-//   TH2F* h_DeltaEtajj_EE_SRSS2; 
-//   TH2F* h_DeltaEtajj_MM_SRSS1;   
-//   TH2F* h_DeltaEtajj_MM_SRSS2; 
-//   TH2F* h_DeltaEtajj_MM_SRSS3; 
-//   TH2F* h_DeltaEtajj_MM_SRSS4; 
-//   TH2F* h_DeltaEtajj_EM_SRSS1; 
-//   TH2F* h_DeltaEtajj_EM_SRSS2; 
-//   TH2F* h_DeltaEtajj_EE_SROS1; 
-//   TH2F* h_DeltaEtajj_MM_SROS1; 
-//   TH2F* h_DeltaEtajj_EM_SROS1;   
-//   
-//       /*--------------------------------------------------------------------------------*/   
-//   TH2F* h_DeltaEtall_EE_SRSS1; 
-//   TH2F* h_DeltaEtall_EE_SRSS2; 
-//   TH2F* h_DeltaEtall_MM_SRSS1;   
-//   TH2F* h_DeltaEtall_MM_SRSS2; 
-//   TH2F* h_DeltaEtall_MM_SRSS3; 
-//   TH2F* h_DeltaEtall_MM_SRSS4; 
-//   TH2F* h_DeltaEtall_EM_SRSS1; 
-//   TH2F* h_DeltaEtall_EM_SRSS2; 
-//   TH2F* h_DeltaEtall_EE_SROS1; 
-//   TH2F* h_DeltaEtall_MM_SROS1; 
-//   TH2F* h_DeltaEtall_EM_SROS1;   
-// 
-// 
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_mTll_EE_SRSS1; 
-//   TH2F* h_mTll_EE_SRSS2; 
-//   TH2F* h_mTll_MM_SRSS1;   
-//   TH2F* h_mTll_MM_SRSS2; 
-//   TH2F* h_mTll_MM_SRSS3; 
-//   TH2F* h_mTll_MM_SRSS4; 
-//   TH2F* h_mTll_EM_SRSS1; 
-//   TH2F* h_mTll_EM_SRSS2; 
-//   TH2F* h_mTll_EE_SROS1; 
-//   TH2F* h_mTll_MM_SROS1; 
-//   TH2F* h_mTll_EM_SROS1; 
-// 
-// 
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_mMETll_EE_SRSS1; 
-//   TH2F* h_mMETll_EE_SRSS2; 
-//   TH2F* h_mMETll_MM_SRSS1;   
-//   TH2F* h_mMETll_MM_SRSS2; 
-//   TH2F* h_mMETll_MM_SRSS3; 
-//   TH2F* h_mMETll_MM_SRSS4; 
-//   TH2F* h_mMETll_EM_SRSS1; 
-//   TH2F* h_mMETll_EM_SRSS2; 
-//   TH2F* h_mMETll_EE_SROS1; 
-//   TH2F* h_mMETll_MM_SROS1; 
-//   TH2F* h_mMETll_EM_SROS1; 
-// 
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_DeltaYjj_EE_SRSS1; 
-//   TH2F* h_DeltaYjj_EE_SRSS2; 
-//   TH2F* h_DeltaYjj_MM_SRSS1;  
-//   TH2F* h_DeltaYjj_MM_SRSS2; 
-//   TH2F* h_DeltaYjj_MM_SRSS3; 
-//   TH2F* h_DeltaYjj_MM_SRSS4; 
-//   TH2F* h_DeltaYjj_EM_SRSS1; 
-//   TH2F* h_DeltaYjj_EM_SRSS2; 
-//   TH2F* h_DeltaYjj_EE_SROS1; 
-//   TH2F* h_DeltaYjj_MM_SROS1; 
-//   TH2F* h_DeltaYjj_EM_SROS1; 
-//   
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_D0_branch_l0_EE_SRSS1;
-//   TH2F* h_D0_branch_l0_EE_SRSS2;
-//   TH2F* h_D0_branch_l0_MM_SRSS1;  
-//   TH2F* h_D0_branch_l0_MM_SRSS2;
-//   TH2F* h_D0_branch_l0_MM_SRSS3;
-//   TH2F* h_D0_branch_l0_MM_SRSS4;
-//   TH2F* h_D0_branch_l0_EM_SRSS1;
-//   TH2F* h_D0_branch_l0_EM_SRSS2;
-//   TH2F* h_D0_branch_l0_EE_SROS1;
-//   TH2F* h_D0_branch_l0_MM_SROS1;
-//   TH2F* h_D0_branch_l0_EM_SROS1;
-//   
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_D0_branch_l1_EE_SRSS1;
-//   TH2F* h_D0_branch_l1_EE_SRSS2;
-//   TH2F* h_D0_branch_l1_MM_SRSS1;  
-//   TH2F* h_D0_branch_l1_MM_SRSS2;
-//   TH2F* h_D0_branch_l1_MM_SRSS3;
-//   TH2F* h_D0_branch_l1_MM_SRSS4;
-//   TH2F* h_D0_branch_l1_EM_SRSS1;
-//   TH2F* h_D0_branch_l1_EM_SRSS2;
-//   TH2F* h_D0_branch_l1_EE_SROS1;
-//   TH2F* h_D0_branch_l1_MM_SROS1;
-//   TH2F* h_D0_branch_l1_EM_SROS1;
-//   
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_D0Signif_branch_l0_EE_SRSS1;
-//   TH2F* h_D0Signif_branch_l0_EE_SRSS2;
-//   TH2F* h_D0Signif_branch_l0_MM_SRSS1;  
-//   TH2F* h_D0Signif_branch_l0_MM_SRSS2;
-//   TH2F* h_D0Signif_branch_l0_MM_SRSS3;
-//   TH2F* h_D0Signif_branch_l0_MM_SRSS4;
-//   TH2F* h_D0Signif_branch_l0_EM_SRSS1;
-//   TH2F* h_D0Signif_branch_l0_EM_SRSS2;
-//   TH2F* h_D0Signif_branch_l0_EE_SROS1;
-//   TH2F* h_D0Signif_branch_l0_MM_SROS1;
-//   TH2F* h_D0Signif_branch_l0_EM_SROS1;
-//   
-//   /*--------------------------------------------------------------------------------*/ 
-//   TH2F* h_D0Signif_branch_l1_EE_SRSS1;
-//   TH2F* h_D0Signif_branch_l1_EE_SRSS2;
-//   TH2F* h_D0Signif_branch_l1_MM_SRSS1;  
-//   TH2F* h_D0Signif_branch_l1_MM_SRSS2;
-//   TH2F* h_D0Signif_branch_l1_MM_SRSS3;
-//   TH2F* h_D0Signif_branch_l1_MM_SRSS4;
-//   TH2F* h_D0Signif_branch_l1_EM_SRSS1;
-//   TH2F* h_D0Signif_branch_l1_EM_SRSS2;
-//   TH2F* h_D0Signif_branch_l1_EE_SROS1;
-//   TH2F* h_D0Signif_branch_l1_MM_SROS1;
-//   TH2F* h_D0Signif_branch_l1_EM_SROS1;
+    TH2F* h_DeltaRLeptons_EE_SRSS1;
+    TH2F* h_DeltaRLeptons_EE_SRSS2;
+    TH2F* h_DeltaRLeptons_MM_SRSS1;
+    TH2F* h_DeltaRLeptons_MM_SRSS2;
+    TH2F* h_DeltaRLeptons_MM_SRSS3;
+    TH2F* h_DeltaRLeptons_MM_SRSS4;
+    TH2F* h_DeltaRLeptons_EM_SRSS1;
+    TH2F* h_DeltaRLeptons_EM_SRSS2;
+    TH2F* h_DeltaRLeptons_EE_SROS1;
+    TH2F* h_DeltaRLeptons_MM_SROS1;
+    TH2F* h_DeltaRLeptons_EM_SROS1;
+    
+    TH2F* h_mZTT_coll_EE_SRSS1;
+    TH2F* h_mZTT_coll_EE_SRSS2;
+    TH2F* h_mZTT_coll_MM_SRSS1;
+    TH2F* h_mZTT_coll_MM_SRSS2;
+    TH2F* h_mZTT_coll_MM_SRSS3;
+    TH2F* h_mZTT_coll_MM_SRSS4;
+    TH2F* h_mZTT_coll_EM_SRSS1;
+    TH2F* h_mZTT_coll_EM_SRSS2;
+    TH2F* h_mZTT_coll_EE_SROS1;
+    TH2F* h_mZTT_coll_MM_SROS1;
+    TH2F* h_mZTT_coll_EM_SROS1;
+    
+    TH2F* h_mZTT_mmc_EE_SRSS1;
+    TH2F* h_mZTT_mmc_EE_SRSS2;
+    TH2F* h_mZTT_mmc_MM_SRSS1;
+    TH2F* h_mZTT_mmc_MM_SRSS2;
+    TH2F* h_mZTT_mmc_MM_SRSS3;
+    TH2F* h_mZTT_mmc_MM_SRSS4;
+    TH2F* h_mZTT_mmc_EM_SRSS1;
+    TH2F* h_mZTT_mmc_EM_SRSS2;
+    TH2F* h_mZTT_mmc_EE_SROS1;
+    TH2F* h_mZTT_mmc_MM_SROS1;
+    TH2F* h_mZTT_mmc_EM_SROS1;
+    
+    TH2F* h_pTl0_EE_SRSS1;
+    TH2F* h_pTl0_EE_SRSS2;
+    TH2F* h_pTl0_MM_SRSS1;
+    TH2F* h_pTl0_MM_SRSS2;
+    TH2F* h_pTl0_MM_SRSS3;
+    TH2F* h_pTl0_MM_SRSS4;
+    TH2F* h_pTl0_EM_SRSS1;
+    TH2F* h_pTl0_EM_SRSS2;
+    TH2F* h_pTl0_EE_SROS1;
+    TH2F* h_pTl0_MM_SROS1;
+    TH2F* h_pTl0_EM_SROS1;
+    
+    TH2F* h_pTl1_EE_SRSS1;
+    TH2F* h_pTl1_EE_SRSS2;
+    TH2F* h_pTl1_MM_SRSS1;  
+    TH2F* h_pTl1_MM_SRSS2;
+    TH2F* h_pTl1_MM_SRSS3;
+    TH2F* h_pTl1_MM_SRSS4;
+    TH2F* h_pTl1_EM_SRSS1;
+    TH2F* h_pTl1_EM_SRSS2;
+    TH2F* h_pTl1_EE_SROS1;
+    TH2F* h_pTl1_MM_SROS1;
+    TH2F* h_pTl1_EM_SROS1;
+    
+    TH2F* h_pTj0_EE_SRSS1;
+    TH2F* h_pTj0_EE_SRSS2;
+    TH2F* h_pTj0_MM_SRSS1;
+    TH2F* h_pTj0_MM_SRSS2;
+    TH2F* h_pTj0_MM_SRSS3;
+    TH2F* h_pTj0_MM_SRSS4;
+    TH2F* h_pTj0_EM_SRSS1;
+    TH2F* h_pTj0_EM_SRSS2;
+    TH2F* h_pTj0_EE_SROS1;
+    TH2F* h_pTj0_MM_SROS1;
+    TH2F* h_pTj0_EM_SROS1;
+    
+    
+    TH2F* h_pTj1_EE_SRSS1;
+    TH2F* h_pTj1_EE_SRSS2;
+    TH2F* h_pTj1_MM_SRSS1;  
+    TH2F* h_pTj1_MM_SRSS2;
+    TH2F* h_pTj1_MM_SRSS3;
+    TH2F* h_pTj1_MM_SRSS4;
+    TH2F* h_pTj1_EM_SRSS1;
+    TH2F* h_pTj1_EM_SRSS2;
+    TH2F* h_pTj1_EE_SROS1;
+    TH2F* h_pTj1_MM_SROS1;
+    TH2F* h_pTj1_EM_SROS1;
+    
+    TH2F* h_mll_EE_SRSS1;
+    TH2F* h_mll_EE_SRSS2;
+    TH2F* h_mll_MM_SRSS1; 
+    TH2F* h_mll_MM_SRSS2;
+    TH2F* h_mll_MM_SRSS3;
+    TH2F* h_mll_MM_SRSS4;
+    TH2F* h_mll_EM_SRSS1;
+    TH2F* h_mll_EM_SRSS2;
+    TH2F* h_mll_EE_SROS1;
+    TH2F* h_mll_MM_SROS1;
+    TH2F* h_mll_EM_SROS1;
+    
+    TH2F* h_METrel_EE_SRSS1;
+    TH2F* h_METrel_EE_SRSS2;
+    TH2F* h_METrel_MM_SRSS1;  
+    TH2F* h_METrel_MM_SRSS2;  
+    TH2F* h_METrel_MM_SRSS3;
+    TH2F* h_METrel_MM_SRSS4;
+    TH2F* h_METrel_EM_SRSS1;
+    TH2F* h_METrel_EM_SRSS2;
+    TH2F* h_METrel_EE_SROS1;
+    TH2F* h_METrel_MM_SROS1;
+    TH2F* h_METrel_EM_SROS1;
+    
+    TH2F* h_MET_EE_SRSS1;
+    TH2F* h_MET_EE_SRSS2;
+    TH2F* h_MET_MM_SRSS1;  
+    TH2F* h_MET_MM_SRSS2;  
+    TH2F* h_MET_MM_SRSS3;
+    TH2F* h_MET_MM_SRSS4;
+    TH2F* h_MET_EM_SRSS1;
+    TH2F* h_MET_EM_SRSS2;
+    TH2F* h_MET_EE_SROS1;
+    TH2F* h_MET_MM_SROS1;
+    TH2F* h_MET_EM_SROS1;
+    
+    TH2F* h_HT_EE_SRSS1;
+    TH2F* h_HT_EE_SRSS2;
+    TH2F* h_HT_MM_SRSS1;  
+    TH2F* h_HT_MM_SRSS2;
+    TH2F* h_HT_MM_SRSS3;
+    TH2F* h_HT_MM_SRSS4;
+    TH2F* h_HT_EM_SRSS1;
+    TH2F* h_HT_EM_SRSS2;
+    TH2F* h_HT_EE_SROS1;
+    TH2F* h_HT_MM_SROS1;
+    TH2F* h_HT_EM_SROS1;
+    
+    TH2F* h_mWWt_EE_SRSS1;
+    TH2F* h_mWWt_EE_SRSS2;
+    TH2F* h_mWWt_MM_SRSS1;  
+    TH2F* h_mWWt_MM_SRSS2;
+    TH2F* h_mWWt_MM_SRSS3;
+    TH2F* h_mWWt_MM_SRSS4;
+    TH2F* h_mWWt_EM_SRSS1;
+    TH2F* h_mWWt_EM_SRSS2;
+    TH2F* h_mWWt_EE_SROS1;
+    TH2F* h_mWWt_MM_SROS1;
+    TH2F* h_mWWt_EM_SROS1;
+    
+    TH2F* h_mTlmin_EE_SRSS1;
+    TH2F* h_mTlmin_EE_SRSS2;
+    TH2F* h_mTlmin_MM_SRSS1;  
+    TH2F* h_mTlmin_MM_SRSS2;
+    TH2F* h_mTlmin_MM_SRSS3;
+    TH2F* h_mTlmin_MM_SRSS4;
+    TH2F* h_mTlmin_EM_SRSS1;
+    TH2F* h_mTlmin_EM_SRSS2;
+    TH2F* h_mTlmin_EE_SROS1;
+    TH2F* h_mTlmin_MM_SROS1;
+    TH2F* h_mTlmin_EM_SROS1;
+    
+    TH2F* h_mTlmax_EE_SRSS1;
+    TH2F* h_mTlmax_EE_SRSS2;
+    TH2F* h_mTlmax_MM_SRSS1;  
+    TH2F* h_mTlmax_MM_SRSS2;
+    TH2F* h_mTlmax_MM_SRSS3;
+    TH2F* h_mTlmax_MM_SRSS4;
+    TH2F* h_mTlmax_EM_SRSS1;
+    TH2F* h_mTlmax_EM_SRSS2;
+    TH2F* h_mTlmax_EE_SROS1;
+    TH2F* h_mTlmax_MM_SROS1;
+    TH2F* h_mTlmax_EM_SROS1;
+
+    TH2F* h_meff_EE_SRSS1;
+    TH2F* h_meff_EE_SRSS2;
+    TH2F* h_meff_MM_SRSS1;
+    TH2F* h_meff_MM_SRSS2;
+    TH2F* h_meff_MM_SRSS3;
+    TH2F* h_meff_MM_SRSS4;
+    TH2F* h_meff_EM_SRSS1;
+    TH2F* h_meff_EM_SRSS2;
+    TH2F* h_meff_EE_SROS1;
+    TH2F* h_meff_MM_SROS1;
+    TH2F* h_meff_EM_SROS1;
+    
+    
+    TH2F* h_mt2_EE_SRSS1;
+    TH2F* h_mt2_EE_SRSS2;
+    TH2F* h_mt2_MM_SRSS1;
+    TH2F* h_mt2_MM_SRSS2;  
+    TH2F* h_mt2_MM_SRSS3;
+    TH2F* h_mt2_MM_SRSS4;
+    TH2F* h_mt2_EM_SRSS1;
+    TH2F* h_mt2_EM_SRSS2;
+    TH2F* h_mt2_EE_SROS1;
+    TH2F* h_mt2_MM_SROS1;
+    TH2F* h_mt2_EM_SROS1;
+    
+    TH2F* h_mt2J_EE_SRSS1;
+    TH2F* h_mt2J_EE_SRSS2;
+    TH2F* h_mt2J_MM_SRSS1;
+    TH2F* h_mt2J_MM_SRSS2;  
+    TH2F* h_mt2J_MM_SRSS3;
+    TH2F* h_mt2J_MM_SRSS4;
+    TH2F* h_mt2J_EM_SRSS1;
+    TH2F* h_mt2J_EM_SRSS2;
+    TH2F* h_mt2J_EE_SROS1;
+    TH2F* h_mt2J_MM_SROS1;
+    TH2F* h_mt2J_EM_SROS1;    
+    
+    TH2F* h_mt2J0LepM_EE_SRSS1;
+    TH2F* h_mt2J0LepM_EE_SRSS2;
+    TH2F* h_mt2J0LepM_MM_SRSS1;
+    TH2F* h_mt2J0LepM_MM_SRSS2;  
+    TH2F* h_mt2J0LepM_MM_SRSS3;
+    TH2F* h_mt2J0LepM_MM_SRSS4;
+    TH2F* h_mt2J0LepM_EM_SRSS1;
+    TH2F* h_mt2J0LepM_EM_SRSS2;
+    TH2F* h_mt2J0LepM_EE_SROS1;
+    TH2F* h_mt2J0LepM_MM_SROS1;
+    TH2F* h_mt2J0LepM_EM_SROS1;        
+
+    TH2F* h_mjj_EE_SRSS1;
+    TH2F* h_mjj_EE_SRSS2;
+    TH2F* h_mjj_MM_SRSS1;  
+    TH2F* h_mjj_MM_SRSS2;
+    TH2F* h_mjj_MM_SRSS3;
+    TH2F* h_mjj_MM_SRSS4;
+    TH2F* h_mjj_EM_SRSS1;
+    TH2F* h_mjj_EM_SRSS2;
+    TH2F* h_mjj_EE_SROS1;
+    TH2F* h_mjj_MM_SROS1;
+    TH2F* h_mjj_EM_SROS1;
+    
+    TH2F* h_DeltaPhiMETll_EE_SRSS1;
+    TH2F* h_DeltaPhiMETll_EE_SRSS2;
+    TH2F* h_DeltaPhiMETll_MM_SRSS1;  
+    TH2F* h_DeltaPhiMETll_MM_SRSS2;
+    TH2F* h_DeltaPhiMETll_MM_SRSS3;
+    TH2F* h_DeltaPhiMETll_MM_SRSS4;
+    TH2F* h_DeltaPhiMETll_EM_SRSS1;
+    TH2F* h_DeltaPhiMETll_EM_SRSS2;
+    TH2F* h_DeltaPhiMETll_EE_SROS1;
+    TH2F* h_DeltaPhiMETll_MM_SROS1;
+    TH2F* h_DeltaPhiMETll_EM_SROS1;
+    
+    TH2F* h_DeltaPhill_EE_SRSS1;
+    TH2F* h_DeltaPhill_EE_SRSS2;
+    TH2F* h_DeltaPhill_MM_SRSS1;  
+    TH2F* h_DeltaPhill_MM_SRSS2;
+    TH2F* h_DeltaPhill_MM_SRSS3;
+    TH2F* h_DeltaPhill_MM_SRSS4;
+    TH2F* h_DeltaPhill_EM_SRSS1;
+    TH2F* h_DeltaPhill_EM_SRSS2;
+    TH2F* h_DeltaPhill_EE_SROS1;
+    TH2F* h_DeltaPhill_MM_SROS1;
+    TH2F* h_DeltaPhill_EM_SROS1;
+
+    TH2F* h_NBJets_EE_SRSS1;
+    TH2F* h_NBJets_EE_SRSS2;
+    TH2F* h_NBJets_MM_SRSS1;  
+    TH2F* h_NBJets_MM_SRSS2;
+    TH2F* h_NBJets_MM_SRSS3;
+    TH2F* h_NBJets_MM_SRSS4;
+    TH2F* h_NBJets_EM_SRSS1;
+    TH2F* h_NBJets_EM_SRSS2;
+    TH2F* h_NBJets_EE_SROS1;
+    TH2F* h_NBJets_MM_SROS1;
+    TH2F* h_NBJets_EM_SROS1;
+
+    TH2F* h_NCJets_EE_SRSS1;
+    TH2F* h_NCJets_EE_SRSS2;
+    TH2F* h_NCJets_MM_SRSS1;  
+    TH2F* h_NCJets_MM_SRSS2;
+    TH2F* h_NCJets_MM_SRSS3;
+    TH2F* h_NCJets_MM_SRSS4;
+    TH2F* h_NCJets_EM_SRSS1;
+    TH2F* h_NCJets_EM_SRSS2;
+    TH2F* h_NCJets_EE_SROS1;
+    TH2F* h_NCJets_MM_SROS1;
+    TH2F* h_NCJets_EM_SROS1;
+
+    TH2F* h_NFJets_EE_SRSS1;
+    TH2F* h_NFJets_EE_SRSS2;
+    TH2F* h_NFJets_MM_SRSS1;  
+    TH2F* h_NFJets_MM_SRSS2;
+    TH2F* h_NFJets_MM_SRSS3;
+    TH2F* h_NFJets_MM_SRSS4;
+    TH2F* h_NFJets_EM_SRSS1;
+    TH2F* h_NFJets_EM_SRSS2;
+    TH2F* h_NFJets_EE_SROS1;
+    TH2F* h_NFJets_MM_SROS1;
+    TH2F* h_NFJets_EM_SROS1;
+    
+      /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhijj_EE_SRSS1; 
+  TH2F* h_DeltaPhijj_EE_SRSS2; 
+  TH2F* h_DeltaPhijj_MM_SRSS1;   
+  TH2F* h_DeltaPhijj_MM_SRSS2; 
+  TH2F* h_DeltaPhijj_MM_SRSS3; 
+  TH2F* h_DeltaPhijj_MM_SRSS4; 
+  TH2F* h_DeltaPhijj_EM_SRSS1; 
+  TH2F* h_DeltaPhijj_EM_SRSS2; 
+  TH2F* h_DeltaPhijj_EE_SROS1; 
+  TH2F* h_DeltaPhijj_MM_SROS1; 
+  TH2F* h_DeltaPhijj_EM_SROS1; 
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_pTjj_EE_SRSS1; 
+  TH2F* h_pTjj_EE_SRSS2; 
+  TH2F* h_pTjj_MM_SRSS1; 
+  TH2F* h_pTjj_MM_SRSS2; 
+  TH2F* h_pTjj_MM_SRSS3; 
+  TH2F* h_pTjj_MM_SRSS4; 
+  TH2F* h_pTjj_EM_SRSS1; 
+  TH2F* h_pTjj_EM_SRSS2; 
+  TH2F* h_pTjj_EE_SROS1; 
+  TH2F* h_pTjj_MM_SROS1; 
+  TH2F* h_pTjj_EM_SROS1; 
+
+  /*----------------------------------------------------------------------------*/ 
+  TH2F* h_ptll_EE_SRSS1; 
+  TH2F* h_ptll_EE_SRSS2; 
+  TH2F* h_ptll_MM_SRSS1;   
+  TH2F* h_ptll_MM_SRSS2; 
+  TH2F* h_ptll_MM_SRSS3; 
+  TH2F* h_ptll_MM_SRSS4; 
+  TH2F* h_ptll_EM_SRSS1; 
+  TH2F* h_ptll_EM_SRSS2; 
+  TH2F* h_ptll_EE_SROS1; 
+  TH2F* h_ptll_MM_SROS1; 
+  TH2F* h_ptll_EM_SROS1; 
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhiMETl0_EE_SRSS1; 
+  TH2F* h_DeltaPhiMETl0_EE_SRSS2; 
+  TH2F* h_DeltaPhiMETl0_MM_SRSS1;   
+  TH2F* h_DeltaPhiMETl0_MM_SRSS2; 
+  TH2F* h_DeltaPhiMETl0_MM_SRSS3; 
+  TH2F* h_DeltaPhiMETl0_MM_SRSS4; 
+  TH2F* h_DeltaPhiMETl0_EM_SRSS1; 
+  TH2F* h_DeltaPhiMETl0_EM_SRSS2; 
+  TH2F* h_DeltaPhiMETl0_EE_SROS1; 
+  TH2F* h_DeltaPhiMETl0_MM_SROS1; 
+  TH2F* h_DeltaPhiMETl0_EM_SROS1; 
+
+  /*-------------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhiMETl1_EE_SRSS1; 
+  TH2F* h_DeltaPhiMETl1_EE_SRSS2; 
+  TH2F* h_DeltaPhiMETl1_MM_SRSS1;   
+  TH2F* h_DeltaPhiMETl1_MM_SRSS2; 
+  TH2F* h_DeltaPhiMETl1_MM_SRSS3; 
+  TH2F* h_DeltaPhiMETl1_MM_SRSS4; 
+  TH2F* h_DeltaPhiMETl1_EM_SRSS1; 
+  TH2F* h_DeltaPhiMETl1_EM_SRSS2; 
+  TH2F* h_DeltaPhiMETl1_EE_SROS1; 
+  TH2F* h_DeltaPhiMETl1_MM_SROS1; 
+  TH2F* h_DeltaPhiMETl1_EM_SROS1; 
+  
+    /*-----------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhiMETj0_EE_SRSS1; 
+  TH2F* h_DeltaPhiMETj0_EE_SRSS2; 
+  TH2F* h_DeltaPhiMETj0_MM_SRSS1;   
+  TH2F* h_DeltaPhiMETj0_MM_SRSS2; 
+  TH2F* h_DeltaPhiMETj0_MM_SRSS3; 
+  TH2F* h_DeltaPhiMETj0_MM_SRSS4; 
+  TH2F* h_DeltaPhiMETj0_EM_SRSS1; 
+  TH2F* h_DeltaPhiMETj0_EM_SRSS2; 
+  TH2F* h_DeltaPhiMETj0_EE_SROS1; 
+  TH2F* h_DeltaPhiMETj0_MM_SROS1; 
+  TH2F* h_DeltaPhiMETj0_EM_SROS1; 
+  /*-------------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhiMETj1_EE_SRSS1; 
+  TH2F* h_DeltaPhiMETj1_EE_SRSS2; 
+  TH2F* h_DeltaPhiMETj1_MM_SRSS1;   
+  TH2F* h_DeltaPhiMETj1_MM_SRSS2; 
+  TH2F* h_DeltaPhiMETj1_MM_SRSS3; 
+  TH2F* h_DeltaPhiMETj1_MM_SRSS4; 
+  TH2F* h_DeltaPhiMETj1_EM_SRSS1; 
+  TH2F* h_DeltaPhiMETj1_EM_SRSS2; 
+  TH2F* h_DeltaPhiMETj1_EE_SROS1; 
+  TH2F* h_DeltaPhiMETj1_MM_SROS1; 
+  TH2F* h_DeltaPhiMETj1_EM_SROS1; 
+
+  /*-------------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhiMETjj_EE_SRSS1; 
+  TH2F* h_DeltaPhiMETjj_EE_SRSS2; 
+  TH2F* h_DeltaPhiMETjj_MM_SRSS1;   
+  TH2F* h_DeltaPhiMETjj_MM_SRSS2; 
+  TH2F* h_DeltaPhiMETjj_MM_SRSS3; 
+  TH2F* h_DeltaPhiMETjj_MM_SRSS4; 
+  TH2F* h_DeltaPhiMETjj_EM_SRSS1; 
+  TH2F* h_DeltaPhiMETjj_EM_SRSS2; 
+  TH2F* h_DeltaPhiMETjj_EE_SROS1; 
+  TH2F* h_DeltaPhiMETjj_MM_SROS1; 
+  TH2F* h_DeltaPhiMETjj_EM_SROS1; 
+
+    /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaRjj_EE_SRSS1; 
+  TH2F* h_DeltaRjj_EE_SRSS2; 
+  TH2F* h_DeltaRjj_MM_SRSS1;   
+  TH2F* h_DeltaRjj_MM_SRSS2; 
+  TH2F* h_DeltaRjj_MM_SRSS3; 
+  TH2F* h_DeltaRjj_MM_SRSS4; 
+  TH2F* h_DeltaRjj_EM_SRSS1; 
+  TH2F* h_DeltaRjj_EM_SRSS2; 
+  TH2F* h_DeltaRjj_EE_SROS1; 
+  TH2F* h_DeltaRjj_MM_SROS1; 
+  TH2F* h_DeltaRjj_EM_SROS1; 
+
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_etal0_EE_SRSS1; 
+  TH2F* h_etal0_EE_SRSS2; 
+  TH2F* h_etal0_MM_SRSS1;   
+  TH2F* h_etal0_MM_SRSS2; 
+  TH2F* h_etal0_MM_SRSS3; 
+  TH2F* h_etal0_MM_SRSS4; 
+  TH2F* h_etal0_EM_SRSS1; 
+  TH2F* h_etal0_EM_SRSS2; 
+  TH2F* h_etal0_EE_SROS1; 
+  TH2F* h_etal0_MM_SROS1; 
+  TH2F* h_etal0_EM_SROS1; 
+    /*---------------------------------------------------------------------------*/ 
+  TH2F* h_etal1_EE_SRSS1; 
+  TH2F* h_etal1_EE_SRSS2; 
+  TH2F* h_etal1_MM_SRSS1;   
+  TH2F* h_etal1_MM_SRSS2; 
+  TH2F* h_etal1_MM_SRSS3; 
+  TH2F* h_etal1_MM_SRSS4; 
+  TH2F* h_etal1_EM_SRSS1; 
+  TH2F* h_etal1_EM_SRSS2; 
+  TH2F* h_etal1_EE_SROS1; 
+  TH2F* h_etal1_MM_SROS1; 
+  TH2F* h_etal1_EM_SROS1; 
+    /*---------------------------------------------------------------------------*/ 
+  TH2F* h_etaj0_EE_SRSS1; 
+  TH2F* h_etaj0_EE_SRSS2; 
+  TH2F* h_etaj0_MM_SRSS1;   
+  TH2F* h_etaj0_MM_SRSS2; 
+  TH2F* h_etaj0_MM_SRSS3; 
+  TH2F* h_etaj0_MM_SRSS4; 
+  TH2F* h_etaj0_EM_SRSS1; 
+  TH2F* h_etaj0_EM_SRSS2; 
+  TH2F* h_etaj0_EE_SROS1; 
+  TH2F* h_etaj0_MM_SROS1; 
+  TH2F* h_etaj0_EM_SROS1; 
+    /*---------------------------------------------------------------------------*/ 
+  TH2F* h_etaj1_EE_SRSS1; 
+  TH2F* h_etaj1_EE_SRSS2; 
+  TH2F* h_etaj1_MM_SRSS1;   
+  TH2F* h_etaj1_MM_SRSS2; 
+  TH2F* h_etaj1_MM_SRSS3; 
+  TH2F* h_etaj1_MM_SRSS4; 
+  TH2F* h_etaj1_EM_SRSS1; 
+  TH2F* h_etaj1_EM_SRSS2; 
+  TH2F* h_etaj1_EE_SROS1; 
+  TH2F* h_etaj1_MM_SROS1; 
+  TH2F* h_etaj1_EM_SROS1; 
+
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_mTl0MET_EE_SRSS1; 
+  TH2F* h_mTl0MET_EE_SRSS2; 
+  TH2F* h_mTl0MET_MM_SRSS1;   
+  TH2F* h_mTl0MET_MM_SRSS2; 
+  TH2F* h_mTl0MET_MM_SRSS3; 
+  TH2F* h_mTl0MET_MM_SRSS4; 
+  TH2F* h_mTl0MET_EM_SRSS1; 
+  TH2F* h_mTl0MET_EM_SRSS2; 
+  TH2F* h_mTl0MET_EE_SROS1; 
+  TH2F* h_mTl0MET_MM_SROS1; 
+  TH2F* h_mTl0MET_EM_SROS1; 
+  /*-------------------------------------------------------------------------------*/ 
+  TH2F* h_mTl1MET_EE_SRSS1; 
+  TH2F* h_mTl1MET_EE_SRSS2; 
+  TH2F* h_mTl1MET_MM_SRSS1;   
+  TH2F* h_mTl1MET_MM_SRSS2; 
+  TH2F* h_mTl1MET_MM_SRSS3; 
+  TH2F* h_mTl1MET_MM_SRSS4; 
+  TH2F* h_mTl1MET_EM_SRSS1; 
+  TH2F* h_mTl1MET_EM_SRSS2; 
+  TH2F* h_mTl1MET_EE_SROS1; 
+  TH2F* h_mTl1MET_MM_SROS1; 
+  TH2F* h_mTl1MET_EM_SROS1; 
+
+      /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhilljj_EE_SRSS1; 
+  TH2F* h_DeltaPhilljj_EE_SRSS2; 
+  TH2F* h_DeltaPhilljj_MM_SRSS1;   
+  TH2F* h_DeltaPhilljj_MM_SRSS2; 
+  TH2F* h_DeltaPhilljj_MM_SRSS3; 
+  TH2F* h_DeltaPhilljj_MM_SRSS4; 
+  TH2F* h_DeltaPhilljj_EM_SRSS1; 
+  TH2F* h_DeltaPhilljj_EM_SRSS2; 
+  TH2F* h_DeltaPhilljj_EE_SROS1; 
+  TH2F* h_DeltaPhilljj_MM_SROS1; 
+  TH2F* h_DeltaPhilljj_EM_SROS1; 
+  /*------------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhil0jj_EE_SRSS1; 
+  TH2F* h_DeltaPhil0jj_EE_SRSS2; 
+  TH2F* h_DeltaPhil0jj_MM_SRSS1;   
+  TH2F* h_DeltaPhil0jj_MM_SRSS2; 
+  TH2F* h_DeltaPhil0jj_MM_SRSS3; 
+  TH2F* h_DeltaPhil0jj_MM_SRSS4; 
+  TH2F* h_DeltaPhil0jj_EM_SRSS1; 
+  TH2F* h_DeltaPhil0jj_EM_SRSS2; 
+  TH2F* h_DeltaPhil0jj_EE_SROS1; 
+  TH2F* h_DeltaPhil0jj_MM_SROS1; 
+  TH2F* h_DeltaPhil0jj_EM_SROS1; 
+  /*------------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaPhil1jj_EE_SRSS1; 
+  TH2F* h_DeltaPhil1jj_EE_SRSS2; 
+  TH2F* h_DeltaPhil1jj_MM_SRSS1;   
+  TH2F* h_DeltaPhil1jj_MM_SRSS2; 
+  TH2F* h_DeltaPhil1jj_MM_SRSS3; 
+  TH2F* h_DeltaPhil1jj_MM_SRSS4; 
+  TH2F* h_DeltaPhil1jj_EM_SRSS1; 
+  TH2F* h_DeltaPhil1jj_EM_SRSS2; 
+  TH2F* h_DeltaPhil1jj_EE_SROS1; 
+  TH2F* h_DeltaPhil1jj_MM_SROS1; 
+  TH2F* h_DeltaPhil1jj_EM_SROS1; 
+
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaRlljj_EE_SRSS1; 
+  TH2F* h_DeltaRlljj_EE_SRSS2; 
+  TH2F* h_DeltaRlljj_MM_SRSS1;   
+  TH2F* h_DeltaRlljj_MM_SRSS2; 
+  TH2F* h_DeltaRlljj_MM_SRSS3; 
+  TH2F* h_DeltaRlljj_MM_SRSS4; 
+  TH2F* h_DeltaRlljj_EM_SRSS1; 
+  TH2F* h_DeltaRlljj_EM_SRSS2; 
+  TH2F* h_DeltaRlljj_EE_SROS1; 
+  TH2F* h_DeltaRlljj_MM_SROS1; 
+  TH2F* h_DeltaRlljj_EM_SROS1; 
+
+    /*--------------------------------------------------------------------------------*/   
+  TH2F* h_DeltaEtajj_EE_SRSS1; 
+  TH2F* h_DeltaEtajj_EE_SRSS2; 
+  TH2F* h_DeltaEtajj_MM_SRSS1;   
+  TH2F* h_DeltaEtajj_MM_SRSS2; 
+  TH2F* h_DeltaEtajj_MM_SRSS3; 
+  TH2F* h_DeltaEtajj_MM_SRSS4; 
+  TH2F* h_DeltaEtajj_EM_SRSS1; 
+  TH2F* h_DeltaEtajj_EM_SRSS2; 
+  TH2F* h_DeltaEtajj_EE_SROS1; 
+  TH2F* h_DeltaEtajj_MM_SROS1; 
+  TH2F* h_DeltaEtajj_EM_SROS1;   
+  
+      /*--------------------------------------------------------------------------------*/   
+  TH2F* h_DeltaEtall_EE_SRSS1; 
+  TH2F* h_DeltaEtall_EE_SRSS2; 
+  TH2F* h_DeltaEtall_MM_SRSS1;   
+  TH2F* h_DeltaEtall_MM_SRSS2; 
+  TH2F* h_DeltaEtall_MM_SRSS3; 
+  TH2F* h_DeltaEtall_MM_SRSS4; 
+  TH2F* h_DeltaEtall_EM_SRSS1; 
+  TH2F* h_DeltaEtall_EM_SRSS2; 
+  TH2F* h_DeltaEtall_EE_SROS1; 
+  TH2F* h_DeltaEtall_MM_SROS1; 
+  TH2F* h_DeltaEtall_EM_SROS1;   
+
+
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_mTll_EE_SRSS1; 
+  TH2F* h_mTll_EE_SRSS2; 
+  TH2F* h_mTll_MM_SRSS1;   
+  TH2F* h_mTll_MM_SRSS2; 
+  TH2F* h_mTll_MM_SRSS3; 
+  TH2F* h_mTll_MM_SRSS4; 
+  TH2F* h_mTll_EM_SRSS1; 
+  TH2F* h_mTll_EM_SRSS2; 
+  TH2F* h_mTll_EE_SROS1; 
+  TH2F* h_mTll_MM_SROS1; 
+  TH2F* h_mTll_EM_SROS1; 
+
+
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_mMETll_EE_SRSS1; 
+  TH2F* h_mMETll_EE_SRSS2; 
+  TH2F* h_mMETll_MM_SRSS1;   
+  TH2F* h_mMETll_MM_SRSS2; 
+  TH2F* h_mMETll_MM_SRSS3; 
+  TH2F* h_mMETll_MM_SRSS4; 
+  TH2F* h_mMETll_EM_SRSS1; 
+  TH2F* h_mMETll_EM_SRSS2; 
+  TH2F* h_mMETll_EE_SROS1; 
+  TH2F* h_mMETll_MM_SROS1; 
+  TH2F* h_mMETll_EM_SROS1; 
+
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_DeltaYjj_EE_SRSS1; 
+  TH2F* h_DeltaYjj_EE_SRSS2; 
+  TH2F* h_DeltaYjj_MM_SRSS1;  
+  TH2F* h_DeltaYjj_MM_SRSS2; 
+  TH2F* h_DeltaYjj_MM_SRSS3; 
+  TH2F* h_DeltaYjj_MM_SRSS4; 
+  TH2F* h_DeltaYjj_EM_SRSS1; 
+  TH2F* h_DeltaYjj_EM_SRSS2; 
+  TH2F* h_DeltaYjj_EE_SROS1; 
+  TH2F* h_DeltaYjj_MM_SROS1; 
+  TH2F* h_DeltaYjj_EM_SROS1; 
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0_branch_l0_EE_SRSS1;
+  TH2F* h_D0_branch_l0_EE_SRSS2;
+  TH2F* h_D0_branch_l0_MM_SRSS1;  
+  TH2F* h_D0_branch_l0_MM_SRSS2;
+  TH2F* h_D0_branch_l0_MM_SRSS3;
+  TH2F* h_D0_branch_l0_MM_SRSS4;
+  TH2F* h_D0_branch_l0_EM_SRSS1;
+  TH2F* h_D0_branch_l0_EM_SRSS2;
+  TH2F* h_D0_branch_l0_EE_SROS1;
+  TH2F* h_D0_branch_l0_MM_SROS1;
+  TH2F* h_D0_branch_l0_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0_branch_l1_EE_SRSS1;
+  TH2F* h_D0_branch_l1_EE_SRSS2;
+  TH2F* h_D0_branch_l1_MM_SRSS1;  
+  TH2F* h_D0_branch_l1_MM_SRSS2;
+  TH2F* h_D0_branch_l1_MM_SRSS3;
+  TH2F* h_D0_branch_l1_MM_SRSS4;
+  TH2F* h_D0_branch_l1_EM_SRSS1;
+  TH2F* h_D0_branch_l1_EM_SRSS2;
+  TH2F* h_D0_branch_l1_EE_SROS1;
+  TH2F* h_D0_branch_l1_MM_SROS1;
+  TH2F* h_D0_branch_l1_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0Signif_branch_l0_EE_SRSS1;
+  TH2F* h_D0Signif_branch_l0_EE_SRSS2;
+  TH2F* h_D0Signif_branch_l0_MM_SRSS1;  
+  TH2F* h_D0Signif_branch_l0_MM_SRSS2;
+  TH2F* h_D0Signif_branch_l0_MM_SRSS3;
+  TH2F* h_D0Signif_branch_l0_MM_SRSS4;
+  TH2F* h_D0Signif_branch_l0_EM_SRSS1;
+  TH2F* h_D0Signif_branch_l0_EM_SRSS2;
+  TH2F* h_D0Signif_branch_l0_EE_SROS1;
+  TH2F* h_D0Signif_branch_l0_MM_SROS1;
+  TH2F* h_D0Signif_branch_l0_EM_SROS1;
+  
+  /*--------------------------------------------------------------------------------*/ 
+  TH2F* h_D0Signif_branch_l1_EE_SRSS1;
+  TH2F* h_D0Signif_branch_l1_EE_SRSS2;
+  TH2F* h_D0Signif_branch_l1_MM_SRSS1;  
+  TH2F* h_D0Signif_branch_l1_MM_SRSS2;
+  TH2F* h_D0Signif_branch_l1_MM_SRSS3;
+  TH2F* h_D0Signif_branch_l1_MM_SRSS4;
+  TH2F* h_D0Signif_branch_l1_EM_SRSS1;
+  TH2F* h_D0Signif_branch_l1_EM_SRSS2;
+  TH2F* h_D0Signif_branch_l1_EE_SROS1;
+  TH2F* h_D0Signif_branch_l1_MM_SROS1;
+  TH2F* h_D0Signif_branch_l1_EM_SROS1;
   
     
     SUSYObjDef m_susyObj;      // SUSY object definitions
@@ -1225,10 +1225,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     TSelector_SusyNtuple();
     virtual ~TSelector_SusyNtuple(){};
 
-    // Output Text File
+//     Output Text File
     ofstream out;
 
-    // Begin is called before looping on entries
+//     Begin is called before looping on entries
     virtual void    Begin(TTree *tree);
     virtual void    SlaveBegin(TTree *tree);
     // Terminate is called after looping is finished
@@ -1320,32 +1320,32 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ptel1;
     float eta_el0;
     float eta_el1;
-    float DeltaRee;
-    float pTee;
-    float Mee;
-    float METrelee;
-    float METee;
+    float DeltaREE;
+    float pTEE;
+    float MEE;
+    float METrelEE;
+    float METEE;
     float HT_EE;
     float mTWW_EE;
-    float mTee;
+    float mTEE;
     float mTemin;
     float mTemax;
     float mTel0MET;
     float mTel1MET;
-    float mMETee;
+    float mMETEE;
     float DeltaPhiEE;
     float DeltaPhiMETel0;
     float DeltaPhiMETel1;
-    float DeltaPhiMETee;
-    float mt2_ee;  
-    float mt2J_ee;      
-    float mt2J0LepM_ee;      
-    float DeltaPhieejj;
+    float DeltaPhiMETEE;
+    float mt2_EE;  
+    float mt2J_EE;      
+    float mt2J0LepM_EE;      
+    float DeltaPhiEEjj;
     float DeltaPhiel0jj;
     float DeltaPhiel1jj;
-    float DeltaReejj;
+    float DeltaREEjj;
     float Mljj_EE;
-    float DeltaEtaee;
+    float DeltaEtaEE;
     
     float D0_branch_el0;
     float D0_branch_el1;
@@ -1488,33 +1488,33 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ptmu1;
     float eta_mu0;
     float eta_mu1;
-    float DeltaRmm;
-    float pTmm;
-    float Mmm;
-    float mTmm;
-    float METrelmm;
-    float METmm;
+    float DeltaR_MM;
+    float pT_MM;
+    float M_MM;
+    float mTMM;
+    float METrel_MM;
+    float MET_MM;
     float HT_MM;
     float mTWW_MM;
-    float mTmmin;
-    float mTmmax;
+    float mTmin_MM;
+    float mTmax_MM;
     float mTmu0MET;
     float mTmu1MET;
-    float mMETmm;
+    float mMETMM;
     float DeltaPhiMM;
     float DeltaPhiMETmu0;
     float DeltaPhiMETmu1;
-    float DeltaPhiMETmm;
-    float mt2_mm;
-    float mt2J_mm;    
-    float mt2J0LepM_mm;    
+    float DeltaPhiMETMM;
+    float mt2_MM;
+    float mt2J_MM;    
+    float mt2J0LepM_MM;    
     
-    float DeltaPhimmjj;
+    float DeltaPhiMMjj;
     float DeltaPhimu0jj;
     float DeltaPhimu1jj;
-    float DeltaRmmjj;
+    float DeltaRMMjj;
     float Mljj_MM;
-    float DeltaEtamm;
+    float DeltaEtaMM;
 
     float D0_branch_mu0;
     float D0_branch_mu1;
@@ -1660,33 +1660,33 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ptl1;
     float eta_l0;
     float eta_l1;
-    float DeltaRem;
-    float pTem;
-    float Mem;
-    float mTem;
-    float METrelem;
-    float METem;
+    float DeltaR_EM;
+    float pT_EM;
+    float M_EM;
+    float mT_EM;
+    float METrel_EM;
+    float MET_EM;
     float HT_EM;
     float mTWW_EM;
-    float mTemmin;
-    float mTemmax;
+    float mTmin_EM;
+    float mTmax_EM;
     float mTl0MET;
     float mTl1MET;
-    float mMETem;
+    float mMET_EM;
     float DeltaPhiEM;
     float DeltaPhiMETl0;
     float DeltaPhiMETl1;
-    float DeltaPhiMETem;
-    float mt2_em;
-    float mt2J_em;    
-    float mt2J0LepM_em;    
+    float DeltaPhiMETEM;
+    float mt2_EM;
+    float mt2J_EM;    
+    float mt2J0LepM_EM;    
     
     float DeltaPhiEMjj;
     float DeltaPhil0jj;
     float DeltaPhil1jj;
-    float DeltaRemjj;
+    float DeltaREMjj;
     float Mljj_EM;
-    float DeltaEtaem;
+    float DeltaEtaEM;
 
     float D0_branch_l0;
     float D0_branch_l1;

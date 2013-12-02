@@ -1,5 +1,6 @@
-root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WZ/*\")"
 root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_ZPlusJets/*\")"
+root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WZ/*\")"
+
 
 
 # root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/ZZ/*\")"
