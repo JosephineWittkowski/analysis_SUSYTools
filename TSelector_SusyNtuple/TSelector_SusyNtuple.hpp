@@ -776,18 +776,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_mt2J_MM_SROS1;
     TH2F* h_mt2J_EM_SROS1;    
     
-    TH2F* h_mt2J0LepM_EE_SRSS1;
-    TH2F* h_mt2J0LepM_EE_SRSS2;
-    TH2F* h_mt2J0LepM_MM_SRSS1;
-    TH2F* h_mt2J0LepM_MM_SRSS2;  
-    TH2F* h_mt2J0LepM_MM_SRSS3;
-    TH2F* h_mt2J0LepM_MM_SRSS4;
-    TH2F* h_mt2J0LepM_EM_SRSS1;
-    TH2F* h_mt2J0LepM_EM_SRSS2;
-    TH2F* h_mt2J0LepM_EE_SROS1;
-    TH2F* h_mt2J0LepM_MM_SROS1;
-    TH2F* h_mt2J0LepM_EM_SROS1;        
-
     TH2F* h_mjj_EE_SRSS1;
     TH2F* h_mjj_EE_SRSS2;
     TH2F* h_mjj_MM_SRSS1;  
@@ -1225,10 +1213,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     TSelector_SusyNtuple();
     virtual ~TSelector_SusyNtuple(){};
 
-//     Output Text File
+    // Output Text File
     ofstream out;
 
-//     Begin is called before looping on entries
+    // Begin is called before looping on entries
     virtual void    Begin(TTree *tree);
     virtual void    SlaveBegin(TTree *tree);
     // Terminate is called after looping is finished
@@ -1245,7 +1233,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float recalcMetRel(TLorentzVector metLV, TLorentzVector l1, TLorentzVector l2, const JetVector& jets, bool useForward);
     float calcMT2(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1);
     float calcMT2J(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1, TLorentzVector j0, TLorentzVector j1);
-    float calcMT2J0LepM(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1, TLorentzVector j0, TLorentzVector j1);
     bool checkLeptonPt(const LeptonVector& leptons);
     float mTWW(TLorentzVector _ll, TLorentzVector _nu, bool MvvTrue);
     float calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, const JetVector &signalJets);
@@ -1316,44 +1303,43 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mZTT_mmc; 
     
     //#####################################
-    float ptel0;
-    float ptel1;
-    float eta_el0;
-    float eta_el1;
-    float DeltaREE;
-    float pTEE;
-    float MEE;
-    float METrelEE;
-    float METEE;
+    float ptl0_EE;
+    float ptl1_EE;
+    float etal0_EE;
+    float etal1_EE;
+    float DeltaR_EE;
+    float pTll_EE;
+    float Mll_EE;
+    float METrel_EE;
+    float MET_EE;
     float HT_EE;
     float mTWW_EE;
-    float mTEE;
-    float mTemin;
-    float mTemax;
-    float mTel0MET;
-    float mTel1MET;
-    float mMETEE;
-    float DeltaPhiEE;
-    float DeltaPhiMETel0;
-    float DeltaPhiMETel1;
-    float DeltaPhiMETEE;
-    float mt2_EE;  
-    float mt2J_EE;      
-    float mt2J0LepM_EE;      
-    float DeltaPhiEEjj;
-    float DeltaPhiel0jj;
-    float DeltaPhiel1jj;
-    float DeltaREEjj;
+    float mT_EE;
+    float mTmin_EE;
+    float mTmax_EE;
+    float mTl0MET_EE;
+    float mTl1MET_EE;
+    float mMET_EE;
+    float DeltaPhi_EE;
+    float DeltaPhiMETl0_EE;
+    float DeltaPhiMETl1_EE;
+    float DeltaPhiMET_EE;
+    float mT2_EE;  
+    float mT2J_EE;       
+    float DeltaPhilljj_EE;
+    float DeltaPhil0jj_EE;
+    float DeltaPhil1jj_EE;
+    float DeltaRlljj_EE;
     float Mljj_EE;
-    float DeltaEtaEE;
+    float DeltaEtall_EE;
     
-    float D0_branch_el0;
-    float D0_branch_el1;
-    float D0err_branch_el0;
-    float D0err_branch_el1;
+    float D0_branch_l0_EE;
+    float D0_branch_l1_EE;
+    float D0err_branch_l0_EE;
+    float D0err_branch_l1_EE;
     
-    float sD0Signif_branch_el0;
-    float sD0Signif_branch_el1;
+    float sD0Signif_branch_l0_EE;
+    float sD0Signif_branch_l1_EE;
 
     int Nleptons_lost_EE;
     float ml0llost_EE;      
@@ -1484,46 +1470,43 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     //#####################################
     
-    float ptmu0;
-    float ptmu1;
-    float eta_mu0;
-    float eta_mu1;
+    float ptl0_MM;
+    float ptl1_MM;
+    float etal0_MM;
+    float etal1_MM;
     float DeltaR_MM;
-    float pT_MM;
-    float M_MM;
-    float mTMM;
+    float pTll_MM;
+    float Mll_MM;
     float METrel_MM;
     float MET_MM;
     float HT_MM;
     float mTWW_MM;
+    float mT_MM;
     float mTmin_MM;
     float mTmax_MM;
-    float mTmu0MET;
-    float mTmu1MET;
-    float mMETMM;
-    float DeltaPhiMM;
-    float DeltaPhiMETmu0;
-    float DeltaPhiMETmu1;
-    float DeltaPhiMETMM;
-    float mt2_MM;
-    float mt2J_MM;    
-    float mt2J0LepM_MM;    
-    
-    float DeltaPhiMMjj;
-    float DeltaPhimu0jj;
-    float DeltaPhimu1jj;
-    float DeltaRMMjj;
+    float mTl0MET_MM;
+    float mTl1MET_MM;
+    float mMET_MM;
+    float DeltaPhi_MM;
+    float DeltaPhiMETl0_MM;
+    float DeltaPhiMETl1_MM;
+    float DeltaPhiMET_MM;
+    float mT2_MM;  
+    float mT2J_MM;       
+    float DeltaPhilljj_MM;
+    float DeltaPhil0jj_MM;
+    float DeltaPhil1jj_MM;
+    float DeltaRlljj_MM;
     float Mljj_MM;
-    float DeltaEtaMM;
-
-    float D0_branch_mu0;
-    float D0_branch_mu1;
-    float D0err_branch_mu0;
-    float D0err_branch_mu1;
+    float DeltaEtall_MM;
     
-    float sD0Signif_branch_mu0;
-    float sD0Signif_branch_mu1;
-
+    float D0_branch_l0_MM;
+    float D0_branch_l1_MM;
+    float D0err_branch_l0_MM;
+    float D0err_branch_l1_MM;
+    
+    float sD0Signif_branch_l0_EE;
+    float sD0Signif_branch_l1_EE;
     int N_MuonToBeChecked_afterORWJet_MM;
     int N_MuonToBeChecked_afterORWOFLepton_MM;
     int N_MuonToBeChecked_afterORWSFLepton_MM;
@@ -1656,45 +1639,43 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     //#####################################
     
-    float ptl0;
-    float ptl1;
-    float eta_l0;
-    float eta_l1;
+    float ptl0_EM;
+    float ptl1_EM;
+    float etal0_EM;
+    float etal1_EM;
     float DeltaR_EM;
-    float pT_EM;
-    float M_EM;
-    float mT_EM;
+    float pTll_EM;
+    float Mll_EM;
     float METrel_EM;
     float MET_EM;
     float HT_EM;
     float mTWW_EM;
+    float mT_EM;
     float mTmin_EM;
     float mTmax_EM;
-    float mTl0MET;
-    float mTl1MET;
+    float mTl0MET_EM;
+    float mTl1MET_EM;
     float mMET_EM;
-    float DeltaPhiEM;
-    float DeltaPhiMETl0;
-    float DeltaPhiMETl1;
-    float DeltaPhiMETEM;
-    float mt2_EM;
-    float mt2J_EM;    
-    float mt2J0LepM_EM;    
-    
-    float DeltaPhiEMjj;
-    float DeltaPhil0jj;
-    float DeltaPhil1jj;
-    float DeltaREMjj;
+    float DeltaPhi_EM;
+    float DeltaPhiMETl0_EM;
+    float DeltaPhiMETl1_EM;
+    float DeltaPhiMET_EM;
+    float mT2_EM;  
+    float mT2J_EM;       
+    float DeltaPhilljj_EM;
+    float DeltaPhil0jj_EM;
+    float DeltaPhil1jj_EM;
+    float DeltaRlljj_EM;
     float Mljj_EM;
-    float DeltaEtaEM;
-
-    float D0_branch_l0;
-    float D0_branch_l1;
-    float D0err_branch_l0;
-    float D0err_branch_l1;   
+    float DeltaEtall_EM;
     
-    float sD0Signif_branch_l0;
-    float sD0Signif_branch_l1;
+    float D0_branch_l0_EM;
+    float D0_branch_l1_EM;
+    float D0err_branch_l0_EM;
+    float D0err_branch_l1_EM;
+    
+    float sD0Signif_branch_l0_EM;
+    float sD0Signif_branch_l1_EM;
     
     int N_MuonToBeChecked_afterORWJet_EM;
     int N_MuonToBeChecked_afterORWOFLepton_EM;

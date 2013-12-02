@@ -695,43 +695,29 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_meff_EM_SROS1 = new TH2F("h_meff_EM_SROS1", "h_meff_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_meff_EM_SROS1->Sumw2();
   
   /*--------------------------------------------------------------------------------*/ 
-  h_mt2_EE_SRSS1 = new TH2F("h_mt2_EE_SRSS1", "h_mt2_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2_EE_SRSS1->Sumw2();
-  h_mt2_EE_SRSS2 = new TH2F("h_mt2_EE_SRSS2", "h_mt2_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2_EE_SRSS2->Sumw2();
-  h_mt2_MM_SRSS1 = new TH2F("h_mt2_MM_SRSS1", "h_mt2_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2_MM_SRSS1->Sumw2();
-  h_mt2_MM_SRSS2 = new TH2F("h_mt2_MM_SRSS2", "h_mt2_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2_MM_SRSS2->Sumw2();  
-  h_mt2_MM_SRSS3 = new TH2F("h_mt2_MM_SRSS3", "h_mt2_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mt2_MM_SRSS3->Sumw2();
-  h_mt2_MM_SRSS4 = new TH2F("h_mt2_MM_SRSS4", "h_mt2_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mt2_MM_SRSS4->Sumw2();
-  h_mt2_EM_SRSS1 = new TH2F("h_mt2_EM_SRSS1", "h_mt2_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2_EM_SRSS1->Sumw2();
-  h_mt2_EM_SRSS2 = new TH2F("h_mt2_EM_SRSS2", "h_mt2_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2_EM_SRSS2->Sumw2();
-  h_mt2_EE_SROS1 = new TH2F("h_mt2_EE_SROS1", "h_mt2_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2_EE_SROS1->Sumw2();
-  h_mt2_MM_SROS1 = new TH2F("h_mt2_MM_SROS1", "h_mt2_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2_MM_SROS1->Sumw2();
-  h_mt2_EM_SROS1 = new TH2F("h_mt2_EM_SROS1", "h_mt2_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2_EM_SROS1->Sumw2();
+  h_mT2_EE_SRSS1 = new TH2F("h_mT2_EE_SRSS1", "h_mT2_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mT2_EE_SRSS1->Sumw2();
+  h_mT2_EE_SRSS2 = new TH2F("h_mT2_EE_SRSS2", "h_mT2_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mT2_EE_SRSS2->Sumw2();
+  h_mT2_MM_SRSS1 = new TH2F("h_mT2_MM_SRSS1", "h_mT2_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mT2_MM_SRSS1->Sumw2();
+  h_mT2_MM_SRSS2 = new TH2F("h_mT2_MM_SRSS2", "h_mT2_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mT2_MM_SRSS2->Sumw2();  
+  h_mT2_MM_SRSS3 = new TH2F("h_mT2_MM_SRSS3", "h_mT2_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mT2_MM_SRSS3->Sumw2();
+  h_mT2_MM_SRSS4 = new TH2F("h_mT2_MM_SRSS4", "h_mT2_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mT2_MM_SRSS4->Sumw2();
+  h_mT2_EM_SRSS1 = new TH2F("h_mT2_EM_SRSS1", "h_mT2_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mT2_EM_SRSS1->Sumw2();
+  h_mT2_EM_SRSS2 = new TH2F("h_mT2_EM_SRSS2", "h_mT2_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mT2_EM_SRSS2->Sumw2();
+  h_mT2_EE_SROS1 = new TH2F("h_mT2_EE_SROS1", "h_mT2_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mT2_EE_SROS1->Sumw2();
+  h_mT2_MM_SROS1 = new TH2F("h_mT2_MM_SROS1", "h_mT2_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mT2_MM_SROS1->Sumw2();
+  h_mT2_EM_SROS1 = new TH2F("h_mT2_EM_SROS1", "h_mT2_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mT2_EM_SROS1->Sumw2();
 /*--------------------------------------------------------------------------------*/ 
-  h_mt2J_EE_SRSS1 = new TH2F("h_mt2J_EE_SRSS1", "h_mt2J_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_EE_SRSS1->Sumw2();
-  h_mt2J_EE_SRSS2 = new TH2F("h_mt2J_EE_SRSS2", "h_mt2J_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J_EE_SRSS2->Sumw2();
-  h_mt2J_MM_SRSS1 = new TH2F("h_mt2J_MM_SRSS1", "h_mt2J_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_MM_SRSS1->Sumw2();
-  h_mt2J_MM_SRSS2 = new TH2F("h_mt2J_MM_SRSS2", "h_mt2J_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J_MM_SRSS2->Sumw2();  
-  h_mt2J_MM_SRSS3 = new TH2F("h_mt2J_MM_SRSS3", "h_mt2J_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mt2J_MM_SRSS3->Sumw2();
-  h_mt2J_MM_SRSS4 = new TH2F("h_mt2J_MM_SRSS4", "h_mt2J_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mt2J_MM_SRSS4->Sumw2();
-  h_mt2J_EM_SRSS1 = new TH2F("h_mt2J_EM_SRSS1", "h_mt2J_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_EM_SRSS1->Sumw2();
-  h_mt2J_EM_SRSS2 = new TH2F("h_mt2J_EM_SRSS2", "h_mt2J_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J_EM_SRSS2->Sumw2();
-  h_mt2J_EE_SROS1 = new TH2F("h_mt2J_EE_SROS1", "h_mt2J_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_EE_SROS1->Sumw2();
-  h_mt2J_MM_SROS1 = new TH2F("h_mt2J_MM_SROS1", "h_mt2J_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_MM_SROS1->Sumw2();
-  h_mt2J_EM_SROS1 = new TH2F("h_mt2J_EM_SROS1", "h_mt2J_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J_EM_SROS1->Sumw2();  
-  
-  /*--------------------------------------------------------------------------------*/ 
-  h_mt2J0LepM_EE_SRSS1 = new TH2F("h_mt2J0LepM_EE_SRSS1", "h_mt2J0LepM_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EE_SRSS1->Sumw2();
-  h_mt2J0LepM_EE_SRSS2 = new TH2F("h_mt2J0LepM_EE_SRSS2", "h_mt2J0LepM_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EE_SRSS2->Sumw2();
-  h_mt2J0LepM_MM_SRSS1 = new TH2F("h_mt2J0LepM_MM_SRSS1", "h_mt2J0LepM_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS1->Sumw2();
-  h_mt2J0LepM_MM_SRSS2 = new TH2F("h_mt2J0LepM_MM_SRSS2", "h_mt2J0LepM_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS2->Sumw2();  
-  h_mt2J0LepM_MM_SRSS3 = new TH2F("h_mt2J0LepM_MM_SRSS3", "h_mt2J0LepM_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS3->Sumw2();
-  h_mt2J0LepM_MM_SRSS4 = new TH2F("h_mt2J0LepM_MM_SRSS4", "h_mt2J0LepM_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SRSS4->Sumw2();
-  h_mt2J0LepM_EM_SRSS1 = new TH2F("h_mt2J0LepM_EM_SRSS1", "h_mt2J0LepM_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EM_SRSS1->Sumw2();
-  h_mt2J0LepM_EM_SRSS2 = new TH2F("h_mt2J0LepM_EM_SRSS2", "h_mt2J0LepM_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EM_SRSS2->Sumw2();
-  h_mt2J0LepM_EE_SROS1 = new TH2F("h_mt2J0LepM_EE_SROS1", "h_mt2J0LepM_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EE_SROS1->Sumw2();
-  h_mt2J0LepM_MM_SROS1 = new TH2F("h_mt2J0LepM_MM_SROS1", "h_mt2J0LepM_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_MM_SROS1->Sumw2();
-  h_mt2J0LepM_EM_SROS1 = new TH2F("h_mt2J0LepM_EM_SROS1", "h_mt2J0LepM_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mt2J0LepM_EM_SROS1->Sumw2();  
-
+  h_mT2J_EE_SRSS1 = new TH2F("h_mT2J_EE_SRSS1", "h_mT2J_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mT2J_EE_SRSS1->Sumw2();
+  h_mT2J_EE_SRSS2 = new TH2F("h_mT2J_EE_SRSS2", "h_mT2J_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mT2J_EE_SRSS2->Sumw2();
+  h_mT2J_MM_SRSS1 = new TH2F("h_mT2J_MM_SRSS1", "h_mT2J_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mT2J_MM_SRSS1->Sumw2();
+  h_mT2J_MM_SRSS2 = new TH2F("h_mT2J_MM_SRSS2", "h_mT2J_MM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mT2J_MM_SRSS2->Sumw2();  
+  h_mT2J_MM_SRSS3 = new TH2F("h_mT2J_MM_SRSS3", "h_mT2J_MM_SRSS3", 100, 0, 500 ,130, 0, 129);  h_mT2J_MM_SRSS3->Sumw2();
+  h_mT2J_MM_SRSS4 = new TH2F("h_mT2J_MM_SRSS4", "h_mT2J_MM_SRSS4", 100, 0, 500 ,130, 0, 129);  h_mT2J_MM_SRSS4->Sumw2();
+  h_mT2J_EM_SRSS1 = new TH2F("h_mT2J_EM_SRSS1", "h_mT2J_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mT2J_EM_SRSS1->Sumw2();
+  h_mT2J_EM_SRSS2 = new TH2F("h_mT2J_EM_SRSS2", "h_mT2J_EM_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mT2J_EM_SRSS2->Sumw2();
+  h_mT2J_EE_SROS1 = new TH2F("h_mT2J_EE_SROS1", "h_mT2J_EE_SROS1", 100, 0, 500 ,130, 0, 129);  h_mT2J_EE_SROS1->Sumw2();
+  h_mT2J_MM_SROS1 = new TH2F("h_mT2J_MM_SROS1", "h_mT2J_MM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mT2J_MM_SROS1->Sumw2();
+  h_mT2J_EM_SROS1 = new TH2F("h_mT2J_EM_SROS1", "h_mT2J_EM_SROS1", 100, 0, 500 ,130, 0, 129);  h_mT2J_EM_SROS1->Sumw2();  
   /*--------------------------------------------------------------------------------*/ 
   h_mjj_EE_SRSS1 = new TH2F("h_mjj_EE_SRSS1", "h_mjj_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_mjj_EE_SRSS1->Sumw2();
   h_mjj_EE_SRSS2 = new TH2F("h_mjj_EE_SRSS2", "h_mjj_EE_SRSS2", 100, 0, 500 ,130, 0, 129);  h_mjj_EE_SRSS2->Sumw2();
@@ -1379,43 +1365,30 @@ bool TSelector_SusyNtuple::writeHistos(){
     if(EM_SROS1) h_meff_EM_SROS1->Write();
 /*--------------------------------------------------------------------------------*/     
     
-    if(EE_SRSS1) h_mt2_EE_SRSS1->Write();
-    if(EE_SRSS2) h_mt2_EE_SRSS2->Write();
-    if(MM_SRSS1) h_mt2_MM_SRSS1->Write();
-    if(MM_SRSS2) h_mt2_MM_SRSS2->Write();  
-    if(MM_SRSS3) h_mt2_MM_SRSS3->Write();
-    if(MM_SRSS4) h_mt2_MM_SRSS4->Write();
-    if(EM_SRSS1) h_mt2_EM_SRSS1->Write();
-    if(EM_SRSS2) h_mt2_EM_SRSS2->Write();
-    if(EE_SROS1) h_mt2_EE_SROS1->Write();
-    if(MM_SROS1) h_mt2_MM_SROS1->Write();
-    if(EM_SROS1) h_mt2_EM_SROS1->Write();
+    if(EE_SRSS1) h_mT2_EE_SRSS1->Write();
+    if(EE_SRSS2) h_mT2_EE_SRSS2->Write();
+    if(MM_SRSS1) h_mT2_MM_SRSS1->Write();
+    if(MM_SRSS2) h_mT2_MM_SRSS2->Write();  
+    if(MM_SRSS3) h_mT2_MM_SRSS3->Write();
+    if(MM_SRSS4) h_mT2_MM_SRSS4->Write();
+    if(EM_SRSS1) h_mT2_EM_SRSS1->Write();
+    if(EM_SRSS2) h_mT2_EM_SRSS2->Write();
+    if(EE_SROS1) h_mT2_EE_SROS1->Write();
+    if(MM_SROS1) h_mT2_MM_SROS1->Write();
+    if(EM_SROS1) h_mT2_EM_SROS1->Write();
 /*--------------------------------------------------------------------------------*/     
     
-    if(EE_SRSS1) h_mt2J_EE_SRSS1->Write();
-    if(EE_SRSS2) h_mt2J_EE_SRSS2->Write();
-    if(MM_SRSS1) h_mt2J_MM_SRSS1->Write();
-    if(MM_SRSS2) h_mt2J_MM_SRSS2->Write();  
-    if(MM_SRSS3) h_mt2J_MM_SRSS3->Write();
-    if(MM_SRSS4) h_mt2J_MM_SRSS4->Write();
-    if(EM_SRSS1) h_mt2J_EM_SRSS1->Write();
-    if(EM_SRSS2) h_mt2J_EM_SRSS2->Write();
-    if(EE_SROS1) h_mt2J_EE_SROS1->Write();
-    if(MM_SROS1) h_mt2J_MM_SROS1->Write();
-    if(EM_SROS1) h_mt2J_EM_SROS1->Write();    
-/*--------------------------------------------------------------------------------*/     
-    
-    if(EE_SRSS1) h_mt2J0LepM_EE_SRSS1->Write();
-    if(EE_SRSS2) h_mt2J0LepM_EE_SRSS2->Write();
-    if(MM_SRSS1) h_mt2J0LepM_MM_SRSS1->Write();
-    if(MM_SRSS2) h_mt2J0LepM_MM_SRSS2->Write();  
-    if(MM_SRSS3) h_mt2J0LepM_MM_SRSS3->Write();
-    if(MM_SRSS4) h_mt2J0LepM_MM_SRSS4->Write();
-    if(EM_SRSS1) h_mt2J0LepM_EM_SRSS1->Write();
-    if(EM_SRSS2) h_mt2J0LepM_EM_SRSS2->Write();
-    if(EE_SROS1) h_mt2J0LepM_EE_SROS1->Write();
-    if(MM_SROS1) h_mt2J0LepM_MM_SROS1->Write();
-    if(EM_SROS1) h_mt2J0LepM_EM_SROS1->Write();        
+    if(EE_SRSS1) h_mT2J_EE_SRSS1->Write();
+    if(EE_SRSS2) h_mT2J_EE_SRSS2->Write();
+    if(MM_SRSS1) h_mT2J_MM_SRSS1->Write();
+    if(MM_SRSS2) h_mT2J_MM_SRSS2->Write();  
+    if(MM_SRSS3) h_mT2J_MM_SRSS3->Write();
+    if(MM_SRSS4) h_mT2J_MM_SRSS4->Write();
+    if(EM_SRSS1) h_mT2J_EM_SRSS1->Write();
+    if(EM_SRSS2) h_mT2J_EM_SRSS2->Write();
+    if(EE_SROS1) h_mT2J_EE_SROS1->Write();
+    if(MM_SROS1) h_mT2J_MM_SROS1->Write();
+    if(EM_SROS1) h_mT2J_EM_SROS1->Write();          
 /*--------------------------------------------------------------------------------*/ 
     if(EE_SRSS1) h_mjj_EE_SRSS1->Write();
     if(EE_SRSS2) h_mjj_EE_SRSS2->Write();
@@ -2403,8 +2376,16 @@ void TSelector_SusyNtuple::calcJet_variables(TLorentzVector signalJet0_TLV, TLor
   
   nSignalJets = numberOfCLJets(m_signalJets2Lep);
   TLorentzVector jet0_TLV, jet1_TLV;
-  if(nSignalJets>0) jet0_TLV.SetPtEtaPhiE(m_signalJets2Lep.at(0)->pt, m_signalJets2Lep.at(0)->eta ,m_signalJets2Lep.at(0)->phi, m_signalJets2Lep.at(0)->pt*cosh(m_signalJets2Lep.at(0)->eta));
-  if(nSignalJets>1) jet1_TLV.SetPtEtaPhiE(m_signalJets2Lep.at(1)->pt, m_signalJets2Lep.at(1)->eta ,m_signalJets2Lep.at(1)->phi, m_signalJets2Lep.at(1)->pt*cosh(m_signalJets2Lep.at(1)->eta));
+  if(nSignalJets>0){
+    jet0_TLV.SetPtEtaPhiE(m_signalJets2Lep.at(0)->pt, m_signalJets2Lep.at(0)->eta ,m_signalJets2Lep.at(0)->phi, m_signalJets2Lep.at(0)
+    ->pt*cosh(m_signalJets2Lep.at(0)->eta));
+    jet0_TLV.SetPtEtaPhiM(m_signalJets2Lep.at(0)->pt, m_signalJets2Lep.at(0)->eta ,m_signalJets2Lep.at(0)->phi, m_signalJets2Lep.at(0)
+    ->m);
+  }
+  if(nSignalJets>1){
+    jet1_TLV.SetPtEtaPhiE(m_signalJets2Lep.at(1)->pt, m_signalJets2Lep.at(1)->eta ,m_signalJets2Lep.at(1)->phi, m_signalJets2Lep.at(1)->pt*cosh(m_signalJets2Lep.at(1)->eta));
+    jet1_TLV.SetPtEtaPhiM(m_signalJets2Lep.at(1)->pt, m_signalJets2Lep.at(1)->eta ,m_signalJets2Lep.at(1)->phi, m_signalJets2Lep.at(1)->m);
+  }
   
   MET = met_TLV.Pt();
   if(nSignalJets>0){
@@ -2430,34 +2411,33 @@ void TSelector_SusyNtuple::calcJet_variables(TLorentzVector signalJet0_TLV, TLor
 }
 void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EE){
   
-  ptel0 = el0_TLV.Pt() > el1_TLV.Pt() ? el0_TLV.Pt() : el1_TLV.Pt();
-  ptel1 = el0_TLV.Pt() > el1_TLV.Pt() ? el1_TLV.Pt() : el0_TLV.Pt();
-  eta_el0 = el0_TLV.Eta();
-  eta_el1 = el1_TLV.Eta();
-  DeltaREE = fabs(el0_TLV.DeltaR(el1_TLV));
-  pTEE = (el0_TLV + el1_TLV).Pt();
-  MEE = Mll(el0, el1);
-  METrelEE = recalcMetRel(met_TLV, el0_TLV, el1_TLV, m_signalJets2Lep, useForwardJets);
-  METEE = met_TLV.Pt();
+  ptl0_EE = el0_TLV.Pt() > el1_TLV.Pt() ? el0_TLV.Pt() : el1_TLV.Pt();
+  ptl1_EE = el0_TLV.Pt() > el1_TLV.Pt() ? el1_TLV.Pt() : el0_TLV.Pt();
+  etal0_EE = el0_TLV.Eta();
+  etal1_EE = el1_TLV.Eta();
+  DeltaR_EE = fabs(el0_TLV.DeltaR(el1_TLV));
+  ptll_EE = (el0_TLV + el1_TLV).Pt();
+  Mll_EE = Mll(el0, el1);
+  METrel_EE = recalcMetRel(met_TLV, el0_TLV, el1_TLV, m_signalJets2Lep, useForwardJets);
+  MET_EE = met_TLV.Pt();
   HT_EE = calcHT(el0_TLV, el1_TLV, met_TLV, m_signalJets2Lep);
   mTWW_EE = calcMt((el0_TLV + el1_TLV), met_TLV);
-  mTEE = calcMt((el0_TLV+el1_TLV), met_TLV);
-  mTemin = (calcMt(el0_TLV, met_TLV) > calcMt(el1_TLV, met_TLV)) ? calcMt(el1_TLV, met_TLV) : calcMt(el0_TLV, met_TLV);
-  mTemax = (calcMt(el0_TLV, met_TLV) < calcMt(el1_TLV, met_TLV)) ? calcMt(el1_TLV, met_TLV) : calcMt(el0_TLV, met_TLV);
-  mTel0MET = calcMt(el0_TLV, met_TLV);
-  mTel1MET = calcMt(el1_TLV, met_TLV);
-  mMETEE = (el0_TLV + el1_TLV + met_TLV).M();
-  DeltaPhiEE = fabs(el0_TLV.DeltaPhi(el1_TLV));
-  DeltaPhiMETel0 = fabs(el0_TLV.DeltaPhi(met_TLV));
-  DeltaPhiMETel1 = fabs(el1_TLV.DeltaPhi(met_TLV));
-  DeltaPhiMETEE = fabs((el0_TLV + el1_TLV).DeltaPhi(met_TLV));
+  mT_EE = calcMt((el0_TLV+el1_TLV), met_TLV);
+  mTmin_EE = (calcMt(el0_TLV, met_TLV) > calcMt(el1_TLV, met_TLV)) ? calcMt(el1_TLV, met_TLV) : calcMt(el0_TLV, met_TLV);
+  mTmax_EE = (calcMt(el0_TLV, met_TLV) < calcMt(el1_TLV, met_TLV)) ? calcMt(el1_TLV, met_TLV) : calcMt(el0_TLV, met_TLV);
+  mTl0MET_EE = calcMt(el0_TLV, met_TLV);
+  mTl1MET_EE = calcMt(el1_TLV, met_TLV);
+  mMET_EE = (el0_TLV + el1_TLV + met_TLV).M();
+  DeltaPhi_EE = fabs(el0_TLV.DeltaPhi(el1_TLV));
+  DeltaPhiMETl0_EE = fabs(el0_TLV.DeltaPhi(met_TLV));
+  DeltaPhiMETl1_EE = fabs(el1_TLV.DeltaPhi(met_TLV));
+  DeltaPhiMET_EE = fabs((el0_TLV + el1_TLV).DeltaPhi(met_TLV));
+  
   if(nSignalJets>0){
-    DeltaPhiEEjj = (nSignalJets>1) ? fabs((el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaPhiEEjj = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : 0.;
-    
-    DeltaPhiel0jj = (nSignalJets>1) ? ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaPhiel1jj= (nSignalJets>1) ?  ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaREEjj = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV);
+     DeltaPhilljj_EE = (nSignalJets>1) ? fabs((el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((el0_TLV + el1_TLV).DeltaPhi(signalJet0_TLV));    
+    DeltaPhil0jj_EE = (nSignalJets>1) ? ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((el0_TLV.Pt()> el1_TLV.Pt()) ? (el0_TLV).DeltaPhi(signalJet0_TLV) : (el1_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhil1jj_EE= (nSignalJets>1) ?  ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((el0_TLV.Pt()< el1_TLV.Pt()) ? (el1_TLV).DeltaPhi(signalJet0_TLV) : (el0_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaRlljj_EE = (nSignalJets>1) ? (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (el0_TLV + el1_TLV).DeltaR(signalJet0_TLV);
   }
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
@@ -2470,30 +2450,29 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
     Mljj_EE = (signalJet0_TLV + signalJet1_TLV + closestElecDijetAxis_TLV).M();
   }
   
-  mt2_EE = calcMT2(met_TLV, el0_TLV, el1_TLV);
-  if(nSignalJets>1) mt2J_EE = calcMT2J(met_TLV, el0_TLV, el1_TLV, signalJet0_TLV, signalJet1_TLV);
-  if(nSignalJets>1) mt2J0LepM_EE = calcMT2J0LepM(met_TLV, el0_TLV, el1_TLV, signalJet0_TLV, signalJet1_TLV);
+  mT2_EE = calcMT2(met_TLV, el0_TLV, el1_TLV);
+  if(nSignalJets>1) mT2J_EE = calcMT2J(met_TLV, el0_TLV, el1_TLV, signalJet0_TLV, signalJet1_TLV);
   
 
-  DeltaEtaEE = fabs(el0_TLV.Eta() - el1_TLV.Eta());
+  DeltaEtall_EE = fabs(el0_TLV.Eta() - el1_TLV.Eta());
     
   bool unbiased = true;
   if(unbiased){
-    D0_branch_el0 = el0->d0Unbiased;
-    D0_branch_el1 = el1->d0Unbiased;
-    D0err_branch_el0 = el0->errD0Unbiased;
-    D0err_branch_el1 = el1->errD0Unbiased;
+    D0_branch_l0_EE = el0->d0Unbiased;
+    D0_branch_l1_EE = el1->d0Unbiased;
+    D0err_branch_l0_EE = el0->errD0Unbiased;
+    D0err_branch_l1_EE = el1->errD0Unbiased;
   }
   else{
-    D0_branch_el0 = el0->d0;
-    D0_branch_el1 = el1->d0;
-    D0err_branch_el0 = el0->errD0;
-    D0err_branch_el1 = el1->errD0;
+    D0_branch_l0_EE = el0->d0;
+    D0_branch_l1_EE = el1->d0;
+    D0err_branch_l0_EE = el0->errD0;
+    D0err_branch_l1_EE = el1->errD0;
   }
   
   
-  sD0Signif_branch_el0 = calc_D0(unbiased, leptons.at(0)) / D0err_branch_el0;
-  sD0Signif_branch_el1 = calc_D0(unbiased, leptons.at(1)) / D0err_branch_el1;
+  sD0Signif_branch_l0_EE = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_EE;
+  sD0Signif_branch_l1_EE = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_EE;
 
   		
  //softElectrons: electrons which are too soft: pT < 10 GeV [susyNt->ele() but pT < 10 GeV, no signal elon]
@@ -2504,36 +2483,18 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   
   ml0lsoft_EE = -1.;      
   mTl0lsoft_EE = -1.;
-//   DeltaRl0lsoft_EE = -1.;  
-//   DeltaRZl0lsoft_EE = -1.;  
-//   DeltaEtaZl0lsoft_EE = -1.;   
   ml1lsoft_EE = -1.;
   mTl1lsoft_EE = -1.;
-  // DeltaRl1lsoft_EE = -1.;
-  //DeltaRZl1lsoft_EE = -1.;
-//   DeltaEtaZl1lsoft_EE = -1.;
   
   ml0llost_EE = -1.;      
   mTl0llost_EE = -1.;
-//   DeltaRl0llost_EE = -1.;  
-  //DeltaRZl0llost_EE = -1.;  
-//   DeltaEtaZl0llost_EE = -1.;  
   ml1llost_EE = -1.;
   mTl1llost_EE = -1.;
-  // DeltaRl1llost_EE = -1.;
-  //DeltaRZl1llost_EE = -1.;
-//   DeltaEtaZl1llost_EE = -1.;
   
   ml0loverlap_EE = -1.;      
   mTl0loverlap_EE = -1.;
-//   DeltaRl0loverlap_EE = -1.;  
-  //DeltaRZl0loverlap_EE = -1.;  
-//   DeltaEtaZl0loverlap_EE = -1.;  
   ml1loverlap_EE = -1.;
   mTl1loverlap_EE = -1.;
-  // DeltaRl1loverlap_EE = -1.;  
-  //DeltaRZl1loverlap_EE = -1.;  
-//   DeltaEtaZl1loverlap_EE = -1.;  
   
   for(uint iel=0; iel<susyNt->ele()->size(); iel++){
     Electron* el_lost = &susyNt->ele()->at(iel);
@@ -2542,6 +2503,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
     if((el_lost->q * el0->q)<0. || (el_lost->q * el1->q)<0.){
       TLorentzVector el_lost_TLV;
       el_lost_TLV.SetPtEtaPhiE(el_lost->pt, el_lost->eta ,el_lost->phi, el_lost->pt*cosh(el_lost->eta));
+      el_lost_TLV.SetPtEtaPhiM(el_lost->pt, el_lost->eta ,el_lost->phi, el_lost->m);
       bool isSoftElectron = false;
       for(uint iel1=0; iel1<softElectrons.size(); iel1++){
 	if(el_lost->DeltaR(*softElectrons.at(iel1)) < 0.0001) isSoftElectron = true;
@@ -2550,56 +2512,32 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
       for(uint iel1=0; iel1<overlapElectrons.size(); iel1++){
 	if(el_lost->DeltaR(*overlapElectrons.at(iel1)) < 0.0001) isOverlapElectron = true;
       }
-      
-//       cout << "lost in any case" << endl;
       ml0llost_EE = (el0_TLV + el_lost_TLV).M();      
-      mTl0llost_EE = calcMt(el0_TLV, el_lost_TLV);      
-//       DeltaRl0llost_EE = el0_TLV.DeltaR(el_lost_TLV);
-      
+      mTl0llost_EE = calcMt(el0_TLV, el_lost_TLV);            
       ml1llost_EE = (el1_TLV + el_lost_TLV).M();      
       mTl1llost_EE = calcMt(el1_TLV, el_lost_TLV);      
-      // DeltaRl1llost_EE = el1_TLV.DeltaR(el_lost_TLV);
       if((el0_TLV + el_lost_TLV).M() <= MZ+10. && (el0_TLV + el_lost_TLV).M() >= MZ-10.){
-	  // DeltaRZ0llost_EE = el0_TLV.DeltaR(el_lost_TLV);
-	  // DeltaRZ1llost_EE = el1_TLV.DeltaR(el_lost_TLV);
-// 	  DeltaEtaZl0llost_EE = fabs(el0_TLV.Eta() - el_lost_TLV.Eta());
-// 	  DeltaEtaZl1llost_EE = fabs(el1_TLV.Eta() - el_lost_TLV.Eta());
 	}      
       
       if(isSoftElectron){
-// 	cout << "soft" << endl;
 	ml0lsoft_EE = (el0_TLV + el_lost_TLV).M();      
 	mTl0lsoft_EE = calcMt(el0_TLV, el_lost_TLV);      
-	// DeltaRl0lsoft_EE = el0_TLV.DeltaR(el_lost_TLV);
-	
-	
+
 	ml1lsoft_EE = (el1_TLV + el_lost_TLV).M();      
 	mTl1lsoft_EE = calcMt(el1_TLV, el_lost_TLV);      
-	// DeltaRl1lsoft_EE = el1_TLV.DeltaR(el_lost_TLV);
 	
 	
 	if((el0_TLV + el_lost_TLV).M() <= MZ+10. && (el0_TLV + el_lost_TLV).M() >= MZ-10.){
-	  // DeltaRZ0lsoft_EE = el0_TLV.DeltaR(el_lost_TLV);
-	  // DeltaRZ1lsoft_EE = el1_TLV.DeltaR(el_lost_TLV);
-// 	  DeltaEtaZl0lsoft_EE = fabs(el0_TLV.Eta() - el_lost_TLV.Eta());
-// 	  DeltaEtaZl1lsoft_EE = fabs(el1_TLV.Eta() - el_lost_TLV.Eta());
 	}
       }
       
       if(isOverlapElectron){
-// 	cout << "overlap" << endl;
 	ml0loverlap_EE = (el0_TLV + el_lost_TLV).M();      
 	mTl0loverlap_EE = calcMt(el0_TLV, el_lost_TLV);      
-	// DeltaRl0loverlap_EE = el0_TLV.DeltaR(el_lost_TLV);
 	
 	ml1loverlap_EE = (el1_TLV + el_lost_TLV).M();      
 	mTl1loverlap_EE = calcMt(el1_TLV, el_lost_TLV);      
-	// DeltaRl1loverlap_EE = el1_TLV.DeltaR(el_lost_TLV);
 	if((el0_TLV + el_lost_TLV).M() <= MZ+10. && (el0_TLV + el_lost_TLV).M() >= MZ-10.){
-	  // DeltaRZ0loverlap_EE = el0_TLV.DeltaR(el_lost_TLV);
-	  // DeltaRZ1loverlap_EE = el1_TLV.DeltaR(el_lost_TLV);
-// 	  DeltaEtaZl0loverlap_EE = fabs(el0_TLV.Eta() - el_lost_TLV.Eta());
-// 	  DeltaEtaZl1loverlap_EE = fabs(el0_TLV.Eta() - el_lost_TLV.Eta());
 	}
       }      
       
@@ -2615,36 +2553,37 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   
   TLorentzVector mu0_TLV_n, mu1_TLV_n;
   mu0_TLV_n.SetPtEtaPhiE(mu0->pt, mu0->eta ,mu0->phi, mu0->pt*cosh(mu0->eta));
+  mu0_TLV_n.SetPtEtaPhiM(mu0->pt, mu0->eta ,mu0->phi, mu0->m);
   mu0_TLV_n.SetPtEtaPhiE(mu1->pt, mu1->eta ,mu1->phi, mu1->pt*cosh(mu1->eta));
+  mu0_TLV_n.SetPtEtaPhiM(mu1->pt, mu1->eta ,mu1->phi, mu1->m);
   
   DeltaR_MM = mu0_TLV.DeltaR(mu1_TLV);
-  ptmu0 = mu0_TLV.Pt() > mu1_TLV.Pt() ? mu0_TLV.Pt() : mu1_TLV.Pt();
-  ptmu1 = mu0_TLV.Pt() > mu1_TLV.Pt() ? mu1_TLV.Pt() : mu0_TLV.Pt();
-  eta_mu0 = mu0_TLV.Eta();
-  eta_mu1 = mu1_TLV.Eta();
-  pT_MM = (mu0_TLV_n + mu1_TLV_n).Pt();
-  M_MM = Mll(mu0, mu1);
+  ptl0_MM = mu0_TLV.Pt() > mu1_TLV.Pt() ? mu0_TLV.Pt() : mu1_TLV.Pt();
+  ptl1_MM = mu0_TLV.Pt() > mu1_TLV.Pt() ? mu1_TLV.Pt() : mu0_TLV.Pt();
+  etal0_MM = mu0_TLV.Eta();
+  etal1_MM = mu1_TLV.Eta();
+  ptll_MM = (mu0_TLV_n + mu1_TLV_n).Pt();
+  Mll_MM = Mll(mu0, mu1);
   METrel_MM = recalcMetRel(met_TLV, mu0_TLV, mu1_TLV, m_signalJets2Lep, useForwardJets);
   MET_MM = met_TLV.Pt();
   HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, m_signalJets2Lep);
   mTWW_MM = calcMt((mu0_TLV + mu1_TLV), met_TLV);
 
-  mTMM = calcMt((mu0_TLV+mu1_TLV), met_TLV);
+  mT_MM = calcMt((mu0_TLV+mu1_TLV), met_TLV);
   mTmin_MM = (calcMt(mu0_TLV, met_TLV) > calcMt(mu1_TLV, met_TLV)) ? calcMt(mu1_TLV, met_TLV) : calcMt(mu0_TLV, met_TLV);
   mTmax_MM = (calcMt(mu0_TLV, met_TLV) < calcMt(mu1_TLV, met_TLV)) ? calcMt(mu1_TLV, met_TLV) : calcMt(mu0_TLV, met_TLV);
-  mTmu0MET = calcMt(mu0_TLV, met_TLV);
-  mTmu1MET = calcMt(mu1_TLV, met_TLV);
-  mMETMM = (mu0_TLV + mu1_TLV + met_TLV).M();
-  DeltaPhiMM = fabs(mu0_TLV.DeltaPhi(mu1_TLV));
-  DeltaPhiMETmu0 = fabs(mu0_TLV.DeltaPhi(met_TLV));
-  DeltaPhiMETmu1 = fabs(mu1_TLV.DeltaPhi(met_TLV));
-  DeltaPhiMETMM = fabs((mu0_TLV + mu1_TLV).DeltaPhi(met_TLV));
+  mTl0MET_MM = calcMt(mu0_TLV, met_TLV);
+  mTl1MET_MM = calcMt(mu1_TLV, met_TLV);
+  mMET_MM = (mu0_TLV + mu1_TLV + met_TLV).M();
+  DeltaPhi_MM = fabs(mu0_TLV.DeltaPhi(mu1_TLV));
+  DeltaPhiMETl0_MM = fabs(mu0_TLV.DeltaPhi(met_TLV));
+  DeltaPhiMETl1_MM = fabs(mu1_TLV.DeltaPhi(met_TLV));
+  DeltaPhiMET_MM = fabs((mu0_TLV + mu1_TLV).DeltaPhi(met_TLV));
   if(nSignalJets>0){
-    DeltaPhiMMjj = (nSignalJets>1) ? fabs((mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaPhiMMjj = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV);
-    DeltaPhimu0jj = (nSignalJets>1) ?  ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaPhimu1jj= (nSignalJets>1) ?  ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaRMMjj = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV);
+    DeltaPhilljj_MM = (nSignalJets>1) ? fabs((mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((mu0_TLV + mu1_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhil0jj_MM = (nSignalJets>1) ?  ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu0_TLV.Pt()> mu1_TLV.Pt()) ? (mu0_TLV).DeltaPhi(signalJet0_TLV) : (mu1_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhil1jj_MM= (nSignalJets>1) ?  ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu0_TLV.Pt()< mu1_TLV.Pt()) ? (mu1_TLV).DeltaPhi(signalJet0_TLV) : (mu0_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaRlljj_MM = (nSignalJets>1) ?  (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (mu0_TLV + mu1_TLV).DeltaR(signalJet0_TLV);
   }
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
@@ -2656,32 +2595,29 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
     Mljj_MM = (signalJet0_TLV + signalJet1_TLV + closestMuonDijetAxis_TLV).M();
   }
   
-  mt2_MM = calcMT2(met_TLV, mu0_TLV, mu1_TLV);
+  mT2_MM = calcMT2(met_TLV, mu0_TLV, mu1_TLV);
   if(nSignalJets>1){
-    mt2J_MM = calcMT2J(met_TLV, mu0_TLV, mu1_TLV, signalJet0_TLV, signalJet1_TLV);
-  }
-  if(nSignalJets>1){
-    mt2J0LepM_MM = calcMT2J0LepM(met_TLV, mu0_TLV, mu1_TLV, signalJet0_TLV, signalJet1_TLV);
+    mT2J_MM = calcMT2J(met_TLV, mu0_TLV, mu1_TLV, signalJet0_TLV, signalJet1_TLV);
   }
   
-  DeltaEtaMM = fabs(mu0_TLV.Eta() - mu1_TLV.Eta());
+  DeltaEtall_MM = fabs(mu0_TLV.Eta() - mu1_TLV.Eta());
   
 bool unbiased = true;
   if(unbiased){
-    D0_branch_mu0 = mu0->d0Unbiased;
-    D0_branch_mu1 = mu1->d0Unbiased;
-    D0err_branch_mu0 = mu0->errD0Unbiased;
-    D0err_branch_mu1 = mu1->errD0Unbiased;
+    D0_branch_l0_MM = mu0->d0Unbiased;
+    D0_branch_l1_MM = mu1->d0Unbiased;
+    D0err_branch_l0_MM = mu0->errD0Unbiased;
+    D0err_branch_l1_MM = mu1->errD0Unbiased;
   }
   else{
-    D0_branch_mu0 = mu0->d0;
-    D0_branch_mu1 = mu1->d0;
-    D0err_branch_mu0 = mu0->errD0;
-    D0err_branch_mu1 = mu1->errD0;
+    D0_branch_l0_MM = mu0->d0;
+    D0_branch_l1_MM = mu1->d0;
+    D0err_branch_l0_MM = mu0->errD0;
+    D0err_branch_l1_MM = mu1->errD0;
   }
   
-  sD0Signif_branch_mu0 = calc_D0(unbiased, leptons.at(0)) / D0err_branch_mu0;
-  sD0Signif_branch_mu1 = calc_D0(unbiased, leptons.at(1)) / D0err_branch_mu1;
+  sD0Signif_branch_l0_MM = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_MM;
+  sD0Signif_branch_l1_MM = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_MM;
 
   
 //NEEded for WZ bg suppression:  
@@ -2711,6 +2647,7 @@ bool unbiased = true;
     if((mu_lost->DeltaR(*mu0) < 0.0001) || (mu_lost->DeltaR(*mu1) < 0.0001)) continue; //no signal lepton
     TLorentzVector mu_lost_TLV;
     mu_lost_TLV.SetPtEtaPhiE(mu_lost->pt, mu_lost->eta ,mu_lost->phi, mu_lost->pt*cosh(mu_lost->eta));
+    mu_lost_TLV.SetPtEtaPhiM(mu_lost->pt, mu_lost->eta ,mu_lost->phi, mu_lost->m);
     mu_lost_vec.push_back(mu_lost);
     //can it be combined to SFOS pair?
     if((mu_lost->q * mu0->q)<0. || (mu_lost->q * mu1->q)<0.){
@@ -2773,6 +2710,7 @@ bool unbiased = true;
     if((soft_mu->DeltaR(*mu0) < 0.0001) || (soft_mu->DeltaR(*mu1) < 0.0001)) continue; //no signal lepton
     TLorentzVector softMuon_TLV;
     softMuon_TLV.SetPtEtaPhiE(soft_mu->pt, soft_mu->eta ,soft_mu->phi, soft_mu->pt*cosh(soft_mu->eta));
+    softMuon_TLV.SetPtEtaPhiM(soft_mu->pt, soft_mu->eta ,soft_mu->phi, soft_mu->m);
     if(soft_mu->pt <= 10.){
       softMuons_vec.push_back(soft_mu);
       
@@ -2849,6 +2787,7 @@ bool unbiased = true;
     if(!isBaseMu){ //can not be matched to any baseline muon
       TLorentzVector overlapMuon_TLV;
       overlapMuon_TLV.SetPtEtaPhiE(pre_mu->pt, pre_mu->eta ,pre_mu->phi, pre_mu->pt*cosh(pre_mu->eta));
+      overlapMuon_TLV.SetPtEtaPhiM(pre_mu->pt, pre_mu->eta ,pre_mu->phi, pre_mu->m);
       overlapMuon_vec.push_back(pre_mu);
 //       overlapMuon_TLV_vec.push_back(overlapMuon_TLV);
       if((pre_mu->q * mu0->q)<0. || (pre_mu->q * mu1->q)<0.){
@@ -2990,6 +2929,7 @@ bool unbiased = true;
       Muon_lostInORWJet_vec.push_back(mu_overlapping);
       TLorentzVector overlapWJetMuon_TLV;
       overlapWJetMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
+      overlapWJetMuon_TLV.SetPtEtaPhiM(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->m);
 //       cout << im << " muon overlappingWJet pt= " << mu_overlapping->pt << endl;
       
       if((mu_overlapping->q * mu0->q)<0. || (mu_overlapping->q * mu1->q)<0.){
@@ -3038,6 +2978,7 @@ bool unbiased = true;
 	Muon_lostInORWOFLepton_vec.push_back(mu_overlapping);
 	TLorentzVector overlapWOFLeptonMuon_TLV;
 	overlapWOFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
+	overlapWOFLeptonMuon_TLV.SetPtEtaPhiM(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->m);
 	
 	if((mu_overlapping->q * mu0->q)<0. || (mu_overlapping->q * mu1->q)<0.){
 	  if(fabs(MZ - Mll(mu0, mu_overlapping)) < fabs(MZ - Mll(mu1, mu_overlapping))){
@@ -3085,6 +3026,7 @@ bool unbiased = true;
 	  Muon_lostInORWSFLepton_vec.push_back(mu_overlapping);
 	  TLorentzVector overlapWSFLeptonMuon_TLV;
 	  overlapWSFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
+	  overlapWSFLeptonMuon_TLV.SetPtEtaPhiM(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->m);
 	  
 	  if((mu_overlapping->q * mu0->q)<0. || (mu_overlapping->q * mu1->q)<0.){
 	    if(fabs(MZ - Mll(mu0, mu_overlapping)) < fabs(MZ - Mll(mu1, mu_overlapping))){
@@ -3213,6 +3155,7 @@ bool unbiased = true;
     }
     TLorentzVector ZcandMuon_TLV;
     ZcandMuon_TLV.SetPtEtaPhiE(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->pt*cosh(mu_WOjOR->eta));
+    ZcandMuon_TLV.SetPtEtaPhiM(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->m);
     Muon_Zcand_vec.push_back(mu_WOjOR);
 //     cout << im << " is no signal mu" << endl;
     if((mu_WOjOR->q * mu0->q)<0. || (mu_WOjOR->q * mu1->q)<0.){
@@ -3260,13 +3203,13 @@ bool unbiased = true;
 
 void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM){
   
-  ptl0 = (el_TLV.Pt() > mu_TLV.Pt()) ? el_TLV.Pt() : mu_TLV.Pt();
-  ptl1 = (el_TLV.Pt() > mu_TLV.Pt()) ? mu_TLV.Pt() : el_TLV.Pt();
-  eta_l0 = (el_TLV.Pt() > mu_TLV.Pt()) ? el_TLV.Eta() : mu_TLV.Eta();
-  eta_l1 = (el_TLV.Pt() > mu_TLV.Pt()) ? mu_TLV.Eta() : el_TLV.Eta();
+  ptl0_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? el_TLV.Pt() : mu_TLV.Pt();
+  ptl1_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? mu_TLV.Pt() : el_TLV.Pt();
+  etal0_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? el_TLV.Eta() : mu_TLV.Eta();
+  etal1_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? mu_TLV.Eta() : el_TLV.Eta();
   DeltaR_EM = fabs(mu_TLV.DeltaR(el_TLV));
-  pT_EM = (mu_TLV + el_TLV).Pt();
-  M_EM= Mll(mu, el);
+  pTll_EM = (mu_TLV + el_TLV).Pt();
+  Mll_EM= Mll(mu, el);
   METrel_EM = recalcMetRel(met_TLV, mu_TLV, el_TLV, m_signalJets2Lep, useForwardJets);
   MET_EM = met_TLV.Pt();
   HT_EM = calcHT(mu_TLV, el_TLV, met_TLV, m_signalJets2Lep);
@@ -3274,19 +3217,18 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   mT_EM= calcMt((mu_TLV+el_TLV), met_TLV);
   mTmin_EM = (calcMt(mu_TLV, met_TLV) > calcMt(el_TLV, met_TLV)) ? calcMt(el_TLV, met_TLV) : calcMt(mu_TLV, met_TLV);
   mTmax_EM = (calcMt(mu_TLV, met_TLV) < calcMt(el_TLV, met_TLV)) ? calcMt(el_TLV, met_TLV) : calcMt(mu_TLV, met_TLV);
-  mTl0MET = (el_TLV.Pt() > mu_TLV.Pt()) ? calcMt(el_TLV, met_TLV) : calcMt(mu_TLV, met_TLV);
-  mTl1MET = (el_TLV.Pt() > mu_TLV.Pt()) ? calcMt(mu_TLV, met_TLV) : calcMt(el_TLV, met_TLV);
+  mTl0MET_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? calcMt(el_TLV, met_TLV) : calcMt(mu_TLV, met_TLV);
+  mTl1MET_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? calcMt(mu_TLV, met_TLV) : calcMt(el_TLV, met_TLV);
   mMET_EM = (mu_TLV + el_TLV + met_TLV).M();
-  DeltaPhiEM = fabs(mu_TLV.DeltaPhi(el_TLV));
-  DeltaPhiMETl0 = (el_TLV.Pt() > mu_TLV.Pt()) ? fabs(el_TLV.DeltaPhi(met_TLV)) : fabs(mu_TLV.DeltaPhi(met_TLV));
-  DeltaPhiMETl1 = (el_TLV.Pt() > mu_TLV.Pt()) ? fabs(mu_TLV.DeltaPhi(met_TLV)) : fabs(el_TLV.DeltaPhi(met_TLV));
-  DeltaPhiMETEM = fabs((mu_TLV + el_TLV).DeltaPhi(met_TLV));
+  DeltaPhi_EM = fabs(mu_TLV.DeltaPhi(el_TLV));
+  DeltaPhiMETl0_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? fabs(el_TLV.DeltaPhi(met_TLV)) : fabs(mu_TLV.DeltaPhi(met_TLV));
+  DeltaPhiMETl1_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? fabs(mu_TLV.DeltaPhi(met_TLV)) : fabs(el_TLV.DeltaPhi(met_TLV));
+  DeltaPhiMET_EM = fabs((mu_TLV + el_TLV).DeltaPhi(met_TLV));
   if(nSignalJets>0){
-    DeltaPhiEMjj = (nSignalJets>1) ? fabs((el_TLV + mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((el_TLV + mu_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaPhiEMjj = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu_TLV + el_TLV).DeltaPhi(signalJet0_TLV);
-    DeltaPhil0jj = (nSignalJets>1) ? ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaPhil1jj = (nSignalJets>1) ? ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV));
-    DeltaREMjj = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (mu_TLV + el_TLV).DeltaR(signalJet0_TLV);
+    DeltaPhi_lljj_EM = (nSignalJets>1) ? fabs((el_TLV + mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : fabs((el_TLV + mu_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhil0jj_EM = (nSignalJets>1) ? ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu_TLV.Pt()> el_TLV.Pt()) ? (mu_TLV).DeltaPhi(signalJet0_TLV) : (el_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaPhil1jj_EM = (nSignalJets>1) ? ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV + signalJet1_TLV)) : ((mu_TLV.Pt()< el_TLV.Pt()) ? (el_TLV).DeltaPhi(signalJet0_TLV) : (mu_TLV).DeltaPhi(signalJet0_TLV));
+    DeltaRlljj_EM = (nSignalJets>1) ? (mu_TLV + el_TLV).DeltaR(signalJet0_TLV + signalJet1_TLV) : (mu_TLV + el_TLV).DeltaR(signalJet0_TLV);
   }
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
@@ -3301,28 +3243,27 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
 
   }
   
-  mt2_EM = calcMT2(met_TLV, el_TLV, mu_TLV);
-  if(nSignalJets>1) mt2J_EM = calcMT2J(met_TLV, el_TLV, mu_TLV, signalJet0_TLV, signalJet1_TLV);
-  if(nSignalJets>1) mt2J0LepM_EM = calcMT2J0LepM(met_TLV, el_TLV, mu_TLV, signalJet0_TLV, signalJet1_TLV);
+  mT2_EM = calcMT2(met_TLV, el_TLV, mu_TLV);
+  if(nSignalJets>1) mT2J_EM = calcMT2J(met_TLV, el_TLV, mu_TLV, signalJet0_TLV, signalJet1_TLV);
   
-  DeltaEtaEM = fabs(mu_TLV.Eta() - el_TLV.Eta());  
+  DeltaEtall_EM = fabs(mu_TLV.Eta() - el_TLV.Eta());  
   
 bool unbiased = true;
   if(unbiased){
-    D0_branch_l0 = leptons.at(0)->d0Unbiased;
-    D0_branch_l1 = leptons.at(1)->d0Unbiased;
-    D0err_branch_l0 = leptons.at(0)->errD0Unbiased;
-    D0err_branch_l1 = leptons.at(1)->errD0Unbiased;
+    D0_branch_l0_EM = leptons.at(0)->d0Unbiased;
+    D0_branch_l1_EM = leptons.at(1)->d0Unbiased;
+    D0err_branch_l0_EM = leptons.at(0)->errD0Unbiased;
+    D0err_branch_l1_EM = leptons.at(1)->errD0Unbiased;
   }
   else{
-    D0_branch_l0 = leptons.at(0)->d0;
-    D0_branch_l1 = leptons.at(1)->d0;
-    D0err_branch_l0 = leptons.at(0)->errD0;
-    D0err_branch_l1 = leptons.at(1)->errD0;
+    D0_branch_l0_EM = leptons.at(0)->d0;
+    D0_branch_l1_EM = leptons.at(1)->d0;
+    D0err_branch_l0_EM = leptons.at(0)->errD0;
+    D0err_branch_l1_EM = leptons.at(1)->errD0;
   }
   
-  sD0Signif_branch_l0 = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0;
-  sD0Signif_branch_l1 = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1;
+  sD0Signif_branch_l0_EM = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_EM;
+  sD0Signif_branch_l1_EM = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_EM;
   
   
   
@@ -3356,6 +3297,7 @@ bool unbiased = true;
     if(mu_lost->DeltaR(*mu) < 0.0001) continue; //no signal lepton
     TLorentzVector mu_lost_TLV;
     mu_lost_TLV.SetPtEtaPhiE(mu_lost->pt, mu_lost->eta ,mu_lost->phi, mu_lost->pt*cosh(mu_lost->eta));
+    mu_lost_TLV.SetPtEtaPhiM(mu_lost->pt, mu_lost->eta ,mu_lost->phi, mu_lost->m);
     mu_lost_vec.push_back(mu_lost);
     //can it be combined to SFOS pair?
     if((mu_lost->q * mu->q)<0.){
@@ -3380,6 +3322,7 @@ bool unbiased = true;
     if(ele_lost->DeltaR(*el) < 0.0001) continue; //no signal lepton
     TLorentzVector ele_lost_TLV;
     ele_lost_TLV.SetPtEtaPhiE(ele_lost->pt, ele_lost->eta ,ele_lost->phi, ele_lost->pt*cosh(ele_lost->eta));
+    ele_lost_TLV.SetPtEtaPhiM(ele_lost->pt, ele_lost->eta ,ele_lost->phi, ele_lost->m);
     el_lost_vec.push_back(ele_lost);
     //can it be combined to SFOS pair?
     if((ele_lost->q * el->q)<0.){
@@ -3450,6 +3393,7 @@ bool unbiased = true;
     if(soft_mu->DeltaR(*mu) < 0.0001) continue; //no signal lepton
     TLorentzVector softMuon_TLV;
     softMuon_TLV.SetPtEtaPhiE(soft_mu->pt, soft_mu->eta ,soft_mu->phi, soft_mu->pt*cosh(soft_mu->eta));
+    softMuon_TLV.SetPtEtaPhiM(soft_mu->pt, soft_mu->eta ,soft_mu->phi, soft_mu->m);
     if(soft_mu->pt <= 10.){
       softMuons_vec.push_back(soft_mu);
       
@@ -3477,6 +3421,7 @@ bool unbiased = true;
     if(soft_ele->DeltaR(*el) < 0.0001) continue; //no signal lepton
     TLorentzVector softElectron_TLV;
     softElectron_TLV.SetPtEtaPhiE(soft_ele->pt, soft_ele->eta ,soft_ele->phi, soft_ele->pt*cosh(soft_ele->eta));
+    softElectron_TLV.SetPtEtaPhiM(soft_ele->pt, soft_ele->eta ,soft_ele->phi, soft_ele->m);
     if(soft_ele->pt <= 10.){
       softElectrons_vec.push_back(soft_ele);
       
@@ -3566,6 +3511,7 @@ bool unbiased = true;
     if(!isBaseMu){ //can not be matched to any baseline muon
       TLorentzVector overlapMuon_TLV;
       overlapMuon_TLV.SetPtEtaPhiE(pre_mu->pt, pre_mu->eta ,pre_mu->phi, pre_mu->pt*cosh(pre_mu->eta));
+      overlapMuon_TLV.SetPtEtaPhiM(pre_mu->pt, pre_mu->eta ,pre_mu->phi, pre_mu->m);
       overlapMuon_vec.push_back(pre_mu);
       if((pre_mu->q * mu->q)<0.){
 	if(fabs(MZ - Mll(mu, pre_mu)) < DeltaMZ_l0loverlap){
@@ -3598,6 +3544,7 @@ bool unbiased = true;
     if(!isBaseEle){ //can not be matched to any baseline muon
       TLorentzVector overlapElectron_TLV;
       overlapElectron_TLV.SetPtEtaPhiE(pre_elec->pt, pre_elec->eta ,pre_elec->phi, pre_elec->pt*cosh(pre_elec->eta));
+      overlapElectron_TLV.SetPtEtaPhiM(pre_elec->pt, pre_elec->eta ,pre_elec->phi, pre_elec->m);
       overlapElectron_vec.push_back(pre_elec);
       if((pre_elec->q * el->q)<0.){
 	if(fabs(MZ - Mll(el, pre_elec)) < DeltaMZ_l1loverlap){
@@ -3777,6 +3724,7 @@ bool unbiased = true;
 //       cout << "lost in ORWJet cut pt= " << mu_overlapping->pt << endl;
       TLorentzVector overlapWJetMuon_TLV;
       overlapWJetMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
+      overlapWJetMuon_TLV.SetPtEtaPhiM(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->m);
       
       if((mu_overlapping->q * mu->q)<0.){
 	if(fabs(MZ - Mll(mu, mu_overlapping)) < DeltaMZ_l0loverlapWJet){
@@ -3805,6 +3753,7 @@ bool unbiased = true;
 	Muon_lostInORWOFLepton_vec.push_back(mu_overlapping);
 	TLorentzVector overlapWOFLeptonMuon_TLV;
 	overlapWOFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
+	overlapWOFLeptonMuon_TLV.SetPtEtaPhiM(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->m);
 	
 	if((mu_overlapping->q * mu->q)<0.){
 	  if(fabs(MZ - Mll(mu, mu_overlapping)) < DeltaMZ_l0loverlapWOFLepton){
@@ -3835,6 +3784,7 @@ bool unbiased = true;
 	  Muon_lostInORWSFLepton_vec.push_back(mu_overlapping);
 	  TLorentzVector overlapWSFLeptonMuon_TLV;
 	  overlapWSFLeptonMuon_TLV.SetPtEtaPhiE(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->pt*cosh(mu_overlapping->eta));
+	  overlapWSFLeptonMuon_TLV.SetPtEtaPhiM(mu_overlapping->pt, mu_overlapping->eta ,mu_overlapping->phi, mu_overlapping->m);
 	  
 	  if((mu_overlapping->q * mu->q)<0.){
 	    if(fabs(MZ - Mll(mu, mu_overlapping)) < DeltaMZ_l0loverlapWSFLepton){
@@ -3889,6 +3839,7 @@ bool unbiased = true;
       Electron_lostInORWJet_vec.push_back(el_overlapping);
       TLorentzVector overlapWJetElectron_TLV;
       overlapWJetElectron_TLV.SetPtEtaPhiE(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->pt*cosh(el_overlapping->eta));
+      overlapWJetElectron_TLV.SetPtEtaPhiM(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->m);
       
       if((el_overlapping->q * el->q)<0.){
 	if(fabs(MZ - Mll(el, el_overlapping)) < DeltaMZ_l1loverlapWJet){
@@ -3919,6 +3870,7 @@ bool unbiased = true;
 	Electron_lostInORWOFLepton_vec.push_back(el_overlapping);
 	TLorentzVector overlapWOFLeptonElectron_TLV;
 	overlapWOFLeptonElectron_TLV.SetPtEtaPhiE(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->pt*cosh(el_overlapping->eta));
+	overlapWOFLeptonElectron_TLV.SetPtEtaPhiM(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->m);
 	
 	if((el_overlapping->q * el->q)<0.){
 	  if(fabs(MZ - Mll(el, el_overlapping)) < DeltaMZ_l1loverlapWOFLepton){
@@ -3951,6 +3903,7 @@ bool unbiased = true;
 	  Electron_lostInORWSFLepton_vec.push_back(el_overlapping);
 	  TLorentzVector overlapWSFLeptonElectron_TLV;
 	  overlapWSFLeptonElectron_TLV.SetPtEtaPhiE(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->pt*cosh(el_overlapping->eta));
+	  overlapWSFLeptonElectron_TLV.SetPtEtaPhiM(el_overlapping->pt, el_overlapping->eta ,el_overlapping->phi, el_overlapping->m);
 	  
 	  if((el_overlapping->q * el->q)<0.){
 	    if(fabs(MZ - Mll(el, el_overlapping)) < DeltaMZ_l1loverlapWSFLepton){
@@ -4139,6 +4092,7 @@ bool unbiased = true;
     }
     TLorentzVector ZcandMuon_TLV;
     ZcandMuon_TLV.SetPtEtaPhiE(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->pt*cosh(mu_WOjOR->eta));
+    ZcandMuon_TLV.SetPtEtaPhiM(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->m);
     Muon_Zcand_vec.push_back(mu_WOjOR);
     if((mu_WOjOR->q * mu->q)<0.){
       if(fabs(MZ - Mll(mu, mu_WOjOR)) < DeltaMZ_l0lZcand){
@@ -4176,6 +4130,7 @@ bool unbiased = true;
     
     TLorentzVector ZcandElec_TLV;
     ZcandElec_TLV.SetPtEtaPhiE(el_WOjOR->pt, el_WOjOR->eta ,el_WOjOR->phi, el_WOjOR->pt*cosh(el_WOjOR->eta));
+    ZcandElec_TLV.SetPtEtaPhiM(el_WOjOR->pt, el_WOjOR->eta ,el_WOjOR->phi, el_WOjOR->m);
     Electron_Zcand_vec.push_back(el_WOjOR);
     if((el_WOjOR->q * el->q)<0.){
       if(fabs(MZ - Mll(el, el_WOjOR)) < DeltaMZ_l1lZcand){
@@ -4227,25 +4182,25 @@ bool unbiased = true;
 void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float weight_ALL_EE){
   fillHistos_EE(cut_EE, weight_ALL_EE);
  
-//   h_DeltaRLeptons_EE_SRSS1->Fill(DeltaREE, cut_EE, weight_ALL_EE); 
-//   h_pTl0_EE_SRSS1->Fill(ptel0, cut_EE, weight_ALL_EE); 
-//   h_pTl1_EE_SRSS1->Fill(ptel1, cut_EE, weight_ALL_EE); 
+//   h_DeltaRLeptons_EE_SRSS1->Fill(DeltaR_EE, cut_EE, weight_ALL_EE); 
+//   h_pTl0_EE_SRSS1->Fill(ptl0_EE, cut_EE, weight_ALL_EE); 
+//   h_pTl1_EE_SRSS1->Fill(ptl1_EE, cut_EE, weight_ALL_EE); 
 //   h_pTj0_EE_SRSS1->Fill(pTj0, cut_EE, weight_ALL_EE); 
 //   h_pTj1_EE_SRSS1->Fill(pTj1, cut_EE, weight_ALL_EE); 
-//   h_mll_EE_SRSS1->Fill(MEE, cut_EE, weight_ALL_EE); 
-//   h_METrel_EE_SRSS1->Fill(METrelEE, cut_EE, weight_ALL_EE); 
-//   h_MET_EE_SRSS1->Fill(METEE, cut_EE, weight_ALL_EE); 
+//   h_mll_EE_SRSS1->Fill(Mll_EE, cut_EE, weight_ALL_EE); 
+//   h_METrel_EE_SRSS1->Fill(METrel_EE, cut_EE, weight_ALL_EE); 
+//   h_MET_EE_SRSS1->Fill(MET_EE, cut_EE, weight_ALL_EE); 
 //   h_HT_EE_SRSS1->Fill(HT_EE, cut_EE, weight_ALL_EE); 
 //   h_mWWt_EE_SRSS1->Fill(mTWW_EE, cut_EE, weight_ALL_EE); 
-//   h_mTlmin_EE_SRSS1->Fill(mTemin, cut_EE, weight_ALL_EE); 
-//   h_mTlmax_EE_SRSS1->Fill(mTemax, cut_EE, weight_ALL_EE); 
+//   h_mTlmin_EE_SRSS1->Fill(mTmin_EE, cut_EE, weight_ALL_EE); 
+//   h_mTlmax_EE_SRSS1->Fill(mTmax_EE, cut_EE, weight_ALL_EE); 
 //   h_meff_EE_SRSS1->Fill(meff, cut_EE, weight_ALL_EE); 
-//   h_mt2_EE_SRSS1->Fill(mt2_EE, cut_EE, weight_ALL_EE); 
-//   h_mt2J_EE_SRSS1->Fill(mt2J_EE, cut_EE, weight_ALL_EE); 
-//   h_mt2J0LepM_EE_SRSS1->Fill(mt2J0LepM_EE, cut_EE, weight_ALL_EE); 
+//   h_mT2_EE_SRSS1->Fill(mT2_EE, cut_EE, weight_ALL_EE); 
+//   h_mT2J_EE_SRSS1->Fill(mT2J_EE, cut_EE, weight_ALL_EE); 
+
 //   h_mjj_EE_SRSS1->Fill(mjj, cut_EE, weight_ALL_EE); 
-//   h_DeltaPhiMETll_EE_SRSS1->Fill(DeltaREE, cut_EE, weight_ALL_EE); 
-//   h_DeltaPhill_EE_SRSS1->Fill(DeltaPhiEE, cut_EE, weight_ALL_EE); 
+//   h_DeltaPhiMETll_EE_SRSS1->Fill(DeltaR_EE, cut_EE, weight_ALL_EE); 
+//   h_DeltaPhill_EE_SRSS1->Fill(DeltaPhi_EE, cut_EE, weight_ALL_EE); 
 //   h_NBJets_EE_SRSS1->Fill(NBJets, cut_EE, weight_ALL_EE); 
 //   h_NCJets_EE_SRSS1->Fill(NCJets, cut_EE, weight_ALL_EE); 
 //   h_NFJets_EE_SRSS1->Fill(NFJets, cut_EE, weight_ALL_EE); 
@@ -4254,34 +4209,34 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, int mcid, float wei
 //   
 //   h_DeltaPhijj_EE_SRSS1->Fill(DeltaPhijj, cut_EE, weight_ALL_EE);  
 //   h_pTjj_EE_SRSS1->Fill(pTjj, cut_EE, weight_ALL_EE);  
-//   h_ptll_EE_SRSS1->Fill(pTEE, cut_EE, weight_ALL_EE);  
-//   h_DeltaPhiMETl0_EE_SRSS1->Fill(DeltaPhiMETel0, cut_EE, weight_ALL_EE);  
-//   h_DeltaPhiMETl1_EE_SRSS1->Fill(DeltaPhiMETel1, cut_EE, weight_ALL_EE);    
+//   h_ptll_EE_SRSS1->Fill(ptll_EE, cut_EE, weight_ALL_EE);  
+//   h_DeltaPhiMETl0_EE_SRSS1->Fill(DeltaPhiMETl0_EE, cut_EE, weight_ALL_EE);  
+//   h_DeltaPhiMETl1_EE_SRSS1->Fill(DeltaPhiMETl1_EE, cut_EE, weight_ALL_EE);    
 //   h_DeltaPhiMETj0_EE_SRSS1->Fill(DeltaPhiMETj0, cut_EE, weight_ALL_EE);  
 //   h_DeltaPhiMETj1_EE_SRSS1->Fill(DeltaPhiMETj1, cut_EE, weight_ALL_EE);  
 //   h_DeltaPhiMETjj_EE_SRSS1->Fill(DeltaPhiMETjj, cut_EE, weight_ALL_EE);  
 //   h_DeltaRjj_EE_SRSS1->Fill(DeltaRjj, cut_EE, weight_ALL_EE);  
 
-//   h_etal0_EE_SRSS1->Fill(fabs(eta_el0), cut_EE, weight_ALL_EE);  
-//   h_etal1_EE_SRSS1->Fill(fabs(eta_el1), cut_EE, weight_ALL_EE);  
+//   h_etal0_EE_SRSS1->Fill(fabs(etal0_EE), cut_EE, weight_ALL_EE);  
+//   h_etal1_EE_SRSS1->Fill(fabs(etal1_EE), cut_EE, weight_ALL_EE);  
 //   h_etaj0_EE_SRSS1->Fill(fabs(eta_j0), cut_EE, weight_ALL_EE);  
 //   h_etaj1_EE_SRSS1->Fill(fabs(eta_j1), cut_EE, weight_ALL_EE);  
-//   h_mTl0MET_EE_SRSS1->Fill(mTel0MET, cut_EE, weight_ALL_EE);  
-//   h_mTl1MET_EE_SRSS1->Fill(mTel1MET, cut_EE, weight_ALL_EE);  
-//   h_DeltaPhilljj_EE_SRSS1->Fill(DeltaPhiEEjj, cut_EE, weight_ALL_EE);  
-//   h_DeltaPhil0jj_EE_SRSS1->Fill(DeltaPhiel0jj, cut_EE, weight_ALL_EE);  
-//   h_DeltaPhil1jj_EE_SRSS1->Fill(DeltaPhiel1jj, cut_EE, weight_ALL_EE);  
-//   h_DeltaRlljj_EE_SRSS1->Fill(DeltaREEjj, cut_EE, weight_ALL_EE);  
+//   h_mTl0MET_EE_SRSS1->Fill(mTl0MET_EE, cut_EE, weight_ALL_EE);  
+//   h_mTl1MET_EE_SRSS1->Fill(mTl1MET_EE, cut_EE, weight_ALL_EE);  
+//   h_DeltaPhilljj_EE_SRSS1->Fill(, cut_EE, weight_ALL_EE);  
+//   h_DeltaPhil0jj_EE_SRSS1->Fill(DeltaPhil0jj_EE, cut_EE, weight_ALL_EE);  
+//   h_DeltaPhil1jj_EE_SRSS1->Fill(DeltaPhil1jj_EE, cut_EE, weight_ALL_EE);  
+//   h_DeltaRlljj_EE_SRSS1->Fill(DeltaRlljj_EE, cut_EE, weight_ALL_EE);  
 //   h_DeltaEtajj_EE_SRSS1->Fill(DeltaEtajj, cut_EE, weight_ALL_EE);  
-//   h_DeltaEtall_EE_SRSS1->Fill(DeltaEtaEE, cut_EE, weight_ALL_EE);  
-//   h_mTll_EE_SRSS1->Fill(mTEE, cut_EE, weight_ALL_EE);  
-//   h_mMETll_EE_SRSS1->Fill(mMETEE, cut_EE, weight_ALL_EE);  
+//   h_DeltaEtall_EE_SRSS1->Fill(DeltaEtall_EE, cut_EE, weight_ALL_EE);  
+//   h_mTll_EE_SRSS1->Fill(mT_EE, cut_EE, weight_ALL_EE);  
+//   h_mMETll_EE_SRSS1->Fill(mMET_EE, cut_EE, weight_ALL_EE);  
 //   h_DeltaYjj_EE_SRSS1->Fill(DeltaYjj, cut_EE, weight_ALL_EE);  
 //   
-//   h_D0_branch_l0_EE_SRSS1->Fill(D0_branch_el0, cut_EE, weight_ALL_EE);  
-//   h_D0_branch_l1_EE_SRSS1->Fill(D0_branch_el1, cut_EE, weight_ALL_EE);  
+//   h_D0_branch_l0_EE_SRSS1->Fill(D0_branch_l0_EE, cut_EE, weight_ALL_EE);  
+//   h_D0_branch_l1_EE_SRSS1->Fill(D0_branch_l1_EE, cut_EE, weight_ALL_EE);  
 //   h_D0Signif_branch_l0_EE_SRSS1->Fill(sD0Signif_branch_el0, cut_EE, weight_ALL_EE);  
-//   h_D0Signif_branch_l1_EE_SRSS1->Fill(sD0Signif_branch_el1, cut_EE, weight_ALL_EE);  
+//   h_D0Signif_branch_l1_EE_SRSS1->Fill(sD0Signif_branch_l1_EE, cut_EE, weight_ALL_EE);  
     h_Mljj_EE_SRSS1->Fill(Mljj_EE, cut_EE, weight_ALL_EE);
   //lost lepton
   h_Nleptons_lost_EE_SRSS1->Fill(Nleptons_lost_EE, cut_EE, weight_ALL_EE);  
@@ -4425,11 +4380,11 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   h_N_MuonToBeChecked_afterORWSFLepton_MM->Fill(N_MuonToBeChecked_afterORWSFLepton_MM, cut_MM, weight_ALL_MM); 
   h_N_MuonToBeChecked_afterMllCut_MM->Fill(N_MuonToBeChecked_afterMllCut_MM, cut_MM, weight_ALL_MM); 
   h_DeltaRLeptons_MM_SRSS1->Fill(DeltaR_MM, cut_MM, weight_ALL_MM); 
-  h_pTl0_MM_SRSS1->Fill(ptmu0, cut_MM, weight_ALL_MM); 
-  h_pTl1_MM_SRSS1->Fill(ptmu1, cut_MM, weight_ALL_MM); 
+  h_pTl0_MM_SRSS1->Fill(ptl0_MM, cut_MM, weight_ALL_MM); 
+  h_pTl1_MM_SRSS1->Fill(ptl1_MM, cut_MM, weight_ALL_MM); 
   h_pTj0_MM_SRSS1->Fill(pTj0, cut_MM, weight_ALL_MM); 
   h_pTj1_MM_SRSS1->Fill(pTj1, cut_MM, weight_ALL_MM); 
-  h_mll_MM_SRSS1->Fill(M_MM, cut_MM, weight_ALL_MM); 
+  h_mll_MM_SRSS1->Fill(Mll_MM, cut_MM, weight_ALL_MM); 
   h_METrel_MM_SRSS1->Fill(METrel_MM, cut_MM, weight_ALL_MM); 
   h_MET_MM_SRSS1->Fill(MET_MM, cut_MM, weight_ALL_MM); 
   h_HT_MM_SRSS1->Fill(HT_MM, cut_MM, weight_ALL_MM); 
@@ -4437,12 +4392,11 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   h_mTlmin_MM_SRSS1->Fill(mTmin_MM, cut_MM, weight_ALL_MM); 
   h_mTlmax_MM_SRSS1->Fill(mTmax_MM, cut_MM, weight_ALL_MM); 
   h_meff_MM_SRSS1->Fill(meff, cut_MM, weight_ALL_MM); 
-  h_mt2_MM_SRSS1->Fill(mt2_MM, cut_MM, weight_ALL_MM); 
-  h_mt2J_MM_SRSS1->Fill(mt2J_MM, cut_MM, weight_ALL_MM); 
-  h_mt2J0LepM_MM_SRSS1->Fill(mt2J0LepM_MM, cut_MM, weight_ALL_MM); 
+  h_mT2_MM_SRSS1->Fill(mT2_MM, cut_MM, weight_ALL_MM); 
+  h_mT2J_MM_SRSS1->Fill(mT2J_MM, cut_MM, weight_ALL_MM); 
   h_mjj_MM_SRSS1->Fill(mjj, cut_MM, weight_ALL_MM); 
   h_DeltaPhiMETll_MM_SRSS1->Fill(DeltaR_MM, cut_MM, weight_ALL_MM); 
-  h_DeltaPhill_MM_SRSS1->Fill(DeltaPhiMM, cut_MM, weight_ALL_MM); 
+  h_DeltaPhill_MM_SRSS1->Fill(DeltaPhi_MM, cut_MM, weight_ALL_MM); 
   h_NBJets_MM_SRSS1->Fill(NBJets, cut_MM, weight_ALL_MM); 
   h_NCJets_MM_SRSS1->Fill(NCJets, cut_MM, weight_ALL_MM); 
   h_NFJets_MM_SRSS1->Fill(NFJets, cut_MM, weight_ALL_MM); 
@@ -4451,34 +4405,34 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, int mcid, float wei
   
   h_DeltaPhijj_MM_SRSS1->Fill(DeltaPhijj, cut_MM, weight_ALL_MM);  
   h_pTjj_MM_SRSS1->Fill(pTjj, cut_MM, weight_ALL_MM);  
-  h_ptll_MM_SRSS1->Fill(pT_MM, cut_MM, weight_ALL_MM);  
-  h_DeltaPhiMETl0_MM_SRSS1->Fill(DeltaPhiMETmu0, cut_MM, weight_ALL_MM);  
-  h_DeltaPhiMETl1_MM_SRSS1->Fill(DeltaPhiMETmu1, cut_MM, weight_ALL_MM);    
+  h_ptll_MM_SRSS1->Fill(ptll_MM, cut_MM, weight_ALL_MM);  
+  h_DeltaPhiMETl0_MM_SRSS1->Fill(DeltaPhiMETl0_MM, cut_MM, weight_ALL_MM);  
+  h_DeltaPhiMETl1_MM_SRSS1->Fill(DeltaPhiMETl1_MM, cut_MM, weight_ALL_MM);    
   h_DeltaPhiMETj0_MM_SRSS1->Fill(DeltaPhiMETj0, cut_MM, weight_ALL_MM);  
   h_DeltaPhiMETj1_MM_SRSS1->Fill(DeltaPhiMETj1, cut_MM, weight_ALL_MM);  
   h_DeltaPhiMETjj_MM_SRSS1->Fill(DeltaPhiMETjj, cut_MM, weight_ALL_MM);  
   h_DeltaRjj_MM_SRSS1->Fill(DeltaRjj, cut_MM, weight_ALL_MM);  
 
-  h_etal0_MM_SRSS1->Fill(fabs(eta_mu0), cut_MM, weight_ALL_MM);  
-  h_etal1_MM_SRSS1->Fill(fabs(eta_mu1), cut_MM, weight_ALL_MM);  
+  h_etal0_MM_SRSS1->Fill(fabs(etal0_MM), cut_MM, weight_ALL_MM);  
+  h_etal1_MM_SRSS1->Fill(fabs(etal1_MM), cut_MM, weight_ALL_MM);  
   h_etaj0_MM_SRSS1->Fill(fabs(eta_j0), cut_MM, weight_ALL_MM);  
   h_etaj1_MM_SRSS1->Fill(fabs(eta_j1), cut_MM, weight_ALL_MM);  
-  h_mTl0MET_MM_SRSS1->Fill(mTmu0MET, cut_MM, weight_ALL_MM);  
-  h_mTl1MET_MM_SRSS1->Fill(mTmu1MET, cut_MM, weight_ALL_MM);  
-  h_DeltaPhilljj_MM_SRSS1->Fill(DeltaPhiMMjj, cut_MM, weight_ALL_MM);  
-  h_DeltaPhil0jj_MM_SRSS1->Fill(DeltaPhimu0jj, cut_MM, weight_ALL_MM);  
-  h_DeltaPhil1jj_MM_SRSS1->Fill(DeltaPhimu1jj, cut_MM, weight_ALL_MM);  
-  h_DeltaRlljj_MM_SRSS1->Fill(DeltaRMMjj, cut_MM, weight_ALL_MM);  
+  h_mTl0MET_MM_SRSS1->Fill(mTl0MET_MM, cut_MM, weight_ALL_MM);  
+  h_mTl1MET_MM_SRSS1->Fill(mTl1MET_MM, cut_MM, weight_ALL_MM);  
+  h_DeltaPhilljj_MM_SRSS1->Fill(DeltaPhilljj_MM, cut_MM, weight_ALL_MM);  
+  h_DeltaPhil0jj_MM_SRSS1->Fill(DeltaPhil0jj_MM, cut_MM, weight_ALL_MM);  
+  h_DeltaPhil1jj_MM_SRSS1->Fill(DeltaPhil1jj_MM, cut_MM, weight_ALL_MM);  
+  h_DeltaRlljj_MM_SRSS1->Fill(DeltaRlljj_MM, cut_MM, weight_ALL_MM);  
   h_DeltaEtajj_MM_SRSS1->Fill(DeltaEtajj, cut_MM, weight_ALL_MM);  
-  h_DeltaEtall_MM_SRSS1->Fill(DeltaEtaMM, cut_MM, weight_ALL_MM);  
-  h_mTll_MM_SRSS1->Fill(mTMM, cut_MM, weight_ALL_MM);  
-  h_mMETll_MM_SRSS1->Fill(mMETMM, cut_MM, weight_ALL_MM);  
+  h_DeltaEtall_MM_SRSS1->Fill(DeltaEtall_MM, cut_MM, weight_ALL_MM);  
+  h_mTll_MM_SRSS1->Fill(mT_MM, cut_MM, weight_ALL_MM);  
+  h_mMETll_MM_SRSS1->Fill(mMET_MM, cut_MM, weight_ALL_MM);  
   h_DeltaYjj_MM_SRSS1->Fill(DeltaYjj, cut_MM, weight_ALL_MM);  
   
-  h_D0_branch_l0_MM_SRSS1->Fill(D0_branch_mu0, cut_MM, weight_ALL_MM);  
-  h_D0_branch_l1_MM_SRSS1->Fill(D0_branch_mu1, cut_MM, weight_ALL_MM);  
-  h_D0Signif_branch_l0_MM_SRSS1->Fill(sD0Signif_branch_mu0, cut_MM, weight_ALL_MM);  
-  h_D0Signif_branch_l1_MM_SRSS1->Fill(sD0Signif_branch_mu1, cut_MM, weight_ALL_MM);  
+  h_D0_branch_l0_MM_SRSS1->Fill(D0_branch_l0_MM, cut_MM, weight_ALL_MM);  
+  h_D0_branch_l1_MM_SRSS1->Fill(D0_branch_l1_MM, cut_MM, weight_ALL_MM);  
+  h_D0Signif_branch_l0_MM_SRSS1->Fill(sD0Signif_branch_l0_MM, cut_MM, weight_ALL_MM);  
+  h_D0Signif_branch_l1_MM_SRSS1->Fill(sD0Signif_branch_l1_MM, cut_MM, weight_ALL_MM);  
   
     h_Mljj_MM_SRSS1->Fill(Mljj_MM, cut_MM, weight_ALL_MM);
   //lost lepton
@@ -4617,11 +4571,11 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
 
   fillHistos_EM(cut_EM, weight_ALL_EM);
   h_DeltaRLeptons_EM_SRSS1->Fill(DeltaR_EM, cut_EM, weight_ALL_EM); 
-  h_pTl0_EM_SRSS1->Fill(ptl0, cut_EM, weight_ALL_EM); 
-  h_pTl1_EM_SRSS1->Fill(ptl1, cut_EM, weight_ALL_EM); 
+  h_pTl0_EM_SRSS1->Fill(ptl0_EM, cut_EM, weight_ALL_EM); 
+  h_pTl1_EM_SRSS1->Fill(ptl1_EM, cut_EM, weight_ALL_EM); 
   h_pTj0_EM_SRSS1->Fill(pTj0, cut_EM, weight_ALL_EM); 
   h_pTj1_EM_SRSS1->Fill(pTj1, cut_EM, weight_ALL_EM); 
-  h_mll_EM_SRSS1->Fill(M_EM, cut_EM, weight_ALL_EM); 
+  h_mll_EM_SRSS1->Fill(Mll_EM, cut_EM, weight_ALL_EM); 
   h_METrel_EM_SRSS1->Fill(METrel_EM, cut_EM, weight_ALL_EM); 
   h_MET_EM_SRSS1->Fill(MET_EM, cut_EM, weight_ALL_EM); 
   h_HT_EM_SRSS1->Fill(HT_EM, cut_EM, weight_ALL_EM); 
@@ -4629,12 +4583,11 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
   h_mTlmin_EM_SRSS1->Fill(mTmin_EM, cut_EM, weight_ALL_EM); 
   h_mTlmax_EM_SRSS1->Fill(mTmax_EM, cut_EM, weight_ALL_EM); 
   h_meff_EM_SRSS1->Fill(meff, cut_EM, weight_ALL_EM); 
-  h_mt2_EM_SRSS1->Fill(mt2_EM, cut_EM, weight_ALL_EM); 
-  h_mt2J_EM_SRSS1->Fill(mt2J_EM, cut_EM, weight_ALL_EM); 
-  h_mt2J0LepM_EM_SRSS1->Fill(mt2J0LepM_EM, cut_EM, weight_ALL_EM); 
+  h_mT2_EM_SRSS1->Fill(mT2_EM, cut_EM, weight_ALL_EM); 
+  h_mT2J_EM_SRSS1->Fill(mT2J_EM, cut_EM, weight_ALL_EM); 
   h_mjj_EM_SRSS1->Fill(mjj, cut_EM, weight_ALL_EM); 
   h_DeltaPhiMETll_EM_SRSS1->Fill(DeltaR_EM, cut_EM, weight_ALL_EM); 
-  h_DeltaPhill_EM_SRSS1->Fill(DeltaPhiEM, cut_EM, weight_ALL_EM); 
+  h_DeltaPhill_EM_SRSS1->Fill(DeltaPhi_EM, cut_EM, weight_ALL_EM); 
   h_NBJets_EM_SRSS1->Fill(NBJets, cut_EM, weight_ALL_EM); 
   h_NCJets_EM_SRSS1->Fill(NCJets, cut_EM, weight_ALL_EM); 
   h_NFJets_EM_SRSS1->Fill(NFJets, cut_EM, weight_ALL_EM); 
@@ -4643,34 +4596,34 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, int mcid, float wei
   
   h_DeltaPhijj_EM_SRSS1->Fill(DeltaPhijj, cut_EM, weight_ALL_EM);  
   h_pTjj_EM_SRSS1->Fill(pTjj, cut_EM, weight_ALL_EM);  
-  h_ptll_EM_SRSS1->Fill(pT_EM, cut_EM, weight_ALL_EM);  
-  h_DeltaPhiMETl0_EM_SRSS1->Fill(DeltaPhiMETl0, cut_EM, weight_ALL_EM);  
-  h_DeltaPhiMETl1_EM_SRSS1->Fill(DeltaPhiMETl1, cut_EM, weight_ALL_EM);    
+  h_ptll_EM_SRSS1->Fill(pTll_EM, cut_EM, weight_ALL_EM);  
+  h_DeltaPhiMETl0_EM_SRSS1->Fill(DeltaPhiMETl0_EM, cut_EM, weight_ALL_EM);  
+  h_DeltaPhiMETl1_EM_SRSS1->Fill(DeltaPhiMETl1_EM, cut_EM, weight_ALL_EM);    
   h_DeltaPhiMETj0_EM_SRSS1->Fill(DeltaPhiMETj0, cut_EM, weight_ALL_EM);  
   h_DeltaPhiMETj1_EM_SRSS1->Fill(DeltaPhiMETj1, cut_EM, weight_ALL_EM);  
   h_DeltaPhiMETjj_EM_SRSS1->Fill(DeltaPhiMETjj, cut_EM, weight_ALL_EM);  
   h_DeltaRjj_EM_SRSS1->Fill(DeltaRjj, cut_EM, weight_ALL_EM);  
 
-  h_etal0_EM_SRSS1->Fill(fabs(eta_l0), cut_EM, weight_ALL_EM);  
-  h_etal1_EM_SRSS1->Fill(fabs(eta_l1), cut_EM, weight_ALL_EM);  
+  h_etal0_EM_SRSS1->Fill(fabs(etal0_EM), cut_EM, weight_ALL_EM);  
+  h_etal1_EM_SRSS1->Fill(fabs(etal1_EM), cut_EM, weight_ALL_EM);  
   h_etaj0_EM_SRSS1->Fill(fabs(eta_j0), cut_EM, weight_ALL_EM);  
   h_etaj1_EM_SRSS1->Fill(fabs(eta_j1), cut_EM, weight_ALL_EM);  
-  h_mTl0MET_EM_SRSS1->Fill(mTl0MET, cut_EM, weight_ALL_EM);  
-  h_mTl1MET_EM_SRSS1->Fill(mTl1MET, cut_EM, weight_ALL_EM);  
-  h_DeltaPhilljj_EM_SRSS1->Fill(DeltaPhiEMjj, cut_EM, weight_ALL_EM);  
-  h_DeltaPhil0jj_EM_SRSS1->Fill(DeltaPhil0jj, cut_EM, weight_ALL_EM);  
-  h_DeltaPhil1jj_EM_SRSS1->Fill(DeltaPhil1jj, cut_EM, weight_ALL_EM);  
-  h_DeltaRlljj_EM_SRSS1->Fill(DeltaREMjj, cut_EM, weight_ALL_EM);  
+  h_mTl0MET_EM_SRSS1->Fill(mTl0MET_EM, cut_EM, weight_ALL_EM);  
+  h_mTl1MET_EM_SRSS1->Fill(mTl1MET_EM, cut_EM, weight_ALL_EM);  
+  h_DeltaPhilljj_EM_SRSS1->Fill(DeltaPhi_lljj_EM, cut_EM, weight_ALL_EM);  
+  h_DeltaPhil0jj_EM_SRSS1->Fill(DeltaPhil0jj_EM, cut_EM, weight_ALL_EM);  
+  h_DeltaPhil1jj_EM_SRSS1->Fill(DeltaPhil1jj_EM, cut_EM, weight_ALL_EM);  
+  h_DeltaRlljj_EM_SRSS1->Fill(DeltaRlljj_EM, cut_EM, weight_ALL_EM);  
   h_DeltaEtajj_EM_SRSS1->Fill(DeltaEtajj, cut_EM, weight_ALL_EM);  
-  h_DeltaEtall_EM_SRSS1->Fill(DeltaEtaEM, cut_EM, weight_ALL_EM);  
+  h_DeltaEtall_EM_SRSS1->Fill(DeltaEtall_EM, cut_EM, weight_ALL_EM);  
   h_mTll_EM_SRSS1->Fill(mT_EM, cut_EM, weight_ALL_EM);  
   h_mMETll_EM_SRSS1->Fill(mMET_EM, cut_EM, weight_ALL_EM);  
   h_DeltaYjj_EM_SRSS1->Fill(DeltaYjj, cut_EM, weight_ALL_EM);  
   
-  h_D0_branch_l0_EM_SRSS1->Fill(D0_branch_l0, cut_EM, weight_ALL_EM);  
-  h_D0_branch_l1_EM_SRSS1->Fill(D0_branch_l1, cut_EM, weight_ALL_EM);  
-  h_D0Signif_branch_l0_EM_SRSS1->Fill(sD0Signif_branch_l0, cut_EM, weight_ALL_EM);  
-  h_D0Signif_branch_l1_EM_SRSS1->Fill(sD0Signif_branch_l1, cut_EM, weight_ALL_EM);  
+  h_D0_branch_l0_EM_SRSS1->Fill(D0_branch_l0_EM, cut_EM, weight_ALL_EM);  
+  h_D0_branch_l1_EM_SRSS1->Fill(D0_branch_l1_EM, cut_EM, weight_ALL_EM);  
+  h_D0Signif_branch_l0_EM_SRSS1->Fill(sD0Signif_branch_l0_EM, cut_EM, weight_ALL_EM);  
+  h_D0Signif_branch_l1_EM_SRSS1->Fill(sD0Signif_branch_l_EM1, cut_EM, weight_ALL_EM);  
   h_N_MuonToBeChecked_afterORWJet_EM->Fill(N_MuonToBeChecked_afterORWJet_EM, cut_EM, weight_ALL_EM);  
   h_N_MuonToBeChecked_afterORWOFLepton_EM->Fill(N_MuonToBeChecked_afterORWOFLepton_EM, cut_EM, weight_ALL_EM);  
   h_N_MuonToBeChecked_afterORWSFLepton_EM->Fill(N_MuonToBeChecked_afterORWSFLepton_EM, cut_EM, weight_ALL_EM);     

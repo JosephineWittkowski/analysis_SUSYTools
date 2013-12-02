@@ -144,9 +144,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
     jet0 = m_signalJets2Lep.at(0);
 
     signalJet0_TLV.SetPtEtaPhiE(jet0->pt, jet0->eta, jet0->phi, jet0->pt*cosh(jet0->eta));
+    signalJet0_TLV.SetPtEtaPhiM(jet0->pt, jet0->eta, jet0->phi, jet0->m);
     if(numberOfCLJets(m_signalJets2Lep) >=2){	
       jet1 = m_signalJets2Lep.at(1);
       signalJet1_TLV.SetPtEtaPhiE(jet1->pt, jet1->eta, jet1->phi, jet1->pt*cosh(jet1->eta));
+      signalJet1_TLV.SetPtEtaPhiM(jet1->pt, jet1->eta, jet1->phi, jet1->m);
       
     }
   }
@@ -182,7 +184,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       electrons = m_signalElectrons;
       
       el0_TLV.SetPtEtaPhiE(el0->pt, el0->eta ,el0->phi, el0->pt*cosh(el0->eta));
+      el0_TLV.SetPtEtaPhiM(el0->pt, el0->eta ,el0->phi, el0->m);
       el1_TLV.SetPtEtaPhiE(el1->pt, el1->eta ,el1->phi, el1->pt*cosh(el1->eta));
+      el1_TLV.SetPtEtaPhiM(el1->pt, el1->eta ,el1->phi, el1->m);
 //       cout << "el0_TLV.M()= " << el0_TLV.M() << " el1_TLV.M()= " << el1_TLV.M() << endl;
     }
       
@@ -195,7 +199,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	el1 = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(1) : electrons.at(0);
 
 	el0_TLV.SetPtEtaPhiE(el0->pt, el0->eta ,el0->phi, el0->pt*cosh(el0->eta));
+	el0_TLV.SetPtEtaPhiM(el0->pt, el0->eta ,el0->phi, el0->m);
 	el1_TLV.SetPtEtaPhiE(el1->pt, el1->eta ,el1->phi, el1->pt*cosh(el1->eta));
+	el1_TLV.SetPtEtaPhiM(el1->pt, el1->eta ,el1->phi, el1->m);
       }
 
       if(passEE && m_signalTaus.size() == 0){
@@ -234,7 +240,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	el1_SS = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(1) : electrons.at(0);
 	TLorentzVector el0_SS_TLV, el1_SS_TLV;
 	el0_SS_TLV.SetPtEtaPhiE(el0_SS->pt, el0_SS->eta ,el0_SS->phi, el0_SS->pt*cosh(el0_SS->eta));
+	el0_SS_TLV.SetPtEtaPhiM(el0_SS->pt, el0_SS->eta ,el0_SS->phi, el0_SS->m);
 	el1_SS_TLV.SetPtEtaPhiE(el1_SS->pt, el1_SS->eta ,el1_SS->phi, el1_SS->pt*cosh(el1_SS->eta));
+	el1_SS_TLV.SetPtEtaPhiM(el1_SS->pt, el1_SS->eta ,el1_SS->phi, el1_SS->m);
 
 	TLorentzVector met_SS_TLV;
 	TVector2 met_SS_TVector2;
@@ -260,12 +268,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	
 	//------------------------------------------------------------------------------------
 	calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_SS_EE * getBTagWeight(nt.evt()));
-	if(numberOfCLJets(m_signalJets2Lep) >1){
+// 	if(numberOfCLJets(m_signalJets2Lep) >1){
+// 	  cout << "m_signalLeptons.at(0)->m= " << m_signalLeptons.at(0)->m << " m_signalLeptons.at(1)->m= " << m_signalLeptons.at(1)->m << endl;
 // 	  cout << "el0->m= " << el0->m << " el0_SS_TLV.M()= " << el0_SS_TLV.M();
 // 	  cout << "el1->m= " << el1->m << " el1_SS_TLV.M()= " << el1_SS_TLV.M() << endl;
 // 	  cout << "jet0->m= " << jet0->m << " signalJet0_TLV.M()= " << signalJet0_TLV.M();	
 // 	  cout << "jet1->m= " << jet1->m << " signalJet1_TLV.M()= " << signalJet1_TLV.M() << endl;
-	}
+// 	}
 	//if running on data for fake bg, instead of weights (pileup, xsec, eventweight, trigger, SF, btag, ...) use fakeWeight from SusyMatrixMethod
 	float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
 	if(!nt.evt()->isMC && calcFakeContribution){
@@ -335,14 +344,16 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 // 		      cutnumber = 54.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
 // 		      TLorentzVector signalJet0_TLV, signalJet1_TLV;
 // 		      signalJet0_TLV.SetPtEtaPhiE(jet0->pt, jet0->eta, jet0->phi, jet0->pt*cosh(jet0->eta));
+// 		      signalJet0_TLV.SetPtEtaPhiM(jet0->pt, jet0->eta, jet0->phi, jet0->m);
 // 		      signalJet1_TLV.SetPtEtaPhiE(jet1->pt, jet1->eta, jet1->phi, jet1->pt*cosh(jet1->eta));
+// 		      signalJet1_TLV.SetPtEtaPhiM(jet1->pt, jet1->eta, jet1->phi, jet1->m);
 // 		      mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
 // 		      if(mjj >= 50. && mjj <= 100.){
 // 			cutnumber = 55.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
 // 			if(el0_TLV.Pt() >= 30 && el1_TLV.Pt() >= 30){
 // 			  cutnumber = 56.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
-// 			  float DeltaRee = fabs(el0_TLV.DeltaR(el1_TLV));
-// 			  if(DeltaRee<=1.5){
+// 			  float DeltaR_EE = fabs(el0_TLV.DeltaR(el1_TLV));
+// 			  if(DeltaR_EE<=1.5){
 // 			    cutnumber = 57.; fillHistos_EE_SROS1(cutnumber, mcid, weight_ALL_EE);
 // 			    float mTemin = (Mt(el0, m_met) > Mt(el1, m_met)) ? Mt(el1, m_met) : Mt(el0, m_met);
 // 			    if(mTemin >= 60.){
@@ -395,7 +406,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       muons = m_signalMuons;
       
       mu0_TLV.SetPtEtaPhiE(mu0->pt, mu0->eta ,mu0->phi, mu0->pt*cosh(mu0->eta));
+      mu0_TLV.SetPtEtaPhiM(mu0->pt, mu0->eta ,mu0->phi, mu0->m);
       mu1_TLV.SetPtEtaPhiE(mu1->pt, mu1->eta ,mu1->phi, mu1->pt*cosh(mu1->eta));
+      mu1_TLV.SetPtEtaPhiM(mu1->pt, mu1->eta ,mu1->phi, mu1->m);
       }
       
 // calculate fake bg contribution with m_baseMuons, don't use info about m_signalMuons
@@ -405,7 +418,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
       mu0 = (m_baseMuons.at(0)->pt > m_baseMuons.at(1)->pt) ? m_baseMuons.at(0) : m_baseMuons.at(1);
       mu1 = (m_baseMuons.at(0)->pt > m_baseMuons.at(1)->pt) ? m_baseMuons.at(1) : m_baseMuons.at(0);
       mu0_TLV.SetPtEtaPhiE(mu0->pt, mu0->eta ,mu0->phi, mu0->pt*cosh(mu0->eta));
+      mu0_TLV.SetPtEtaPhiM(mu0->pt, mu0->eta ,mu0->phi, mu0->m);
       mu1_TLV.SetPtEtaPhiE(mu1->pt, mu1->eta ,mu1->phi, mu1->pt*cosh(mu1->eta));
+      mu1_TLV.SetPtEtaPhiM(mu1->pt, mu1->eta ,mu1->phi, mu1->m);
       
       leptons = m_baseLeptons;
       muons = m_baseMuons;
@@ -436,6 +451,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		//------------------------------------------------------------------------------------
 		calc_MM_variables(leptons, mu0, mu1, mu0_TLV, mu1_TLV, m_met->lv(), signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_MM * getBTagWeight(nt.evt()));
 		if(!nt.evt()->isMC && calcFakeContribution) weight_ALL_MM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel, SusyMatrixMethod::SYS_NONE);
+/*		if(numberOfCLJets(m_signalJets2Lep) >1){
+		  cout << "m_signalLeptons.at(0)->m= " << m_signalLeptons.at(0)->m << " m_signalLeptons.at(1)->m= " << m_signalLeptons.at(1)->m << endl;
+		  cout << "mu0->m= " << mu0->m << " mu0_TLV.M()= " << mu0_TLV.M();
+		  cout << "mu1->m= " << mu1->m << " mu1_TLV.M()= " << mu1_TLV.M() << endl;
+		  cout << "jet0->m= " << jet0->m << " signalJet0_TLV.M()= " << signalJet0_TLV.M();	
+		  cout << "jet1->m= " << jet1->m << " signalJet1_TLV.M()= " << signalJet1_TLV.M() << endl;
+		}	*/	
 
 
 //------------------------------------------------------------------------------------
@@ -563,7 +585,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 // 			  cutnumber = 54.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
 // 			  TLorentzVector signalJet0_TLV, signalJet1_TLV;
 // 			  signalJet0_TLV.SetPtEtaPhiE(jet0->pt, jet0->eta, jet0->phi, jet0->pt*cosh(jet0->eta));
+// 			  signalJet0_TLV.SetPtEtaPhiM(jet0->pt, jet0->eta, jet0->phi, jet0->m);
 // 			  signalJet1_TLV.SetPtEtaPhiE(jet1->pt, jet1->eta, jet1->phi, jet1->pt*cosh(jet1->eta));
+// 			  signalJet1_TLV.SetPtEtaPhiM(jet1->pt, jet1->eta, jet1->phi, jet1->m);
 // 			  mjj = Mll(m_signalJets2Lep.at(0), m_signalJets2Lep.at(1));
 // 			  if(mjj >= 50. && mjj <= 100.){
 // 			    cutnumber = 55.; fillHistos_MM_SROS1(cutnumber, mcid, weight_ALL_MM);
@@ -642,7 +666,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 
 
       el_TLV.SetPtEtaPhiE(el->pt, el->eta ,el->phi, el->pt*cosh(el->eta));
+      el_TLV.SetPtEtaPhiM(el->pt, el->eta ,el->phi, el->m);
       mu_TLV.SetPtEtaPhiE(mu->pt, mu->eta ,mu->phi, mu->pt*cosh(mu->eta));
+      mu_TLV.SetPtEtaPhiM(mu->pt, mu->eta ,mu->phi, mu->m);
       float pt1 = (mu->pt > el->pt) ? mu->pt : el->pt;
       float pt2 = (mu->pt > el->pt) ? el->pt : mu->pt;
       if(m_signalTaus.size() == 0){
@@ -679,6 +705,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	      electrons_SS = electrons;
 	      TLorentzVector el_SS_TLV;
 	      el_SS_TLV.SetPtEtaPhiE(el_SS->pt, el_SS->eta ,el_SS->phi, el_SS->pt*cosh(el_SS->eta));
+	      el_SS_TLV.SetPtEtaPhiM(el_SS->pt, el_SS->eta ,el_SS->phi, el_SS->m);
 
 	      TLorentzVector met_SS_TLV;
 	      TVector2 met_SS_TVector2;
@@ -705,6 +732,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		weight_ALL_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
 		weight_ALL_SS_EM = getFakeWeight(m_baseLeptons, SusyMatrixMethod::FR_SRDavide, METrel_SS, SusyMatrixMethod::SYS_NONE);
 	      }
+// 	      if(numberOfCLJets(m_signalJets2Lep) >1){
+// 		  cout << "m_signalLeptons.at(0)->m= " << m_signalLeptons.at(0)->m << " m_signalLeptons.at(1)->m= " << m_signalLeptons.at(1)->m << endl;
+// 		  cout << "mu->m= " << mu->m << " mu_TLV.M()= " << mu_TLV.M();
+// 		  cout << "el->m= " << el->m << " el_TLV.M()= " << el_TLV.M() << endl;
+// 		  cout << "jet0->m= " << jet0->m << " signalJet0_TLV.M()= " << signalJet0_TLV.M();	
+// 		  cout << "jet1->m= " << jet1->m << " signalJet1_TLV.M()= " << signalJet1_TLV.M() << endl;
+// 		}
 
 //------------------------------------------------------------------------------------
 //----------------------------------SR-SS1-EM------------------------------------------
@@ -1052,54 +1086,17 @@ float TSelector_SusyNtuple::calcMT2J(TLorentzVector metlv, TLorentzVector l0, TL
   mt2_event2.set_mn(0); // LSP mass = 0 is Generic
   double min_mt2 = min(mt2_event1.get_mt2(), mt2_event2.get_mt2());
   double return_value = (min_mt2 > 0.) ? min_mt2 : -1.;
-//   cout << nt.evt()->event << " mt2J= " << return_value << " mt2_event1.get_mt2()= " << mt2_event1.get_mt2() << " mt2_event2.get_mt2()= " << mt2_event2.get_mt2() << endl; 
-//   cout << "m_signalLeptons.at(0)->m= " << m_signalLeptons.at(0)->m << " m_signalLeptons.at(1)->m= " << m_signalLeptons.at(1)->m << endl;
-//   cout << "metlv.Px()= "<< metlv.Px() << " metlv.Py()= " << metlv.Py() << endl;
-//   cout << "l0.Px()= " << l0.Px() << " l0.Py()= " << l0.Py() << " l0.M()= " << l0.M() << endl;
-//   cout << "l1.Px()= " << l1.Px() << " l1.Py()= " << l1.Py() << " l1.M()= " << l1.M() << endl;
-//   cout << "j0.Px()= " << j0.Px() << " j0.Py()= " << j0.Py() << " j0.M()= " << j0.M() << endl;
-//   cout << "j1.Px()= " << j1.Px() << " j1.Py()= " << j1.Py() << " j1.M()= " << j1.M() << endl;
-//   cout << "---------" << endl;
+  cout << nt.evt()->event << " mt2J= " << return_value << " mt2_event1.get_mt2()= " << mt2_event1.get_mt2() << " mt2_event2.get_mt2()= " << mt2_event2.get_mt2() << endl; 
+  cout << "m_signalLeptons.at(0)->m= " << m_signalLeptons.at(0)->m << " m_signalLeptons.at(1)->m= " << m_signalLeptons.at(1)->m << endl;
+  cout << "before ChargeFlip: m_met->lv().Px()= " << m_met->lv().Px() << " m_met->lv().Py()= " << m_met->lv().Py() << endl;
+  cout << "after ChargeFlip:  metlv.Px()= "<< metlv.Px() << " metlv.Py()= " << metlv.Py() << endl;
+  cout << "l0.Px()= " << l0.Px() << " l0.Py()= " << l0.Py() << " l0.M()= " << l0.M() << endl;
+  cout << "l1.Px()= " << l1.Px() << " l1.Py()= " << l1.Py() << " l1.M()= " << l1.M() << endl;
+  cout << "j0.Px()= " << j0.Px() << " j0.Py()= " << j0.Py() << " j0.M()= " << j0.M() << endl;
+  cout << "j1.Px()= " << j1.Px() << " j1.Py()= " << j1.Py() << " j1.M()= " << j1.M() << endl;
+  cout << "-------------------------------------------" << endl;
   return return_value;
   
-}
-/*--------------------------------------------------------------------------------*/
-float TSelector_SusyNtuple::calcMT2J0LepM(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1, TLorentzVector j0, TLorentzVector j1)
-{
-//   l0 -> l0 + jet_i
-//   l1 -> l1 + jet_j
-//   minimize for jet
-
-  //copied from SusyNtTools.cxx and modified to work with TLorentzVector
-  
-  TLorentzVector alpha_a, alpha_b;
-  //case 1:
-  alpha_a = l0 + j0;
-  alpha_b = l1 + j1;
-
-  double pTMiss1[3] = {0.0, metlv.Px(), metlv.Py()};
-  double pA1[3] = {0.0, alpha_a.Px(), alpha_a.Py()};
-  double pB1[3] = {0.0, alpha_b.Px(), alpha_b.Py()};
-  
-  // Create Mt2 object
-  mt2_bisect::mt2 mt2_event1;
-  mt2_event1.set_momenta(pA1,pB1,pTMiss1);
-  mt2_event1.set_mn(0); // LSP mass = 0 is Generic
-  
-  //case 2:
-  alpha_a = l0 + j1;
-  alpha_b = l1 + j0;
-
-  double pTMiss2[3] = {0.0, metlv.Px(), metlv.Py()};
-  double pA2[3] = {0.0, alpha_a.Px(), alpha_a.Py()};
-  double pB2[3] = {0.0, alpha_b.Px(), alpha_b.Py()};
-  
-  // Create Mt2 object
-  mt2_bisect::mt2 mt2_event2;
-  mt2_event2.set_momenta(pA2,pB2,pTMiss2);
-  mt2_event2.set_mn(0); // LSP mass = 0 is Generic
-  double min_mt2 = min(mt2_event1.get_mt2(), mt2_event2.get_mt2());
-  return (min_mt2 > 0.) ? min_mt2 : -1.;
 }
 /*--------------------------------------------------------------------------------*/
 float TSelector_SusyNtuple::calcMZTauTau_coll(const TLorentzVector &signal_lep_0, const TLorentzVector &signal_lep_1, const TLorentzVector &met)
@@ -1523,7 +1520,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
 
     if(sample_identifier == 169471)outputfile="histos_ZN_WW_WOJ_corrCutflow.root";
     if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_WOJ_corrCutflow.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_WOJ_corrCutflow.root_NEU";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_WOJ_corrCutflow.root";
     if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_WOJ_corrCutflow.root";
     if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_WOJ_corrCutflow.root";
     if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_WOJ_corrCutflow_NEU.root";    
