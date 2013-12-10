@@ -49,25 +49,25 @@ cout << "mWWT               :" << alpha_raw->GetBinContent(30) << "     " << gam
 cout << "HT                 :" << alpha_raw->GetBinContent(31) << "     " << gamma_raw->GetBinContent(31) << "     " << beta_raw->GetBinContent(31)  << endl; 
 cout << "metREL             :" << alpha_raw->GetBinContent(32) << "     " << gamma_raw->GetBinContent(32) << "     " << beta_raw->GetBinContent(32)  << endl; 
 
-cout << "MM SRSS2: " << endl;
-cout << "mWWT                :"  << gamma_raw->GetBinContent(33) << endl; 
-cout << "HT                 :" << gamma_raw->GetBinContent(34) << endl; 
-cout << "metREL             :" << gamma_raw->GetBinContent(35) << endl; 
+// cout << "MM SRSS2: " << endl;
+// cout << "mWWT                :"  << gamma_raw->GetBinContent(33) << endl; 
+// cout << "HT                 :" << gamma_raw->GetBinContent(34) << endl; 
+// cout << "metREL             :" << gamma_raw->GetBinContent(35) << endl; 
+// 
+// cout << "MM SRSS3: " << endl;
+// cout << "mWWT                :"  << gamma_raw->GetBinContent(36) << endl; 
+// cout << "HT                 :" << gamma_raw->GetBinContent(37) << endl; 
+// cout << "metREL             :" << gamma_raw->GetBinContent(38) << endl; 
+// 
+// cout << "MM SRSS4: " << endl;
+// cout << "mWWT                :"  << gamma_raw->GetBinContent(39) << endl; 
+// cout << "HT                 :" << gamma_raw->GetBinContent(40) << endl; 
+// cout << "metREL             :" << gamma_raw->GetBinContent(41) << endl; 
+// 
+// cout << "EE SRSS:" << endl;
+// cout << "mt2>90             :" << alpha_raw->GetBinContent(33) << endl;
 
-cout << "MM SRSS3: " << endl;
-cout << "mWWT                :"  << gamma_raw->GetBinContent(36) << endl; 
-cout << "HT                 :" << gamma_raw->GetBinContent(37) << endl; 
-cout << "metREL             :" << gamma_raw->GetBinContent(38) << endl; 
-
-cout << "MM SRSS4: " << endl;
-cout << "mWWT                :"  << gamma_raw->GetBinContent(39) << endl; 
-cout << "HT                 :" << gamma_raw->GetBinContent(40) << endl; 
-cout << "metREL             :" << gamma_raw->GetBinContent(41) << endl; 
-
-cout << "EE SRSS:" << endl;
-cout << "mt2>90             :" << alpha_raw->GetBinContent(33) << endl;
-
-cout << "----------------  OS  --------------------------" << endl;
+/*cout << "----------------  OS  --------------------------" << endl;
 cout << "                      EE       MM     EM                " << endl;
 cout << "----------------------------------------------" << endl;
 cout << "pass OS            :" << alpha_raw->GetBinContent(51) << "     " << gamma_raw->GetBinContent(51) << "     " << beta_raw->GetBinContent(51)  << endl;         
@@ -80,7 +80,7 @@ cout << "pass lepPt         :" << alpha_raw->GetBinContent(57) << "     " << gam
 cout << "pass dRll          :" << alpha_raw->GetBinContent(58) << "     " << gamma_raw->GetBinContent(58) << "     " << beta_raw->GetBinContent(58)  << endl;                    
 cout << "pass min(mT1,mT2)  :" << alpha_raw->GetBinContent(59) << "     " << gamma_raw->GetBinContent(59) << "     " << beta_raw->GetBinContent(59)  << endl;            
 cout << "pass dPhi(ll,Met)  :" << alpha_raw->GetBinContent(60) << "     " << gamma_raw->GetBinContent(60) << "     " << beta_raw->GetBinContent(60)  << endl;            
-cout << "pass Met           :" << alpha_raw->GetBinContent(61) << "     " << gamma_raw->GetBinContent(61) << "     " << beta_raw->GetBinContent(61)  << endl;              
+cout << "pass Met           :" << alpha_raw->GetBinContent(61) << "     " << gamma_raw->GetBinContent(61) << "     " << beta_raw->GetBinContent(61)  << endl;    */          
 
 
 cout << "#############################################" << endl;
@@ -130,7 +130,7 @@ cout << "mll                :" << alpha_mcEventWeight->GetBinContent(29) << "   
 cout << "mWWT               :" << alpha_mcEventWeight->GetBinContent(30) << "     " << gamma_mcEventWeight->GetBinContent(30) << "     " << beta_mcEventWeight->GetBinContent(30)  << endl; 
 cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(31) << "     " << gamma_mcEventWeight->GetBinContent(31) << "     " << beta_mcEventWeight->GetBinContent(31)  << endl; 
 cout << "metREL             :" << alpha_mcEventWeight->GetBinContent(32) << "     " << gamma_mcEventWeight->GetBinContent(32) << "     " << beta_mcEventWeight->GetBinContent(32)  << endl; 
-
+/*
 cout << "MM SRSS2: " << endl;
 cout << "mWWT                :"  << gamma_mcEventWeight->GetBinContent(33) << endl; 
 cout << "HT                 :" << gamma_mcEventWeight->GetBinContent(34) << endl; 
@@ -144,8 +144,8 @@ cout << "mWWT                :"  << gamma_mcEventWeight->GetBinContent(39) << en
 cout << "HT                 :" << gamma_mcEventWeight->GetBinContent(40) << endl; 
 
 cout << "EE SRSS:" << endl;
-cout << "mt2>90             :" << alpha_mcEventWeight->GetBinContent(33) << endl;
-
+cout << "mt2>90             :" << alpha_mcEventWeight->GetBinContent(33) << endl;*/
+/*
 cout << "----------------  OS  --------------------------" << endl;
 cout << "                      EE       MM     EM                " << endl;
 cout << "----------------------------------------------" << endl;
@@ -159,5 +159,5 @@ cout << "pass lepPt         :" << alpha_mcEventWeight->GetBinContent(57) << "   
 cout << "pass dRll          :" << alpha_mcEventWeight->GetBinContent(58) << "     " << gamma_mcEventWeight->GetBinContent(58) << "     " << beta_mcEventWeight->GetBinContent(58)  << endl;                    
 cout << "pass min(mT1,mT2)  :" << alpha_mcEventWeight->GetBinContent(59) << "     " << gamma_mcEventWeight->GetBinContent(59) << "     " << beta_mcEventWeight->GetBinContent(59)  << endl;            
 cout << "pass dPhi(ll,Met)  :" << alpha_mcEventWeight->GetBinContent(60) << "     " << gamma_mcEventWeight->GetBinContent(60) << "     " << beta_mcEventWeight->GetBinContent(60)  << endl;            
-cout << "pass Met           :" << alpha_mcEventWeight->GetBinContent(61) << "     " << gamma_mcEventWeight->GetBinContent(61) << "     " << beta_mcEventWeight->GetBinContent(61)  << endl;  
+cout << "pass Met           :" << alpha_mcEventWeight->GetBinContent(61) << "     " << gamma_mcEventWeight->GetBinContent(61) << "     " << beta_mcEventWeight->GetBinContent(61)  << endl; */ 
 }

@@ -91,7 +91,7 @@ void run_root_TSelector_SusyNtuple_Muons() {
 
       gROOT->ProcessLine(processLine); // need to add this, or PoD at LRZ will not be able to load the .so
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
-
+//======================================             1                                  ============================================================================================
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165423/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165447/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165507/*");
@@ -103,6 +103,8 @@ void run_root_TSelector_SusyNtuple_Muons() {
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodB.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165829/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodB.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165907/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodB.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165935/*");
+      //-------------------------------
+      //======================================             2                                  ============================================================================================
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodB.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170005/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodB.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130709051736/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodB.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130709212230/*");
@@ -116,7 +118,7 @@ void run_root_TSelector_SusyNtuple_Muons() {
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodC.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130709051801/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170353/*");
       //-------------------------------
-
+//======================================             3                                 ============================================================================================
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170420/*");      
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170458/*");  
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170524/*");
@@ -127,6 +129,8 @@ void run_root_TSelector_SusyNtuple_Muons() {
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodD.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130709212549/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170738/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170757/*");
+      //-------------------------------
+      //======================================             4                                 ============================================================================================
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170819/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170844/*");    
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodE.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708170905/*");
@@ -140,7 +144,7 @@ void run_root_TSelector_SusyNtuple_Muons() {
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708171315/*");
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708171342/*");
 //       //-------------------------------
-     
+     //======================================             5                                  ============================================================================================
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708171402/*");
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708171419/*");  
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodH.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708171442/*");
@@ -152,6 +156,8 @@ void run_root_TSelector_SusyNtuple_Muons() {
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodI.physics_Muons.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130710002540/*");
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Muons.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708171724/*");
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Muons.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708171804/*");
+      //-------------------------------
+      //======================================             6                                  ============================================================================================
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Muons.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708171839/*");
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Muons.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708171907/*");
       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodJ.physics_Muons.PhysCont.SusyNt.t0pro14_v01_p1542_n0145.130708171941/*");

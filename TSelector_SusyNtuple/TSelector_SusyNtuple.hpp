@@ -24,7 +24,7 @@
 #include "SusyMatrixMethod/DiLeptonMatrixMethod.h"
 #include "TH1.h"
 #include "TH2.h"
-#include "mmc/mmc.cpp"
+// #include "mmc/mmc.cpp"
 #include "MultiLep/CutflowTools.h"
 
 #include "MultiLep/MuonD3PDObject.h"
@@ -62,9 +62,9 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* cutflow_ME;
     TH1F* cutflow_ME_ALL;
     
-    TH1F* h_DeltaR_ljOR_EE;
+    TH1F* h_DeltaR_l1jOR_EM;
     TH1F* h_DeltaR_ljOR_MM;
-    TH1F* h_DeltaR_ljOR_EM;
+    TH1F* h_DeltaR_l0jOR_EM;
     
     TH2F* h_N_MuonToBeChecked_afterORWJet_MM;
     TH2F* h_N_MuonToBeChecked_afterORWOFLepton_MM;
@@ -86,6 +86,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_etcone30l1loverlapWOFLepton_EM_SRSS1;
     TH2F* h_etcone30l1loverlapWSFLepton_EM_SRSS1;
     TH2F* h_etcone30l1lZcand_EM_SRSS1;
+    TH2F* h_etcone30l1lZcandSoft_EM_SRSS1;
     
     
     TH2F* h_Nleptons_lost_EE_SRSS1;
@@ -566,6 +567,75 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_z0SinThetal1lZcand_MM_SRSS1;
     TH2F* h_z0SinThetal1lZcand_EM_SRSS1;
     
+    TH2F* h_Nleptons_ZcandSoft_EE_SRSS1;
+    TH2F* h_Nleptons_ZcandSoft_MM_SRSS1;
+    TH2F* h_Nleptons_ZcandSoft_EM_SRSS1;
+    
+    TH2F* h_ml0lZcandSoft_EE_SRSS1;  
+    TH2F* h_ml0lZcandSoft_MM_SRSS1;  
+    TH2F* h_ml0lZcandSoft_EM_SRSS1;  
+    
+    TH2F* h_mTl0lZcandSoft_EE_SRSS1;
+    TH2F* h_mTl0lZcandSoft_MM_SRSS1;
+    TH2F* h_mTl0lZcandSoft_EM_SRSS1;
+    
+    TH2F* h_ICl0lZcandSoft_EE_SRSS1;  
+    TH2F* h_ICl0lZcandSoft_MM_SRSS1;  
+    TH2F* h_ICl0lZcandSoft_EM_SRSS1;  
+    
+    TH2F* h_pTl0lZcandSoft_EE_SRSS1;  
+    TH2F* h_pTl0lZcandSoft_MM_SRSS1;  
+    TH2F* h_pTl0lZcandSoft_EM_SRSS1;  
+    
+    TH2F* h_etal0lZcandSoft_EE_SRSS1;
+    TH2F* h_etal0lZcandSoft_MM_SRSS1;
+    TH2F* h_etal0lZcandSoft_EM_SRSS1;
+    
+    TH2F* h_ptcone30l0lZcandSoft_EE_SRSS1;
+    TH2F* h_ptcone30l0lZcandSoft_MM_SRSS1;
+    TH2F* h_ptcone30l0lZcandSoft_EM_SRSS1;
+    
+    TH2F* h_d0Sigl0lZcandSoft_EE_SRSS1;  
+    TH2F* h_d0Sigl0lZcandSoft_MM_SRSS1;  
+    TH2F* h_d0Sigl0lZcandSoft_EM_SRSS1;  
+    
+    TH2F* h_z0SinThetal0lZcandSoft_EE_SRSS1;
+    TH2F* h_z0SinThetal0lZcandSoft_MM_SRSS1;
+    TH2F* h_z0SinThetal0lZcandSoft_EM_SRSS1;
+    
+    TH2F* h_ml1lZcandSoft_EE_SRSS1; 
+    TH2F* h_ml1lZcandSoft_MM_SRSS1; 
+    TH2F* h_ml1lZcandSoft_EM_SRSS1; 
+    
+    TH2F* h_mTl1lZcandSoft_EE_SRSS1;  
+    TH2F* h_mTl1lZcandSoft_MM_SRSS1;  
+    TH2F* h_mTl1lZcandSoft_EM_SRSS1;  
+    
+    TH2F* h_ICl1lZcandSoft_EE_SRSS1; 
+    TH2F* h_ICl1lZcandSoft_MM_SRSS1; 
+    TH2F* h_ICl1lZcandSoft_EM_SRSS1; 
+    
+    TH2F* h_pTl1lZcandSoft_EE_SRSS1;  
+    TH2F* h_pTl1lZcandSoft_MM_SRSS1;  
+    TH2F* h_pTl1lZcandSoft_EM_SRSS1;  
+    
+    TH2F* h_etal1lZcandSoft_EE_SRSS1;
+    TH2F* h_etal1lZcandSoft_MM_SRSS1;
+    TH2F* h_etal1lZcandSoft_EM_SRSS1;
+    
+    TH2F* h_ptcone30l1lZcandSoft_EE_SRSS1;
+    TH2F* h_ptcone30l1lZcandSoft_MM_SRSS1;
+    TH2F* h_ptcone30l1lZcandSoft_EM_SRSS1;
+    
+    TH2F* h_d0Sigl1lZcandSoft_EE_SRSS1;
+    TH2F* h_d0Sigl1lZcandSoft_MM_SRSS1;
+    TH2F* h_d0Sigl1lZcandSoft_EM_SRSS1;
+    
+    TH2F* h_z0SinThetal1lZcandSoft_EE_SRSS1;
+    TH2F* h_z0SinThetal1lZcandSoft_MM_SRSS1;
+    TH2F* h_z0SinThetal1lZcandSoft_EM_SRSS1;
+  
+    
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_MM_SRSS1;
     TH2F* h_Mljj_EM_SRSS1;
@@ -752,29 +822,29 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_meff_EM_SROS1;
     
     
-    TH2F* h_mt2_EE_SRSS1;
-    TH2F* h_mt2_EE_SRSS2;
-    TH2F* h_mt2_MM_SRSS1;
-    TH2F* h_mt2_MM_SRSS2;  
-    TH2F* h_mt2_MM_SRSS3;
-    TH2F* h_mt2_MM_SRSS4;
-    TH2F* h_mt2_EM_SRSS1;
-    TH2F* h_mt2_EM_SRSS2;
-    TH2F* h_mt2_EE_SROS1;
-    TH2F* h_mt2_MM_SROS1;
-    TH2F* h_mt2_EM_SROS1;
+    TH2F* h_mT2_EE_SRSS1;
+    TH2F* h_mT2_EE_SRSS2;
+    TH2F* h_mT2_MM_SRSS1;
+    TH2F* h_mT2_MM_SRSS2;  
+    TH2F* h_mT2_MM_SRSS3;
+    TH2F* h_mT2_MM_SRSS4;
+    TH2F* h_mT2_EM_SRSS1;
+    TH2F* h_mT2_EM_SRSS2;
+    TH2F* h_mT2_EE_SROS1;
+    TH2F* h_mT2_MM_SROS1;
+    TH2F* h_mT2_EM_SROS1;
     
-    TH2F* h_mt2J_EE_SRSS1;
-    TH2F* h_mt2J_EE_SRSS2;
-    TH2F* h_mt2J_MM_SRSS1;
-    TH2F* h_mt2J_MM_SRSS2;  
-    TH2F* h_mt2J_MM_SRSS3;
-    TH2F* h_mt2J_MM_SRSS4;
-    TH2F* h_mt2J_EM_SRSS1;
-    TH2F* h_mt2J_EM_SRSS2;
-    TH2F* h_mt2J_EE_SROS1;
-    TH2F* h_mt2J_MM_SROS1;
-    TH2F* h_mt2J_EM_SROS1;    
+    TH2F* h_mT2J_EE_SRSS1;
+    TH2F* h_mT2J_EE_SRSS2;
+    TH2F* h_mT2J_MM_SRSS1;
+    TH2F* h_mT2J_MM_SRSS2;  
+    TH2F* h_mT2J_MM_SRSS3;
+    TH2F* h_mT2J_MM_SRSS4;
+    TH2F* h_mT2J_EM_SRSS1;
+    TH2F* h_mT2J_EM_SRSS2;
+    TH2F* h_mT2J_EE_SROS1;
+    TH2F* h_mT2J_MM_SROS1;
+    TH2F* h_mT2J_EM_SROS1;    
     
     TH2F* h_mjj_EE_SRSS1;
     TH2F* h_mjj_EE_SRSS2;
@@ -875,17 +945,17 @@ class TSelector_SusyNtuple : public SusyNtAna
   TH2F* h_pTjj_EM_SROS1; 
 
   /*----------------------------------------------------------------------------*/ 
-  TH2F* h_ptll_EE_SRSS1; 
-  TH2F* h_ptll_EE_SRSS2; 
-  TH2F* h_ptll_MM_SRSS1;   
-  TH2F* h_ptll_MM_SRSS2; 
-  TH2F* h_ptll_MM_SRSS3; 
-  TH2F* h_ptll_MM_SRSS4; 
-  TH2F* h_ptll_EM_SRSS1; 
-  TH2F* h_ptll_EM_SRSS2; 
-  TH2F* h_ptll_EE_SROS1; 
-  TH2F* h_ptll_MM_SROS1; 
-  TH2F* h_ptll_EM_SROS1; 
+  TH2F* h_pTll_EE_SRSS1; 
+  TH2F* h_pTll_EE_SRSS2; 
+  TH2F* h_pTll_MM_SRSS1;   
+  TH2F* h_pTll_MM_SRSS2; 
+  TH2F* h_pTll_MM_SRSS3; 
+  TH2F* h_pTll_MM_SRSS4; 
+  TH2F* h_pTll_EM_SRSS1; 
+  TH2F* h_pTll_EM_SRSS2; 
+  TH2F* h_pTll_EE_SROS1; 
+  TH2F* h_pTll_MM_SROS1; 
+  TH2F* h_pTll_EM_SROS1; 
   
   /*--------------------------------------------------------------------------------*/ 
   TH2F* h_DeltaPhiMETl0_EE_SRSS1; 
@@ -1249,14 +1319,14 @@ class TSelector_SusyNtuple : public SusyNtAna
     void fillHistos_MM(int cutnumber, float weight);
     void fillHistos_EM(int cutnumber, float weight);
     
-    void calcJet_variables(TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, TLorentzVector met_TLV);
+    void calcJet_variables(TLorentzVector met_TLV);
     void calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EE);
     void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_MM);
     void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM);
     
-    void fillHistos_EE_SRSS1(float cut_EE, int mcid, float weight_ALL_EE);    
-    void fillHistos_MM_SRSS1(float cut_MM, int mcid, float weight_ALL_MM);    
-    void fillHistos_EM_SRSS1(float cut_EM, int mcid, float weight_ALL_EM);
+    void fillHistos_EE_SRSS1(float cut_EE, float weight_ALL_EE);    
+    void fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM);    
+    void fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM);
     
     float getFakeWeight(const LeptonVector &baseLeps, SusyMatrixMethod::FAKE_REGION region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
     
@@ -1303,8 +1373,8 @@ class TSelector_SusyNtuple : public SusyNtAna
     float mZTT_mmc; 
     
     //#####################################
-    float ptl0_EE;
-    float ptl1_EE;
+    float pTl0_EE;
+    float pTl1_EE;
     float etal0_EE;
     float etal1_EE;
     float DeltaR_EE;
@@ -1467,11 +1537,29 @@ class TSelector_SusyNtuple : public SusyNtAna
     float d0Sigl1lZcand_EE;
     float z0SinThetal1lZcand_EE;
     
+    int Nleptons_ZcandSoft_EE;
+    float ml0lZcandSoft_EE;      
+    float mTl0lZcandSoft_EE;
+    int ICl0lZcandSoft_EE;
+    float pTl0lZcandSoft_EE;
+    float etal0lZcandSoft_EE;
+    float ptcone30l0lZcandSoft_EE;
+    float d0Sigl0lZcandSoft_EE;
+    float z0SinThetal0lZcandSoft_EE;    
+    float ml1lZcandSoft_EE;
+    float mTl1lZcandSoft_EE;
+    int ICl1lZcandSoft_EE;
+    float pTl1lZcandSoft_EE;
+    float etal1lZcandSoft_EE;
+    float ptcone30l1lZcandSoft_EE;
+    float d0Sigl1lZcandSoft_EE;
+    float z0SinThetal1lZcandSoft_EE;
+
     
     //#####################################
     
-    float ptl0_MM;
-    float ptl1_MM;
+    float pTl0_MM;
+    float pTl1_MM;
     float etal0_MM;
     float etal1_MM;
     float DeltaR_MM;
@@ -1505,8 +1593,8 @@ class TSelector_SusyNtuple : public SusyNtAna
     float D0err_branch_l0_MM;
     float D0err_branch_l1_MM;
     
-    float sD0Signif_branch_l0_EE;
-    float sD0Signif_branch_l1_EE;
+    float sD0Signif_branch_l0_MM;
+    float sD0Signif_branch_l1_MM;
     int N_MuonToBeChecked_afterORWJet_MM;
     int N_MuonToBeChecked_afterORWOFLepton_MM;
     int N_MuonToBeChecked_afterORWSFLepton_MM;
@@ -1637,10 +1725,29 @@ class TSelector_SusyNtuple : public SusyNtAna
     float d0Sigl1lZcand_MM;
     float z0SinThetal1lZcand_MM;
     
+    int Nleptons_ZcandSoft_MM;
+    float ml0lZcandSoft_MM;      
+    float mTl0lZcandSoft_MM;
+    int ICl0lZcandSoft_MM;
+    float pTl0lZcandSoft_MM;
+    float etal0lZcandSoft_MM;
+    float ptcone30l0lZcandSoft_MM;
+    float d0Sigl0lZcandSoft_MM;
+    float z0SinThetal0lZcandSoft_MM;    
+    float ml1lZcandSoft_MM;
+    float mTl1lZcandSoft_MM;
+    int ICl1lZcandSoft_MM;
+    float pTl1lZcandSoft_MM;
+    float etal1lZcandSoft_MM;
+    float ptcone30l1lZcandSoft_MM;
+    float d0Sigl1lZcandSoft_MM;
+    float z0SinThetal1lZcandSoft_MM;
+
+    
     //#####################################
     
-    float ptl0_EM;
-    float ptl1_EM;
+    float pTl0_EM;
+    float pTl1_EM;
     float etal0_EM;
     float etal1_EM;
     float DeltaR_EM;
@@ -1810,6 +1917,24 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ptcone30l1lZcand_EM;
     float d0Sigl1lZcand_EM;
     float z0SinThetal1lZcand_EM;
+    
+    int Nleptons_ZcandSoft_EM;
+    float ml0lZcandSoft_EM;      
+    float mTl0lZcandSoft_EM;
+    int ICl0lZcandSoft_EM;
+    float pTl0lZcandSoft_EM;
+    float etal0lZcandSoft_EM;
+    float ptcone30l0lZcandSoft_EM;
+    float d0Sigl0lZcandSoft_EM;
+    float z0SinThetal0lZcandSoft_EM;    
+    float ml1lZcandSoft_EM;
+    float mTl1lZcandSoft_EM;
+    int ICl1lZcandSoft_EM;
+    float pTl1lZcandSoft_EM;
+    float etal1lZcandSoft_EM;
+    float ptcone30l1lZcandSoft_EM;
+    float d0Sigl1lZcandSoft_EM;
+    float z0SinThetal1lZcandSoft_EM;
 
     float etcone30l0llost_EM;
     float etcone30l0lsoft_EM;
@@ -1825,6 +1950,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float etcone30l1loverlapWOFLepton_EM;
     float etcone30l1loverlapWSFLepton_EM;
     float etcone30l1lZcand_EM;
+    float etcone30l1lZcandSoft_EM;
    
     
     //#####################################
@@ -1839,7 +1965,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     chargeFlip m_chargeFlip;
     SusyMatrixMethod::DiLeptonMatrixMethod* m_matrix;
     //initialize missing mass calculator MMC for identification of Z->tau tau events
-    mmc MMC_sumet;
+//     mmc MMC_sumet;
 //     TGuiUtils* GuiUtils;
 
     // Cut variables
@@ -1854,7 +1980,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     RecoTruthMatch                m_recoTruthMatch;       // Lepton truth matching tool
     
-  int mcid_of_first_entry;
+  unsigned int mcid_of_first_entry;
   float sumw_from_histo;
   
   bool m_kIsData;
