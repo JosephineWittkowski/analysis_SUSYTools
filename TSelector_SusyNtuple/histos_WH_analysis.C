@@ -15,6 +15,11 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_DeltaR_ljOR_MM = new TH1F("h_DeltaR_ljOR_MM", "h_DeltaR_ljOR_MM", 70, 0, 7);
   h_DeltaR_l0jOR_EM = new TH1F("h_DeltaR_l0jOR_EM", "h_DeltaR_l0jOR_EM", 70, 0, 7);
   
+  h_failedSignalCriteria_l0_MM = new TH2F("h_failedSignalCriteria_l0_MM", "h_failedSignalCriteria_l0_MM", 11, -0.5, 10.5, 130, 0, 129); h_failedSignalCriteria_l0_MM->Sumw2();
+  h_failedSignalCriteria_l1_MM = new TH2F("h_failedSignalCriteria_l1_MM", "h_failedSignalCriteria_l1_MM", 11, -0.5, 10.5, 130, 0, 129); h_failedSignalCriteria_l1_MM->Sumw2();
+  h_failedSignalCriteria_l0_EM = new TH2F("h_failedSignalCriteria_l0_EM", "h_failedSignalCriteria_l0_EM", 11, -0.5, 10.5, 130, 0, 129); h_failedSignalCriteria_l0_EM->Sumw2();
+  h_failedSignalCriteria_l1_EM = new TH2F("h_failedSignalCriteria_l1_EM", "h_failedSignalCriteria_l1_EM", 11, -0.5, 10.5, 130, 0, 129); h_failedSignalCriteria_l1_EM->Sumw2();
+  
   h_N_MuonToBeChecked_afterORWJet_MM = new TH2F("h_N_MuonToBeChecked_afterORWJet_MM", "h_N_MuonToBeChecked_afterORWJet_MM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWJet_MM->Sumw2();
   h_N_MuonToBeChecked_afterORWOFLepton_MM = new TH2F("h_N_MuonToBeChecked_afterORWOFLepton_MM", "h_N_MuonToBeChecked_afterORWOFLepton_MM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWOFLepton_MM->Sumw2();
   h_N_MuonToBeChecked_afterORWSFLepton_MM = new TH2F("h_N_MuonToBeChecked_afterORWSFLepton_MM", "h_N_MuonToBeChecked_afterORWSFLepton_MM", 11, -0.5, 10.5, 130, 0, 129); h_N_MuonToBeChecked_afterORWSFLepton_MM->Sumw2();
@@ -1931,6 +1936,11 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_DeltaR_ljOR_MM->Write();
   h_DeltaR_l0jOR_EM->Write();
   
+  h_failedSignalCriteria_l0_MM->Write();
+  h_failedSignalCriteria_l1_MM->Write();
+  h_failedSignalCriteria_l0_EM->Write();
+  h_failedSignalCriteria_l1_EM->Write();
+  
   h_etcone30l1llost_EM_SRSS1->Write();
   h_etcone30l1lsoft_EM_SRSS1->Write();
   h_etcone30l1loverlap_EM_SRSS1->Write();
@@ -2802,8 +2812,8 @@ bool unbiased = true;
 	  pTl0llost_MM = mu_lost->pt;
 	  etal0llost_MM = fabs(mu_lost->eta);
 	  ptcone30l0llost_MM = mu_lost->ptcone30ElStyle/mu_lost->pt;
-	  d0Sigl0llost_MM = mu_lost->d0Sig(true);
-	  z0SinThetal0llost_MM = mu_lost->z0SinTheta(true);	
+	  d0Sigl0llost_MM = fabs(mu_lost->d0Sig(true));
+	  z0SinThetal0llost_MM = fabs(mu_lost->z0SinTheta(true));	
 	  DeltaMZ_l0llost = fabs(MZ - Mll(mu0, mu_lost));
 	}
       }
@@ -2815,8 +2825,8 @@ bool unbiased = true;
 	  pTl1llost_MM = mu_lost->pt;
 	  etal1llost_MM = fabs(mu_lost->eta);
 	  ptcone30l1llost_MM = mu_lost->ptcone30ElStyle/mu_lost->pt;
-	  d0Sigl1llost_MM = mu_lost->d0Sig(true);
-	  z0SinThetal1llost_MM = mu_lost->z0SinTheta(true);	
+	  d0Sigl1llost_MM = fabs(mu_lost->d0Sig(true));
+	  z0SinThetal1llost_MM = fabs(mu_lost->z0SinTheta(true));	
 	  DeltaMZ_l1llost = fabs(MZ - Mll(mu1, mu_lost));
 	}
       }
@@ -2866,8 +2876,8 @@ bool unbiased = true;
 	    pTl0lsoft_MM = soft_mu->pt;
 	    etal0lsoft_MM = fabs(soft_mu->eta);
 	    ptcone30l0lsoft_MM = soft_mu->ptcone30ElStyle/soft_mu->pt;
-	    d0Sigl0lsoft_MM = soft_mu->d0Sig(true);
-	    z0SinThetal0lsoft_MM = soft_mu->z0SinTheta(true);	
+	    d0Sigl0lsoft_MM = fabs(soft_mu->d0Sig(true));
+	    z0SinThetal0lsoft_MM = fabs(soft_mu->z0SinTheta(true));	
 	    DeltaMZ_l0lsoft = fabs(MZ - Mll(mu0, soft_mu));
 	  }
 	}
@@ -2879,8 +2889,8 @@ bool unbiased = true;
 	    pTl1lsoft_MM = soft_mu->pt;
 	    etal1lsoft_MM = fabs(soft_mu->eta);
 	    ptcone30l1lsoft_MM = soft_mu->ptcone30ElStyle/soft_mu->pt;
-	    d0Sigl1lsoft_MM = soft_mu->d0Sig(true);
-	    z0SinThetal1lsoft_MM = soft_mu->z0SinTheta(true);	
+	    d0Sigl1lsoft_MM = fabs(soft_mu->d0Sig(true));
+	    z0SinThetal1lsoft_MM = fabs(soft_mu->z0SinTheta(true));	
 	    DeltaMZ_l1lsoft = fabs(MZ - Mll(mu1, soft_mu));
 	  }
 	}
@@ -2941,8 +2951,8 @@ bool unbiased = true;
 	    pTl0loverlap_MM = pre_mu->pt;
 	    etal0loverlap_MM = fabs(pre_mu->eta);
 	    ptcone30l0loverlap_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	    d0Sigl0loverlap_MM = pre_mu->d0Sig(true);
-	    z0SinThetal0loverlap_MM = pre_mu->z0SinTheta(true);	
+	    d0Sigl0loverlap_MM = fabs(pre_mu->d0Sig(true));
+	    z0SinThetal0loverlap_MM = fabs(pre_mu->z0SinTheta(true));	
 	    DeltaMZ_l0loverlap = fabs(MZ - Mll(mu0, pre_mu));
 	  }
 	}
@@ -2954,8 +2964,8 @@ bool unbiased = true;
 	    pTl1loverlap_MM = pre_mu->pt;
 	    etal1loverlap_MM = fabs(pre_mu->eta);
 	    ptcone30l1loverlap_MM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	    d0Sigl1loverlap_MM = pre_mu->d0Sig(true);
-	    z0SinThetal1loverlap_MM = pre_mu->z0SinTheta(true);	
+	    d0Sigl1loverlap_MM = fabs(pre_mu->d0Sig(true));
+	    z0SinThetal1loverlap_MM = fabs(pre_mu->z0SinTheta(true));	
 	    DeltaMZ_l1loverlap = fabs(MZ - Mll(mu1, pre_mu));
 	  }
 	}
@@ -3084,8 +3094,8 @@ bool unbiased = true;
 	    pTl0loverlapWJet_MM = mu_overlapping->pt;
 	    etal0loverlapWJet_MM = fabs(mu_overlapping->eta);
 	    ptcone30l0loverlapWJet_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	    d0Sigl0loverlapWJet_MM = mu_overlapping->d0Sig(true);
-	    z0SinThetal0loverlapWJet_MM = mu_overlapping->z0SinTheta(true);	
+	    d0Sigl0loverlapWJet_MM = fabs(mu_overlapping->d0Sig(true));
+	    z0SinThetal0loverlapWJet_MM = fabs(mu_overlapping->z0SinTheta(true));	
 	    DeltaMZ_l0loverlapWJet = fabs(MZ - Mll(mu0, mu_overlapping));
 	  }
 	}
@@ -3098,8 +3108,8 @@ bool unbiased = true;
 	    pTl1loverlapWJet_MM = mu_overlapping->pt;
 	    etal1loverlapWJet_MM = fabs(mu_overlapping->eta);
 	    ptcone30l1loverlapWJet_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	    d0Sigl1loverlapWJet_MM = mu_overlapping->d0Sig(true);
-	    z0SinThetal1loverlapWJet_MM = mu_overlapping->z0SinTheta(true);	
+	    d0Sigl1loverlapWJet_MM = fabs(mu_overlapping->d0Sig(true));
+	    z0SinThetal1loverlapWJet_MM = fabs(mu_overlapping->z0SinTheta(true));	
 	    DeltaMZ_l1loverlapWJet = fabs(MZ - Mll(mu1, mu_overlapping));
 	  }
 	}
@@ -3131,8 +3141,8 @@ bool unbiased = true;
 	      pTl0loverlapWOFLepton_MM = mu_overlapping->pt;
 	      etal0loverlapWOFLepton_MM = fabs(mu_overlapping->eta);
 	      ptcone30l0loverlapWOFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	      d0Sigl0loverlapWOFLepton_MM = mu_overlapping->d0Sig(true);
-	      z0SinThetal0loverlapWOFLepton_MM = mu_overlapping->z0SinTheta(true);	
+	      d0Sigl0loverlapWOFLepton_MM = fabs(mu_overlapping->d0Sig(true));
+	      z0SinThetal0loverlapWOFLepton_MM = fabs(mu_overlapping->z0SinTheta(true));	
 	      DeltaMZ_l0loverlapWOFLepton = fabs(MZ - Mll(mu0, mu_overlapping));
 	    }
 	  }
@@ -3144,8 +3154,8 @@ bool unbiased = true;
 	      pTl1loverlapWOFLepton_MM = mu_overlapping->pt;
 	      etal1loverlapWOFLepton_MM = fabs(mu_overlapping->eta);
 	      ptcone30l1loverlapWOFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	      d0Sigl1loverlapWOFLepton_MM = mu_overlapping->d0Sig(true);
-	      z0SinThetal1loverlapWOFLepton_MM = mu_overlapping->z0SinTheta(true);	
+	      d0Sigl1loverlapWOFLepton_MM = fabs(mu_overlapping->d0Sig(true));
+	      z0SinThetal1loverlapWOFLepton_MM = fabs(mu_overlapping->z0SinTheta(true));	
 	      DeltaMZ_l1loverlapWOFLepton = fabs(MZ - Mll(mu1, mu_overlapping));
 	    }
 	  }
@@ -3179,8 +3189,8 @@ bool unbiased = true;
 		pTl0loverlapWSFLepton_MM = mu_overlapping->pt;
 		etal0loverlapWSFLepton_MM = fabs(mu_overlapping->eta);
 		ptcone30l0loverlapWSFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-		d0Sigl0loverlapWSFLepton_MM = mu_overlapping->d0Sig(true);
-		z0SinThetal0loverlapWSFLepton_MM = mu_overlapping->z0SinTheta(true);	
+		d0Sigl0loverlapWSFLepton_MM = fabs(mu_overlapping->d0Sig(true));
+		z0SinThetal0loverlapWSFLepton_MM = fabs(mu_overlapping->z0SinTheta(true));	
 		DeltaMZ_l0loverlapWSFLepton = fabs(MZ - Mll(mu0, mu_overlapping));
 	      }
 	    }
@@ -3192,8 +3202,8 @@ bool unbiased = true;
 	      pTl1loverlapWSFLepton_MM = mu_overlapping->pt;
 	      etal1loverlapWSFLepton_MM = fabs(mu_overlapping->eta);
 	      ptcone30l1loverlapWSFLepton_MM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	      d0Sigl1loverlapWSFLepton_MM = mu_overlapping->d0Sig(true);
-	      z0SinThetal1loverlapWSFLepton_MM = mu_overlapping->z0SinTheta(true);	
+	      d0Sigl1loverlapWSFLepton_MM = fabs(mu_overlapping->d0Sig(true));
+	      z0SinThetal1loverlapWSFLepton_MM = fabs(mu_overlapping->z0SinTheta(true));	
 	      DeltaMZ_l1loverlapWSFLepton = fabs(MZ - Mll(mu1, mu_overlapping));
 	    }
 	  }
@@ -3236,6 +3246,8 @@ bool unbiased = true;
   N_MuonToBeChecked_afterORWSFLepton_MM = muons_toBeChecked_vec.size();
   removeSFOSPair(muons_toBeChecked_vec, MLL_MIN);
   N_MuonToBeChecked_afterMllCut_MM = muons_toBeChecked_vec.size();
+  
+  
 //   cout << "of the muons lost in ORwJet: " << endl;
 //   cout << "N_MuonToBeChecked_afterORWJet_MM= " << N_MuonToBeChecked_afterORWJet_MM << " N_MuonToBeChecked_afterORWOFLepton_MM= " << N_MuonToBeChecked_afterORWOFLepton_MM << " N_MuonToBeChecked_afterORWSFLepton_MM= " << N_MuonToBeChecked_afterORWSFLepton_MM << " N_MuonToBeChecked_afterMllCut_MM= " << N_MuonToBeChecked_afterMllCut_MM << endl;
   
@@ -3266,14 +3278,12 @@ bool unbiased = true;
   double DeltaMZ_l0lZcand = 99999.;
   double DeltaMZ_l1lZcand = 99999.;
   MuonVector Muon_Zcand_vec;  
-//   bool ZcandIsSignalMuon = false;
+
   for(uint im=0; im<MuonWOjOR_vec.size(); im++){
     Muon* mu_WOjOR = MuonWOjOR_vec.at(im);
     mu_WOjOR->setState(NtSys_NOM);
-    if((mu_WOjOR->DeltaR(*mu0) < 0.0001) || (mu_WOjOR->DeltaR(*mu1) < 0.0001)){
-//       ZcandIsSignalMuon = true;
-      continue; //no signal lepton
-    }
+    if((mu_WOjOR->DeltaR(*mu0) < 0.0001) || (mu_WOjOR->DeltaR(*mu1) < 0.0001)) continue; //no signal lepton
+
     TLorentzVector ZcandMuon_TLV;
     ZcandMuon_TLV.SetPtEtaPhiE(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->pt*cosh(mu_WOjOR->eta));
     ZcandMuon_TLV.SetPtEtaPhiM(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->m);
@@ -3287,8 +3297,8 @@ bool unbiased = true;
 	  pTl0lZcand_MM = mu_WOjOR->pt;
 	  etal0lZcand_MM = fabs(mu_WOjOR->eta);
 	  ptcone30l0lZcand_MM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
-	  d0Sigl0lZcand_MM = mu_WOjOR->d0Sig(true);
-	  z0SinThetal0lZcand_MM = mu_WOjOR->z0SinTheta(true);	
+	  d0Sigl0lZcand_MM = fabs(mu_WOjOR->d0Sig(true));
+	  z0SinThetal0lZcand_MM = fabs(mu_WOjOR->z0SinTheta(true));	
 	  DeltaMZ_l0lZcand = fabs(MZ - Mll(mu0, mu_WOjOR));
 	}
       }
@@ -3300,8 +3310,8 @@ bool unbiased = true;
 	  pTl1lZcand_MM = mu_WOjOR->pt;
 	  etal1lZcand_MM = fabs(mu_WOjOR->eta);
 	  ptcone30l1lZcand_MM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
-	  d0Sigl1lZcand_MM = mu_WOjOR->d0Sig(true);
-	  z0SinThetal1lZcand_MM = mu_WOjOR->z0SinTheta(true);	
+	  d0Sigl1lZcand_MM = fabs(mu_WOjOR->d0Sig(true));
+	  z0SinThetal1lZcand_MM = fabs(mu_WOjOR->z0SinTheta(true));	
 	  DeltaMZ_l1lZcand = fabs(MZ - Mll(mu1, mu_WOjOR));
 	}
       }
@@ -3329,6 +3339,10 @@ bool unbiased = true;
     z0SinThetal0lZcand_MM = -1.;
   }
   
+  ZcandLep_l0passesOR_MM = true;
+  ZcandLep_l0passesMllCut_MM = true;
+  if((N_MuonToBeChecked_afterORWSFLepton_MM - N_MuonToBeChecked_afterORWJet_MM) !=0) ZcandLep_l0passesOR_MM = false;
+  if((N_MuonToBeChecked_afterMllCut_MM - N_MuonToBeChecked_afterORWSFLepton_MM) !=0) ZcandLep_l0passesMllCut_MM = false;
  
   Nleptons_Zcand_MM = Muon_Zcand_vec.size();
 //   cout << "Nleptons_Zcand_MM= " << Nleptons_Zcand_MM << endl;
@@ -3380,15 +3394,12 @@ bool unbiased = true;
   double DeltaMZ_l0lZcandSoft = 99999.;
   double DeltaMZ_l1lZcandSoft = 99999.;
   MuonVector Muon_ZcandSoft_vec;  
-//   bool ZcandSoftIsSignalMuon = false;
+
   for(uint im=0; im<Muons_all_vec.size(); im++){
     Muon* mu_WOjOR = Muons_all_vec.at(im);
     mu_WOjOR->setState(NtSys_NOM);
-    if((mu_WOjOR->DeltaR(*mu0) < 0.0001) || (mu_WOjOR->DeltaR(*mu1) < 0.0001)){
-//       ZcandSoftIsSignalMuon = true;
-      continue; //no signal lepton
-    }
-    if(fabs(mu_WOjOR->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
+    if((mu_WOjOR->DeltaR(*mu0) < 0.0001) || (mu_WOjOR->DeltaR(*mu1) < 0.0001)) continue; //no signal lepton
+//     if(fabs(mu_WOjOR->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
     TLorentzVector ZcandSoftMuon_TLV;
     ZcandSoftMuon_TLV.SetPtEtaPhiE(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->pt*cosh(mu_WOjOR->eta));
     ZcandSoftMuon_TLV.SetPtEtaPhiM(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->m);
@@ -3402,8 +3413,8 @@ bool unbiased = true;
 	  pTl0lZcandSoft_MM = mu_WOjOR->pt;
 	  etal0lZcandSoft_MM = fabs(mu_WOjOR->eta);
 	  ptcone30l0lZcandSoft_MM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
-	  d0Sigl0lZcandSoft_MM = mu_WOjOR->d0Sig(true);
-	  z0SinThetal0lZcandSoft_MM = mu_WOjOR->z0SinTheta(true);	
+	  d0Sigl0lZcandSoft_MM = fabs(mu_WOjOR->d0Sig(true));
+	  z0SinThetal0lZcandSoft_MM = fabs(mu_WOjOR->z0SinTheta(true));	
 	  DeltaMZ_l0lZcandSoft = fabs(MZ - Mll(mu0, mu_WOjOR));
 	}
       }
@@ -3415,15 +3426,30 @@ bool unbiased = true;
 	  pTl1lZcandSoft_MM = mu_WOjOR->pt;
 	  etal1lZcandSoft_MM = fabs(mu_WOjOR->eta);
 	  ptcone30l1lZcandSoft_MM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
-	  d0Sigl1lZcandSoft_MM = mu_WOjOR->d0Sig(true);
-	  z0SinThetal1lZcandSoft_MM = mu_WOjOR->z0SinTheta(true);	
+	  d0Sigl1lZcandSoft_MM = fabs(mu_WOjOR->d0Sig(true));
+	  z0SinThetal1lZcandSoft_MM = fabs(mu_WOjOR->z0SinTheta(true));	
 	  DeltaMZ_l1lZcandSoft = fabs(MZ - Mll(mu1, mu_WOjOR));
 	}
       }
     }
       
   }
+  ZcandLep_l0passesPT_MM = true;
+  ZcandLep_l0passesEta_MM = true;
+  ZcandLep_l0passesPTcone_MM = true;
+  ZcandLep_l0passesETcone_MM = true;
+  ZcandLep_l0passesD0_MM = true; 
+  ZcandLep_l0PassesMedium_MM = true;
+  ZcandLep_l0PassesTight_MM = true; 
   
+  ZcandLep_l1passesPT_MM = true;
+  ZcandLep_l1passesEta_MM = true;
+  ZcandLep_l1passesPTcone_MM = true;
+  ZcandLep_l1passesETcone_MM = true;
+  ZcandLep_l1passesD0_MM = true; 
+  ZcandLep_l1PassesMedium_MM = true;
+  ZcandLep_l1PassesTight_MM = true;
+    
   if(DeltaMZ_l0lZcandSoft < DeltaMZ_l1lZcandSoft){
     ml1lZcandSoft_MM = -1.;
     mTl1lZcandSoft_MM = -1.;
@@ -3432,6 +3458,12 @@ bool unbiased = true;
     ptcone30l1lZcandSoft_MM = -1.;
     d0Sigl1lZcandSoft_MM = -1.;
     z0SinThetal1lZcandSoft_MM = -1.;
+    
+  if(pTl0lZcandSoft_MM < 10.) ZcandLep_l0passesPT_MM = false;
+  if(etal0lZcandSoft_MM >= 2.4) ZcandLep_l0passesEta_MM = false;
+  if(ptcone30l0lZcandSoft_MM >= MUON_PTCONE30ELSTYLE_PT_CUT) ZcandLep_l0passesPTcone_MM = false;
+  if(d0Sigl0lZcandSoft_MM >= MUON_D0SIG_CUT) ZcandLep_l0passesD0_MM = false;
+  if(z0SinThetal0lZcandSoft_MM >= MUON_Z0_SINTHETA_CUT) ZcandLep_l0passesZ0_MM = false;
   }
   else{
     ml0lZcandSoft_MM = -1.;      
@@ -3442,7 +3474,15 @@ bool unbiased = true;
     ptcone30l0lZcandSoft_MM = -1.;
     d0Sigl0lZcandSoft_MM = -1.;
     z0SinThetal0lZcandSoft_MM = -1.;
+    
+    if(pTl1lZcandSoft_MM < 10.) ZcandLep_l1passesPT_MM = false;
+    if(etal1lZcandSoft_MM >= 2.4) ZcandLep_l1passesEta_MM = false;
+    if(ptcone30l1lZcandSoft_MM >= MUON_PTCONE30ELSTYLE_PT_CUT) ZcandLep_l1passesPTcone_MM = false;
+    if(d0Sigl1lZcandSoft_MM >= MUON_D0SIG_CUT) ZcandLep_l1passesD0_MM = false;
+    if(z0SinThetal1lZcandSoft_MM >= MUON_Z0_SINTHETA_CUT) ZcandLep_l1passesZ0_MM = false;
   }
+  
+
   
  
   Nleptons_ZcandSoft_MM = Muon_ZcandSoft_vec.size();
@@ -3558,8 +3598,8 @@ bool unbiased = true;
 	pTl0llost_EM = mu_lost->pt;
 	etal0llost_EM = fabs(mu_lost->eta);
 	ptcone30l0llost_EM = mu_lost->ptcone30ElStyle/mu_lost->pt;
-	d0Sigl0llost_EM = mu_lost->d0Sig(true);
-	z0SinThetal0llost_EM = mu_lost->z0SinTheta(true);
+	d0Sigl0llost_EM = fabs(mu_lost->d0Sig(true));
+	z0SinThetal0llost_EM = fabs(mu_lost->z0SinTheta(true));
 	DeltaMZ_l0llost = fabs(MZ - Mll(mu, mu_lost));
       }   
     }
@@ -3585,8 +3625,8 @@ bool unbiased = true;
 	ptcone30l1llost_EM = ptcone30/ele_lost->pt;
 	float etcone = elEtTopoConeCorr(ele_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	etcone30l1llost_EM = etcone/ele_lost->pt;
-	d0Sigl1llost_EM = ele_lost->d0Sig(true);
-	z0SinThetal1llost_EM = ele_lost->z0SinTheta(true);
+	d0Sigl1llost_EM = fabs(ele_lost->d0Sig(true));
+	z0SinThetal1llost_EM = fabs(ele_lost->z0SinTheta(true));
 	DeltaMZ_l1llost = fabs(MZ - Mll(el, ele_lost));
       }   
     }
@@ -3655,8 +3695,8 @@ bool unbiased = true;
 	  pTl0lsoft_EM = soft_mu->pt;
 	  etal0lsoft_EM = fabs(soft_mu->eta);
 	  ptcone30l0lsoft_EM = soft_mu->ptcone30ElStyle/soft_mu->pt;
-	  d0Sigl0lsoft_EM = soft_mu->d0Sig(true);
-	  z0SinThetal0lsoft_EM = soft_mu->z0SinTheta(true);	  
+	  d0Sigl0lsoft_EM = fabs(soft_mu->d0Sig(true));
+	  z0SinThetal0lsoft_EM = fabs(soft_mu->z0SinTheta(true));	  
 	  DeltaMZ_l0lsoft = fabs(MZ - Mll(mu, soft_mu));
 	}
       }
@@ -3685,8 +3725,8 @@ bool unbiased = true;
 	  ptcone30l1lsoft_EM = ptcone30/soft_ele->pt;
 	  float etcone = elEtTopoConeCorr(soft_ele, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	  etcone30l1lsoft_EM = etcone/soft_ele->pt;	  
-	  d0Sigl1lsoft_EM = soft_ele->d0Sig(true);
-	  z0SinThetal1lsoft_EM = soft_ele->z0SinTheta(true);	  
+	  d0Sigl1lsoft_EM = fabs(soft_ele->d0Sig(true));
+	  z0SinThetal1lsoft_EM = fabs(soft_ele->z0SinTheta(true));	  
 	  DeltaMZ_l1lsoft = fabs(MZ - Mll(el, soft_ele));
 	}
       }
@@ -3771,8 +3811,8 @@ bool unbiased = true;
 	  pTl0loverlap_EM = pre_mu->pt;
 	  etal0loverlap_EM = fabs(pre_mu->eta);
 	  ptcone30l0loverlap_EM = pre_mu->ptcone30ElStyle/pre_mu->pt;
-	  d0Sigl0loverlap_EM = pre_mu->d0Sig(true);
-	  z0SinThetal0loverlap_EM = pre_mu->z0SinTheta(true);		  
+	  d0Sigl0loverlap_EM = fabs(pre_mu->d0Sig(true));
+	  z0SinThetal0loverlap_EM = fabs(pre_mu->z0SinTheta(true));		  
 	  DeltaMZ_l0loverlap = fabs(MZ - Mll(mu, pre_mu));
 	}
       }
@@ -3806,8 +3846,8 @@ bool unbiased = true;
 	  ptcone30l1loverlap_EM = ptcone30/pre_elec->pt;
 	  float etcone = elEtTopoConeCorr(pre_elec, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	  etcone30l1loverlap_EM = etcone/pre_elec->pt;	  	  
-	  d0Sigl1loverlap_EM = pre_elec->d0Sig(true);
-	  z0SinThetal1loverlap_EM = pre_elec->z0SinTheta(true);		  
+	  d0Sigl1loverlap_EM = fabs(pre_elec->d0Sig(true));
+	  z0SinThetal1loverlap_EM = fabs(pre_elec->z0SinTheta(true));		  
 	  DeltaMZ_l1loverlap = fabs(MZ - Mll(el, pre_elec));
 	}
       }
@@ -3986,8 +4026,8 @@ bool unbiased = true;
 	  pTl0loverlapWJet_EM = mu_overlapping->pt;
 	  etal0loverlapWJet_EM = fabs(mu_overlapping->eta);
 	  ptcone30l0loverlapWJet_EM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	  d0Sigl0loverlapWJet_EM = mu_overlapping->d0Sig(true);
-	  z0SinThetal0loverlapWJet_EM = mu_overlapping->z0SinTheta(true);		  
+	  d0Sigl0loverlapWJet_EM = fabs(mu_overlapping->d0Sig(true));
+	  z0SinThetal0loverlapWJet_EM = fabs(mu_overlapping->z0SinTheta(true));		  
 	  DeltaMZ_l0loverlapWJet = fabs(MZ - Mll(mu, mu_overlapping));
 	}
       }
@@ -4015,8 +4055,8 @@ bool unbiased = true;
 	    pTl0loverlapWOFLepton_EM = mu_overlapping->pt;
 	    etal0loverlapWOFLepton_EM = fabs(mu_overlapping->eta);
 	    ptcone30l0loverlapWOFLepton_EM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	    d0Sigl0loverlapWOFLepton_EM = mu_overlapping->d0Sig(true);
-	    z0SinThetal0loverlapWOFLepton_EM = mu_overlapping->z0SinTheta(true);			    
+	    d0Sigl0loverlapWOFLepton_EM = fabs(mu_overlapping->d0Sig(true));
+	    z0SinThetal0loverlapWOFLepton_EM = fabs(mu_overlapping->z0SinTheta(true));			    
 	    DeltaMZ_l0loverlapWOFLepton = fabs(MZ - Mll(mu, mu_overlapping));
 	  }
 	}
@@ -4046,8 +4086,8 @@ bool unbiased = true;
 	      pTl0loverlapWSFLepton_EM = mu_overlapping->pt;
 	      etal0loverlapWSFLepton_EM = fabs(mu_overlapping->eta);
 	      ptcone30l0loverlapWSFLepton_EM = mu_overlapping->ptcone30ElStyle/mu_overlapping->pt;
-	      d0Sigl0loverlapWSFLepton_EM = mu_overlapping->d0Sig(true);
-	      z0SinThetal0loverlapWSFLepton_EM = mu_overlapping->z0SinTheta(true);		      
+	      d0Sigl0loverlapWSFLepton_EM = fabs(mu_overlapping->d0Sig(true));
+	      z0SinThetal0loverlapWSFLepton_EM = fabs(mu_overlapping->z0SinTheta(true));		      
 	      DeltaMZ_l0loverlapWSFLepton = fabs(MZ - Mll(mu, mu_overlapping));
 	    }
 	  }
@@ -4103,8 +4143,8 @@ bool unbiased = true;
 	  ptcone30l1loverlapWJet_EM = ptcone30/el_overlapping->pt;
 	  float etcone = elEtTopoConeCorr(el_overlapping, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	  etcone30l1loverlapWJet_EM = etcone/el_overlapping->pt;	  	  
-	  d0Sigl1loverlapWJet_EM = el_overlapping->d0Sig(true);
-	  z0SinThetal1loverlapWJet_EM = el_overlapping->z0SinTheta(true);		  
+	  d0Sigl1loverlapWJet_EM = fabs(el_overlapping->d0Sig(true));
+	  z0SinThetal1loverlapWJet_EM = fabs(el_overlapping->z0SinTheta(true));		  
 	  DeltaMZ_l1loverlapWJet = fabs(MZ - Mll(el, el_overlapping));
 	}
       }
@@ -4134,8 +4174,8 @@ bool unbiased = true;
 	    ptcone30l1loverlapWOFLepton_EM = ptcone30/el_overlapping->pt;
 	    float etcone = elEtTopoConeCorr(el_overlapping, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	    etcone30l1loverlapWOFLepton_EM = etcone/el_overlapping->pt;		    
-	    d0Sigl1loverlapWOFLepton_EM = el_overlapping->d0Sig(true);
-	    z0SinThetal1loverlapWOFLepton_EM = el_overlapping->z0SinTheta(true);	    
+	    d0Sigl1loverlapWOFLepton_EM = fabs(el_overlapping->d0Sig(true));
+	    z0SinThetal1loverlapWOFLepton_EM = fabs(el_overlapping->z0SinTheta(true));	    
 	    DeltaMZ_l1loverlapWOFLepton = fabs(MZ - Mll(el, el_overlapping));
 	  }
 	}
@@ -4167,8 +4207,8 @@ bool unbiased = true;
 	      ptcone30l1loverlapWSFLepton_EM = ptcone30/el_overlapping->pt;
 	      float etcone = elEtTopoConeCorr(el_overlapping, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	      etcone30l1loverlapWSFLepton_EM = etcone/el_overlapping->pt;	
-	      d0Sigl1loverlapWSFLepton_EM = el_overlapping->d0Sig(true);
-	      z0SinThetal1loverlapWSFLepton_EM = el_overlapping->z0SinTheta(true);		      
+	      d0Sigl1loverlapWSFLepton_EM = fabs(el_overlapping->d0Sig(true));
+	      z0SinThetal1loverlapWSFLepton_EM = fabs(el_overlapping->z0SinTheta(true));		      
 	      DeltaMZ_l1loverlapWSFLepton = fabs(MZ - Mll(el, el_overlapping));
 	    }
 	  }
@@ -4350,8 +4390,8 @@ bool unbiased = true;
 	pTl0lZcand_EM = mu_WOjOR->pt;
 	etal0lZcand_EM = fabs(mu_WOjOR->eta);
 	ptcone30l0lZcand_EM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
-	d0Sigl0lZcand_EM = mu_WOjOR->d0Sig(true);
-	z0SinThetal0lZcand_EM = mu_WOjOR->z0SinTheta(true);	  
+	d0Sigl0lZcand_EM = fabs(mu_WOjOR->d0Sig(true));
+	z0SinThetal0lZcand_EM = fabs(mu_WOjOR->z0SinTheta(true));	  
 	DeltaMZ_l0lZcand = fabs(MZ - Mll(mu, mu_WOjOR));
       }
     }
@@ -4390,8 +4430,8 @@ bool unbiased = true;
 	ptcone30l1lZcand_EM = ptcone30/el_WOjOR->pt;
 	float etcone = elEtTopoConeCorr(el_WOjOR, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	etcone30l1lZcand_EM = etcone/el_WOjOR->pt;		    	  
-	d0Sigl1lZcand_EM = el_WOjOR->d0Sig(true);
-	z0SinThetal1lZcand_EM = el_WOjOR->z0SinTheta(true);	 	  
+	d0Sigl1lZcand_EM = fabs(el_WOjOR->d0Sig(true));
+	z0SinThetal1lZcand_EM = fabs(el_WOjOR->z0SinTheta(true));	 	  
 	DeltaMZ_l1lZcand = fabs(MZ - Mll(el, el_WOjOR));
       }
     }
@@ -4476,12 +4516,8 @@ bool unbiased = true;
     Muon* mu_WOjOR = Muons_all_vec.at(im);
 //     cout << im << " considered as ZcandSoft pt= " << mu_WOjOR->pt << endl;
     mu_WOjOR->setState(NtSys_NOM);
-    if((mu_WOjOR->DeltaR(*mu) < 0.0001)){
-//       cout << "is signal mu" << endl;
-//       ZcandSoftIsSignalMuon = true;
-      continue; //no signal lepton
-    }
-    if(fabs(mu_WOjOR->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
+    if((mu_WOjOR->DeltaR(*mu) < 0.0001)) continue; //no signal lepton
+//     if(fabs(mu_WOjOR->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
 //     cout << "mu_WOjOR->pt= " << mu_WOjOR->pt << endl;
     TLorentzVector ZcandSoftMuon_TLV;
     ZcandSoftMuon_TLV.SetPtEtaPhiE(mu_WOjOR->pt, mu_WOjOR->eta ,mu_WOjOR->phi, mu_WOjOR->pt*cosh(mu_WOjOR->eta));
@@ -4495,8 +4531,8 @@ bool unbiased = true;
 	pTl0lZcandSoft_EM = mu_WOjOR->pt;
 	etal0lZcandSoft_EM = fabs(mu_WOjOR->eta);
 	ptcone30l0lZcandSoft_EM = mu_WOjOR->ptcone30ElStyle/mu_WOjOR->pt;
-	d0Sigl0lZcandSoft_EM = mu_WOjOR->d0Sig(true);
-	z0SinThetal0lZcandSoft_EM = mu_WOjOR->z0SinTheta(true);	  
+	d0Sigl0lZcandSoft_EM = fabs(mu_WOjOR->d0Sig(true));
+	z0SinThetal0lZcandSoft_EM = fabs(mu_WOjOR->z0SinTheta(true));	  
 	DeltaMZ_l0lZcandSoft = fabs(MZ - Mll(mu, mu_WOjOR));
       }
     }
@@ -4511,16 +4547,13 @@ bool unbiased = true;
   //can a preElectron be matched to an electron after OR?
   double DeltaMZ_l1lZcandSoft = 99999.;
   ElectronVector Electron_ZcandSoft_vec;
-//   bool ZcandSoftIsSignalElectron = false;
+  bool l1ZcandSoft_medium = false;
+  bool l1ZcandSoft_tight = false;
   for(uint ie=0; ie<Electrons_all_vec.size(); ie++){
     Electron* el_WOjOR = Electrons_all_vec.at(ie);
     el_WOjOR->setState(NtSys_NOM);
-    if((el_WOjOR->DeltaR(*el) < 0.0001)){
-//       ZcandSoftIsSignalElectron = true;
-      continue; //no signal lepton
-    }
-    if(fabs(el_WOjOR->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
-//     cout << "el_WOjOR->pt= " << el_WOjOR->pt << endl;
+    if((el_WOjOR->DeltaR(*el) < 0.0001)) continue; //no signal lepton
+//     if(fabs(el_WOjOR->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
     TLorentzVector ZcandSoftElec_TLV;
     ZcandSoftElec_TLV.SetPtEtaPhiE(el_WOjOR->pt, el_WOjOR->eta ,el_WOjOR->phi, el_WOjOR->pt*cosh(el_WOjOR->eta));
     ZcandSoftElec_TLV.SetPtEtaPhiM(el_WOjOR->pt, el_WOjOR->eta ,el_WOjOR->phi, el_WOjOR->m);
@@ -4535,12 +4568,30 @@ bool unbiased = true;
 	ptcone30l1lZcandSoft_EM = ptcone30/el_WOjOR->pt;
 	float etcone = elEtTopoConeCorr(el_WOjOR, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	etcone30l1lZcandSoft_EM = etcone/el_WOjOR->pt;		    	  
-	d0Sigl1lZcandSoft_EM = el_WOjOR->d0Sig(true);
-	z0SinThetal1lZcandSoft_EM = el_WOjOR->z0SinTheta(true);	 	  
+	d0Sigl1lZcandSoft_EM = fabs(el_WOjOR->d0Sig(true));
+	z0SinThetal1lZcandSoft_EM = fabs(el_WOjOR->z0SinTheta(true));	 	  
 	DeltaMZ_l1lZcandSoft = fabs(MZ - Mll(el, el_WOjOR));
+	l1ZcandSoft_medium = el_WOjOR->mediumPP;
+	l1ZcandSoft_tight = el_WOjOR->tightPP;
       }
     }
   }
+  
+  ZcandLep_l0passesPT_EM = true;
+  ZcandLep_l0passesEta_EM = true;
+  ZcandLep_l0passesPTcone_EM = true;
+  ZcandLep_l0passesETcone_EM = true;
+  ZcandLep_l0passesD0_EM = true; 
+  ZcandLep_l0PassesMedium_EM = true;
+  ZcandLep_l0PassesTight_EM = true; 
+  
+  ZcandLep_l1passesPT_EM = true;
+  ZcandLep_l1passesEta_EM = true;
+  ZcandLep_l1passesPTcone_EM = true;
+  ZcandLep_l1passesETcone_EM = true;
+  ZcandLep_l1passesD0_EM = true; 
+  ZcandLep_l1PassesMedium_EM = true;
+  ZcandLep_l1PassesTight_EM = true;
   
   if(DeltaMZ_l0lZcandSoft < DeltaMZ_l1lZcandSoft){
     ml1lZcandSoft_EM = -1.;
@@ -4551,7 +4602,14 @@ bool unbiased = true;
     etcone30l1lZcandSoft_EM = -1.;
     d0Sigl1lZcandSoft_EM = -1.;
     z0SinThetal1lZcandSoft_EM = -1.;
-  }
+    
+    if(pTl0lZcandSoft_EM < 10.) ZcandLep_l0passesPT_EM = false;
+    if(fabs(etal0lZcand_EM) >= 2.4) ZcandLep_l0passesEta_EM = false;
+    if(ptcone30l0lZcandSoft_EM >= MUON_PTCONE30ELSTYLE_PT_CUT) ZcandLep_l0passesPTcone_EM = false;
+    if(d0Sigl0lZcandSoft_EM >= MUON_D0SIG_CUT) ZcandLep_l0passesD0_EM = false;
+    if(z0SinThetal0lZcandSoft_EM >= MUON_Z0_SINTHETA_CUT) ZcandLep_l0passesZ0_EM = false;
+    
+    }
   else{
     ml0lZcandSoft_EM = -1.;      
     mTl0lZcandSoft_EM = -1.;
@@ -4561,6 +4619,14 @@ bool unbiased = true;
     ptcone30l0lZcandSoft_EM = -1.;
     d0Sigl0lZcandSoft_EM = -1.;
     z0SinThetal0lZcandSoft_EM = -1.;
+    
+    if(pTl1lZcandSoft_EM < 10.) ZcandLep_l1passesPT_EM = false;
+    if(ptcone30l1lZcandSoft_EM >= ELECTRON_PTCONE30_PT_CUT) ZcandLep_l1passesPTcone_EM = false;
+    if(etcone30l1lZcandSoft_EM >= ELECTRON_TOPOCONE30_PT_CUT)ZcandLep_l1passesETcone_EM;
+    if(d0Sigl1lZcandSoft_EM >= ELECTRON_D0SIG_CUT_WH) ZcandLep_l1passesD0_EM = false;
+    if(z0SinThetal1lZcandSoft_EM >= ELECTRON_Z0_SINTHETA_CUT) ZcandLep_l1passesZ0_EM = false;
+    if(!l1ZcandSoft_medium) ZcandLep_l1PassesMedium_EM = false;
+    if(!l1ZcandSoft_tight) ZcandLep_l1PassesTight_EM = false;
   }
   
   Nleptons_ZcandSoft_EM = Muon_ZcandSoft_vec.size() + Electron_ZcandSoft_vec.size();
@@ -4977,6 +5043,20 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM
   h_ptcone30l1lZcandSoft_MM_SRSS1->Fill(ptcone30l1lZcandSoft_MM, cut_MM, weight_ALL_MM);  
   h_d0Sigl1lZcandSoft_MM_SRSS1->Fill(d0Sigl1lZcandSoft_MM, cut_MM, weight_ALL_MM);  
   h_z0SinThetal1lZcandSoft_MM_SRSS1->Fill(z0SinThetal1lZcandSoft_MM, cut_MM, weight_ALL_MM);
+  
+  h_failedSignalCriteria_l0_MM->Fill(1., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l0passesPT_MM) h_failedSignalCriteria_l0_MM->Fill(2., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l0passesEta_MM) h_failedSignalCriteria_l0_MM->Fill(3., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l0passesPTcone_MM) h_failedSignalCriteria_l0_MM->Fill(4., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l0passesD0_MM) h_failedSignalCriteria_l0_MM->Fill(6., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l0passesZ0_MM) h_failedSignalCriteria_l0_MM->Fill(7., cut_MM, weight_ALL_MM);
+  
+  h_failedSignalCriteria_l1_MM->Fill(1., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l1passesPT_MM) h_failedSignalCriteria_l1_MM->Fill(2., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l1passesEta_MM) h_failedSignalCriteria_l1_MM->Fill(3., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l1passesPTcone_MM) h_failedSignalCriteria_l1_MM->Fill(4., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l1passesD0_MM) h_failedSignalCriteria_l1_MM->Fill(6., cut_MM, weight_ALL_MM);
+  if(!ZcandLep_l1passesZ0_MM) h_failedSignalCriteria_l1_MM->Fill(7., cut_MM, weight_ALL_MM);
 }
 
 void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM){
@@ -5200,4 +5280,25 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM
   h_ptcone30l1lZcandSoft_EM_SRSS1->Fill(ptcone30l1lZcandSoft_EM, cut_EM, weight_ALL_EM);  
   h_d0Sigl1lZcandSoft_EM_SRSS1->Fill(d0Sigl1lZcandSoft_EM, cut_EM, weight_ALL_EM);  
   h_z0SinThetal1lZcandSoft_EM_SRSS1->Fill(z0SinThetal1lZcandSoft_EM, cut_EM, weight_ALL_EM);
+  
+  h_failedSignalCriteria_l0_EM->Fill(1., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l0passesPT_EM) h_failedSignalCriteria_l0_EM->Fill(2., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l0passesEta_EM) h_failedSignalCriteria_l0_EM->Fill(3., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l0passesPTcone_EM) h_failedSignalCriteria_l0_EM->Fill(4., cut_EM, weight_ALL_EM);
+//   if(!ZcandLep_l0passesETcone_EM) h_failedSignalCriteria_l0_EM->Fill(5., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l0passesD0_EM) h_failedSignalCriteria_l0_EM->Fill(6., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l0passesZ0_EM) h_failedSignalCriteria_l0_EM->Fill(7., cut_EM, weight_ALL_EM);
+//   if(!ZcandLepPassesMedium_EM) h_failedSignalCriteria_l0_EM->Fill(8., cut_EM, weight_ALL_EM);
+//   if(!ZcandLepPassesTight_EM) h_failedSignalCriteria_l0_EM->Fill(9., cut_EM, weight_ALL_EM);
+  
+  h_failedSignalCriteria_l1_EM->Fill(1., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l1passesPT_EM) h_failedSignalCriteria_l1_EM->Fill(2., cut_EM, weight_ALL_EM);
+//   if(!ZcandLep_l1passesEta_EM) h_failedSignalCriteria_l0_EM->Fill(3., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l1passesPTcone_EM) h_failedSignalCriteria_l1_EM->Fill(4., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l1passesETcone_EM) h_failedSignalCriteria_l1_EM->Fill(5., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l1passesD0_EM) h_failedSignalCriteria_l1_EM->Fill(6., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l1passesZ0_EM) h_failedSignalCriteria_l1_EM->Fill(7., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l1PassesMedium_EM) h_failedSignalCriteria_l1_EM->Fill(8., cut_EM, weight_ALL_EM);
+  if(!ZcandLep_l1PassesTight_EM) h_failedSignalCriteria_l1_EM->Fill(9., cut_EM, weight_ALL_EM);
+    
 }

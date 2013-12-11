@@ -66,6 +66,11 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* h_DeltaR_ljOR_MM;
     TH1F* h_DeltaR_l0jOR_EM;
     
+    TH2F* h_failedSignalCriteria_l0_MM;
+    TH2F* h_failedSignalCriteria_l1_MM;
+    TH2F* h_failedSignalCriteria_l0_EM;
+    TH2F* h_failedSignalCriteria_l1_EM;
+    
     TH2F* h_N_MuonToBeChecked_afterORWJet_MM;
     TH2F* h_N_MuonToBeChecked_afterORWOFLepton_MM;
     TH2F* h_N_MuonToBeChecked_afterORWSFLepton_MM;
@@ -1742,6 +1747,28 @@ class TSelector_SusyNtuple : public SusyNtAna
     float ptcone30l1lZcandSoft_MM;
     float d0Sigl1lZcandSoft_MM;
     float z0SinThetal1lZcandSoft_MM;
+    
+    bool ZcandLep_l0passesOR_MM;
+    bool ZcandLep_l0passesMllCut_MM;
+    bool ZcandLep_l0passesPT_MM;
+    bool ZcandLep_l0passesEta_MM;
+    bool ZcandLep_l0passesPTcone_MM;
+    bool ZcandLep_l0passesETcone_MM;
+    bool ZcandLep_l0passesD0_MM; 
+    bool ZcandLep_l0passesZ0_MM; 
+    bool ZcandLep_l0PassesMedium_MM;
+    bool ZcandLep_l0PassesTight_MM; 
+
+    bool ZcandLep_l1passesOR_MM;
+    bool ZcandLep_l1passesMllCut_MM;
+    bool ZcandLep_l1passesPT_MM;
+    bool ZcandLep_l1passesEta_MM;
+    bool ZcandLep_l1passesPTcone_MM;
+    bool ZcandLep_l1passesETcone_MM;
+    bool ZcandLep_l1passesD0_MM; 
+    bool ZcandLep_l1passesZ0_MM; 
+    bool ZcandLep_l1PassesMedium_MM;
+    bool ZcandLep_l1PassesTight_MM;
 
     
     //#####################################
@@ -1951,6 +1978,28 @@ class TSelector_SusyNtuple : public SusyNtAna
     float etcone30l1loverlapWSFLepton_EM;
     float etcone30l1lZcand_EM;
     float etcone30l1lZcandSoft_EM;
+
+    bool ZcandLep_l0passesOR_EM;
+    bool ZcandLep_l0passesMllCut_EM;
+    bool ZcandLep_l0passesPT_EM;
+    bool ZcandLep_l0passesEta_EM;
+    bool ZcandLep_l0passesPTcone_EM;
+    bool ZcandLep_l0passesETcone_EM;
+    bool ZcandLep_l0passesD0_EM; 
+    bool ZcandLep_l0passesZ0_EM; 
+    bool ZcandLep_l0PassesMedium_EM;
+    bool ZcandLep_l0PassesTight_EM; 
+
+    bool ZcandLep_l1passesOR_EM;
+    bool ZcandLep_l1passesMllCut_EM;
+    bool ZcandLep_l1passesPT_EM;
+    bool ZcandLep_l1passesEta_EM;
+    bool ZcandLep_l1passesPTcone_EM;
+    bool ZcandLep_l1passesETcone_EM;
+    bool ZcandLep_l1passesD0_EM; 
+    bool ZcandLep_l1passesZ0_EM; 
+    bool ZcandLep_l1PassesMedium_EM;
+    bool ZcandLep_l1PassesTight_EM;
    
     
     //#####################################

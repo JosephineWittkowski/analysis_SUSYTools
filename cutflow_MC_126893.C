@@ -85,7 +85,7 @@ cout << "pass Met           :" << alpha_raw->GetBinContent(61) << "     " << gam
 
 cout << "#############################################" << endl;
 cout << "#############################################" << endl;
-cout << "MC event Weights: nt.evt()->w only" << endl;
+cout << "MC event Weights: all weights applied" << endl;
 
 TH1F *alpha_mcEventWeight = (TH1F*)hn.Get("cutflow_EE_ALL");
 TH1F *beta_mcEventWeight = (TH1F*)hn.Get("cutflow_EM_ALL");
