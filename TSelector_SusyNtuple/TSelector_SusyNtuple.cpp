@@ -341,6 +341,39 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 32.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
 			if(METrel_EE>=50.){			    
 			  cutnumber = 31.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);		  
+			  if((ml0lZcandSoft_EE > MZ+15. || ml0lZcandSoft_EE < MZ-15.) && (ml1lZcandSoft_EE > MZ+15. || ml1lZcandSoft_EE < MZ-15.)){
+			    cutnumber = 50.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }
+			  
+			  if((ml0lZcandSoft_EE > MZ+20. || ml0lZcandSoft_EE < MZ-20.) && (ml1lZcandSoft_EE > MZ+20. || ml1lZcandSoft_EE < MZ-20.)){
+			    cutnumber = 51.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }				
+			  
+			  if((ml0lZcandSoft_EE > MZ+10. || ml0lZcandSoft_EE < MZ-10.) && (ml1lZcandSoft_EE > MZ+10. || ml1lZcandSoft_EE < MZ-10.)){
+			    cutnumber = 52.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }
+			  if((ml0lZcandSimple_EE > MZ+15. || ml0lZcandSimple_EE < MZ-15.) && (ml1lZcandSimple_EE > MZ+15. || ml1lZcandSimple_EE < MZ-15.)){
+			    cutnumber = 70.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }
+			  
+			  if((ml0lZcandSimple_EE > MZ+20. || ml0lZcandSimple_EE < MZ-20.) && (ml1lZcandSimple_EE > MZ+20. || ml1lZcandSimple_EE < MZ-20.)){
+			    cutnumber = 71.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }				
+			  
+			  if((ml0lZcandSimple_EE > MZ+10. || ml0lZcandSimple_EE < MZ-10.) && (ml1lZcandSimple_EE > MZ+10. || ml1lZcandSimple_EE < MZ-10.)){
+			    cutnumber = 72.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }
+			  if((ml0lZcandIso_EE > MZ+15. || ml0lZcandIso_EE < MZ-15.) && (ml1lZcandIso_EE > MZ+15. || ml1lZcandIso_EE < MZ-15.)){
+			    cutnumber = 90.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }
+			  
+			  if((ml0lZcandIso_EE > MZ+20. || ml0lZcandIso_EE < MZ-20.) && (ml1lZcandIso_EE > MZ+20. || ml1lZcandIso_EE < MZ-20.)){
+			    cutnumber = 91.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }				
+			  
+			  if((ml0lZcandIso_EE > MZ+10. || ml0lZcandIso_EE < MZ-10.) && (ml1lZcandIso_EE > MZ+10. || ml1lZcandIso_EE < MZ-10.)){
+			    cutnumber = 92.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+			  }
 			}
 		      }
 		    }
@@ -495,31 +528,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      if(numberOfCBJets(m_signalJets2Lep) == 0){
 			cutnumber = 25.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 			if(nSignalJets >=1){
-			  cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);	
-			  if((ml0lZcand_MM > MZ+15. || ml0lZcand_MM < MZ-15.) && (ml1lZcand_MM > MZ+15. || ml1lZcand_MM < MZ-15.)){
-			    cutnumber = 50.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			  }
-			  
-			  if((ml0lZcand_MM > MZ+20. || ml0lZcand_MM < MZ-20.) && (ml1lZcand_MM > MZ+20. || ml1lZcand_MM < MZ-20.)){
-			    cutnumber = 51.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			  }				
-			  
-			  if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
-			    cutnumber = 52.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			  }
-			  
-			  if((ml0lZcandSoft_MM > MZ+15. || ml0lZcandSoft_MM < MZ-15.) && (ml1lZcandSoft_MM > MZ+15. || ml1lZcandSoft_MM < MZ-15.)){
-			    cutnumber = 70.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			  }
-			  
-			  if((ml0lZcandSoft_MM > MZ+20. || ml0lZcandSoft_MM < MZ-20.) && (ml1lZcandSoft_MM > MZ+20. || ml1lZcandSoft_MM < MZ-20.)){
-			    cutnumber = 71.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			  }				
-			  
-			  if((ml0lZcandSoft_MM > MZ+10. || ml0lZcandSoft_MM < MZ-10.) && (ml1lZcandSoft_MM > MZ+10. || ml1lZcandSoft_MM < MZ-10.)){
-			    cutnumber = 72.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			  }
-			  
+			  cutnumber = 26.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				  
 			  if(mu0->pt >= 30.){
 			    cutnumber = 27.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 			    cutnumber = 28.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM); //ZVeto
@@ -528,27 +537,38 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      cutnumber = 29.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 			      if(HT_MM >= 200.){
 				cutnumber = 30.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				if((ml0lZcand_MM > MZ+15. || ml0lZcand_MM < MZ-15.) && (ml1lZcand_MM > MZ+15. || ml1lZcand_MM < MZ-15.)){
-				  cutnumber = 53.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}
-				
-				if((ml0lZcand_MM > MZ+20. || ml0lZcand_MM < MZ-20.) && (ml1lZcand_MM > MZ+20. || ml1lZcand_MM < MZ-20.)){
-				  cutnumber = 54.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}				
-				
-				if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
-				  cutnumber = 55.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}
 				if((ml0lZcandSoft_MM > MZ+15. || ml0lZcandSoft_MM < MZ-15.) && (ml1lZcandSoft_MM > MZ+15. || ml1lZcandSoft_MM < MZ-15.)){
-				  cutnumber = 73.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  cutnumber = 50.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				}
 				
 				if((ml0lZcandSoft_MM > MZ+20. || ml0lZcandSoft_MM < MZ-20.) && (ml1lZcandSoft_MM > MZ+20. || ml1lZcandSoft_MM < MZ-20.)){
-				  cutnumber = 74.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  cutnumber = 51.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				}				
 				
 				if((ml0lZcandSoft_MM > MZ+10. || ml0lZcandSoft_MM < MZ-10.) && (ml1lZcandSoft_MM > MZ+10. || ml1lZcandSoft_MM < MZ-10.)){
-				  cutnumber = 75.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  cutnumber = 52.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				}
+				if((ml0lZcandSimple_MM > MZ+15. || ml0lZcandSimple_MM < MZ-15.) && (ml1lZcandSimple_MM > MZ+15. || ml1lZcandSimple_MM < MZ-15.)){
+				  cutnumber = 70.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				}
+				
+				if((ml0lZcandSimple_MM > MZ+20. || ml0lZcandSimple_MM < MZ-20.) && (ml1lZcandSimple_MM > MZ+20. || ml1lZcandSimple_MM < MZ-20.)){
+				  cutnumber = 71.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				}				
+				
+				if((ml0lZcandSimple_MM > MZ+10. || ml0lZcandSimple_MM < MZ-10.) && (ml1lZcandSimple_MM > MZ+10. || ml1lZcandSimple_MM < MZ-10.)){
+				  cutnumber = 72.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				}
+				if((ml0lZcandIso_MM > MZ+15. || ml0lZcandIso_MM < MZ-15.) && (ml1lZcandIso_MM > MZ+15. || ml1lZcandIso_MM < MZ-15.)){
+				  cutnumber = 90.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				}
+				
+				if((ml0lZcandIso_MM > MZ+20. || ml0lZcandIso_MM < MZ-20.) && (ml1lZcandIso_MM > MZ+20. || ml1lZcandIso_MM < MZ-20.)){
+				  cutnumber = 91.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				}				
+				
+				if((ml0lZcandIso_MM > MZ+10. || ml0lZcandIso_MM < MZ-10.) && (ml1lZcandIso_MM > MZ+10. || ml1lZcandIso_MM < MZ-10.)){
+				  cutnumber = 92.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				}
 				if(METrel_MM >= 50.){
 				  cutnumber = 31.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
@@ -587,55 +607,85 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 // 			    << " trigW_MM= " << trigW_MM 
 // 			    << " btag= " << getBTagWeight(nt.evt()) << endl;
 // 			    << " chargeFlipWeight= " << chargeFlipWeight << endl;
-			    if((ml0lZcand_MM > MZ+15. || ml0lZcand_MM < MZ-15.) && (ml1lZcand_MM > MZ+15. || ml1lZcand_MM < MZ-15.)){
-			      cutnumber = 57.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			    }
 			    
-			    if((ml0lZcand_MM > MZ+20. || ml0lZcand_MM < MZ-20.) && (ml1lZcand_MM > MZ+20. || ml1lZcand_MM < MZ-20.)){
-			      cutnumber = 58.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			    }				
-			    
-			    if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
-			      cutnumber = 59.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			    }
-			    
-			    if((ml0lZcandSoft_MM > MZ+15. || ml0lZcandSoft_MM < MZ-15.) && (ml1lZcandSoft_MM > MZ+15. || ml1lZcandSoft_MM < MZ-15.)){
-			      cutnumber = 77.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			    }
-			    
-			    if((ml0lZcandSoft_MM > MZ+20. || ml0lZcandSoft_MM < MZ-20.) && (ml1lZcandSoft_MM > MZ+20. || ml1lZcandSoft_MM < MZ-20.)){
-			      cutnumber = 78.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			    }				
-			    
-			    if((ml0lZcandSoft_MM > MZ+10. || ml0lZcandSoft_MM < MZ-10.) && (ml1lZcandSoft_MM > MZ+10. || ml1lZcandSoft_MM < MZ-10.)){
-			      cutnumber = 79.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-			    }			    
 			    
 			      if(METrel_MM >= 100.){
 				cutnumber = 60.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				
-				if((ml0lZcand_MM > MZ+15. || ml0lZcand_MM < MZ-15.) && (ml1lZcand_MM > MZ+15. || ml1lZcand_MM < MZ-15.)){
+				if(DeltaEtall_MM <= 1.75){
 				  cutnumber = 61.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  
+				  if((ml0lZcandSoft_MM > MZ+15. || ml0lZcandSoft_MM < MZ-15.) && (ml1lZcandSoft_MM > MZ+15. || ml1lZcandSoft_MM < MZ-15.)){
+				    cutnumber = 53.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }
+				  
+				  if((ml0lZcandSoft_MM > MZ+20. || ml0lZcandSoft_MM < MZ-20.) && (ml1lZcandSoft_MM > MZ+20. || ml1lZcandSoft_MM < MZ-20.)){
+				    cutnumber = 54.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }				
+				  
+				  if((ml0lZcandSoft_MM > MZ+10. || ml0lZcandSoft_MM < MZ-10.) && (ml1lZcandSoft_MM > MZ+10. || ml1lZcandSoft_MM < MZ-10.)){
+				    cutnumber = 55.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }
+				  if((ml0lZcandSimple_MM > MZ+15. || ml0lZcandSimple_MM < MZ-15.) && (ml1lZcandSimple_MM > MZ+15. || ml1lZcandSimple_MM < MZ-15.)){
+				    cutnumber = 73.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }
+				  
+				  if((ml0lZcandSimple_MM > MZ+20. || ml0lZcandSimple_MM < MZ-20.) && (ml1lZcandSimple_MM > MZ+20. || ml1lZcandSimple_MM < MZ-20.)){
+				    cutnumber = 74.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }				
+				  
+				  if((ml0lZcandSimple_MM > MZ+10. || ml0lZcandSimple_MM < MZ-10.) && (ml1lZcandSimple_MM > MZ+10. || ml1lZcandSimple_MM < MZ-10.)){
+				    cutnumber = 75.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }
+				  if((ml0lZcandIso_MM > MZ+15. || ml0lZcandIso_MM < MZ-15.) && (ml1lZcandIso_MM > MZ+15. || ml1lZcandIso_MM < MZ-15.)){
+				    cutnumber = 93.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }
+				  
+				  if((ml0lZcandIso_MM > MZ+20. || ml0lZcandIso_MM < MZ-20.) && (ml1lZcandIso_MM > MZ+20. || ml1lZcandIso_MM < MZ-20.)){
+				    cutnumber = 94.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }				
+				  
+				  if((ml0lZcandIso_MM > MZ+10. || ml0lZcandIso_MM < MZ-10.) && (ml1lZcandIso_MM > MZ+10. || ml1lZcandIso_MM < MZ-10.)){
+				    cutnumber = 95.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				  }
+				  if(Mljj_MM <= 150. ){
+				    cutnumber = 61.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    if((ml0lZcandSoft_MM > MZ+15. || ml0lZcandSoft_MM < MZ-15.) && (ml1lZcandSoft_MM > MZ+15. || ml1lZcandSoft_MM < MZ-15.)){
+				      cutnumber = 56.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }
+				    
+				    if((ml0lZcandSoft_MM > MZ+20. || ml0lZcandSoft_MM < MZ-20.) && (ml1lZcandSoft_MM > MZ+20. || ml1lZcandSoft_MM < MZ-20.)){
+				      cutnumber = 57.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }				
+				    
+				    if((ml0lZcandSoft_MM > MZ+10. || ml0lZcandSoft_MM < MZ-10.) && (ml1lZcandSoft_MM > MZ+10. || ml1lZcandSoft_MM < MZ-10.)){
+				      cutnumber = 58.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }
+				    if((ml0lZcandSimple_MM > MZ+15. || ml0lZcandSimple_MM < MZ-15.) && (ml1lZcandSimple_MM > MZ+15. || ml1lZcandSimple_MM < MZ-15.)){
+				      cutnumber = 76.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }
+				    
+				    if((ml0lZcandSimple_MM > MZ+20. || ml0lZcandSimple_MM < MZ-20.) && (ml1lZcandSimple_MM > MZ+20. || ml1lZcandSimple_MM < MZ-20.)){
+				      cutnumber = 77.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }				
+				    
+				    if((ml0lZcandSimple_MM > MZ+10. || ml0lZcandSimple_MM < MZ-10.) && (ml1lZcandSimple_MM > MZ+10. || ml1lZcandSimple_MM < MZ-10.)){
+				      cutnumber = 78.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }
+				    if((ml0lZcandIso_MM > MZ+15. || ml0lZcandIso_MM < MZ-15.) && (ml1lZcandIso_MM > MZ+15. || ml1lZcandIso_MM < MZ-15.)){
+				      cutnumber = 96.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }
+				    
+				    if((ml0lZcandIso_MM > MZ+20. || ml0lZcandIso_MM < MZ-20.) && (ml1lZcandIso_MM > MZ+20. || ml1lZcandIso_MM < MZ-20.)){
+				      cutnumber = 97.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }				
+				    
+				    if((ml0lZcandIso_MM > MZ+10. || ml0lZcandIso_MM < MZ-10.) && (ml1lZcandIso_MM > MZ+10. || ml1lZcandIso_MM < MZ-10.)){
+				      cutnumber = 98.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }
+				  }
 				}
 				
-				if((ml0lZcand_MM > MZ+20. || ml0lZcand_MM < MZ-20.) && (ml1lZcand_MM > MZ+20. || ml1lZcand_MM < MZ-20.)){
-				  cutnumber = 62.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}				
-				
-				if((ml0lZcand_MM > MZ+10. || ml0lZcand_MM < MZ-10.) && (ml1lZcand_MM > MZ+10. || ml1lZcand_MM < MZ-10.)){
-				  cutnumber = 63.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}
-				if((ml0lZcandSoft_MM > MZ+15. || ml0lZcandSoft_MM < MZ-15.) && (ml1lZcandSoft_MM > MZ+15. || ml1lZcandSoft_MM < MZ-15.)){
-				  cutnumber = 81.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}
-				
-				if((ml0lZcandSoft_MM > MZ+20. || ml0lZcandSoft_MM < MZ-20.) && (ml1lZcandSoft_MM > MZ+20. || ml1lZcandSoft_MM < MZ-20.)){
-				  cutnumber = 82.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}				
-				
-				if((ml0lZcandSoft_MM > MZ+10. || ml0lZcandSoft_MM < MZ-10.) && (ml1lZcandSoft_MM > MZ+10. || ml1lZcandSoft_MM < MZ-10.)){
-				  cutnumber = 83.; fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
-				}				
 				
 			      }
 			    }
@@ -820,28 +870,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 		  if(nSignalJets >=1){
 		    cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      if((ml0lZcand_EM > MZ+15. || ml0lZcand_EM < MZ-15.) && (ml1lZcand_EM > MZ+15. || ml1lZcand_EM < MZ-15.)){
-			cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      }
-		      if((ml0lZcand_EM > MZ+20. || ml0lZcand_EM < MZ-20.) && (ml1lZcand_EM > MZ+20. || ml1lZcand_EM < MZ-20.)){
-			cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      }
-		      if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      }
-		      
-		      if((ml0lZcandSoft_EM > MZ+15. || ml0lZcandSoft_EM < MZ-15.) && (ml1lZcandSoft_EM > MZ+15. || ml1lZcandSoft_EM < MZ-15.)){
-			cutnumber = 70.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      }
-		      if((ml0lZcandSoft_EM > MZ+20. || ml0lZcandSoft_EM < MZ-20.) && (ml1lZcandSoft_EM > MZ+20. || ml1lZcandSoft_EM < MZ-20.)){
-			cutnumber = 71.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      }
-		      if((ml0lZcandSoft_EM > MZ+10. || ml0lZcandSoft_EM < MZ-10.) && (ml1lZcandSoft_EM > MZ+10. || ml1lZcandSoft_EM < MZ-10.)){
-			cutnumber = 72.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      }				
-		      
-			  
-// 		    float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
 		    if(el_SS_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
 		      cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 		      cutnumber = 28.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM); //ZVeto
@@ -856,45 +884,41 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 // 			<< " trigW_EM= " << trigW_EM 
 // 			<< " btag= " << getBTagWeight(nt.evt())
 // 			<< " chargeFlipWeight= " << chargeFlipWeight << endl;
-			if((ml0lZcand_EM > MZ+15. || ml0lZcand_EM < MZ-15.) && (ml1lZcand_EM > MZ+15. || ml1lZcand_EM < MZ-15.)){
-			  cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			}
-			if((ml0lZcand_EM > MZ+20. || ml0lZcand_EM < MZ-20.) && (ml1lZcand_EM > MZ+20. || ml1lZcand_EM < MZ-20.)){
-			  cutnumber = 54.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			}
-			if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			  cutnumber = 55.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			}
-			
-			if((ml0lZcandSoft_EM > MZ+15. || ml0lZcandSoft_EM < MZ-15.) && (ml1lZcandSoft_EM > MZ+15. || ml1lZcandSoft_EM < MZ-15.)){
-			  cutnumber = 73.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			}
-			if((ml0lZcandSoft_EM > MZ+20. || ml0lZcandSoft_EM < MZ-20.) && (ml1lZcandSoft_EM > MZ+20. || ml1lZcandSoft_EM < MZ-20.)){
-			  cutnumber = 74.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			}
-			if((ml0lZcandSoft_EM > MZ+10. || ml0lZcandSoft_EM < MZ-10.) && (ml1lZcandSoft_EM > MZ+10. || ml1lZcandSoft_EM < MZ-10.)){
-			  cutnumber = 75.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			}				
+				
 			if(HT_EM >= 200.){
 			  cutnumber = 30.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  if((ml0lZcand_EM > MZ+15. || ml0lZcand_EM < MZ-15.) && (ml1lZcand_EM > MZ+15. || ml1lZcand_EM < MZ-15.)){
-			    cutnumber = 56.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
-			  if((ml0lZcand_EM > MZ+20. || ml0lZcand_EM < MZ-20.) && (ml1lZcand_EM > MZ+20. || ml1lZcand_EM < MZ-20.)){
-			    cutnumber = 57.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
-			  if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			    cutnumber = 58.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  if((ml0lZcandSoft_EM > MZ+15. || ml0lZcandSoft_EM < MZ-15.) && (ml1lZcandSoft_EM > MZ+15. || ml1lZcandSoft_EM < MZ-15.)){
+			    cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 			  }
 			  
-			  if((ml0lZcandSoft_EM > MZ+15. || ml0lZcandSoft_EM < MZ-15.) && (ml1lZcandSoft_EM > MZ+15. || ml1lZcandSoft_EM < MZ-15.)){
-			    cutnumber = 76.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
 			  if((ml0lZcandSoft_EM > MZ+20. || ml0lZcandSoft_EM < MZ-20.) && (ml1lZcandSoft_EM > MZ+20. || ml1lZcandSoft_EM < MZ-20.)){
-			    cutnumber = 77.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
+			    cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  }				
+			  
 			  if((ml0lZcandSoft_EM > MZ+10. || ml0lZcandSoft_EM < MZ-10.) && (ml1lZcandSoft_EM > MZ+10. || ml1lZcandSoft_EM < MZ-10.)){
-			    cutnumber = 78.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  }
+			  if((ml0lZcandSimple_EM > MZ+15. || ml0lZcandSimple_EM < MZ-15.) && (ml1lZcandSimple_EM > MZ+15. || ml1lZcandSimple_EM < MZ-15.)){
+			    cutnumber = 70.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  }
+			  
+			  if((ml0lZcandSimple_EM > MZ+20. || ml0lZcandSimple_EM < MZ-20.) && (ml1lZcandSimple_EM > MZ+20. || ml1lZcandSimple_EM < MZ-20.)){
+			    cutnumber = 71.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  }				
+			  
+			  if((ml0lZcandSimple_EM > MZ+10. || ml0lZcandSimple_EM < MZ-10.) && (ml1lZcandSimple_EM > MZ+10. || ml1lZcandSimple_EM < MZ-10.)){
+			    cutnumber = 72.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  }
+			  if((ml0lZcandIso_EM > MZ+15. || ml0lZcandIso_EM < MZ-15.) && (ml1lZcandIso_EM > MZ+15. || ml1lZcandIso_EM < MZ-15.)){
+			    cutnumber = 90.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  }
+			  
+			  if((ml0lZcandIso_EM > MZ+20. || ml0lZcandIso_EM < MZ-20.) && (ml1lZcandIso_EM > MZ+20. || ml1lZcandIso_EM < MZ-20.)){
+			    cutnumber = 91.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			  }				
+			  
+			  if((ml0lZcandIso_EM > MZ+10. || ml0lZcandIso_EM < MZ-10.) && (ml1lZcandIso_EM > MZ+10. || ml1lZcandIso_EM < MZ-10.)){
+			    cutnumber = 92.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 			  }
 
 			  if(METrel_EM>=30.){
@@ -902,25 +926,39 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			  }
 			  if(METrel_EM>=50.){
 			    cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  if((ml0lZcand_EM > MZ+15. || ml0lZcand_EM < MZ-15.) && (ml1lZcand_EM > MZ+15. || ml1lZcand_EM < MZ-15.)){
-			    cutnumber = 59.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
-			  if((ml0lZcand_EM > MZ+20. || ml0lZcand_EM < MZ-20.) && (ml1lZcand_EM > MZ+20. || ml1lZcand_EM < MZ-20.)){
-			    cutnumber = 60.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
-			  if((ml0lZcand_EM > MZ+10. || ml0lZcand_EM < MZ-10.) && (ml1lZcand_EM > MZ+10. || ml1lZcand_EM < MZ-10.)){
-			    cutnumber = 61.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
-			  
-			  if((ml0lZcandSoft_EM > MZ+15. || ml0lZcandSoft_EM < MZ-15.) && (ml1lZcandSoft_EM > MZ+15. || ml1lZcandSoft_EM < MZ-15.)){
-			    cutnumber = 79.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
-			  if((ml0lZcandSoft_EM > MZ+20. || ml0lZcandSoft_EM < MZ-20.) && (ml1lZcandSoft_EM > MZ+20. || ml1lZcandSoft_EM < MZ-20.)){
-			    cutnumber = 80.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
-			  if((ml0lZcandSoft_EM > MZ+10. || ml0lZcandSoft_EM < MZ-10.) && (ml1lZcandSoft_EM > MZ+10. || ml1lZcandSoft_EM < MZ-10.)){
-			    cutnumber = 81.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-			  }
+			    if((ml0lZcandSoft_EM > MZ+15. || ml0lZcandSoft_EM < MZ-15.) && (ml1lZcandSoft_EM > MZ+15. || ml1lZcandSoft_EM < MZ-15.)){
+			      cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }
+			    
+			    if((ml0lZcandSoft_EM > MZ+20. || ml0lZcandSoft_EM < MZ-20.) && (ml1lZcandSoft_EM > MZ+20. || ml1lZcandSoft_EM < MZ-20.)){
+			      cutnumber = 54.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }				
+			    
+			    if((ml0lZcandSoft_EM > MZ+10. || ml0lZcandSoft_EM < MZ-10.) && (ml1lZcandSoft_EM > MZ+10. || ml1lZcandSoft_EM < MZ-10.)){
+			      cutnumber = 55.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }
+			    if((ml0lZcandSimple_EM > MZ+15. || ml0lZcandSimple_EM < MZ-15.) && (ml1lZcandSimple_EM > MZ+15. || ml1lZcandSimple_EM < MZ-15.)){
+			      cutnumber = 73.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }
+			    
+			    if((ml0lZcandSimple_EM > MZ+20. || ml0lZcandSimple_EM < MZ-20.) && (ml1lZcandSimple_EM > MZ+20. || ml1lZcandSimple_EM < MZ-20.)){
+			      cutnumber = 74.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }				
+			    
+			    if((ml0lZcandSimple_EM > MZ+10. || ml0lZcandSimple_EM < MZ-10.) && (ml1lZcandSimple_EM > MZ+10. || ml1lZcandSimple_EM < MZ-10.)){
+			      cutnumber = 75.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }
+			    if((ml0lZcandIso_EM > MZ+15. || ml0lZcandIso_EM < MZ-15.) && (ml1lZcandIso_EM > MZ+15. || ml1lZcandIso_EM < MZ-15.)){
+			      cutnumber = 93.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }
+			    
+			    if((ml0lZcandIso_EM > MZ+20. || ml0lZcandIso_EM < MZ-20.) && (ml1lZcandIso_EM > MZ+20. || ml1lZcandIso_EM < MZ-20.)){
+			      cutnumber = 94.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }				
+			    
+			    if((ml0lZcandIso_EM > MZ+10. || ml0lZcandIso_EM < MZ-10.) && (ml1lZcandIso_EM > MZ+10. || ml1lZcandIso_EM < MZ-10.)){
+			      cutnumber = 95.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+			    }
 			  }
 			}
 		      }
@@ -1624,62 +1662,62 @@ void TSelector_SusyNtuple::SlaveTerminate()
   
     TString outputfile="";
 
-    if(sample_identifier == 169471)outputfile="histos_ZN_WW_d0quality.root";
-    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_d0quality.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_d0quality_NEU.root";
-    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_d0quality.root";
-    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_d0quality.root";
+    if(sample_identifier == 169471)outputfile="histos_ZN_WW_ZcandIsoCorr.root";
+    if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_ZcandIsoCorr.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_ZcandIsoCorr.root";
+    if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_ZcandIsoCorr.root";
+    if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_ZcandIsoCorr.root";
     
-    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_d0quality_split1.root";    
-    if(sample_identifier == 117670)outputfile="histos_ZN_ZPlusJets_d0quality_split2.root";    
-    if(sample_identifier == 173041)outputfile="histos_ZN_ZPlusJets_d0quality_split3.root";           
-    if(sample_identifier == 173044)outputfile="histos_ZN_ZPlusJets_d0quality_split4.root";    
+    if(sample_identifier == 110805)outputfile="histos_ZN_ZPlusJets_ZcandIsoCorr_split1.root";    
+    if(sample_identifier == 117670)outputfile="histos_ZN_ZPlusJets_ZcandIsoCorr_split2.root";    
+    if(sample_identifier == 173041)outputfile="histos_ZN_ZPlusJets_ZcandIsoCorr_split3.root";           
+    if(sample_identifier == 173044)outputfile="histos_ZN_ZPlusJets_ZcandIsoCorr_split4.root";    
     
-    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_d0quality.root";
+    if(sample_identifier == 160155)outputfile="histos_ZN_Higgs_ZcandIsoCorr.root";
     
     if(sample_identifier == 126893)outputfile="histos_cutflow_126893_TSelector.root";
     if(sample_identifier == 176576)outputfile="histos_cutflow_176576_TSelector.root";
-    if(sample_identifier == 177501)outputfile="histos_ZN_177501_d0quality.root";
-    if(sample_identifier == 177502)outputfile="histos_ZN_177502_d0quality.root";
-    if(sample_identifier == 177503)outputfile="histos_ZN_177503_d0quality.root";
-    if(sample_identifier == 177504)outputfile="histos_ZN_177504_d0quality.root";
-    if(sample_identifier == 177505)outputfile="histos_ZN_177505_d0quality.root";
-    if(sample_identifier == 177506)outputfile="histos_ZN_177506_d0quality.root";
-    if(sample_identifier == 177507)outputfile="histos_ZN_177507_d0quality.root";
-    if(sample_identifier == 177508)outputfile="histos_ZN_177508_d0quality.root";
-    if(sample_identifier == 177509)outputfile="histos_ZN_177509_d0quality.root";
-    if(sample_identifier == 177510)outputfile="histos_ZN_177510_d0quality.root";
-    if(sample_identifier == 177511)outputfile="histos_ZN_177511_d0quality.root";
-    if(sample_identifier == 177512)outputfile="histos_ZN_177512_d0quality.root";
-    if(sample_identifier == 177513)outputfile="histos_ZN_177513_d0quality.root";
-    if(sample_identifier == 177514)outputfile="histos_ZN_177514_d0quality.root";
-    if(sample_identifier == 177515)outputfile="histos_ZN_177515_d0quality.root";
-    if(sample_identifier == 177516)outputfile="histos_ZN_177516_d0quality.root";
-    if(sample_identifier == 177517)outputfile="histos_ZN_177517_d0quality.root";
-    if(sample_identifier == 177518)outputfile="histos_ZN_177518_d0quality.root";
-    if(sample_identifier == 177519)outputfile="histos_ZN_177519_d0quality.root";
-    if(sample_identifier == 177520)outputfile="histos_ZN_177520_d0quality.root";
-    if(sample_identifier == 177521)outputfile="histos_ZN_177521_d0quality.root";
-    if(sample_identifier == 177522)outputfile="histos_ZN_177522_d0quality.root";
-    if(sample_identifier == 177523)outputfile="histos_ZN_177523_d0quality.root";
-    if(sample_identifier == 177524)outputfile="histos_ZN_177524_d0quality.root";
-    if(sample_identifier == 177525)outputfile="histos_ZN_177525_d0quality.root";
-    if(sample_identifier == 177526)outputfile="histos_ZN_177526_d0quality.root";
-    if(sample_identifier == 177527)outputfile="histos_ZN_177527_d0quality.root";
+    if(sample_identifier == 177501)outputfile="histos_ZN_177501_ZcandIsoCorr.root";
+    if(sample_identifier == 177502)outputfile="histos_ZN_177502_ZcandIsoCorr.root";
+    if(sample_identifier == 177503)outputfile="histos_ZN_177503_ZcandIsoCorr.root";
+    if(sample_identifier == 177504)outputfile="histos_ZN_177504_ZcandIsoCorr.root";
+    if(sample_identifier == 177505)outputfile="histos_ZN_177505_ZcandIsoCorr.root";
+    if(sample_identifier == 177506)outputfile="histos_ZN_177506_ZcandIsoCorr.root";
+    if(sample_identifier == 177507)outputfile="histos_ZN_177507_ZcandIsoCorr.root";
+    if(sample_identifier == 177508)outputfile="histos_ZN_177508_ZcandIsoCorr.root";
+    if(sample_identifier == 177509)outputfile="histos_ZN_177509_ZcandIsoCorr.root";
+    if(sample_identifier == 177510)outputfile="histos_ZN_177510_ZcandIsoCorr.root";
+    if(sample_identifier == 177511)outputfile="histos_ZN_177511_ZcandIsoCorr.root";
+    if(sample_identifier == 177512)outputfile="histos_ZN_177512_ZcandIsoCorr.root";
+    if(sample_identifier == 177513)outputfile="histos_ZN_177513_ZcandIsoCorr.root";
+    if(sample_identifier == 177514)outputfile="histos_ZN_177514_ZcandIsoCorr.root";
+    if(sample_identifier == 177515)outputfile="histos_ZN_177515_ZcandIsoCorr.root";
+    if(sample_identifier == 177516)outputfile="histos_ZN_177516_ZcandIsoCorr.root";
+    if(sample_identifier == 177517)outputfile="histos_ZN_177517_ZcandIsoCorr.root";
+    if(sample_identifier == 177518)outputfile="histos_ZN_177518_ZcandIsoCorr.root";
+    if(sample_identifier == 177519)outputfile="histos_ZN_177519_ZcandIsoCorr.root";
+    if(sample_identifier == 177520)outputfile="histos_ZN_177520_ZcandIsoCorr.root";
+    if(sample_identifier == 177521)outputfile="histos_ZN_177521_ZcandIsoCorr.root";
+    if(sample_identifier == 177522)outputfile="histos_ZN_177522_ZcandIsoCorr.root";
+    if(sample_identifier == 177523)outputfile="histos_ZN_177523_ZcandIsoCorr.root";
+    if(sample_identifier == 177524)outputfile="histos_ZN_177524_ZcandIsoCorr.root";
+    if(sample_identifier == 177525)outputfile="histos_ZN_177525_ZcandIsoCorr.root";
+    if(sample_identifier == 177526)outputfile="histos_ZN_177526_ZcandIsoCorr.root";
+    if(sample_identifier == 177527)outputfile="histos_ZN_177527_ZcandIsoCorr.root";
     
-    if(sample_identifier == 10001) outputfile="histos_fake_Egamma_d0quality_1.root";
-    if(sample_identifier == 10002) outputfile="histos_fake_Egamma_d0quality_2.root";
-    if(sample_identifier == 10003) outputfile="histos_fake_Egamma_d0quality_3.root";
-    if(sample_identifier == 10004) outputfile="histos_fake_Egamma_d0quality_4.root";
-    if(sample_identifier == 10005) outputfile="histos_fake_Egamma_d0quality_5.root";
-    if(sample_identifier == 10006) outputfile="histos_fake_Egamma_d0quality_6.root";
+    if(sample_identifier == 10001) outputfile="histos_fake_Egamma_ZcandIsoCorr_1.root";
+    if(sample_identifier == 10002) outputfile="histos_fake_Egamma_ZcandIsoCorr_2.root";
+    if(sample_identifier == 10003) outputfile="histos_fake_Egamma_ZcandIsoCorr_3.root";
+    if(sample_identifier == 10004) outputfile="histos_fake_Egamma_ZcandIsoCorr_4.root";
+    if(sample_identifier == 10005) outputfile="histos_fake_Egamma_ZcandIsoCorr_5.root";
+    if(sample_identifier == 10006) outputfile="histos_fake_Egamma_ZcandIsoCorr_6.root";
     
-    if(sample_identifier == 20001) outputfile="histos_fake_Muons_d0quality_1.root";
-    if(sample_identifier == 20002) outputfile="histos_fake_Muons_d0quality_2.root";
-    if(sample_identifier == 20003) outputfile="histos_fake_Muons_d0quality_3.root";
-    if(sample_identifier == 20004) outputfile="histos_fake_Muons_d0quality_4.root";
-    if(sample_identifier == 20005) outputfile="histos_fake_Muons_d0quality_5.root";
-    if(sample_identifier == 20006) outputfile="histos_fake_Muons_d0quality_6_NEU.root";
+    if(sample_identifier == 20001) outputfile="histos_fake_Muons_ZcandIsoCorr_1.root";
+    if(sample_identifier == 20002) outputfile="histos_fake_Muons_ZcandIsoCorr_2.root";
+    if(sample_identifier == 20003) outputfile="histos_fake_Muons_ZcandIsoCorr_3.root";
+    if(sample_identifier == 20004) outputfile="histos_fake_Muons_ZcandIsoCorr_4.root";
+    if(sample_identifier == 20005) outputfile="histos_fake_Muons_ZcandIsoCorr_5.root";
+    if(sample_identifier == 20006) outputfile="histos_fake_Muons_ZcandIsoCorr_6_NEU.root";
     
 // if(sample_identifier>=176574 && sample_identifier <= 176640){
 // char buffer[10];
