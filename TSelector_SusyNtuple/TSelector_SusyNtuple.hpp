@@ -35,6 +35,7 @@
 #include "MultiLep/TrackD3PDObject.h"
 #include "MultiLep/JetTools.h"
 #include "MultiLep/LeptonInfo.h"
+// #include "TupleMaker.h"
 
 #ifndef __CINT__
 #include "ChargeFlip/chargeFlip.h"
@@ -44,10 +45,45 @@ class chargeFlip ;
 
 #include <fstream>
 
+
+using Susy::Lepton;
+  using Susy::Jet;
+  using Susy::Met;
+struct FourMom {
+    double px, py, pz, E;
+    bool isMu, isEl, isJet;
+    FourMom() : px(0), py(0), pz(0), E(0), isMu(false), isEl(false), isJet(false) {}
+#ifndef __CINT__
+// cint is not able to parse 'complex' code; see
+// http://root.cern.ch/drupal/content/interacting-shared-libraries-rootcint
+    FourMom& set4mom(const Lepton &l) { px=l.Px(); py=l.Py(); pz=l.Pz(); E=l.E(); return *this; }
+    FourMom& set4mom(const Jet &j)    { px=j.Px(); py=j.Py(); pz=j.Pz(); E=j.E(); return *this; }
+    FourMom& setMu(const Lepton &l) { isMu=true; isEl = isJet = false; return set4mom(l); }
+    FourMom& setEl(const Lepton &l) { isEl=true; isMu = isJet = false; return set4mom(l); }
+    FourMom& setJet(const Jet &j)   { isJet=true; isMu = isEl = false; return set4mom(j); }
+    FourMom& setMet(const Met &m)   { isJet=isMu=isEl=false; px=m.lv().Px(); py=m.lv().Py(); E=m.lv().E(); return *this; }
+#endif
+};
+
+struct EventParameters {
+    double weight;
+    unsigned int eventNumber;
+    unsigned int runNumber;
+    EventParameters() : weight(0), eventNumber(0), runNumber(0) {}
+#ifndef __CINT__
+    EventParameters& setWeight(const double &w) { weight=w; return *this; }
+    EventParameters& setEvent(const unsigned int &e) { eventNumber=e; return *this; }
+    EventParameters& setRun(const unsigned int &r) { runNumber=r; return *this; }
+#endif
+};
+
 class TSelector_SusyNtuple : public SusyNtAna
 {
 
   public:
+    
+    TBranch        *b_pars;
+    
     TH1F* h_storeSumwMcid;
     
     TH1F* cutflow_EE;
@@ -62,10 +98,31 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* cutflow_ME;
     TH1F* cutflow_ME_ALL;
     
-    TH1F* h_DeltaR_l1jOR_EM;
-    TH1F* h_DeltaR_ljOR_MM;
-    TH1F* h_DeltaR_ljOR_EE;
-    TH1F* h_DeltaR_l0jOR_EM;
+    TH2F* h_NpreTaus;
+    
+    TH2F* h_DeltaR_JVF_l1jOR_EM;
+    TH2F* h_DeltaR_JVF_ljOR_MM;
+    TH2F* h_DeltaR_JVF_ljOR_EE;
+    TH2F* h_DeltaR_JVF_l0jOR_EM;
+    
+    TH2F* h_DeltaR_leptonType_l1jOR_EM;
+    TH2F* h_DeltaR_leptonType_ljOR_MM;
+    TH2F* h_DeltaR_leptonType_ljOR_EE;
+    TH2F* h_DeltaR_leptonType_l0jOR_EM;    
+    
+    TH2F* h_DeltaR_ptcone_ljOR_PR_EE; 
+    TH2F* h_DeltaR_etcone_ljOR_PR_EE; 
+    TH2F* h_DeltaR_ptcone_ljOR_PR_MM; 
+    TH2F* h_DeltaR_ptcone_l0jOR_PR_EM;
+    TH2F* h_DeltaR_ptcone_l1jOR_PR_EM;
+    TH2F* h_DeltaR_etcone_l1jOR_PR_EM;
+    
+    TH2F* h_DeltaR_ptcone_ljOR_HF_EE; 
+    TH2F* h_DeltaR_etcone_ljOR_HF_EE; 
+    TH2F* h_DeltaR_ptcone_ljOR_HF_MM; 
+    TH2F* h_DeltaR_ptcone_l0jOR_HF_EM;
+    TH2F* h_DeltaR_ptcone_l1jOR_HF_EM;
+    TH2F* h_DeltaR_etcone_l1jOR_HF_EM;
     
     TH1F* h_mllCut_EE;
     TH1F* h_mllCut_MM;
@@ -81,89 +138,89 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_failedSignalCriteria_l0_EM;
     TH2F* h_failedSignalCriteria_l1_EM;
         
-    TH2F* h_etcone30l0lZcand_EE_SRSS1;
+    TH2F* h_etcone30l0lZcandImpact_EE_SRSS1;
     TH2F* h_etcone30l0lZcandSoft_EE_SRSS1;
     TH2F* h_etcone30l0lZcandSimple_EE_SRSS1;
     TH2F* h_etcone30l0lZcandIso_EE_SRSS1;
     
-    TH2F* h_etcone30l1lZcand_EE_SRSS1;
+    TH2F* h_etcone30l1lZcandImpact_EE_SRSS1;
     TH2F* h_etcone30l1lZcandSoft_EE_SRSS1;
     TH2F* h_etcone30l1lZcandSimple_EE_SRSS1;
     TH2F* h_etcone30l1lZcandIso_EE_SRSS1;
     
-    TH2F* h_etcone30l1lZcand_EM_SRSS1;
+    TH2F* h_etcone30l1lZcandImpact_EM_SRSS1;
     TH2F* h_etcone30l1lZcandSoft_EM_SRSS1;
     TH2F* h_etcone30l1lZcandSimple_EM_SRSS1;
     TH2F* h_etcone30l1lZcandIso_EM_SRSS1;
     
    
-    TH2F* h_Nleptons_Zcand_EE_SRSS1;
-    TH2F* h_Nleptons_Zcand_MM_SRSS1;
-    TH2F* h_Nleptons_Zcand_EM_SRSS1;
+    TH2F* h_Nleptons_ZcandImpact_EE_SRSS1;
+    TH2F* h_Nleptons_ZcandImpact_MM_SRSS1;
+    TH2F* h_Nleptons_ZcandImpact_EM_SRSS1;
     
-    TH2F* h_ml0lZcand_EE_SRSS1;
-    TH2F* h_ml0lZcand_MM_SRSS1;
-    TH2F* h_ml0lZcand_EM_SRSS1;
+    TH2F* h_ml0lZcandImpact_EE_SRSS1;
+    TH2F* h_ml0lZcandImpact_MM_SRSS1;
+    TH2F* h_ml0lZcandImpact_EM_SRSS1;
     
-    TH2F* h_mTl0lZcand_EE_SRSS1;
-    TH2F* h_mTl0lZcand_MM_SRSS1;
-    TH2F* h_mTl0lZcand_EM_SRSS1;    
+    TH2F* h_mTl0lZcandImpact_EE_SRSS1;
+    TH2F* h_mTl0lZcandImpact_MM_SRSS1;
+    TH2F* h_mTl0lZcandImpact_EM_SRSS1;    
     
-    TH2F* h_pTl0lZcand_EE_SRSS1;
-    TH2F* h_pTl0lZcand_MM_SRSS1;
-    TH2F* h_pTl0lZcand_EM_SRSS1;
+    TH2F* h_pTl0lZcandImpact_EE_SRSS1;
+    TH2F* h_pTl0lZcandImpact_MM_SRSS1;
+    TH2F* h_pTl0lZcandImpact_EM_SRSS1;
     
-    TH2F* h_ICl0lZcand_EE_SRSS1;
-    TH2F* h_ICl0lZcand_MM_SRSS1;
-    TH2F* h_ICl0lZcand_EM_SRSS1;   
+    TH2F* h_ICl0lZcandImpact_EE_SRSS1;
+    TH2F* h_ICl0lZcandImpact_MM_SRSS1;
+    TH2F* h_ICl0lZcandImpact_EM_SRSS1;   
     
-    TH2F* h_etal0lZcand_EE_SRSS1;
-    TH2F* h_etal0lZcand_MM_SRSS1;
-    TH2F* h_etal0lZcand_EM_SRSS1;
+    TH2F* h_etal0lZcandImpact_EE_SRSS1;
+    TH2F* h_etal0lZcandImpact_MM_SRSS1;
+    TH2F* h_etal0lZcandImpact_EM_SRSS1;
     
-    TH2F* h_ptcone30l0lZcand_EE_SRSS1;
-    TH2F* h_ptcone30l0lZcand_MM_SRSS1;
-    TH2F* h_ptcone30l0lZcand_EM_SRSS1;
+    TH2F* h_ptcone30l0lZcandImpact_EE_SRSS1;
+    TH2F* h_ptcone30l0lZcandImpact_MM_SRSS1;
+    TH2F* h_ptcone30l0lZcandImpact_EM_SRSS1;
     
-    TH2F* h_d0Sigl0lZcand_EE_SRSS1;
-    TH2F* h_d0Sigl0lZcand_MM_SRSS1;
-    TH2F* h_d0Sigl0lZcand_EM_SRSS1;
+    TH2F* h_d0Sigl0lZcandImpact_EE_SRSS1;
+    TH2F* h_d0Sigl0lZcandImpact_MM_SRSS1;
+    TH2F* h_d0Sigl0lZcandImpact_EM_SRSS1;
     
-    TH2F* h_z0SinThetal0lZcand_EE_SRSS1;
-    TH2F* h_z0SinThetal0lZcand_MM_SRSS1;
-    TH2F* h_z0SinThetal0lZcand_EM_SRSS1;
+    TH2F* h_z0SinThetal0lZcandImpact_EE_SRSS1;
+    TH2F* h_z0SinThetal0lZcandImpact_MM_SRSS1;
+    TH2F* h_z0SinThetal0lZcandImpact_EM_SRSS1;
     
-    TH2F* h_ml1lZcand_EE_SRSS1;
-    TH2F* h_ml1lZcand_MM_SRSS1;
-    TH2F* h_ml1lZcand_EM_SRSS1;
+    TH2F* h_ml1lZcandImpact_EE_SRSS1;
+    TH2F* h_ml1lZcandImpact_MM_SRSS1;
+    TH2F* h_ml1lZcandImpact_EM_SRSS1;
     
-    TH2F* h_mTl1lZcand_EE_SRSS1;
-    TH2F* h_mTl1lZcand_MM_SRSS1;
-    TH2F* h_mTl1lZcand_EM_SRSS1;    
+    TH2F* h_mTl1lZcandImpact_EE_SRSS1;
+    TH2F* h_mTl1lZcandImpact_MM_SRSS1;
+    TH2F* h_mTl1lZcandImpact_EM_SRSS1;    
     
-    TH2F* h_ICl1lZcand_EE_SRSS1;
-    TH2F* h_ICl1lZcand_MM_SRSS1;
-    TH2F* h_ICl1lZcand_EM_SRSS1;    
+    TH2F* h_ICl1lZcandImpact_EE_SRSS1;
+    TH2F* h_ICl1lZcandImpact_MM_SRSS1;
+    TH2F* h_ICl1lZcandImpact_EM_SRSS1;    
     
-    TH2F* h_pTl1lZcand_EE_SRSS1;
-    TH2F* h_pTl1lZcand_MM_SRSS1;
-    TH2F* h_pTl1lZcand_EM_SRSS1;
+    TH2F* h_pTl1lZcandImpact_EE_SRSS1;
+    TH2F* h_pTl1lZcandImpact_MM_SRSS1;
+    TH2F* h_pTl1lZcandImpact_EM_SRSS1;
     
-    TH2F* h_etal1lZcand_EE_SRSS1;
-    TH2F* h_etal1lZcand_MM_SRSS1;
-    TH2F* h_etal1lZcand_EM_SRSS1;
+    TH2F* h_etal1lZcandImpact_EE_SRSS1;
+    TH2F* h_etal1lZcandImpact_MM_SRSS1;
+    TH2F* h_etal1lZcandImpact_EM_SRSS1;
     
-    TH2F* h_ptcone30l1lZcand_EE_SRSS1;
-    TH2F* h_ptcone30l1lZcand_MM_SRSS1;
-    TH2F* h_ptcone30l1lZcand_EM_SRSS1;
+    TH2F* h_ptcone30l1lZcandImpact_EE_SRSS1;
+    TH2F* h_ptcone30l1lZcandImpact_MM_SRSS1;
+    TH2F* h_ptcone30l1lZcandImpact_EM_SRSS1;
     
-    TH2F* h_d0Sigl1lZcand_EE_SRSS1;
-    TH2F* h_d0Sigl1lZcand_MM_SRSS1;
-    TH2F* h_d0Sigl1lZcand_EM_SRSS1;
+    TH2F* h_d0Sigl1lZcandImpact_EE_SRSS1;
+    TH2F* h_d0Sigl1lZcandImpact_MM_SRSS1;
+    TH2F* h_d0Sigl1lZcandImpact_EM_SRSS1;
     
-    TH2F* h_z0SinThetal1lZcand_EE_SRSS1;
-    TH2F* h_z0SinThetal1lZcand_MM_SRSS1;
-    TH2F* h_z0SinThetal1lZcand_EM_SRSS1;
+    TH2F* h_z0SinThetal1lZcandImpact_EE_SRSS1;
+    TH2F* h_z0SinThetal1lZcandImpact_MM_SRSS1;
+    TH2F* h_z0SinThetal1lZcandImpact_EM_SRSS1;
     
     TH2F* h_Nleptons_ZcandSoft_EE_SRSS1;
     TH2F* h_Nleptons_ZcandSoft_MM_SRSS1;
@@ -368,7 +425,54 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_z0SinThetal1lZcandIso_EE_SRSS1;
     TH2F* h_z0SinThetal1lZcandIso_MM_SRSS1;
     TH2F* h_z0SinThetal1lZcandIso_EM_SRSS1;
-  
+    
+    TH2F* h_Nleptons_tauZcand_EE_SRSS1;
+    TH2F* h_Nleptons_tauZcand_MM_SRSS1;
+    TH2F* h_Nleptons_tauZcand_EM_SRSS1;
+    
+    TH2F* h_Nleptons_preTau_EE_SRSS1;
+    TH2F* h_Nleptons_preTau_MM_SRSS1;
+    TH2F* h_Nleptons_preTau_EM_SRSS1;
+    
+    TH2F* h_ml0ltauZcand_EE_SRSS1;
+    TH2F* h_ml0ltauZcand_MM_SRSS1;
+    TH2F* h_ml0ltauZcand_EM_SRSS1;
+    
+    TH2F* h_mTl0ltauZcand_EE_SRSS1;
+    TH2F* h_mTl0ltauZcand_MM_SRSS1;
+    TH2F* h_mTl0ltauZcand_EM_SRSS1;    
+    
+    TH2F* h_pTl0ltauZcand_EE_SRSS1;
+    TH2F* h_pTl0ltauZcand_MM_SRSS1;
+    TH2F* h_pTl0ltauZcand_EM_SRSS1;
+
+    TH2F* h_etal0ltauZcand_EE_SRSS1;
+    TH2F* h_etal0ltauZcand_MM_SRSS1;
+    TH2F* h_etal0ltauZcand_EM_SRSS1;
+    
+    TH2F* h_jetBDTl0ltauZcand_EE_SRSS1;
+    TH2F* h_jetBDTl0ltauZcand_MM_SRSS1;
+    TH2F* h_jetBDTl0ltauZcand_EM_SRSS1;
+    
+    TH2F* h_ml1ltauZcand_EE_SRSS1;
+    TH2F* h_ml1ltauZcand_MM_SRSS1;
+    TH2F* h_ml1ltauZcand_EM_SRSS1;
+    
+    TH2F* h_mTl1ltauZcand_EE_SRSS1;
+    TH2F* h_mTl1ltauZcand_MM_SRSS1;
+    TH2F* h_mTl1ltauZcand_EM_SRSS1;    
+    
+    TH2F* h_pTl1ltauZcand_EE_SRSS1;
+    TH2F* h_pTl1ltauZcand_MM_SRSS1;
+    TH2F* h_pTl1ltauZcand_EM_SRSS1;
+    
+    TH2F* h_etal1ltauZcand_EE_SRSS1;
+    TH2F* h_etal1ltauZcand_MM_SRSS1;
+    TH2F* h_etal1ltauZcand_EM_SRSS1;
+    
+    TH2F* h_jetBDTl1ltauZcand_EE_SRSS1;
+    TH2F* h_jetBDTl1ltauZcand_MM_SRSS1;
+    TH2F* h_jetBDTl1ltauZcand_EM_SRSS1;  
     
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_MM_SRSS1;
@@ -421,6 +525,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_pTl0_EE_SROS1;
     TH2F* h_pTl0_MM_SROS1;
     TH2F* h_pTl0_EM_SROS1;
+    
+    TH2F* h_pTl0_raw_EE_SRSS1;
+    TH2F* h_pTl0_raw_MM_SRSS1;
+    TH2F* h_pTl0_raw_EM_SRSS1;
     
     TH2F* h_pTl1_EE_SRSS1;
     TH2F* h_pTl1_EE_SRSS2;
@@ -1026,6 +1134,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     // Terminate is called after looping is finished
     virtual void    Terminate();
     virtual void    SlaveTerminate();
+//     virtual void    Init(TTree *tree);
 
     // Main event loop function
     virtual Bool_t  Process(Long64_t entry);
@@ -1058,6 +1167,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_MM);
     void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM);
     
+    void estimate_WZ_tau_bg_EE(Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, SusyNtObject* susyNt);
+    void estimate_WZ_tau_bg_MM(Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, SusyNtObject* susyNt);
+    void estimate_WZ_tau_bg_EM(Muon* mu, Electron* el, TLorentzVector mu_TLV, TLorentzVector el_TLV, SusyNtObject* susyNt);
+    
     void fillHistos_EE_SRSS1(float cut_EE, float weight_ALL_EE);    
     void fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM);    
     void fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM);
@@ -1075,6 +1188,13 @@ class TSelector_SusyNtuple : public SusyNtAna
     int numberOfCMSJets(const JetVector& jets);    
     vector<TLorentzVector> overlapRemoval(vector<TLorentzVector> objects_type1, vector<TLorentzVector> indices_2, double dr, bool sameType, bool removeSoft) ;
     bool doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM);
+    bool initTupleMaker(const std::string &outFilename, const std::string &treename);
+    bool initFile(const std::string &outFilename);
+    bool initTree(const std::string &treename);
+    bool initTreeBranches();
+    bool fillTupleMaker(const double weight, const unsigned int run, const unsigned int event, const Susy::Lepton &l0, const Susy::Lepton &l1, const Susy::Met &met, const LeptonVector &otherLeptons, const JetVector &jets);
+    LeptonVector getAnyElOrMu(SusyNtObject &susyNt/*, SusyNtSys sys*/);
+    bool closeTupleMaker();
 
     // Selection region
     void setSelection(std::string s) { m_sel = s; }
@@ -1082,6 +1202,8 @@ class TSelector_SusyNtuple : public SusyNtAna
     // debug check
     bool debugEvent();
     Analysis::AnalysisMuonConfigurableScaleFactors* m_muon_scaleFactor;
+    bool makeNTuple;
+    bool run_on_SusyNtuple;
 
     int nSignalJets;
     float MET;
@@ -1145,23 +1267,23 @@ class TSelector_SusyNtuple : public SusyNtAna
     float sD0Signif_branch_l0_EE;
     float sD0Signif_branch_l1_EE;
     
-    int Nleptons_Zcand_EE;
-    float ml0lZcand_EE;      
-    float mTl0lZcand_EE;
-    int ICl0lZcand_EE;
-    float pTl0lZcand_EE;
-    float etal0lZcand_EE;
-    float ptcone30l0lZcand_EE;
-    float d0Sigl0lZcand_EE;
-    float z0SinThetal0lZcand_EE;    
-    float ml1lZcand_EE;
-    float mTl1lZcand_EE;
-    int ICl1lZcand_EE;
-    float pTl1lZcand_EE;
-    float etal1lZcand_EE;
-    float ptcone30l1lZcand_EE;
-    float d0Sigl1lZcand_EE;
-    float z0SinThetal1lZcand_EE;
+    int Nleptons_ZcandImpact_EE;
+    float ml0lZcandImpact_EE;      
+    float mTl0lZcandImpact_EE;
+    int ICl0lZcandImpact_EE;
+    float pTl0lZcandImpact_EE;
+    float etal0lZcandImpact_EE;
+    float ptcone30l0lZcandImpact_EE;
+    float d0Sigl0lZcandImpact_EE;
+    float z0SinThetal0lZcandImpact_EE;    
+    float ml1lZcandImpact_EE;
+    float mTl1lZcandImpact_EE;
+    int ICl1lZcandImpact_EE;
+    float pTl1lZcandImpact_EE;
+    float etal1lZcandImpact_EE;
+    float ptcone30l1lZcandImpact_EE;
+    float d0Sigl1lZcandImpact_EE;
+    float z0SinThetal1lZcandImpact_EE;
     
     int Nleptons_ZcandSoft_EE;
     float ml0lZcandSoft_EE;      
@@ -1217,16 +1339,32 @@ class TSelector_SusyNtuple : public SusyNtAna
     float d0Sigl1lZcandIso_EE;
     float z0SinThetal1lZcandIso_EE;      
     
-    float etcone30l0lZcand_EE;
+    float etcone30l0lZcandImpact_EE;
     float etcone30l0lZcandSoft_EE;
     float etcone30l0lZcandSimple_EE;
     float etcone30l0lZcandIso_EE;
     
-    float etcone30l1lZcand_EE;
+    float etcone30l1lZcandImpact_EE;
     float etcone30l1lZcandSoft_EE;
     float etcone30l1lZcandSimple_EE;
     float etcone30l1lZcandIso_EE;
     
+    int Nleptons_tauZcand_EE;
+    int Nleptons_preTau_EE;
+    float ml0ltauZcand_EE;      
+    float mTl0ltauZcand_EE;  
+    float ICl0ltauZcand_EE;
+    float pTl0ltauZcand_EE;
+    float etal0ltauZcand_EE;
+    float jetBDTl0ltauZcand_EE;        
+    float ml1ltauZcand_EE;      
+    float mTl1ltauZcand_EE;  
+    float ICl1ltauZcand_EE;
+    float pTl1ltauZcand_EE;
+    float etal1ltauZcand_EE;
+    float jetBDTl1ltauZcand_EE;
+    
+    bool ZcandLep_l0exists_EE;
     bool ZcandLep_l0PassesOR_EE;
     bool ZcandLep_l0passesMllCut_EE;
     bool ZcandLep_l0passesPT_EE;
@@ -1238,7 +1376,9 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool ZcandLep_l0PassesMedium_EE;
     bool ZcandLep_l0PassesTight_EE; 
     bool ZcandLep_l0PassesORAndMllCut_EE;
+    bool ZcandLep_l0PassesPR_EE;
 
+    bool ZcandLep_l1exists_EE;
     bool ZcandLep_l1PassesOR_EE;
     bool ZcandLep_l1passesMllCut_EE;
     bool ZcandLep_l1passesPT_EE;
@@ -1250,6 +1390,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool ZcandLep_l1PassesMedium_EE;
     bool ZcandLep_l1PassesTight_EE;
     bool ZcandLep_l1PassesORAndMllCut_EE;
+    bool ZcandLep_l1PassesPR_EE;
 
     
     //#####################################
@@ -1292,23 +1433,23 @@ class TSelector_SusyNtuple : public SusyNtAna
     float sD0Signif_branch_l0_MM;
     float sD0Signif_branch_l1_MM;
     
-    int Nleptons_Zcand_MM;
-    float ml0lZcand_MM;      
-    float mTl0lZcand_MM;
-    int ICl0lZcand_MM;
-    float pTl0lZcand_MM;
-    float etal0lZcand_MM;
-    float ptcone30l0lZcand_MM;
-    float d0Sigl0lZcand_MM;
-    float z0SinThetal0lZcand_MM;    
-    float ml1lZcand_MM;
-    float mTl1lZcand_MM;
-    int ICl1lZcand_MM;
-    float pTl1lZcand_MM;
-    float etal1lZcand_MM;
-    float ptcone30l1lZcand_MM;
-    float d0Sigl1lZcand_MM;
-    float z0SinThetal1lZcand_MM;
+    int Nleptons_ZcandImpact_MM;
+    float ml0lZcandImpact_MM;      
+    float mTl0lZcandImpact_MM;
+    int ICl0lZcandImpact_MM;
+    float pTl0lZcandImpact_MM;
+    float etal0lZcandImpact_MM;
+    float ptcone30l0lZcandImpact_MM;
+    float d0Sigl0lZcandImpact_MM;
+    float z0SinThetal0lZcandImpact_MM;    
+    float ml1lZcandImpact_MM;
+    float mTl1lZcandImpact_MM;
+    int ICl1lZcandImpact_MM;
+    float pTl1lZcandImpact_MM;
+    float etal1lZcandImpact_MM;
+    float ptcone30l1lZcandImpact_MM;
+    float d0Sigl1lZcandImpact_MM;
+    float z0SinThetal1lZcandImpact_MM;
     
     int Nleptons_ZcandSoft_MM;
     float ml0lZcandSoft_MM;      
@@ -1364,6 +1505,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float d0Sigl1lZcandIso_MM;
     float z0SinThetal1lZcandIso_MM;      
     
+    bool ZcandLep_l0exists_MM;
     bool ZcandLep_l0PassesOR_MM;
     bool ZcandLep_l0passesMllCut_MM;
     bool ZcandLep_l0passesPT_MM;
@@ -1375,7 +1517,9 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool ZcandLep_l0PassesMedium_MM;
     bool ZcandLep_l0PassesTight_MM; 
     bool ZcandLep_l0PassesORAndMllCut_MM;
+    bool ZcandLep_l0PassesPR_MM;
 
+    bool ZcandLep_l1exists_MM;
     bool ZcandLep_l1PassesOR_MM;
     bool ZcandLep_l1passesMllCut_MM;
     bool ZcandLep_l1passesPT_MM;
@@ -1387,7 +1531,22 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool ZcandLep_l1PassesMedium_MM;
     bool ZcandLep_l1PassesTight_MM;
     bool ZcandLep_l1PassesORAndMllCut_MM;
+    bool ZcandLep_l1PassesPR_MM;
 
+    int Nleptons_tauZcand_MM;
+    int Nleptons_preTau_MM;
+    float ml0ltauZcand_MM;      
+    float mTl0ltauZcand_MM;  
+    float ICl0ltauZcand_MM;
+    float pTl0ltauZcand_MM;
+    float etal0ltauZcand_MM;
+    float jetBDTl0ltauZcand_MM;        
+    float ml1ltauZcand_MM;      
+    float mTl1ltauZcand_MM;  
+    float ICl1ltauZcand_MM;
+    float pTl1ltauZcand_MM;
+    float etal1ltauZcand_MM;
+    float jetBDTl1ltauZcand_MM;
     
     //#####################################
     
@@ -1429,23 +1588,23 @@ class TSelector_SusyNtuple : public SusyNtAna
     float sD0Signif_branch_l0_EM;
     float sD0Signif_branch_l1_EM;
     
-    int Nleptons_Zcand_EM;
-    float ml0lZcand_EM;      
-    float mTl0lZcand_EM;
-    int ICl0lZcand_EM;
-    float pTl0lZcand_EM;
-    float etal0lZcand_EM;
-    float ptcone30l0lZcand_EM;
-    float d0Sigl0lZcand_EM;
-    float z0SinThetal0lZcand_EM;    
-    float ml1lZcand_EM;
-    float mTl1lZcand_EM;
-    int ICl1lZcand_EM;
-    float pTl1lZcand_EM;
-    float etal1lZcand_EM;
-    float ptcone30l1lZcand_EM;
-    float d0Sigl1lZcand_EM;
-    float z0SinThetal1lZcand_EM;
+    int Nleptons_ZcandImpact_EM;
+    float ml0lZcandImpact_EM;      
+    float mTl0lZcandImpact_EM;
+    int ICl0lZcandImpact_EM;
+    float pTl0lZcandImpact_EM;
+    float etal0lZcandImpact_EM;
+    float ptcone30l0lZcandImpact_EM;
+    float d0Sigl0lZcandImpact_EM;
+    float z0SinThetal0lZcandImpact_EM;    
+    float ml1lZcandImpact_EM;
+    float mTl1lZcandImpact_EM;
+    int ICl1lZcandImpact_EM;
+    float pTl1lZcandImpact_EM;
+    float etal1lZcandImpact_EM;
+    float ptcone30l1lZcandImpact_EM;
+    float d0Sigl1lZcandImpact_EM;
+    float z0SinThetal1lZcandImpact_EM;
     
     int Nleptons_ZcandSoft_EM;
     float ml0lZcandSoft_EM;      
@@ -1501,11 +1660,27 @@ class TSelector_SusyNtuple : public SusyNtAna
     float d0Sigl1lZcandIso_EM;
     float z0SinThetal1lZcandIso_EM; 
 
-    float etcone30l1lZcand_EM;
+    float etcone30l1lZcandImpact_EM;
     float etcone30l1lZcandSoft_EM;
     float etcone30l1lZcandSimple_EM;
     float etcone30l1lZcandIso_EM;
+    
+    int Nleptons_tauZcand_EM;
+    int Nleptons_preTau_EM;
+    float ml0ltauZcand_EM;      
+    float mTl0ltauZcand_EM;  
+    float ICl0ltauZcand_EM;
+    float pTl0ltauZcand_EM;
+    float etal0ltauZcand_EM;
+    float jetBDTl0ltauZcand_EM;        
+    float ml1ltauZcand_EM;      
+    float mTl1ltauZcand_EM;  
+    float ICl1ltauZcand_EM;
+    float pTl1ltauZcand_EM;
+    float etal1ltauZcand_EM;
+    float jetBDTl1ltauZcand_EM;
 
+    bool ZcandLep_l0exists_EM;
     bool ZcandLep_l0PassesOR_EM;
     bool ZcandLep_l0passesMllCut_EM;
     bool ZcandLep_l0passesPT_EM;
@@ -1515,9 +1690,11 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool ZcandLep_l0passesD0_EM; 
     bool ZcandLep_l0passesZ0_EM; 
     bool ZcandLep_l0PassesMedium_EM;
-    bool ZcandLep_l0PassesTight_EM;
+    bool ZcandLep_l0PassesTight_EM; 
     bool ZcandLep_l0PassesORAndMllCut_EM;
+    bool ZcandLep_l0PassesPR_EM;
 
+    bool ZcandLep_l1exists_EM;
     bool ZcandLep_l1PassesOR_EM;
     bool ZcandLep_l1passesMllCut_EM;
     bool ZcandLep_l1passesPT_EM;
@@ -1529,6 +1706,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool ZcandLep_l1PassesMedium_EM;
     bool ZcandLep_l1PassesTight_EM;
     bool ZcandLep_l1PassesORAndMllCut_EM;
+    bool ZcandLep_l1PassesPR_EM;
    
     
     //#####################################
@@ -1542,6 +1720,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     DilTrigLogic*      m_trigObjWithoutRU;      // My trigger logic class
     chargeFlip m_chargeFlip;
     SusyMatrixMethod::DiLeptonMatrixMethod* m_matrix;
+//     susy::wh::TupleMaker m_tupleMaker;
     //initialize missing mass calculator MMC for identification of Z->tau tau events
 //     mmc MMC_sumet;
 //     TGuiUtils* GuiUtils;
@@ -1558,15 +1737,61 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     RecoTruthMatch                m_recoTruthMatch;       // Lepton truth matching tool
     
-  unsigned int mcid_of_first_entry;
-  float sumw_from_histo;
+    unsigned int mcid_of_first_entry;
+    float sumw_from_histo;
+    
+    bool m_kIsData;
+    bool runWithPoD;
+    bool calcFakeContribution; 
+    
+    enum LEP_TYPE{PR=0, CONV, HF, LF, TYPE_Undef};
+    
+    // Build a vector that is the difference between two vectors.
+// Caveat1: computing the difference triggers copies of the vectors
+// Caveat2: the result is not guaranteed to be sorted
+// Caveat3: a-b != b-a
+// Based on: http://stackoverflow.com/questions/14175858/c-subtract-vectors
+  template <typename T>
+  std::vector<T> subtract_vector(std::vector<T>& a, const std::vector<T>& b)
+  {
+    std::vector<T> difference;
+    std::set_difference(a.begin(), a.end(), b.begin(), b.end(), std::back_inserter( difference ));
+    return difference;
+  }
   
-  bool m_kIsData;
-  bool runWithPoD;
-  bool calcFakeContribution; 
-  
-  enum LEP_TYPE{PR=0, CONV, HF, LF, TYPE_Undef};
-  
+   TTree *tree_out;
+   EventParameters pars;
+
+  private:
+    TFile *file_;
+    TTree *tree_;
+    FourMom l0_, l1_, met_;
+    std::vector<FourMom> jets_, lowptLepts_;
+    EventParameters eventPars_;
+    
 };
 
+
+
+
 #endif
+
+// #ifdef TSelector_SusyNtuple_cpp
+// void susy::Init(TTree *tree)
+// {
+//    // The Init() function is called when the selector needs to initialize
+//    // a new tree or chain. Typically here the branch addresses and branch
+//    // pointers of the tree will be set.
+//    // It is normally not necessary to make changes to the generated
+//    // code, but the routine can be extended by the user if needed.
+//    // Init() will be called many times when running on PROOF
+//    // (once per file to be processed).
+// 
+//    // Set object pointer
+//   pars = 0;
+//   fChain->SetBranchAddress("pars", &pars, &b_pars);
+// 
+// }
+
+
+// #endif // #ifdef susy_cxx
