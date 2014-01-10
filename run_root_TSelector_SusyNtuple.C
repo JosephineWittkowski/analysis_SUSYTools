@@ -82,10 +82,8 @@ void run_root_TSelector_SusyNtuple(TString InputPath) {
       TString selectorName = "TSelector_SusyNtuple"; // !!! enter the name of your Selector (without _C.so)
 
       TChain *ch;
-      bool run_on_SusyNtuple = true;
-      if(run_on_SusyNtuple) ch = new TChain("susyNt");
-      else ch = new TChain("SusySel");
-
+      
+      ch = new TChain("susyNt");
 
       TString processLine = ".L " + selectorName + ".cpp++g";
       TString execLine;
@@ -94,44 +92,20 @@ void run_root_TSelector_SusyNtuple(TString InputPath) {
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
       ch->Add(InputPath);
 //       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WZ_SherpaVVtotautauqq/user.sfarrell.mc12_8TeV.157816.Sherpa_CT10_VVtotautauqq.SusyNt.e1515_s1499_s1504_r3658_r3549_p1512_n0145.130708082025/*");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00006.susyNt.root");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00040.susyNt.root");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00109.susyNt.root");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00144.susyNt.root");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00177.susyNt.root");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.116630._00002.susyNt.root.1");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00007.susyNt.root");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg/ttbarWtop/user.sfarrell.117206._00041.susyNt.root");
 
 
 
 //       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708161315/user.sfarrell.116519._00003.susyNt.root");
       
-//       if(run_on_SusyNtuple) ch->Add("/data/etp6/jwittkow/SusyNtuple_testdir/126893_n0145/*");
-      if(!run_on_SusyNtuple) ch->Add("/data/etp3/jwittkow/analysis_SUSYTools_03_04/file.root");
+      ch->Add("/data/etp6/jwittkow/SusyNtuple_testdir/126893_n0145/*");
+//       if(run_on_SusyNtuple) ch->Add("/data/etp6/jwittkow/user.gerbaudo.mc12_8TeV.126893.Sherpa_CT10_lllnu_WZ.SusyNt.e1434_s1499_s1504_r3658_r3549_p1512_n0145dev4.131220015824/*");
+      
 //       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/ttbar105200/*");
 
 //             ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_signal_samples/user.gerbaudo.mc12_8TeV.177503.Herwigpp_sM_wA_noslep_notauhad_WH_2Lep_3.SusyNt.e2149_s1581_s1586_r3658_r3549_p1512_n0145.130806161345/user.gerbaudo.023459._00001.susyNt.root");
       
       
-//############################
-//Egamma stream:
-//############################      
-//             ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708161315/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708161341/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708161402/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Egamma/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Egamma.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708161438/*");
-      
-//############################
-//Muons stream:
-//############################
-      
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165423/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165447/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165507/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165547/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165619/*");
-//       ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_data/Muons/user.sfarrell.group.phys-susy.data12_8TeV.periodA.physics_Muons.PhysCont.SusyNt.repro14_v01_p1542_n0145.130708165710/*");
+
 	    
 
 
@@ -142,7 +116,7 @@ void run_root_TSelector_SusyNtuple(TString InputPath) {
 
 
       TSelector_SusyNtuple* susyAna = new TSelector_SusyNtuple();
-      if(run_on_SusyNtuple) susyAna->buildSumwMap(ch);
+      susyAna->buildSumwMap(ch);
       ch->Process(susyAna);
       delete susyAna;
       

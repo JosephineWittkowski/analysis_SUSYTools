@@ -1,6 +1,6 @@
 {
    
-  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04/histos_cutflow_fake_Egamma_periodA.root");
+  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04/histos_cutflow_126893_TSelector.root");
   hn.Print();
 TH1F *alpha_raw = (TH1F*)hn.Get("cutflow_EE");
 TH1F *beta_raw = (TH1F*)hn.Get("cutflow_EM");
@@ -43,11 +43,24 @@ cout << "dOS                :" << alpha_raw->GetBinContent(24) << "     " << gam
 cout << "FVeto              :" << alpha_raw->GetBinContent(25) << "     " << gamma_raw->GetBinContent(25) << "     " << beta_raw->GetBinContent(25)  << endl; 
 cout << "bVeto              :" << alpha_raw->GetBinContent(26) << "     " << gamma_raw->GetBinContent(26) << "     " << beta_raw->GetBinContent(26)  << endl; 
 cout << ">=1jet             :" << alpha_raw->GetBinContent(27) << "     " << gamma_raw->GetBinContent(27) << "     " << beta_raw->GetBinContent(27)  << endl; 
-cout << "lep pt             :" << alpha_raw->GetBinContent(28) << "     " << gamma_raw->GetBinContent(28) << "     " << beta_raw->GetBinContent(28)  << endl; 
-cout << "mll                :" << alpha_raw->GetBinContent(29) << "     " << gamma_raw->GetBinContent(29) << "     " << beta_raw->GetBinContent(29)  << endl; 
-cout << "mWWT               :" << alpha_raw->GetBinContent(30) << "     " << gamma_raw->GetBinContent(30) << "     " << beta_raw->GetBinContent(30)  << endl; 
-cout << "HT                 :" << alpha_raw->GetBinContent(31) << "     " << gamma_raw->GetBinContent(31) << "     " << beta_raw->GetBinContent(31)  << endl; 
-cout << "metREL             :" << alpha_raw->GetBinContent(32) << "     " << gamma_raw->GetBinContent(32) << "     " << beta_raw->GetBinContent(32)  << endl; 
+cout << "======================================================" << endl;
+cout << "==1jet             :" << alpha_raw->GetBinContent(28) << "     " << gamma_raw->GetBinContent(28) << "     " << beta_raw->GetBinContent(28)  << endl; 
+cout << "lep pt             :" << alpha_raw->GetBinContent(29) << "     " << gamma_raw->GetBinContent(29) << "     " << beta_raw->GetBinContent(29)  << endl; 
+cout << "mll                :" << alpha_raw->GetBinContent(30) << "     " << gamma_raw->GetBinContent(30) << "     " << beta_raw->GetBinContent(30)  << endl; 
+cout << "mWWT               :" << alpha_raw->GetBinContent(31) << "     " << gamma_raw->GetBinContent(31) << "     " << beta_raw->GetBinContent(31)  << endl; 
+cout << "HT                 :" << alpha_raw->GetBinContent(32) << "     " << gamma_raw->GetBinContent(32) << "     " << beta_raw->GetBinContent(32)  << endl; 
+cout << "metREL             :" << alpha_raw->GetBinContent(33) << "     " << gamma_raw->GetBinContent(33) << "     " << beta_raw->GetBinContent(33)  << endl; 
+cout << "3rd lepton veto    :" << alpha_raw->GetBinContent(34) << "     " << gamma_raw->GetBinContent(34) << "     " << beta_raw->GetBinContent(34)  << endl; 
+cout << "======================================================" << endl;
+cout << ">=2jets            :" << alpha_raw->GetBinContent(38) << "     " << gamma_raw->GetBinContent(38) << "     " << beta_raw->GetBinContent(38)  << endl; 
+cout << "lep pt             :" << alpha_raw->GetBinContent(39) << "     " << gamma_raw->GetBinContent(39) << "     " << beta_raw->GetBinContent(39)  << endl; 
+cout << "mll                :" << alpha_raw->GetBinContent(40) << "     " << gamma_raw->GetBinContent(40) << "     " << beta_raw->GetBinContent(40)  << endl; 
+cout << "mWWT               :" << alpha_raw->GetBinContent(41) << "     " << gamma_raw->GetBinContent(41) << "     " << beta_raw->GetBinContent(41)  << endl; 
+cout << "HT                 :" << alpha_raw->GetBinContent(42) << "     " << gamma_raw->GetBinContent(42) << "     " << beta_raw->GetBinContent(42)  << endl; 
+cout << "metREL             :" << alpha_raw->GetBinContent(43) << "     " << gamma_raw->GetBinContent(43) << "     " << beta_raw->GetBinContent(43)  << endl; 
+cout << "3rd lepton veto    :" << alpha_raw->GetBinContent(44) << "     " << gamma_raw->GetBinContent(44) << "     " << beta_raw->GetBinContent(44)  << endl; 
+
+
 
 // cout << "MM SRSS2: " << endl;
 // cout << "mWWT                :"  << gamma_raw->GetBinContent(33) << endl; 
@@ -124,12 +137,23 @@ cout << "Iso                :" << alpha_mcEventWeight->GetBinContent(23) << "   
 cout << "dOS                :" << alpha_mcEventWeight->GetBinContent(24) << "     " << gamma_mcEventWeight->GetBinContent(24) << "     " << beta_mcEventWeight->GetBinContent(24)  << endl; 
 cout << "FVeto              :" << alpha_mcEventWeight->GetBinContent(25) << "     " << gamma_mcEventWeight->GetBinContent(25) << "     " << beta_mcEventWeight->GetBinContent(25)  << endl; 
 cout << "bVeto              :" << alpha_mcEventWeight->GetBinContent(26) << "     " << gamma_mcEventWeight->GetBinContent(26) << "     " << beta_mcEventWeight->GetBinContent(26)  << endl; 
-cout << ">=1jet             :" << alpha_mcEventWeight->GetBinContent(27) << "     " << gamma_mcEventWeight->GetBinContent(27) << "     " << beta_mcEventWeight->GetBinContent(27)  << endl; 
-cout << "lep pt             :" << alpha_mcEventWeight->GetBinContent(28) << "     " << gamma_mcEventWeight->GetBinContent(28) << "     " << beta_mcEventWeight->GetBinContent(28)  << endl; 
-cout << "mll                :" << alpha_mcEventWeight->GetBinContent(29) << "     " << gamma_mcEventWeight->GetBinContent(29) << "     " << beta_mcEventWeight->GetBinContent(29)  << endl; 
-cout << "mWWT               :" << alpha_mcEventWeight->GetBinContent(30) << "     " << gamma_mcEventWeight->GetBinContent(30) << "     " << beta_mcEventWeight->GetBinContent(30)  << endl; 
-cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(31) << "     " << gamma_mcEventWeight->GetBinContent(31) << "     " << beta_mcEventWeight->GetBinContent(31)  << endl; 
-cout << "metREL             :" << alpha_mcEventWeight->GetBinContent(32) << "     " << gamma_mcEventWeight->GetBinContent(32) << "     " << beta_mcEventWeight->GetBinContent(32)  << endl; 
+
+cout << "======================================================" << endl;
+cout << "==1jet             :" << alpha_mcEventWeight->GetBinContent(28) << "     " << gamma_mcEventWeight->GetBinContent(28) << "     " << beta_mcEventWeight->GetBinContent(28)  << endl; 
+cout << "lep pt             :" << alpha_mcEventWeight->GetBinContent(29) << "     " << gamma_mcEventWeight->GetBinContent(29) << "     " << beta_mcEventWeight->GetBinContent(29)  << endl; 
+cout << "mll                :" << alpha_mcEventWeight->GetBinContent(30) << "     " << gamma_mcEventWeight->GetBinContent(30) << "     " << beta_mcEventWeight->GetBinContent(30)  << endl; 
+cout << "mWWT               :" << alpha_mcEventWeight->GetBinContent(31) << "     " << gamma_mcEventWeight->GetBinContent(31) << "     " << beta_mcEventWeight->GetBinContent(31)  << endl; 
+cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(32) << "     " << gamma_mcEventWeight->GetBinContent(32) << "     " << beta_mcEventWeight->GetBinContent(32)  << endl; 
+cout << "metREL             :" << alpha_mcEventWeight->GetBinContent(33) << "     " << gamma_mcEventWeight->GetBinContent(33) << "     " << beta_mcEventWeight->GetBinContent(33)  << endl; 
+cout << "3rd lepton veto    :" << alpha_mcEventWeight->GetBinContent(34) << "     " << gamma_mcEventWeight->GetBinContent(34) << "     " << beta_mcEventWeight->GetBinContent(34)  << endl; 
+cout << "======================================================" << endl;
+cout << ">=2jets            :" << alpha_mcEventWeight->GetBinContent(38) << "     " << gamma_mcEventWeight->GetBinContent(38) << "     " << beta_mcEventWeight->GetBinContent(38)  << endl; 
+cout << "lep pt             :" << alpha_mcEventWeight->GetBinContent(39) << "     " << gamma_mcEventWeight->GetBinContent(39) << "     " << beta_mcEventWeight->GetBinContent(39)  << endl; 
+cout << "mll                :" << alpha_mcEventWeight->GetBinContent(40) << "     " << gamma_mcEventWeight->GetBinContent(40) << "     " << beta_mcEventWeight->GetBinContent(40)  << endl; 
+cout << "mWWT               :" << alpha_mcEventWeight->GetBinContent(41) << "     " << gamma_mcEventWeight->GetBinContent(41) << "     " << beta_mcEventWeight->GetBinContent(41)  << endl; 
+cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(42) << "     " << gamma_mcEventWeight->GetBinContent(42) << "     " << beta_mcEventWeight->GetBinContent(42)  << endl; 
+cout << "metREL             :" << alpha_mcEventWeight->GetBinContent(43) << "     " << gamma_mcEventWeight->GetBinContent(43) << "     " << beta_mcEventWeight->GetBinContent(43)  << endl; 
+cout << "3rd lepton veto    :" << alpha_mcEventWeight->GetBinContent(44) << "     " << gamma_mcEventWeight->GetBinContent(44) << "     " << beta_mcEventWeight->GetBinContent(44)  << endl; 
 /*
 cout << "MM SRSS2: " << endl;
 cout << "mWWT                :"  << gamma_mcEventWeight->GetBinContent(33) << endl; 

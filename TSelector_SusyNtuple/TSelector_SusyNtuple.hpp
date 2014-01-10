@@ -12,6 +12,7 @@
 // #include "TProofOutputFile.h"
 // #include "TSystem.h"
 // Susy Common
+#include "SusyNtuple/SusyNtTruthAna.h"
 #include "SusyNtuple/SusyNtAna.h"
 #include "SusyNtuple/SusyNtTools.h"
 #include "SusyNtuple/DilTrigLogic.h"
@@ -24,6 +25,7 @@
 #include "SusyMatrixMethod/DiLeptonMatrixMethod.h"
 #include "TH1.h"
 #include "TH2.h"
+#include "TH3.h"
 // #include "mmc/mmc.cpp"
 #include "MultiLep/CutflowTools.h"
 
@@ -82,7 +84,18 @@ class TSelector_SusyNtuple : public SusyNtAna
 
   public:
     
-    TBranch        *b_pars;
+//   Event* event_test;
+//   EventParameters   pars; 
+//   TBranch        *b_pars; 
+  TBranch* m_eventParameters_b;
+  EventParameters* m_eventParameters;
+  
+//   int truthParticles_pdgId;
+//   TBranch *truthParticles_pdgId;
+  
+  unsigned int eventNumber;
+  TBranch *b_pars_eventNumber;
+
     
     TH1F* h_storeSumwMcid;
     
@@ -99,30 +112,55 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* cutflow_ME_ALL;
     
     TH2F* h_NpreTaus;
+      
+    TH2F* h_DeltaR_JVF_ljOR_EE; 
+    TH2F* h_DeltaR_JVF_ljOR_MM; 
+    TH2F* h_DeltaR_JVF_ljOR_mu_EM;
+    TH2F* h_DeltaR_JVF_ljOR_el_EM;
     
-    TH2F* h_DeltaR_JVF_l1jOR_EM;
-    TH2F* h_DeltaR_JVF_ljOR_MM;
-    TH2F* h_DeltaR_JVF_ljOR_EE;
-    TH2F* h_DeltaR_JVF_l0jOR_EM;
-    
-    TH2F* h_DeltaR_leptonType_l1jOR_EM;
-    TH2F* h_DeltaR_leptonType_ljOR_MM;
     TH2F* h_DeltaR_leptonType_ljOR_EE;
-    TH2F* h_DeltaR_leptonType_l0jOR_EM;    
+    TH2F* h_DeltaR_leptonType_ljOR_MM;
+    TH2F* h_DeltaR_leptonType_ljOR_mu_EM;
+    TH2F* h_DeltaR_leptonType_ljOR_el_EM;
     
     TH2F* h_DeltaR_ptcone_ljOR_PR_EE; 
-    TH2F* h_DeltaR_etcone_ljOR_PR_EE; 
-    TH2F* h_DeltaR_ptcone_ljOR_PR_MM; 
-    TH2F* h_DeltaR_ptcone_l0jOR_PR_EM;
-    TH2F* h_DeltaR_ptcone_l1jOR_PR_EM;
-    TH2F* h_DeltaR_etcone_l1jOR_PR_EM;
+    TH2F* h_DeltaR_etcone_ljOR_PR_EE;
+    TH2F* h_DeltaR_ptcone_ljOR_PR_MM;
+    TH2F* h_DeltaR_ptcone_ljOR_PR_mu_EM;
+    TH2F* h_DeltaR_ptcone_ljOR_PR_el_EM;
+    TH2F* h_DeltaR_etcone_ljOR_PR_el_EM;
+    
+    TH1F* h_Ntpr_ljOR_HF_EE;
+    TH1F* h_Ntpr_ljOR_LF_EE;
+    TH1F* h_Ntpr_ljOR_HF_MM;
+    TH1F* h_Ntpr_ljOR_LF_MM;
+    
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_HF_EE;
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_LF_EE;
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_HF_MM;
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_LF_MM;
+    
+    TH1F* h_DeltaR_min_lostLepton_truthJet_HF_EE;
+    TH1F* h_DeltaR_min_lostLepton_truthJet_LF_EE;
+    TH1F* h_DeltaR_min_lostLepton_truthJet_HF_MM;
+    TH1F* h_DeltaR_min_lostLepton_truthJet_LF_MM;
+    
+    TH1F* h_DeltaR_min_lostLepton_preJet_HF_EE;
+    TH1F* h_DeltaR_min_lostLepton_preJet_LF_EE;
+    TH1F* h_DeltaR_min_lostLepton_preJet_HF_MM;
+    TH1F* h_DeltaR_min_lostLepton_preJet_LF_MM;
+    
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_HF_EE;
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_LF_EE;
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_HF_MM;
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_LF_MM;
     
     TH2F* h_DeltaR_ptcone_ljOR_HF_EE; 
-    TH2F* h_DeltaR_etcone_ljOR_HF_EE; 
-    TH2F* h_DeltaR_ptcone_ljOR_HF_MM; 
-    TH2F* h_DeltaR_ptcone_l0jOR_HF_EM;
-    TH2F* h_DeltaR_ptcone_l1jOR_HF_EM;
-    TH2F* h_DeltaR_etcone_l1jOR_HF_EM;
+    TH2F* h_DeltaR_etcone_ljOR_HF_EE;
+    TH2F* h_DeltaR_ptcone_ljOR_HF_MM;
+    TH2F* h_DeltaR_ptcone_ljOR_HF_mu_EM;
+    TH2F* h_DeltaR_ptcone_ljOR_HF_el_EM;
+    TH2F* h_DeltaR_etcone_ljOR_HF_el_EM; 
     
     TH1F* h_mllCut_EE;
     TH1F* h_mllCut_MM;
@@ -131,348 +169,60 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     TH1F* h_DeltaR_em_EM;
     
-    TH2F* h_failedSignalCriteria_l0_EE;
-    TH2F* h_failedSignalCriteria_l1_EE;
-    TH2F* h_failedSignalCriteria_l0_MM;
-    TH2F* h_failedSignalCriteria_l1_MM;
-    TH2F* h_failedSignalCriteria_l0_EM;
-    TH2F* h_failedSignalCriteria_l1_EM;
+    TH2F* h_failedSignalCriteria_EE;
+    TH2F* h_failedSignalCriteria_MM;
+    TH2F* h_failedSignalCriteria_mu_EM;
+    TH2F* h_failedSignalCriteria_el_EM;
         
-    TH2F* h_etcone30l0lZcandImpact_EE_SRSS1;
-    TH2F* h_etcone30l0lZcandSoft_EE_SRSS1;
-    TH2F* h_etcone30l0lZcandSimple_EE_SRSS1;
-    TH2F* h_etcone30l0lZcandIso_EE_SRSS1;
-    
-    TH2F* h_etcone30l1lZcandImpact_EE_SRSS1;
-    TH2F* h_etcone30l1lZcandSoft_EE_SRSS1;
-    TH2F* h_etcone30l1lZcandSimple_EE_SRSS1;
-    TH2F* h_etcone30l1lZcandIso_EE_SRSS1;
-    
-    TH2F* h_etcone30l1lZcandImpact_EM_SRSS1;
-    TH2F* h_etcone30l1lZcandSoft_EM_SRSS1;
-    TH2F* h_etcone30l1lZcandSimple_EM_SRSS1;
-    TH2F* h_etcone30l1lZcandIso_EM_SRSS1;
-    
+    TH2F* h_etcone30lZcandImpact_EE_SRSS1;        
+    TH2F* h_etcone30lZcandImpact_el_EM_SRSS1;  
    
     TH2F* h_Nleptons_ZcandImpact_EE_SRSS1;
     TH2F* h_Nleptons_ZcandImpact_MM_SRSS1;
-    TH2F* h_Nleptons_ZcandImpact_EM_SRSS1;
-    
-    TH2F* h_ml0lZcandImpact_EE_SRSS1;
-    TH2F* h_ml0lZcandImpact_MM_SRSS1;
-    TH2F* h_ml0lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_mTl0lZcandImpact_EE_SRSS1;
-    TH2F* h_mTl0lZcandImpact_MM_SRSS1;
-    TH2F* h_mTl0lZcandImpact_EM_SRSS1;    
-    
-    TH2F* h_pTl0lZcandImpact_EE_SRSS1;
-    TH2F* h_pTl0lZcandImpact_MM_SRSS1;
-    TH2F* h_pTl0lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_ICl0lZcandImpact_EE_SRSS1;
-    TH2F* h_ICl0lZcandImpact_MM_SRSS1;
-    TH2F* h_ICl0lZcandImpact_EM_SRSS1;   
-    
-    TH2F* h_etal0lZcandImpact_EE_SRSS1;
-    TH2F* h_etal0lZcandImpact_MM_SRSS1;
-    TH2F* h_etal0lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_ptcone30l0lZcandImpact_EE_SRSS1;
-    TH2F* h_ptcone30l0lZcandImpact_MM_SRSS1;
-    TH2F* h_ptcone30l0lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_d0Sigl0lZcandImpact_EE_SRSS1;
-    TH2F* h_d0Sigl0lZcandImpact_MM_SRSS1;
-    TH2F* h_d0Sigl0lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_z0SinThetal0lZcandImpact_EE_SRSS1;
-    TH2F* h_z0SinThetal0lZcandImpact_MM_SRSS1;
-    TH2F* h_z0SinThetal0lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_ml1lZcandImpact_EE_SRSS1;
-    TH2F* h_ml1lZcandImpact_MM_SRSS1;
-    TH2F* h_ml1lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_mTl1lZcandImpact_EE_SRSS1;
-    TH2F* h_mTl1lZcandImpact_MM_SRSS1;
-    TH2F* h_mTl1lZcandImpact_EM_SRSS1;    
-    
-    TH2F* h_ICl1lZcandImpact_EE_SRSS1;
-    TH2F* h_ICl1lZcandImpact_MM_SRSS1;
-    TH2F* h_ICl1lZcandImpact_EM_SRSS1;    
-    
-    TH2F* h_pTl1lZcandImpact_EE_SRSS1;
-    TH2F* h_pTl1lZcandImpact_MM_SRSS1;
-    TH2F* h_pTl1lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_etal1lZcandImpact_EE_SRSS1;
-    TH2F* h_etal1lZcandImpact_MM_SRSS1;
-    TH2F* h_etal1lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_ptcone30l1lZcandImpact_EE_SRSS1;
-    TH2F* h_ptcone30l1lZcandImpact_MM_SRSS1;
-    TH2F* h_ptcone30l1lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_d0Sigl1lZcandImpact_EE_SRSS1;
-    TH2F* h_d0Sigl1lZcandImpact_MM_SRSS1;
-    TH2F* h_d0Sigl1lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_z0SinThetal1lZcandImpact_EE_SRSS1;
-    TH2F* h_z0SinThetal1lZcandImpact_MM_SRSS1;
-    TH2F* h_z0SinThetal1lZcandImpact_EM_SRSS1;
-    
-    TH2F* h_Nleptons_ZcandSoft_EE_SRSS1;
-    TH2F* h_Nleptons_ZcandSoft_MM_SRSS1;
-    TH2F* h_Nleptons_ZcandSoft_EM_SRSS1;
-    
-    TH2F* h_ml0lZcandSoft_EE_SRSS1;  
-    TH2F* h_ml0lZcandSoft_MM_SRSS1;  
-    TH2F* h_ml0lZcandSoft_EM_SRSS1;  
-    
-    TH2F* h_mTl0lZcandSoft_EE_SRSS1;
-    TH2F* h_mTl0lZcandSoft_MM_SRSS1;
-    TH2F* h_mTl0lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_ICl0lZcandSoft_EE_SRSS1;  
-    TH2F* h_ICl0lZcandSoft_MM_SRSS1;  
-    TH2F* h_ICl0lZcandSoft_EM_SRSS1;  
-    
-    TH2F* h_pTl0lZcandSoft_EE_SRSS1;  
-    TH2F* h_pTl0lZcandSoft_MM_SRSS1;  
-    TH2F* h_pTl0lZcandSoft_EM_SRSS1;  
-    
-    TH2F* h_etal0lZcandSoft_EE_SRSS1;
-    TH2F* h_etal0lZcandSoft_MM_SRSS1;
-    TH2F* h_etal0lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_ptcone30l0lZcandSoft_EE_SRSS1;
-    TH2F* h_ptcone30l0lZcandSoft_MM_SRSS1;
-    TH2F* h_ptcone30l0lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_d0Sigl0lZcandSoft_EE_SRSS1;  
-    TH2F* h_d0Sigl0lZcandSoft_MM_SRSS1;  
-    TH2F* h_d0Sigl0lZcandSoft_EM_SRSS1;  
-    
-    TH2F* h_z0SinThetal0lZcandSoft_EE_SRSS1;
-    TH2F* h_z0SinThetal0lZcandSoft_MM_SRSS1;
-    TH2F* h_z0SinThetal0lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_ml1lZcandSoft_EE_SRSS1; 
-    TH2F* h_ml1lZcandSoft_MM_SRSS1; 
-    TH2F* h_ml1lZcandSoft_EM_SRSS1; 
-    
-    TH2F* h_mTl1lZcandSoft_EE_SRSS1;  
-    TH2F* h_mTl1lZcandSoft_MM_SRSS1;  
-    TH2F* h_mTl1lZcandSoft_EM_SRSS1;  
-    
-    TH2F* h_ICl1lZcandSoft_EE_SRSS1; 
-    TH2F* h_ICl1lZcandSoft_MM_SRSS1; 
-    TH2F* h_ICl1lZcandSoft_EM_SRSS1; 
-    
-    TH2F* h_pTl1lZcandSoft_EE_SRSS1;  
-    TH2F* h_pTl1lZcandSoft_MM_SRSS1;  
-    TH2F* h_pTl1lZcandSoft_EM_SRSS1;  
-    
-    TH2F* h_etal1lZcandSoft_EE_SRSS1;
-    TH2F* h_etal1lZcandSoft_MM_SRSS1;
-    TH2F* h_etal1lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_ptcone30l1lZcandSoft_EE_SRSS1;
-    TH2F* h_ptcone30l1lZcandSoft_MM_SRSS1;
-    TH2F* h_ptcone30l1lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_d0Sigl1lZcandSoft_EE_SRSS1;
-    TH2F* h_d0Sigl1lZcandSoft_MM_SRSS1;
-    TH2F* h_d0Sigl1lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_z0SinThetal1lZcandSoft_EE_SRSS1;
-    TH2F* h_z0SinThetal1lZcandSoft_MM_SRSS1;
-    TH2F* h_z0SinThetal1lZcandSoft_EM_SRSS1;
-    
-    TH2F* h_Nleptons_ZcandSimple_EE_SRSS1;
-    TH2F* h_Nleptons_ZcandSimple_MM_SRSS1;
-    TH2F* h_Nleptons_ZcandSimple_EM_SRSS1;
-    
-    TH2F* h_ml0lZcandSimple_EE_SRSS1;  
-    TH2F* h_ml0lZcandSimple_MM_SRSS1;  
-    TH2F* h_ml0lZcandSimple_EM_SRSS1;  
-    
-    TH2F* h_mTl0lZcandSimple_EE_SRSS1;
-    TH2F* h_mTl0lZcandSimple_MM_SRSS1;
-    TH2F* h_mTl0lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_ICl0lZcandSimple_EE_SRSS1;  
-    TH2F* h_ICl0lZcandSimple_MM_SRSS1;  
-    TH2F* h_ICl0lZcandSimple_EM_SRSS1;  
-    
-    TH2F* h_pTl0lZcandSimple_EE_SRSS1;  
-    TH2F* h_pTl0lZcandSimple_MM_SRSS1;  
-    TH2F* h_pTl0lZcandSimple_EM_SRSS1;  
-    
-    TH2F* h_etal0lZcandSimple_EE_SRSS1;
-    TH2F* h_etal0lZcandSimple_MM_SRSS1;
-    TH2F* h_etal0lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_ptcone30l0lZcandSimple_EE_SRSS1;
-    TH2F* h_ptcone30l0lZcandSimple_MM_SRSS1;
-    TH2F* h_ptcone30l0lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_d0Sigl0lZcandSimple_EE_SRSS1;  
-    TH2F* h_d0Sigl0lZcandSimple_MM_SRSS1;  
-    TH2F* h_d0Sigl0lZcandSimple_EM_SRSS1;  
-    
-    TH2F* h_z0SinThetal0lZcandSimple_EE_SRSS1;
-    TH2F* h_z0SinThetal0lZcandSimple_MM_SRSS1;
-    TH2F* h_z0SinThetal0lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_ml1lZcandSimple_EE_SRSS1; 
-    TH2F* h_ml1lZcandSimple_MM_SRSS1; 
-    TH2F* h_ml1lZcandSimple_EM_SRSS1; 
-    
-    TH2F* h_mTl1lZcandSimple_EE_SRSS1;  
-    TH2F* h_mTl1lZcandSimple_MM_SRSS1;  
-    TH2F* h_mTl1lZcandSimple_EM_SRSS1;  
-    
-    TH2F* h_ICl1lZcandSimple_EE_SRSS1; 
-    TH2F* h_ICl1lZcandSimple_MM_SRSS1; 
-    TH2F* h_ICl1lZcandSimple_EM_SRSS1; 
-    
-    TH2F* h_pTl1lZcandSimple_EE_SRSS1;  
-    TH2F* h_pTl1lZcandSimple_MM_SRSS1;  
-    TH2F* h_pTl1lZcandSimple_EM_SRSS1;  
-    
-    TH2F* h_etal1lZcandSimple_EE_SRSS1;
-    TH2F* h_etal1lZcandSimple_MM_SRSS1;
-    TH2F* h_etal1lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_ptcone30l1lZcandSimple_EE_SRSS1;
-    TH2F* h_ptcone30l1lZcandSimple_MM_SRSS1;
-    TH2F* h_ptcone30l1lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_d0Sigl1lZcandSimple_EE_SRSS1;
-    TH2F* h_d0Sigl1lZcandSimple_MM_SRSS1;
-    TH2F* h_d0Sigl1lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_z0SinThetal1lZcandSimple_EE_SRSS1;
-    TH2F* h_z0SinThetal1lZcandSimple_MM_SRSS1;
-    TH2F* h_z0SinThetal1lZcandSimple_EM_SRSS1;
-    
-    TH2F* h_Nleptons_ZcandIso_EE_SRSS1;
-    TH2F* h_Nleptons_ZcandIso_MM_SRSS1;
-    TH2F* h_Nleptons_ZcandIso_EM_SRSS1;
-    
-    TH2F* h_ml0lZcandIso_EE_SRSS1;  
-    TH2F* h_ml0lZcandIso_MM_SRSS1;  
-    TH2F* h_ml0lZcandIso_EM_SRSS1;  
-    
-    TH2F* h_mTl0lZcandIso_EE_SRSS1;
-    TH2F* h_mTl0lZcandIso_MM_SRSS1;
-    TH2F* h_mTl0lZcandIso_EM_SRSS1;
-    
-    TH2F* h_ICl0lZcandIso_EE_SRSS1;  
-    TH2F* h_ICl0lZcandIso_MM_SRSS1;  
-    TH2F* h_ICl0lZcandIso_EM_SRSS1;  
-    
-    TH2F* h_pTl0lZcandIso_EE_SRSS1;  
-    TH2F* h_pTl0lZcandIso_MM_SRSS1;  
-    TH2F* h_pTl0lZcandIso_EM_SRSS1;  
-    
-    TH2F* h_etal0lZcandIso_EE_SRSS1;
-    TH2F* h_etal0lZcandIso_MM_SRSS1;
-    TH2F* h_etal0lZcandIso_EM_SRSS1;
-    
-    TH2F* h_ptcone30l0lZcandIso_EE_SRSS1;
-    TH2F* h_ptcone30l0lZcandIso_MM_SRSS1;
-    TH2F* h_ptcone30l0lZcandIso_EM_SRSS1;
-    
-    TH2F* h_d0Sigl0lZcandIso_EE_SRSS1;  
-    TH2F* h_d0Sigl0lZcandIso_MM_SRSS1;  
-    TH2F* h_d0Sigl0lZcandIso_EM_SRSS1;  
-    
-    TH2F* h_z0SinThetal0lZcandIso_EE_SRSS1;
-    TH2F* h_z0SinThetal0lZcandIso_MM_SRSS1;
-    TH2F* h_z0SinThetal0lZcandIso_EM_SRSS1;
-    
-    TH2F* h_ml1lZcandIso_EE_SRSS1; 
-    TH2F* h_ml1lZcandIso_MM_SRSS1; 
-    TH2F* h_ml1lZcandIso_EM_SRSS1; 
-    
-    TH2F* h_mTl1lZcandIso_EE_SRSS1;  
-    TH2F* h_mTl1lZcandIso_MM_SRSS1;  
-    TH2F* h_mTl1lZcandIso_EM_SRSS1;  
-    
-    TH2F* h_ICl1lZcandIso_EE_SRSS1; 
-    TH2F* h_ICl1lZcandIso_MM_SRSS1; 
-    TH2F* h_ICl1lZcandIso_EM_SRSS1; 
-    
-    TH2F* h_pTl1lZcandIso_EE_SRSS1;  
-    TH2F* h_pTl1lZcandIso_MM_SRSS1;  
-    TH2F* h_pTl1lZcandIso_EM_SRSS1;  
-    
-    TH2F* h_etal1lZcandIso_EE_SRSS1;
-    TH2F* h_etal1lZcandIso_MM_SRSS1;
-    TH2F* h_etal1lZcandIso_EM_SRSS1;
-    
-    TH2F* h_ptcone30l1lZcandIso_EE_SRSS1;
-    TH2F* h_ptcone30l1lZcandIso_MM_SRSS1;
-    TH2F* h_ptcone30l1lZcandIso_EM_SRSS1;
-    
-    TH2F* h_d0Sigl1lZcandIso_EE_SRSS1;
-    TH2F* h_d0Sigl1lZcandIso_MM_SRSS1;
-    TH2F* h_d0Sigl1lZcandIso_EM_SRSS1;
-    
-    TH2F* h_z0SinThetal1lZcandIso_EE_SRSS1;
-    TH2F* h_z0SinThetal1lZcandIso_MM_SRSS1;
-    TH2F* h_z0SinThetal1lZcandIso_EM_SRSS1;
-    
-    TH2F* h_Nleptons_tauZcand_EE_SRSS1;
-    TH2F* h_Nleptons_tauZcand_MM_SRSS1;
-    TH2F* h_Nleptons_tauZcand_EM_SRSS1;
-    
-    TH2F* h_Nleptons_preTau_EE_SRSS1;
-    TH2F* h_Nleptons_preTau_MM_SRSS1;
-    TH2F* h_Nleptons_preTau_EM_SRSS1;
-    
-    TH2F* h_ml0ltauZcand_EE_SRSS1;
-    TH2F* h_ml0ltauZcand_MM_SRSS1;
-    TH2F* h_ml0ltauZcand_EM_SRSS1;
-    
-    TH2F* h_mTl0ltauZcand_EE_SRSS1;
-    TH2F* h_mTl0ltauZcand_MM_SRSS1;
-    TH2F* h_mTl0ltauZcand_EM_SRSS1;    
-    
-    TH2F* h_pTl0ltauZcand_EE_SRSS1;
-    TH2F* h_pTl0ltauZcand_MM_SRSS1;
-    TH2F* h_pTl0ltauZcand_EM_SRSS1;
-
-    TH2F* h_etal0ltauZcand_EE_SRSS1;
-    TH2F* h_etal0ltauZcand_MM_SRSS1;
-    TH2F* h_etal0ltauZcand_EM_SRSS1;
-    
-    TH2F* h_jetBDTl0ltauZcand_EE_SRSS1;
-    TH2F* h_jetBDTl0ltauZcand_MM_SRSS1;
-    TH2F* h_jetBDTl0ltauZcand_EM_SRSS1;
-    
-    TH2F* h_ml1ltauZcand_EE_SRSS1;
-    TH2F* h_ml1ltauZcand_MM_SRSS1;
-    TH2F* h_ml1ltauZcand_EM_SRSS1;
-    
-    TH2F* h_mTl1ltauZcand_EE_SRSS1;
-    TH2F* h_mTl1ltauZcand_MM_SRSS1;
-    TH2F* h_mTl1ltauZcand_EM_SRSS1;    
-    
-    TH2F* h_pTl1ltauZcand_EE_SRSS1;
-    TH2F* h_pTl1ltauZcand_MM_SRSS1;
-    TH2F* h_pTl1ltauZcand_EM_SRSS1;
-    
-    TH2F* h_etal1ltauZcand_EE_SRSS1;
-    TH2F* h_etal1ltauZcand_MM_SRSS1;
-    TH2F* h_etal1ltauZcand_EM_SRSS1;
-    
-    TH2F* h_jetBDTl1ltauZcand_EE_SRSS1;
-    TH2F* h_jetBDTl1ltauZcand_MM_SRSS1;
-    TH2F* h_jetBDTl1ltauZcand_EM_SRSS1;  
+    TH2F* h_Nleptons_ZcandImpact_mu_EM_SRSS1;
+    TH2F* h_Nleptons_ZcandImpact_el_EM_SRSS1;
+    
+    TH2F* h_mllZcandImpact_EE_SRSS1;
+    TH2F* h_mllZcandImpact_MM_SRSS1;
+    TH2F* h_mllZcandImpact_mu_EM_SRSS1;
+    TH2F* h_mllZcandImpact_el_EM_SRSS1;
+    
+    TH2F* h_mTllZcandImpact_EE_SRSS1;
+    TH2F* h_mTllZcandImpact_MM_SRSS1;
+    TH2F* h_mTllZcandImpact_mu_EM_SRSS1;   
+    TH2F* h_mTllZcandImpact_el_EM_SRSS1;   
+    
+    TH2F* h_pTlZcandImpact_EE_SRSS1;
+    TH2F* h_pTlZcandImpact_MM_SRSS1;
+    TH2F* h_pTlZcandImpact_mu_EM_SRSS1;
+    TH2F* h_pTlZcandImpact_el_EM_SRSS1;
+    
+    TH2F* h_IClZcandImpact_EE_SRSS1;
+    TH2F* h_IClZcandImpact_MM_SRSS1;
+    TH2F* h_IClZcandImpact_mu_EM_SRSS1;
+    TH2F* h_IClZcandImpact_el_EM_SRSS1;
+    
+    TH2F* h_etalZcandImpact_EE_SRSS1;
+    TH2F* h_etalZcandImpact_MM_SRSS1;
+    TH2F* h_etalZcandImpact_mu_EM_SRSS1;
+    TH2F* h_etalZcandImpact_el_EM_SRSS1;
+    
+    TH2F* h_ptcone30lZcandImpact_EE_SRSS1;
+    TH2F* h_ptcone30lZcandImpact_MM_SRSS1;
+    TH2F* h_ptcone30lZcandImpact_mu_EM_SRSS1;
+    TH2F* h_ptcone30lZcandImpact_el_EM_SRSS1;
+    
+    TH2F* h_d0SiglZcandImpact_EE_SRSS1;
+    TH2F* h_d0SiglZcandImpact_MM_SRSS1;
+    TH2F* h_d0SiglZcandImpact_mu_EM_SRSS1;
+    TH2F* h_d0SiglZcandImpact_el_EM_SRSS1;
+    
+    TH2F* h_z0SinThetalZcandImpact_EE_SRSS1;
+    TH2F* h_z0SinThetalZcandImpact_MM_SRSS1;
+    TH2F* h_z0SinThetalZcandImpact_mu_EM_SRSS1;
+    TH2F* h_z0SinThetalZcandImpact_el_EM_SRSS1;
+       
+ 
     
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_MM_SRSS1;
@@ -1131,13 +881,18 @@ class TSelector_SusyNtuple : public SusyNtAna
     // Begin is called before looping on entries
     virtual void    Begin(TTree *tree);
     virtual void    SlaveBegin(TTree *tree);
-    // Terminate is called after looping is finished
-    virtual void    Terminate();
-    virtual void    SlaveTerminate();
 //     virtual void    Init(TTree *tree);
-
     // Main event loop function
     virtual Bool_t  Process(Long64_t entry);
+    // Terminate is called after looping is finished
+    
+    virtual void    Terminate();
+    virtual void    SlaveTerminate();
+    
+  
+
+
+    
 		     
     // Cut methods
     bool CheckRealLeptons(const ElectronVector& signal_electrons, MuonVector& signal_muons);
@@ -1249,7 +1004,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhi_EE;
     float DeltaPhiMETl0_EE;
     float DeltaPhiMETl1_EE;
-    float DeltaPhiMET_EE;
+    float DeltaPhiMETll_EE;
     float mT2_EE;  
     float mT2J_EE;       
     float DeltaPhilljj_EE;
@@ -1266,132 +1021,30 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     float sD0Signif_branch_l0_EE;
     float sD0Signif_branch_l1_EE;
-    
+  
     int Nleptons_ZcandImpact_EE;
-    float ml0lZcandImpact_EE;      
-    float mTl0lZcandImpact_EE;
-    int ICl0lZcandImpact_EE;
-    float pTl0lZcandImpact_EE;
-    float etal0lZcandImpact_EE;
-    float ptcone30l0lZcandImpact_EE;
-    float d0Sigl0lZcandImpact_EE;
-    float z0SinThetal0lZcandImpact_EE;    
-    float ml1lZcandImpact_EE;
-    float mTl1lZcandImpact_EE;
-    int ICl1lZcandImpact_EE;
-    float pTl1lZcandImpact_EE;
-    float etal1lZcandImpact_EE;
-    float ptcone30l1lZcandImpact_EE;
-    float d0Sigl1lZcandImpact_EE;
-    float z0SinThetal1lZcandImpact_EE;
+    float etcone30lZcandImpact_EE;
     
-    int Nleptons_ZcandSoft_EE;
-    float ml0lZcandSoft_EE;      
-    float mTl0lZcandSoft_EE;
-    int ICl0lZcandSoft_EE;
-    float pTl0lZcandSoft_EE;
-    float etal0lZcandSoft_EE;
-    float ptcone30l0lZcandSoft_EE;
-    float d0Sigl0lZcandSoft_EE;
-    float z0SinThetal0lZcandSoft_EE;    
-    float ml1lZcandSoft_EE;
-    float mTl1lZcandSoft_EE;
-    int ICl1lZcandSoft_EE;
-    float pTl1lZcandSoft_EE;
-    float etal1lZcandSoft_EE;
-    float ptcone30l1lZcandSoft_EE;
-    float d0Sigl1lZcandSoft_EE;
-    float z0SinThetal1lZcandSoft_EE;
+    float mllZcandImpact_EE;      
+    float mTllZcandImpact_EE;
+    float pTlZcandImpact_EE;
+    float etalZcandImpact_EE;
+    int IClZcandImpact_EE;
+    float ptcone30lZcandImpact_EE;
+    float d0SiglZcandImpact_EE;
+    float z0SinThetalZcandImpact_EE;
     
-    int Nleptons_ZcandSimple_EE;
-    float ml0lZcandSimple_EE;      
-    float mTl0lZcandSimple_EE;
-    int ICl0lZcandSimple_EE;
-    float pTl0lZcandSimple_EE;
-    float etal0lZcandSimple_EE;
-    float ptcone30l0lZcandSimple_EE;
-    float d0Sigl0lZcandSimple_EE;
-    float z0SinThetal0lZcandSimple_EE;    
-    float ml1lZcandSimple_EE;
-    float mTl1lZcandSimple_EE;
-    int ICl1lZcandSimple_EE;
-    float pTl1lZcandSimple_EE;
-    float etal1lZcandSimple_EE;
-    float ptcone30l1lZcandSimple_EE;
-    float d0Sigl1lZcandSimple_EE;
-    float z0SinThetal1lZcandSimple_EE;    
-    
-    int Nleptons_ZcandIso_EE;
-    float ml0lZcandIso_EE;      
-    float mTl0lZcandIso_EE;
-    int ICl0lZcandIso_EE;
-    float pTl0lZcandIso_EE;
-    float etal0lZcandIso_EE;
-    float ptcone30l0lZcandIso_EE;
-    float d0Sigl0lZcandIso_EE;
-    float z0SinThetal0lZcandIso_EE;    
-    float ml1lZcandIso_EE;
-    float mTl1lZcandIso_EE;
-    int ICl1lZcandIso_EE;
-    float pTl1lZcandIso_EE;
-    float etal1lZcandIso_EE;
-    float ptcone30l1lZcandIso_EE;
-    float d0Sigl1lZcandIso_EE;
-    float z0SinThetal1lZcandIso_EE;      
-    
-    float etcone30l0lZcandImpact_EE;
-    float etcone30l0lZcandSoft_EE;
-    float etcone30l0lZcandSimple_EE;
-    float etcone30l0lZcandIso_EE;
-    
-    float etcone30l1lZcandImpact_EE;
-    float etcone30l1lZcandSoft_EE;
-    float etcone30l1lZcandSimple_EE;
-    float etcone30l1lZcandIso_EE;
-    
-    int Nleptons_tauZcand_EE;
-    int Nleptons_preTau_EE;
-    float ml0ltauZcand_EE;      
-    float mTl0ltauZcand_EE;  
-    float ICl0ltauZcand_EE;
-    float pTl0ltauZcand_EE;
-    float etal0ltauZcand_EE;
-    float jetBDTl0ltauZcand_EE;        
-    float ml1ltauZcand_EE;      
-    float mTl1ltauZcand_EE;  
-    float ICl1ltauZcand_EE;
-    float pTl1ltauZcand_EE;
-    float etal1ltauZcand_EE;
-    float jetBDTl1ltauZcand_EE;
-    
-    bool ZcandLep_l0exists_EE;
-    bool ZcandLep_l0PassesOR_EE;
-    bool ZcandLep_l0passesMllCut_EE;
-    bool ZcandLep_l0passesPT_EE;
-    bool ZcandLep_l0passesEta_EE;
-    bool ZcandLep_l0passesPTcone_EE;
-    bool ZcandLep_l0passesETcone_EE;
-    bool ZcandLep_l0passesD0_EE; 
-    bool ZcandLep_l0passesZ0_EE; 
-    bool ZcandLep_l0PassesMedium_EE;
-    bool ZcandLep_l0PassesTight_EE; 
-    bool ZcandLep_l0PassesORAndMllCut_EE;
-    bool ZcandLep_l0PassesPR_EE;
-
-    bool ZcandLep_l1exists_EE;
-    bool ZcandLep_l1PassesOR_EE;
-    bool ZcandLep_l1passesMllCut_EE;
-    bool ZcandLep_l1passesPT_EE;
-    bool ZcandLep_l1passesEta_EE;
-    bool ZcandLep_l1passesPTcone_EE;
-    bool ZcandLep_l1passesETcone_EE;
-    bool ZcandLep_l1passesD0_EE; 
-    bool ZcandLep_l1passesZ0_EE; 
-    bool ZcandLep_l1PassesMedium_EE;
-    bool ZcandLep_l1PassesTight_EE;
-    bool ZcandLep_l1PassesORAndMllCut_EE;
-    bool ZcandLep_l1PassesPR_EE;
-
+    bool ZcandLep_exists_EE;
+    bool ZcandLep_passesPT_EE;
+    bool ZcandLep_passesEta_EE;
+    bool ZcandLep_passesPTcone_EE;
+    bool ZcandLep_passesETcone_EE;
+    bool ZcandLep_passesD0_EE; 
+    bool ZcandLep_passesZ0_EE; 
+    bool ZcandLep_PassesMedium_EE;
+    bool ZcandLep_PassesTight_EE; 
+    bool ZcandLep_PassesORAndMllCut_EE;
+    bool ZcandLep_PassesPR_EE;
     
     //#####################################
     
@@ -1415,7 +1068,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhi_MM;
     float DeltaPhiMETl0_MM;
     float DeltaPhiMETl1_MM;
-    float DeltaPhiMET_MM;
+    float DeltaPhiMETll_MM;
     float mT2_MM;  
     float mT2J_MM;       
     float DeltaPhilljj_MM;
@@ -1434,120 +1087,26 @@ class TSelector_SusyNtuple : public SusyNtAna
     float sD0Signif_branch_l1_MM;
     
     int Nleptons_ZcandImpact_MM;
-    float ml0lZcandImpact_MM;      
-    float mTl0lZcandImpact_MM;
-    int ICl0lZcandImpact_MM;
-    float pTl0lZcandImpact_MM;
-    float etal0lZcandImpact_MM;
-    float ptcone30l0lZcandImpact_MM;
-    float d0Sigl0lZcandImpact_MM;
-    float z0SinThetal0lZcandImpact_MM;    
-    float ml1lZcandImpact_MM;
-    float mTl1lZcandImpact_MM;
-    int ICl1lZcandImpact_MM;
-    float pTl1lZcandImpact_MM;
-    float etal1lZcandImpact_MM;
-    float ptcone30l1lZcandImpact_MM;
-    float d0Sigl1lZcandImpact_MM;
-    float z0SinThetal1lZcandImpact_MM;
+    float mllZcandImpact_MM;      
+    float mTllZcandImpact_MM;
+    float pTlZcandImpact_MM;
+    float etalZcandImpact_MM;
+    int IClZcandImpact_MM;
+    float ptcone30lZcandImpact_MM;
+    float d0SiglZcandImpact_MM;
+    float z0SinThetalZcandImpact_MM;
     
-    int Nleptons_ZcandSoft_MM;
-    float ml0lZcandSoft_MM;      
-    float mTl0lZcandSoft_MM;
-    int ICl0lZcandSoft_MM;
-    float pTl0lZcandSoft_MM;
-    float etal0lZcandSoft_MM;
-    float ptcone30l0lZcandSoft_MM;
-    float d0Sigl0lZcandSoft_MM;
-    float z0SinThetal0lZcandSoft_MM;    
-    float ml1lZcandSoft_MM;
-    float mTl1lZcandSoft_MM;
-    int ICl1lZcandSoft_MM;
-    float pTl1lZcandSoft_MM;
-    float etal1lZcandSoft_MM;
-    float ptcone30l1lZcandSoft_MM;
-    float d0Sigl1lZcandSoft_MM;
-    float z0SinThetal1lZcandSoft_MM;
-    
-    int Nleptons_ZcandSimple_MM;
-    float ml0lZcandSimple_MM;      
-    float mTl0lZcandSimple_MM;
-    int ICl0lZcandSimple_MM;
-    float pTl0lZcandSimple_MM;
-    float etal0lZcandSimple_MM;
-    float ptcone30l0lZcandSimple_MM;
-    float d0Sigl0lZcandSimple_MM;
-    float z0SinThetal0lZcandSimple_MM;    
-    float ml1lZcandSimple_MM;
-    float mTl1lZcandSimple_MM;
-    int ICl1lZcandSimple_MM;
-    float pTl1lZcandSimple_MM;
-    float etal1lZcandSimple_MM;
-    float ptcone30l1lZcandSimple_MM;
-    float d0Sigl1lZcandSimple_MM;
-    float z0SinThetal1lZcandSimple_MM;    
-    
-    int Nleptons_ZcandIso_MM;
-    float ml0lZcandIso_MM;      
-    float mTl0lZcandIso_MM;
-    int ICl0lZcandIso_MM;
-    float pTl0lZcandIso_MM;
-    float etal0lZcandIso_MM;
-    float ptcone30l0lZcandIso_MM;
-    float d0Sigl0lZcandIso_MM;
-    float z0SinThetal0lZcandIso_MM;    
-    float ml1lZcandIso_MM;
-    float mTl1lZcandIso_MM;
-    int ICl1lZcandIso_MM;
-    float pTl1lZcandIso_MM;
-    float etal1lZcandIso_MM;
-    float ptcone30l1lZcandIso_MM;
-    float d0Sigl1lZcandIso_MM;
-    float z0SinThetal1lZcandIso_MM;      
-    
-    bool ZcandLep_l0exists_MM;
-    bool ZcandLep_l0PassesOR_MM;
-    bool ZcandLep_l0passesMllCut_MM;
-    bool ZcandLep_l0passesPT_MM;
-    bool ZcandLep_l0passesEta_MM;
-    bool ZcandLep_l0passesPTcone_MM;
-    bool ZcandLep_l0passesETcone_MM;
-    bool ZcandLep_l0passesD0_MM; 
-    bool ZcandLep_l0passesZ0_MM; 
-    bool ZcandLep_l0PassesMedium_MM;
-    bool ZcandLep_l0PassesTight_MM; 
-    bool ZcandLep_l0PassesORAndMllCut_MM;
-    bool ZcandLep_l0PassesPR_MM;
-
-    bool ZcandLep_l1exists_MM;
-    bool ZcandLep_l1PassesOR_MM;
-    bool ZcandLep_l1passesMllCut_MM;
-    bool ZcandLep_l1passesPT_MM;
-    bool ZcandLep_l1passesEta_MM;
-    bool ZcandLep_l1passesPTcone_MM;
-    bool ZcandLep_l1passesETcone_MM;
-    bool ZcandLep_l1passesD0_MM; 
-    bool ZcandLep_l1passesZ0_MM; 
-    bool ZcandLep_l1PassesMedium_MM;
-    bool ZcandLep_l1PassesTight_MM;
-    bool ZcandLep_l1PassesORAndMllCut_MM;
-    bool ZcandLep_l1PassesPR_MM;
-
-    int Nleptons_tauZcand_MM;
-    int Nleptons_preTau_MM;
-    float ml0ltauZcand_MM;      
-    float mTl0ltauZcand_MM;  
-    float ICl0ltauZcand_MM;
-    float pTl0ltauZcand_MM;
-    float etal0ltauZcand_MM;
-    float jetBDTl0ltauZcand_MM;        
-    float ml1ltauZcand_MM;      
-    float mTl1ltauZcand_MM;  
-    float ICl1ltauZcand_MM;
-    float pTl1ltauZcand_MM;
-    float etal1ltauZcand_MM;
-    float jetBDTl1ltauZcand_MM;
-    
+    bool ZcandLep_exists_MM;
+    bool ZcandLep_passesPT_MM;
+    bool ZcandLep_passesEta_MM;
+    bool ZcandLep_passesPTcone_MM;
+    bool ZcandLep_passesETcone_MM;
+    bool ZcandLep_passesD0_MM; 
+    bool ZcandLep_passesZ0_MM; 
+    bool ZcandLep_PassesMedium_MM;
+    bool ZcandLep_PassesTight_MM; 
+    bool ZcandLep_PassesORAndMllCut_MM;
+    bool ZcandLep_PassesPR_MM;
     //#####################################
     
     float pTl0_EM;
@@ -1570,7 +1129,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhi_EM;
     float DeltaPhiMETl0_EM;
     float DeltaPhiMETl1_EM;
-    float DeltaPhiMET_EM;
+    float DeltaPhiMETll_EM;
     float mT2_EM;  
     float mT2J_EM;       
     float DeltaPhilljj_EM;
@@ -1588,126 +1147,52 @@ class TSelector_SusyNtuple : public SusyNtAna
     float sD0Signif_branch_l0_EM;
     float sD0Signif_branch_l1_EM;
     
-    int Nleptons_ZcandImpact_EM;
-    float ml0lZcandImpact_EM;      
-    float mTl0lZcandImpact_EM;
-    int ICl0lZcandImpact_EM;
-    float pTl0lZcandImpact_EM;
-    float etal0lZcandImpact_EM;
-    float ptcone30l0lZcandImpact_EM;
-    float d0Sigl0lZcandImpact_EM;
-    float z0SinThetal0lZcandImpact_EM;    
-    float ml1lZcandImpact_EM;
-    float mTl1lZcandImpact_EM;
-    int ICl1lZcandImpact_EM;
-    float pTl1lZcandImpact_EM;
-    float etal1lZcandImpact_EM;
-    float ptcone30l1lZcandImpact_EM;
-    float d0Sigl1lZcandImpact_EM;
-    float z0SinThetal1lZcandImpact_EM;
+ 
+    int Nleptons_ZcandImpact_mu_EM;
+    int Nleptons_ZcandImpact_el_EM;
     
-    int Nleptons_ZcandSoft_EM;
-    float ml0lZcandSoft_EM;      
-    float mTl0lZcandSoft_EM;
-    int ICl0lZcandSoft_EM;
-    float pTl0lZcandSoft_EM;
-    float etal0lZcandSoft_EM;
-    float ptcone30l0lZcandSoft_EM;
-    float d0Sigl0lZcandSoft_EM;
-    float z0SinThetal0lZcandSoft_EM;    
-    float ml1lZcandSoft_EM;
-    float mTl1lZcandSoft_EM;
-    int ICl1lZcandSoft_EM;
-    float pTl1lZcandSoft_EM;
-    float etal1lZcandSoft_EM;
-    float ptcone30l1lZcandSoft_EM;
-    float d0Sigl1lZcandSoft_EM;
-    float z0SinThetal1lZcandSoft_EM;
+    float mllZcandImpact_mu_EM;      
+    float mTllZcandImpact_mu_EM;
+    float pTlZcandImpact_mu_EM;
+    float etalZcandImpact_mu_EM;
+    int IClZcandImpact_mu_EM;
+    float ptcone30lZcandImpact_mu_EM;
+    float d0SiglZcandImpact_mu_EM;
+    float z0SinThetalZcandImpact_mu_EM;    
     
-    int Nleptons_ZcandSimple_EM;
-    float ml0lZcandSimple_EM;      
-    float mTl0lZcandSimple_EM;
-    int ICl0lZcandSimple_EM;
-    float pTl0lZcandSimple_EM;
-    float etal0lZcandSimple_EM;
-    float ptcone30l0lZcandSimple_EM;
-    float d0Sigl0lZcandSimple_EM;
-    float z0SinThetal0lZcandSimple_EM;    
-    float ml1lZcandSimple_EM;
-    float mTl1lZcandSimple_EM;
-    int ICl1lZcandSimple_EM;
-    float pTl1lZcandSimple_EM;
-    float etal1lZcandSimple_EM;
-    float ptcone30l1lZcandSimple_EM;
-    float d0Sigl1lZcandSimple_EM;
-    float z0SinThetal1lZcandSimple_EM;  
+    float mllZcandImpact_el_EM;      
+    float mTllZcandImpact_el_EM;
+    float pTlZcandImpact_el_EM;
+    float etalZcandImpact_el_EM;
+    int IClZcandImpact_el_EM;
+    float ptcone30lZcandImpact_el_EM;
+    float etcone30lZcandImpact_el_EM;   
+    float d0SiglZcandImpact_el_EM;
+    float z0SinThetalZcandImpact_el_EM;
     
-    int Nleptons_ZcandIso_EM;
-    float ml0lZcandIso_EM;      
-    float mTl0lZcandIso_EM;
-    int ICl0lZcandIso_EM;
-    float pTl0lZcandIso_EM;
-    float etal0lZcandIso_EM;
-    float ptcone30l0lZcandIso_EM;
-    float d0Sigl0lZcandIso_EM;
-    float z0SinThetal0lZcandIso_EM;    
-    float ml1lZcandIso_EM;
-    float mTl1lZcandIso_EM;
-    int ICl1lZcandIso_EM;
-    float pTl1lZcandIso_EM;
-    float etal1lZcandIso_EM;
-    float ptcone30l1lZcandIso_EM;
-    float d0Sigl1lZcandIso_EM;
-    float z0SinThetal1lZcandIso_EM; 
-
-    float etcone30l1lZcandImpact_EM;
-    float etcone30l1lZcandSoft_EM;
-    float etcone30l1lZcandSimple_EM;
-    float etcone30l1lZcandIso_EM;
+    bool ZcandLep_exists_mu_EM;
+    bool ZcandLep_passesPT_mu_EM;
+    bool ZcandLep_passesEta_mu_EM;
+    bool ZcandLep_passesPTcone_mu_EM;
+    bool ZcandLep_passesETcone_mu_EM;
+    bool ZcandLep_passesD0_mu_EM; 
+    bool ZcandLep_passesZ0_mu_EM; 
+    bool ZcandLep_PassesMedium_mu_EM;
+    bool ZcandLep_PassesTight_mu_EM; 
+    bool ZcandLep_PassesORAndMllCut_mu_EM;
+    bool ZcandLep_PassesPR_mu_EM;
     
-    int Nleptons_tauZcand_EM;
-    int Nleptons_preTau_EM;
-    float ml0ltauZcand_EM;      
-    float mTl0ltauZcand_EM;  
-    float ICl0ltauZcand_EM;
-    float pTl0ltauZcand_EM;
-    float etal0ltauZcand_EM;
-    float jetBDTl0ltauZcand_EM;        
-    float ml1ltauZcand_EM;      
-    float mTl1ltauZcand_EM;  
-    float ICl1ltauZcand_EM;
-    float pTl1ltauZcand_EM;
-    float etal1ltauZcand_EM;
-    float jetBDTl1ltauZcand_EM;
-
-    bool ZcandLep_l0exists_EM;
-    bool ZcandLep_l0PassesOR_EM;
-    bool ZcandLep_l0passesMllCut_EM;
-    bool ZcandLep_l0passesPT_EM;
-    bool ZcandLep_l0passesEta_EM;
-    bool ZcandLep_l0passesPTcone_EM;
-    bool ZcandLep_l0passesETcone_EM;
-    bool ZcandLep_l0passesD0_EM; 
-    bool ZcandLep_l0passesZ0_EM; 
-    bool ZcandLep_l0PassesMedium_EM;
-    bool ZcandLep_l0PassesTight_EM; 
-    bool ZcandLep_l0PassesORAndMllCut_EM;
-    bool ZcandLep_l0PassesPR_EM;
-
-    bool ZcandLep_l1exists_EM;
-    bool ZcandLep_l1PassesOR_EM;
-    bool ZcandLep_l1passesMllCut_EM;
-    bool ZcandLep_l1passesPT_EM;
-    bool ZcandLep_l1passesEta_EM;
-    bool ZcandLep_l1passesPTcone_EM;
-    bool ZcandLep_l1passesETcone_EM;
-    bool ZcandLep_l1passesD0_EM; 
-    bool ZcandLep_l1passesZ0_EM; 
-    bool ZcandLep_l1PassesMedium_EM;
-    bool ZcandLep_l1PassesTight_EM;
-    bool ZcandLep_l1PassesORAndMllCut_EM;
-    bool ZcandLep_l1PassesPR_EM;
-   
+    bool ZcandLep_exists_el_EM;
+    bool ZcandLep_passesPT_el_EM;
+    bool ZcandLep_passesEta_el_EM;
+    bool ZcandLep_passesPTcone_el_EM;
+    bool ZcandLep_passesETcone_el_EM;
+    bool ZcandLep_passesD0_el_EM; 
+    bool ZcandLep_passesZ0_el_EM; 
+    bool ZcandLep_PassesMedium_el_EM;
+    bool ZcandLep_PassesTight_el_EM; 
+    bool ZcandLep_PassesORAndMllCut_el_EM;
+    bool ZcandLep_PassesPR_el_EM;
     
     //#####################################
     
@@ -1720,6 +1205,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     DilTrigLogic*      m_trigObjWithoutRU;      // My trigger logic class
     chargeFlip m_chargeFlip;
     SusyMatrixMethod::DiLeptonMatrixMethod* m_matrix;
+//     SusyNtTruthAna* susyAnaTruth;
 //     susy::wh::TupleMaker m_tupleMaker;
     //initialize missing mass calculator MMC for identification of Z->tau tau events
 //     mmc MMC_sumet;
@@ -1760,7 +1246,6 @@ class TSelector_SusyNtuple : public SusyNtAna
   }
   
    TTree *tree_out;
-   EventParameters pars;
 
   private:
     TFile *file_;
@@ -1771,27 +1256,20 @@ class TSelector_SusyNtuple : public SusyNtAna
     
 };
 
+// #ifdef TSelector_SusyNtuple_cpp
+//   void TSelector_SusyNtuple::Init(TTree *tree)
+//   {
+//     // The Init() function is called when the selector needs to initialize
+//     // a new tree or chain. Typically here the branch addresses and branch
+//     // pointers of the tree will be set.
+//     // It is normally not necessary to make changes to the generated
+//     // code, but the routine can be extended by the user if needed.
+//     // Init() will be called many times when running on PROOF
+//     // (once per file to be processed).
+//     
 
-
+//       
+//   }
+//   #endif // #ifdef TSelector_SusyNtuple_cpp
 
 #endif
-
-// #ifdef TSelector_SusyNtuple_cpp
-// void susy::Init(TTree *tree)
-// {
-//    // The Init() function is called when the selector needs to initialize
-//    // a new tree or chain. Typically here the branch addresses and branch
-//    // pointers of the tree will be set.
-//    // It is normally not necessary to make changes to the generated
-//    // code, but the routine can be extended by the user if needed.
-//    // Init() will be called many times when running on PROOF
-//    // (once per file to be processed).
-// 
-//    // Set object pointer
-//   pars = 0;
-//   fChain->SetBranchAddress("pars", &pars, &b_pars);
-// 
-// }
-
-
-// #endif // #ifdef susy_cxx
