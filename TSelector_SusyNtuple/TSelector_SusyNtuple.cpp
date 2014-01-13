@@ -40,30 +40,28 @@ void TSelector_SusyNtuple::Begin(TTree * /*tree*/)
 }
 void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
 {
-//   run_on_SusyNtuple = true;
+
   makeNTuple = false;
   defineHistos();
 
-//   if(run_on_SusyNtuple){
-    SusyNtAna::Begin(0);
-    m_susyObj.initialize(nt.evt()->isMC);
 
-    
+  SusyNtAna::Begin(0);
+  m_susyObj.initialize(nt.evt()->isMC);
 
-    setSelectTaus(true);
-    setDoIP(true);
+  
 
-    m_trigObjWithoutRU = new DilTrigLogic("Moriond",false/*No Reweight Utils!*/);
-    
-    cout << "initialize chargeFlip tool" << endl;
-    
-    m_chargeFlip.initialize("/data/etp3/jwittkow/analysis_SUSYTools_03_04/ChargeFlip/data/d0_chargeflip_map.root");
-    
-    m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
-    m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
-    if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/WZ_SusySel.root", "SusySel");
-    
-//   }
+  setSelectTaus(true);
+  setDoIP(true);
+
+  m_trigObjWithoutRU = new DilTrigLogic("Moriond",false/*No Reweight Utils!*/);
+  
+  cout << "initialize chargeFlip tool" << endl;
+  
+  m_chargeFlip.initialize("/data/etp3/jwittkow/analysis_SUSYTools_03_04/ChargeFlip/data/d0_chargeflip_map.root");
+  
+  m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
+  m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
+  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/WZ_SusySel.root", "SusySel");
   
 }
 
@@ -115,7 +113,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
     if(nt.evt()->event == 11336195) sample_identifier = 20006; //Muons 6
     cout << "sample_identifier= " << sample_identifier << endl;
     
-  cout << "nt.evt()->event= " << nt.evt()->event << endl; 
     
   }
   if(m_dbg || m_chainEntry%50000==0)
@@ -380,6 +377,9 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 				    if((mllZcandImpact_EE > MZ+20. || mllZcandImpact_EE < MZ-20.)){
 				      cutnumber = 33.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
 				    }
+				    else{
+// 				      cout << "vetoed: EE " << nt.evt()->event << "mllZcandImpact_EE= " << mllZcandImpact_EE << " el0_TLV.Pt()= " << el0_TLV.Pt() << " el1_TLV.Pt()= " << el1_TLV.Pt() << endl;
+				    }
 				  }
 				}
 			      }
@@ -404,7 +404,10 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 				  cutnumber = 42.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);		  
 				  if((mllZcandImpact_EE > MZ+20. || mllZcandImpact_EE < MZ-20.)){
 				    cutnumber = 43.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
-				  }				
+				  }
+				  else{
+// 				    cout << "vetoed: EE " << nt.evt()->event << "mllZcandImpact_EE= " << mllZcandImpact_EE << " el0_TLV.Pt()= " << el0_TLV.Pt() << " el1_TLV.Pt()= " << el1_TLV.Pt() << endl;
+				  }
 				}
 			      }
 			    }
@@ -579,11 +582,14 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 				cutnumber = 30.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				if(HT_MM >= 200.){
 				  cutnumber = 31.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				
-				  if(METrel_MM >= 50.){
+				  if(/*METrel_MM >= 50.*/1){
 				    cutnumber = 32.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				    
 				    if((mllZcandImpact_MM > MZ+20. || mllZcandImpact_MM < MZ-20.)){
 				    cutnumber = 33.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
+				    }
+				    else{
+// 				      cout << "vetoed: MM " << nt.evt()->event << "mllZcandImpact_MM= " << mllZcandImpact_MM << " mu0_TLV.Pt()= " << mu0_TLV.Pt() << " mu1_TLV.Pt= " << mu1_TLV.Pt() << endl;
 				    }
 				  }
 				}
@@ -601,7 +607,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 				cutnumber = 40.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				if(HT_MM >= 200.){
 				  cutnumber = 41.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				
-				  if(METrel_MM >= 50.){
+				  if(/*METrel_MM >= 50.*/1){
 				    cutnumber = 42.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 				    if((mllZcandImpact_MM > MZ+20. || mllZcandImpact_MM < MZ-20.)){
 				      cutnumber = 43.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
@@ -860,10 +866,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      cutnumber = 41.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 			      if(METrel_EM>=50.){
 				cutnumber = 42.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-				
+				if(nt.evt()->event==2374956) cout << "mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << " mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << endl;
 				if((mllZcandImpact_mu_EM > MZ+20. || mllZcandImpact_mu_EM < MZ-20.) && (mllZcandImpact_el_EM > MZ+20. || mllZcandImpact_el_EM < MZ-20.)){
 				  cutnumber = 43.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-				}				 
+				}
+				else{
+				  cout << " vetoed: EM " << nt.evt()->event << "mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << "mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << " mu_TLV.Pt()= " << mu_TLV.Pt() << " el_TLV.Pt()= " << el_TLV.Pt() << endl;
+				}
 			      }
 			    }
 			  }
