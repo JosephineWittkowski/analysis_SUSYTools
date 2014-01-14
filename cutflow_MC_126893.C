@@ -1,6 +1,6 @@
 {
    
-  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04/histos_cutflow_126893_TSelector.root");
+  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04/histos_ZN_WZ_SusySel.root");
   hn.Print();
 TH1F *alpha_raw = (TH1F*)hn.Get("cutflow_EE");
 TH1F *beta_raw = (TH1F*)hn.Get("cutflow_EM");
@@ -62,38 +62,13 @@ cout << "3rd lepton veto    :" << alpha_raw->GetBinContent(44) << "     " << gam
 
 
 
-// cout << "MM SRSS2: " << endl;
-// cout << "mWWT                :"  << gamma_raw->GetBinContent(33) << endl; 
-// cout << "HT                 :" << gamma_raw->GetBinContent(34) << endl; 
-// cout << "metREL             :" << gamma_raw->GetBinContent(35) << endl; 
-// 
-// cout << "MM SRSS3: " << endl;
-// cout << "mWWT                :"  << gamma_raw->GetBinContent(36) << endl; 
-// cout << "HT                 :" << gamma_raw->GetBinContent(37) << endl; 
-// cout << "metREL             :" << gamma_raw->GetBinContent(38) << endl; 
-// 
-// cout << "MM SRSS4: " << endl;
-// cout << "mWWT                :"  << gamma_raw->GetBinContent(39) << endl; 
-// cout << "HT                 :" << gamma_raw->GetBinContent(40) << endl; 
-// cout << "metREL             :" << gamma_raw->GetBinContent(41) << endl; 
-// 
-// cout << "EE SRSS:" << endl;
-// cout << "mt2>90             :" << alpha_raw->GetBinContent(33) << endl;
 
-/*cout << "----------------  OS  --------------------------" << endl;
-cout << "                      EE       MM     EM                " << endl;
-cout << "----------------------------------------------" << endl;
-cout << "pass OS            :" << alpha_raw->GetBinContent(51) << "     " << gamma_raw->GetBinContent(51) << "     " << beta_raw->GetBinContent(51)  << endl;         
-cout << "pass Iso           :" << alpha_raw->GetBinContent(52) << "     " << gamma_raw->GetBinContent(52) << "     " << beta_raw->GetBinContent(52)  << endl;                     
-cout << "pass FVeto         :" << alpha_raw->GetBinContent(53) << "     " << gamma_raw->GetBinContent(53) << "     " << beta_raw->GetBinContent(53)  << endl;                   
-cout << "pass bVeto         :" << alpha_raw->GetBinContent(54) << "     " << gamma_raw->GetBinContent(54) << "     " << beta_raw->GetBinContent(54)  << endl;                   
-cout << "pass >=2 J         :" << alpha_raw->GetBinContent(55) << "     " << gamma_raw->GetBinContent(55) << "     " << beta_raw->GetBinContent(55)  << endl;                   
-cout << "pass Mjj           :" << alpha_raw->GetBinContent(56) << "     " << gamma_raw->GetBinContent(56) << "     " << beta_raw->GetBinContent(56)  << endl;                   
-cout << "pass lepPt         :" << alpha_raw->GetBinContent(57) << "     " << gamma_raw->GetBinContent(57) << "     " << beta_raw->GetBinContent(57)  << endl;                     
-cout << "pass dRll          :" << alpha_raw->GetBinContent(58) << "     " << gamma_raw->GetBinContent(58) << "     " << beta_raw->GetBinContent(58)  << endl;                    
-cout << "pass min(mT1,mT2)  :" << alpha_raw->GetBinContent(59) << "     " << gamma_raw->GetBinContent(59) << "     " << beta_raw->GetBinContent(59)  << endl;            
-cout << "pass dPhi(ll,Met)  :" << alpha_raw->GetBinContent(60) << "     " << gamma_raw->GetBinContent(60) << "     " << beta_raw->GetBinContent(60)  << endl;            
-cout << "pass Met           :" << alpha_raw->GetBinContent(61) << "     " << gamma_raw->GetBinContent(61) << "     " << beta_raw->GetBinContent(61)  << endl;    */          
+
+
+
+
+
+
 
 
 cout << "#############################################" << endl;
@@ -137,7 +112,7 @@ cout << "Iso                :" << alpha_mcEventWeight->GetBinContent(23) << "   
 cout << "dOS                :" << alpha_mcEventWeight->GetBinContent(24) << "     " << gamma_mcEventWeight->GetBinContent(24) << "     " << beta_mcEventWeight->GetBinContent(24)  << endl; 
 cout << "FVeto              :" << alpha_mcEventWeight->GetBinContent(25) << "     " << gamma_mcEventWeight->GetBinContent(25) << "     " << beta_mcEventWeight->GetBinContent(25)  << endl; 
 cout << "bVeto              :" << alpha_mcEventWeight->GetBinContent(26) << "     " << gamma_mcEventWeight->GetBinContent(26) << "     " << beta_mcEventWeight->GetBinContent(26)  << endl; 
-
+cout << ">=1jet             :" << alpha_mcEventWeight->GetBinContent(27) << "     " << gamma_mcEventWeight->GetBinContent(27) << "     " << beta_mcEventWeight->GetBinContent(27)  << endl; 
 cout << "======================================================" << endl;
 cout << "==1jet             :" << alpha_mcEventWeight->GetBinContent(28) << "     " << gamma_mcEventWeight->GetBinContent(28) << "     " << beta_mcEventWeight->GetBinContent(28)  << endl; 
 cout << "lep pt             :" << alpha_mcEventWeight->GetBinContent(29) << "     " << gamma_mcEventWeight->GetBinContent(29) << "     " << beta_mcEventWeight->GetBinContent(29)  << endl; 

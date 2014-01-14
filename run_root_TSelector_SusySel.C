@@ -68,13 +68,8 @@ void run_root_TSelector_SusySel(TString InputPath) {
       gROOT->ProcessLine(processLine); // need to add this, or PoD at LRZ will not be able to load the .so
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
 //       ch->Add(InputPath);
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WZ_SherpaVVtotautauqq/user.sfarrell.mc12_8TeV.157816.Sherpa_CT10_VVtotautauqq.SusyNt.e1515_s1499_s1504_r3658_r3549_p1512_n0145.130708082025/*");
 
-      
-//       ch->Add("/data/etp6/jwittkow/SusyNtuple_testdir/126893_n0145/*");
-//       ch->Add("/data/etp6/jwittkow/user.gerbaudo.mc12_8TeV.126893.Sherpa_CT10_lllnu_WZ.SusyNt.e1434_s1499_s1504_r3658_r3549_p1512_n0145dev4.131220015824/*");
-      ch->Add("/data/etp3/jwittkow/analysis_SUSYTools_03_04/file.root");
-//       ch->Add("/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/ttbar105200/*");
+      ch->Add("/data/etp3/jwittkow/analysis_SUSYTools_03_04/WZ_SusySel.root");
 
 
 

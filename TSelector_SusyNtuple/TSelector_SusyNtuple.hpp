@@ -123,6 +123,11 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_DeltaR_leptonType_ljOR_mu_EM;
     TH2F* h_DeltaR_leptonType_ljOR_el_EM;
     
+    TH1F* h_3rdleptonType_EE;
+    TH1F* h_3rdleptonType_MM;
+    TH1F* h_3rdleptonType_mu_EM;
+    TH1F* h_3rdleptonType_el_EM; 
+    
     TH2F* h_DeltaR_ptcone_ljOR_PR_EE; 
     TH2F* h_DeltaR_etcone_ljOR_PR_EE;
     TH2F* h_DeltaR_ptcone_ljOR_PR_MM;
@@ -134,26 +139,46 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH1F* h_Ntpr_ljOR_LF_EE;
     TH1F* h_Ntpr_ljOR_HF_MM;
     TH1F* h_Ntpr_ljOR_LF_MM;
+    TH1F* h_Ntpr_ljOR_HF_mu_EM;
+    TH1F* h_Ntpr_ljOR_LF_mu_EM;
+    TH1F* h_Ntpr_ljOR_HF_el_EM;
+    TH1F* h_Ntpr_ljOR_LF_el_EM;    
     
     TH1F* h_DeltaR_min_lostLepton_truthParticle_HF_EE;
     TH1F* h_DeltaR_min_lostLepton_truthParticle_LF_EE;
     TH1F* h_DeltaR_min_lostLepton_truthParticle_HF_MM;
     TH1F* h_DeltaR_min_lostLepton_truthParticle_LF_MM;
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_HF_mu_EM;
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_LF_mu_EM;
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_HF_el_EM;
+    TH1F* h_DeltaR_min_lostLepton_truthParticle_LF_el_EM;    
     
     TH1F* h_DeltaR_min_lostLepton_truthJet_HF_EE;
     TH1F* h_DeltaR_min_lostLepton_truthJet_LF_EE;
     TH1F* h_DeltaR_min_lostLepton_truthJet_HF_MM;
     TH1F* h_DeltaR_min_lostLepton_truthJet_LF_MM;
+    TH1F* h_DeltaR_min_lostLepton_truthJet_HF_mu_EM;
+    TH1F* h_DeltaR_min_lostLepton_truthJet_LF_mu_EM;
+    TH1F* h_DeltaR_min_lostLepton_truthJet_HF_el_EM;
+    TH1F* h_DeltaR_min_lostLepton_truthJet_LF_el_EM;    
     
     TH1F* h_DeltaR_min_lostLepton_preJet_HF_EE;
     TH1F* h_DeltaR_min_lostLepton_preJet_LF_EE;
     TH1F* h_DeltaR_min_lostLepton_preJet_HF_MM;
     TH1F* h_DeltaR_min_lostLepton_preJet_LF_MM;
+    TH1F* h_DeltaR_min_lostLepton_preJet_HF_mu_EM;
+    TH1F* h_DeltaR_min_lostLepton_preJet_LF_mu_EM;
+    TH1F* h_DeltaR_min_lostLepton_preJet_HF_el_EM;
+    TH1F* h_DeltaR_min_lostLepton_preJet_LF_el_EM;    
     
     TH2F* h_DeltaR_min_lostLepton_preJet_JVF_HF_EE;
     TH2F* h_DeltaR_min_lostLepton_preJet_JVF_LF_EE;
     TH2F* h_DeltaR_min_lostLepton_preJet_JVF_HF_MM;
     TH2F* h_DeltaR_min_lostLepton_preJet_JVF_LF_MM;
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_HF_mu_EM;
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_LF_mu_EM;
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_HF_el_EM;
+    TH2F* h_DeltaR_min_lostLepton_preJet_JVF_LF_el_EM;    
     
     TH2F* h_DeltaR_ptcone_ljOR_HF_EE; 
     TH2F* h_DeltaR_etcone_ljOR_HF_EE;
@@ -161,12 +186,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_DeltaR_ptcone_ljOR_HF_mu_EM;
     TH2F* h_DeltaR_ptcone_ljOR_HF_el_EM;
     TH2F* h_DeltaR_etcone_ljOR_HF_el_EM; 
-    
-    TH1F* h_mllCut_EE;
-    TH1F* h_mllCut_MM;
-    TH1F* h_mllCut_l0_EM;
-    TH1F* h_mllCut_l1_EM;
-    
+        
     TH1F* h_DeltaR_em_EM;
     
     TH2F* h_failedSignalCriteria_EE;

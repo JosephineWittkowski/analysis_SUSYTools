@@ -41,7 +41,7 @@ void TSelector_SusyNtuple::Begin(TTree * /*tree*/)
 void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
 {
 
-  makeNTuple = false;
+  makeNTuple = true;
   defineHistos();
 
 
@@ -61,7 +61,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
   m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
-  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/WZ_SusySel.root", "SusySel");
+  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/ZPlusJets_split4_SusySel.root", "SusySel");
   
 }
 
@@ -194,15 +194,15 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   float METrel = getMetRel(m_met, m_signalLeptons, m_signalJets2Lep, useForwardJets);
 
   float cutnumber;
-  if(m_signalLeptons.size()>1){
-    double weight= getEventWeight(LUMI_A_L, true);
-    unsigned int run(nt.evt()->run), event(nt.evt()->event);
-    LeptonVector anyLep(getAnyElOrMu(nt));
-    LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
-    const Lepton *l0 = m_signalLeptons[0];
-    const Lepton *l1 = m_signalLeptons[1];
-    if(makeNTuple) fillTupleMaker(weight, run, event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
-  }
+//   if(m_signalLeptons.size()>1){
+//     double weight= getEventWeight(LUMI_A_L, true);
+//     unsigned int run(nt.evt()->run), event(nt.evt()->event);
+//     LeptonVector anyLep(getAnyElOrMu(nt));
+//     LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
+//     const Lepton *l0 = m_signalLeptons[0];
+//     const Lepton *l1 = m_signalLeptons[1];
+//     if(makeNTuple) fillTupleMaker(weight, run, event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+//   }
   TauVector preTaus = getPreTaus(&nt, NtSys_NOM);
   h_NpreTaus->Fill(preTaus.size(), 14, weight_ALL_EE);
   
@@ -359,6 +359,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      cutnumber = 25.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
 		      if(nSignalJets >=1){
 			cutnumber = 26.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);	
+			LeptonVector anyLep(getAnyElOrMu(nt));
+			LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
+			const Lepton *l0 = m_signalLeptons[0];
+			const Lepton *l1 = m_signalLeptons[1];
+			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EE, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 			//============================================
 			if(nSignalJets ==1){
 			  cutnumber = 27.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
@@ -415,10 +420,10 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			}
 		      }
 		    }
-	    //=========================================
-	  }
-	}
-      }
+		  //=========================================
+		  }
+		}
+	      }
 	      //----------------------------------SR-OS-EE------------------------------------------
 	      //------------------------------------------------------------------------------------
 // 	      if((el0->q * el1->q)<0){
@@ -571,6 +576,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 25.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 			if(nSignalJets >=1){
 			  cutnumber = 26.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				  
+			  LeptonVector anyLep(getAnyElOrMu(nt));
+			  LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
+			  const Lepton *l0 = m_signalLeptons[0];
+			  const Lepton *l1 = m_signalLeptons[1];
+			  if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 			  //===============================================================================================================================		  
 			  if(nSignalJets ==1){
 			    cutnumber = 27.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
@@ -831,6 +841,11 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 		    if(nSignalJets >=1){
 		      cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+		      LeptonVector anyLep(getAnyElOrMu(nt));
+		      LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
+		      const Lepton *l0 = m_signalLeptons[0];
+		      const Lepton *l1 = m_signalLeptons[1];
+		      if(makeNTuple) fillTupleMaker(weight_ALL_SS_EM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 		      //------------------------------------------------------------------------------------
 		      if(nSignalJets ==1){
 			cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
@@ -871,7 +886,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 				  cutnumber = 43.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 				}
 				else{
-				  cout << " vetoed: EM " << nt.evt()->event << "mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << "mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << " mu_TLV.Pt()= " << mu_TLV.Pt() << " el_TLV.Pt()= " << el_TLV.Pt() << endl;
+// 				  cout << " vetoed: EM " << nt.evt()->event << "mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << "mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << " mu_TLV.Pt()= " << mu_TLV.Pt() << " el_TLV.Pt()= " << el_TLV.Pt() << endl;
 				}
 			      }
 			    }
@@ -1698,7 +1713,9 @@ void TSelector_SusyNtuple::SlaveTerminate()
 
     if(sample_identifier == 169471)outputfile="histos_ZN_WW_bgTable.root";
     if(sample_identifier == 126988)outputfile="histos_ZN_WWPlusJets_bgTable.root";
-    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_checkJetOR_neu.root";
+    if(sample_identifier == 157814)outputfile="histos_ZN_WZ_bgTable.root";
+//     if(sample_identifier == 129481)outputfile="histos_ZN_WZ_checkJetOR_neu2.root";
+    
     if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_bgTable.root";
     if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_bgTable.root";
     
@@ -1776,7 +1793,7 @@ void TSelector_SusyNtuple::SlaveTerminate()
 
    output_file->cd();
 
-   if(run_on_SusyNtuple) writeHistos();
+   writeHistos();
 
    output_file->Write() ;
    output_file->Close();

@@ -5,16 +5,16 @@
 // framework see $ROOTSYS/README/README.SELECTOR or the ROOT User Manual.
 
 // The following methods are defined in this file:
-//    Begin():        called every time a loop on the tree starts,
-//                    a convenient place to create your histograms.
-//    SlaveBegin():   called after Begin(), when on PROOF called only on the
-//                    slave servers.
-//    Process():      called for each event, in this function you decide what
-//                    to read and fill your histograms.
-//    SlaveTerminate: called at the end of the loop on the tree, when on PROOF
-//                    called only on the slave servers.
-//    Terminate():    called at the end of the loop on the tree,
-//                    a convenient place to draw/fit your histograms.
+// Begin(): called every time a loop on the tree starts,
+// a convenient place to create your histograms.
+// SlaveBegin(): called after Begin(), when on PROOF called only on the
+// slave servers.
+// Process(): called for each event, in this function you decide what
+// to read and fill your histograms.
+// SlaveTerminate: called at the end of the loop on the tree, when on PROOF
+// called only on the slave servers.
+// Terminate(): called at the end of the loop on the tree,
+// a convenient place to draw/fit your histograms.
 //
 // To use this file, try the following session on your Tree T:
 //
@@ -26,6 +26,7 @@
 #include "SusySel.h"
 #include <TH2.h>
 #include <TStyle.h>
+#include "histos_WH_analysis_SusySel.C"
 
 using namespace std;
 
@@ -42,10 +43,10 @@ void SusySel::Init(TTree *tree)
    // Set branch addresses and branch pointers
   if (!tree) return;
   fChain = tree;
-//    fChain->SetMakeClass(1);
-//    m_eventParameters = 0;
-//    fChain->SetBranchStatus("*",1);  //all branches inactivated
-//    fChain->SetBranchStatus("weight",1);  
+// fChain->SetMakeClass(1);
+// m_eventParameters = 0;
+// fChain->SetBranchStatus("*",1); //all branches inactivated
+// fChain->SetBranchStatus("weight",1);
 
   fChain->SetBranchAddress("pars", &m_eventParameters, &m_eventParameters_b);
   fChain->SetBranchAddress("l0", &m_l0, &m_l0_b);
@@ -61,7 +62,7 @@ void SusySel::Begin(TTree * /*tree*/)
    // The tree argument is deprecated (on PROOF 0 is passed).
 
    TString option = GetOption();
-//    m_eventParameters = new EventParameters();
+// m_eventParameters = new EventParameters();
 }
 
 void SusySel::SlaveBegin(TTree * /*tree*/)
@@ -71,6 +72,7 @@ void SusySel::SlaveBegin(TTree * /*tree*/)
    // The tree argument is deprecated (on PROOF 0 is passed).
 
    TString option = GetOption();
+   defineHistos();
 
 }
 
@@ -99,12 +101,16 @@ Bool_t SusySel::Process(Long64_t entry)
     m_l0_b->GetEntry(entry);
     m_l1_b->GetEntry(entry);
     m_met_b->GetEntry(entry);
-    cout << "m_eventParameters.weight= " << m_eventParameters->weight << endl;
-    cout << "m_eventParameters.eventNumber= " << m_eventParameters->eventNumber << endl;
-      
-    cout<<"l0  : "<<fourMom2str(m_l0 )<<endl;
-    cout<<"l1  : "<<fourMom2str(m_l1 )<<endl;
-    cout<<"met  : "<<fourMom2str(m_met )<<endl;
+//     cout << "m_eventParameters.weight= " << m_eventParameters->weight << endl;
+//     cout << "m_eventParameters.eventNumber= " << m_eventParameters->eventNumber << endl;
+//       
+//     cout<<"l0 : "<<fourMom2str(m_l0 )<<endl;
+//     cout<<"l1 : "<<fourMom2str(m_l1 )<<endl;
+//     cout<<"met : "<<fourMom2str(m_met )<<endl;
+    if(m_l0->isMu && m_l1->isMu){
+      cout << "MM event" << endl;
+      fillHistos_MM(1., m_eventParameters->weight);
+    }
 
 
    return kTRUE;
@@ -121,12 +127,36 @@ string SusySel::fourMom2str(const FourMom* fm)
     return oss.str();
 }
 
+void SusySel::fillHistos_EE(int cutnumber, float weight){
+  cutflow_EE->Fill(cutnumber,1.0);
+  cutflow_EE_ALL->Fill(cutnumber, weight);
+// return true;
+}
+/*--------------------------------------------------------------------------------*/
+void SusySel::fillHistos_MM(int cutnumber, float weight){
+  cutflow_MM->Fill(cutnumber,1.0);
+  cutflow_MM_ALL->Fill(cutnumber, weight);
+}
+/*--------------------------------------------------------------------------------*/
+void SusySel::fillHistos_EM(int cutnumber, float weight){
+  cutflow_EM->Fill(cutnumber,1.0);
+  cutflow_EM_ALL->Fill(cutnumber, weight);
+}
 
 void SusySel::SlaveTerminate()
 {
-   // The SlaveTerminate() function is called after all entries or objects
-   // have been processed. When running with PROOF SlaveTerminate() is called
-   // on each slave server.
+  TString outputfile="output_SusySel.root";
+    cout << " " << endl;
+    cout << "ouputfile: " << outputfile << endl;
+    cout << " " << endl;
+   TFile* output_file = new TFile(outputfile, "recreate") ;//update or recreate?
+
+   output_file->cd();
+
+   writeHistos();
+
+   output_file->Write() ;
+   output_file->Close();
 
 }
 
