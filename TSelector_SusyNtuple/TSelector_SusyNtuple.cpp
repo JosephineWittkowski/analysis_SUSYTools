@@ -61,7 +61,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
   m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
-  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/WH_177519_SusySel.root", "SusySel");
+  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/WH_177526_SusySel.root", "SusySel");
   
 }
 

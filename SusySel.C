@@ -1,27 +1,5 @@
 #define SusySel_cxx
-// The class definition in SusySel.h has been generated automatically
-// by the ROOT utility TTree::MakeSelector(). This class is derived
-// from the ROOT class TSelector. For more information on the TSelector
-// framework see $ROOTSYS/README/README.SELECTOR or the ROOT User Manual.
 
-// The following methods are defined in this file:
-// Begin(): called every time a loop on the tree starts,
-// a convenient place to create your histograms.
-// SlaveBegin(): called after Begin(), when on PROOF called only on the
-// slave servers.
-// Process(): called for each event, in this function you decide what
-// to read and fill your histograms.
-// SlaveTerminate: called at the end of the loop on the tree, when on PROOF
-// called only on the slave servers.
-// Terminate(): called at the end of the loop on the tree,
-// a convenient place to draw/fit your histograms.
-//
-// To use this file, try the following session on your Tree T:
-//
-// Root > T->Process("SusySel.C")
-// Root > T->Process("SusySel.C","some options")
-// Root > T->Process("SusySel.C+")
-//
 
 #include "SusySel.h"
 #include <TH2.h>
@@ -32,13 +10,6 @@ using namespace std;
 
 void SusySel::Init(TTree *tree)
 {
-   // The Init() function is called when the selector needs to initialize
-   // a new tree or chain. Typically here the branch addresses and branch
-   // pointers of the tree will be set.
-   // It is normally not necessary to make changes to the generated
-   // code, but the routine can be extended by the user if needed.
-   // Init() will be called many times when running on PROOF
-   // (once per file to be processed).
 
    // Set branch addresses and branch pointers
   if (!tree) return;
@@ -47,7 +18,7 @@ void SusySel::Init(TTree *tree)
 // m_eventParameters = 0;
 // fChain->SetBranchStatus("*",1); //all branches inactivated
 // fChain->SetBranchStatus("weight",1);
-
+  m_jets_b = 0;
   fChain->SetBranchAddress("pars", &m_eventParameters, &m_eventParameters_b);
   fChain->SetBranchAddress("l0", &m_l0, &m_l0_b);
   fChain->SetBranchAddress("l1", &m_l1, &m_l1_b);
@@ -58,20 +29,14 @@ void SusySel::Init(TTree *tree)
 
 void SusySel::Begin(TTree * /*tree*/)
 {
-   // The Begin() function is called at the start of the query.
-   // When running with PROOF Begin() is only called on the client.
-   // The tree argument is deprecated (on PROOF 0 is passed).
 
+//   gROOT->ProcessLine("#include <vector>");
    TString option = GetOption();
 // m_eventParameters = new EventParameters();
 }
 
 void SusySel::SlaveBegin(TTree * /*tree*/)
 {
-   // The SlaveBegin() function is called after the Begin() function.
-   // When running with PROOF SlaveBegin() is called on each slave server.
-   // The tree argument is deprecated (on PROOF 0 is passed).
-
    TString option = GetOption();
    defineHistos();
 
@@ -79,24 +44,7 @@ void SusySel::SlaveBegin(TTree * /*tree*/)
 
 Bool_t SusySel::Process(Long64_t entry)
 {
-   // The Process() function is called for each entry in the tree (or possibly
-   // keyed object in the case of PROOF) to be processed. The entry argument
-   // specifies which entry in the currently loaded tree is to be processed.
-   // It can be passed to either SusySel::GetEntry() or TBranch::GetEntry()
-   // to read either all or the required parts of the data. When processing
-   // keyed objects with PROOF, the object is already loaded and is available
-   // via the fObject pointer.
-   //
-   // This function should contain the "body" of the analysis. It can contain
-   // simple or elaborate selection criteria, run algorithms on the data
-   // of the event and typically fill histograms.
-   //
-   // The processing can be stopped by calling Abort().
-   //
-   // Use fStatus to set the return value of TTree::Process().
-   //
-   // The return value is currently not used.
-  
+
     GetEntry(entry);
     m_eventParameters_b->GetEntry(entry);
     m_l0_b->GetEntry(entry);
@@ -113,7 +61,48 @@ Bool_t SusySel::Process(Long64_t entry)
     
     TLorentzVector met_TLV;
     met_TLV.SetPxPyPzE(m_met->px, m_met->py, m_met->pz, m_met->E);
+    if(entry== 0 || entry==1){
+      cout << "event= " << m_eventParameters->eventNumber << endl;
+      
+    if(entry== 0  && (m_eventParameters->eventNumber == 1149513 || m_eventParameters->eventNumber == 3276687)) sample_identifier = 30000; //fake  
+    if(entry== 0  && m_eventParameters->eventNumber == 25009) sample_identifier = 169471; //WW
+    if(entry== 0  && m_eventParameters->eventNumber == 111) sample_identifier = 126988;//WWPlusJets
+    if(entry== 0  && m_eventParameters->eventNumber == 15004) sample_identifier = 157814; //WZ    
+    if(entry== 0  && m_eventParameters->eventNumber == 5) sample_identifier = 116600; //ZZ
+    if(entry== 0  && m_eventParameters->eventNumber == 5012) sample_identifier = 108346; //ttbar    
+    if(entry== 0  && m_eventParameters->eventNumber == 35015) sample_identifier = 110805; //ZPlusJets    
+    if(entry== 0  && m_eventParameters->eventNumber == 10017) sample_identifier = 160155; //Higgs
+
+    if(entry== 0  && m_eventParameters->eventNumber == 10006) sample_identifier = 177501; 
+    if(entry== 0  && m_eventParameters->eventNumber == 5007) sample_identifier = 177502; 
+    if(entry== 0  && m_eventParameters->eventNumber == 25013) sample_identifier = 177503; 
+    if(entry== 0  && m_eventParameters->eventNumber == 10012) sample_identifier = 177504; 
+    if(entry== 0  && m_eventParameters->eventNumber == 2) sample_identifier = 177505; 
+    if(entry== 0  && m_eventParameters->eventNumber == 40006) sample_identifier = 177506; 
+    if(entry== 0  && m_eventParameters->eventNumber == 10010) sample_identifier = 177507; 
+    if(entry== 0  && m_eventParameters->eventNumber == 40002) sample_identifier = 177508; 
+    if(entry== 0  && m_eventParameters->eventNumber == 5005) sample_identifier = 177509; 
+    if(entry== 0  && m_eventParameters->eventNumber == 15015) sample_identifier = 177510; 
+    if(entry== 0  && m_eventParameters->eventNumber == 10001) sample_identifier = 177511; 
+    if(entry== 0  && m_eventParameters->eventNumber == 25004) sample_identifier = 177512; 
+    if(entry== 0  && m_eventParameters->eventNumber == 9) sample_identifier = 177513; 
+    if(entry== 0  && m_eventParameters->eventNumber == 20001) sample_identifier = 177514; 
+    if(entry== 0  && m_eventParameters->eventNumber == 45017) sample_identifier = 177515; 
+    if(entry== 1  && m_eventParameters->eventNumber == 40014) sample_identifier = 177516; //!40014
+    if(entry== 0  && m_eventParameters->eventNumber == 15001) sample_identifier = 177517; 
+    if(entry== 1  && m_eventParameters->eventNumber == 20002) sample_identifier = 177518; //!20002
+    if(entry== 0  && m_eventParameters->eventNumber == 35016) sample_identifier = 177519; 
+    if(entry== 0  && m_eventParameters->eventNumber == 45001) sample_identifier = 177520; 
+    if(entry== 1  && m_eventParameters->eventNumber == 45004) sample_identifier = 177521; //!45004
+    if(entry== 0  && m_eventParameters->eventNumber == 35001) sample_identifier = 177522; 
+    if(entry== 0  && m_eventParameters->eventNumber == 9) sample_identifier = 177523; 
+    if(entry== 0  && m_eventParameters->eventNumber == 6) sample_identifier = 177524; 
+    if(entry== 0  && m_eventParameters->eventNumber == 5010) sample_identifier = 177525; 
+    if(entry== 0  && m_eventParameters->eventNumber == 25003) sample_identifier = 177526; 
+    if(entry== 0  && m_eventParameters->eventNumber == 20018) sample_identifier = 177527; 
     
+    
+    }
     if(m_l0->isMu && m_l1->isMu){
       //   FourMom jet0 =     (*m_jets).at(0);
 //       cout << "jet0->px= " << jet0.px << endl;
@@ -130,10 +119,9 @@ Bool_t SusySel::Process(Long64_t entry)
 	if(mu1_TLV.Pt()>20.){
 	  cutnumber_MM = 2.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
 // 	  float HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, m_jets);
-	  cout << "HT_MM= " << HT_MM << endl;
-// 	  if(HT_MM> 170.){
-// 	    cutnumber_MM = 3.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);	    
-// 	  }
+	  if(HT_MM> 170.){
+	    cutnumber_MM = 3.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);	    
+	  }
 	}
       }
 //        	l0_pT>30
@@ -143,6 +131,9 @@ Bool_t SusySel::Process(Long64_t entry)
 //  Min(mT(l0), mT(l1)) >80
 //  	mlj < 120
     }
+//     if(m_l0->isEl && m_l1->isEl){
+//       cout << "EE" << endl;
+//     }
 
    return kTRUE;
 }
@@ -184,7 +175,47 @@ float SusySel::calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, 
 
 void SusySel::SlaveTerminate()
 {
-  TString outputfile="output_SusySel.root";
+  cout << "sample_identifier= " << sample_identifier << endl;
+  TString outputfile;
+  if(sample_identifier == 30000)  outputfile = "output_fake_SusySel.root"; //fake  
+  if(sample_identifier == 169471)  outputfile = "output_WW_SusySel.root"; //WW
+  if(sample_identifier == 126988)  outputfile = "output_WWPlusJets_SusySel.root";//WWPlusJets
+  if(sample_identifier == 157814)  outputfile = "output_WZ_SusySel.root"; //WZ    
+  if(sample_identifier == 116600)  outputfile = "output_ZZ_SusySel.root"; //ZZ
+  if(sample_identifier == 108346)  outputfile = "output_ttbar_SusySel.root"; //ttbar    
+  if(sample_identifier == 110805)  outputfile = "output_ZPlusJets_SusySel.root"; //ZPlusJets    
+  if(sample_identifier == 160155)  outputfile = "output_Higgs_SusySel.root"; //Higgs
+
+  if(sample_identifier == 177501)  outputfile = "output_WH_177501_SusySel.root";  
+  if(sample_identifier == 177502)  outputfile = "output_WH_177502_SusySel.root";  
+  if(sample_identifier == 177503)  outputfile = "output_WH_177503_SusySel.root";  
+  if(sample_identifier == 177504)  outputfile = "output_WH_177504_SusySel.root";  
+  if(sample_identifier == 177505)  outputfile = "output_WH_177505_SusySel.root";  
+  if(sample_identifier == 177506)  outputfile = "output_WH_177506_SusySel.root";  
+  if(sample_identifier == 177507)  outputfile = "output_WH_177507_SusySel.root";  
+  if(sample_identifier == 177508)  outputfile = "output_WH_177508_SusySel.root";  
+  if(sample_identifier == 177509)  outputfile = "output_WH_177509_SusySel.root";  
+  if(sample_identifier == 177510)  outputfile = "output_WH_177510_SusySel.root";  
+  if(sample_identifier == 177511)  outputfile = "output_WH_177511_SusySel.root";  
+  if(sample_identifier == 177512)  outputfile = "output_WH_177512_SusySel.root";  
+  if(sample_identifier == 177513)  outputfile = "output_WH_177513_SusySel.root";  
+  if(sample_identifier == 177514)  outputfile = "output_WH_177514_SusySel.root";  
+  if(sample_identifier == 177515)  outputfile = "output_WH_177515_SusySel.root";  
+  if(sample_identifier == 177516)  outputfile = "output_WH_177516_SusySel.root";  //!40014
+  if(sample_identifier == 177517)  outputfile = "output_WH_177517_SusySel.root";  
+  if(sample_identifier == 177518)  outputfile = "output_WH_177518_SusySel.root";  //!20002
+  if(sample_identifier == 177519)  outputfile = "output_WH_177519_SusySel.root";  
+  if(sample_identifier == 177520)  outputfile = "output_WH_177520_SusySel.root";  
+  if(sample_identifier == 177521)  outputfile = "output_WH_177521_SusySel.root";  //!45004
+  if(sample_identifier == 177522)  outputfile = "output_WH_177522_SusySel.root";  
+  if(sample_identifier == 177523)  outputfile = "output_WH_177523_SusySel.root";  
+  if(sample_identifier == 177524)  outputfile = "output_WH_177524_SusySel.root";  
+  if(sample_identifier == 177525)  outputfile = "output_WH_177525_SusySel.root";  
+  if(sample_identifier == 177526)  outputfile = "output_WH_177526_SusySel.root";  
+  if(sample_identifier == 177527)  outputfile = "output_WH_177527_SusySel.root";  
+
+  
+  
     cout << " " << endl;
     cout << "ouputfile: " << outputfile << endl;
     cout << " " << endl;
@@ -202,8 +233,6 @@ void SusySel::SlaveTerminate()
 void SusySel::Terminate()
 {
   cout << "finished" << endl;
-   // The Terminate() function is the last function to be called during
-   // a query. It always runs on the client, it can be used to present
-   // the results graphically or save the results to file.
+
 
 }

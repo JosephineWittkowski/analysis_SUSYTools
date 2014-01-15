@@ -27,6 +27,7 @@
 #include "TH1.h"
 #include "TH2.h"
 #include "TH3.h"
+
 // #include "mmc/mmc.cpp"
 #include "MultiLep/CutflowTools.h"
 
@@ -47,6 +48,7 @@ class chargeFlip ;
 #endif
 
 #include <fstream>
+// #include <vector>
 
 using Susy::Lepton;
   using Susy::Jet;
@@ -281,6 +283,8 @@ public :
    
 
    ClassDef(SusySel,0);
+   
+   int sample_identifier;
    
    //#####################################
     

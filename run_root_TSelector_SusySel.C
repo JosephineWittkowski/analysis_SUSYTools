@@ -53,7 +53,7 @@ void run_root_TSelector_SusySel(TString InputPath) {
 
       gSystem->Setenv("ROOTCOREDIR", "/data/etp3/jwittkow/analysis_SUSYTools_03_04/RootCore");
       gSystem->SetIncludePath("-I$ROOTCOREDIR/include/");
-
+//       gROOT->ProcessLine("#include <vector>");
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+"); 
 
       TString selectorName = "SusySel"; // !!! enter the name of your Selector (without _C.so)
