@@ -123,12 +123,13 @@ Bool_t SusySel::Process(Long64_t entry)
       TLorentzVector mu0_TLV, mu1_TLV;
       mu0_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
       mu1_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
-      calc_MM_variables(mu0_TLV, mu1_TLV);
+      calc_MM_variables(mu0_TLV, mu1_TLV, met_TLV, m_jets);
+      
       if(mu0_TLV.Pt()>30.){
 	cutnumber_MM = 1.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
 	if(mu1_TLV.Pt()>20.){
 	  cutnumber_MM = 2.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
-	  float HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, m_jets);
+// 	  float HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, m_jets);
 	  cout << "HT_MM= " << HT_MM << endl;
 // 	  if(HT_MM> 170.){
 // 	    cutnumber_MM = 3.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);	    
@@ -171,10 +172,8 @@ float SusySel::calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, 
       
   for(uint i=0; i<(*signalJets).size(); i++){
     FourMom signalJet =     (*signalJets).at(0);
-//       cout << "jet0->px= " << jet0.px << endl;
     TLorentzVector jet_TLV;
     jet_TLV.SetPxPyPzE(m_met->px, m_met->py, m_met->pz, m_met->E);
-//     cout << "jet_TLV.Pt()= " << jet_TLV.Pt() << endl;
     if(jet_TLV.Pt() > 20) HT += jet_TLV.Pt();
   }
   

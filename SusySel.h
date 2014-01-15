@@ -98,8 +98,143 @@ public :
     
     TH2F* h_pTl0_1j_MM;
     TH2F* h_pTl0_2j_MM;
+
     TH2F* h_pTl1_1j_MM;
     TH2F* h_pTl1_2j_MM;
+
+    TH2F* h_DeltaRLeptons_1j_MM;
+    TH2F* h_DeltaRLeptons_2j_MM;
+      
+    TH2F* h_pTj0_1j_MM;
+    TH2F* h_pTj0_2j_MM;
+      
+
+    TH2F* h_pTj1_1j_MM;
+    TH2F* h_pTj1_2j_MM;
+      
+
+    TH2F* h_mll_1j_MM;
+    TH2F* h_mll_2j_MM;
+
+
+    TH2F* h_METrel_1j_MM;
+    TH2F* h_METrel_2j_MM;
+      
+    TH2F* h_MET_1j_MM;
+    TH2F* h_MET_2j_MM;
+      
+    TH2F* h_HT_1j_MM;
+    TH2F* h_HT_2j_MM;
+      
+    TH2F* h_mWWt_1j_MM;
+    TH2F* h_mWWt_2j_MM;
+
+    TH2F* h_mTlmin_1j_MM;
+    TH2F* h_mTlmin_2j_MM;
+      
+    TH2F* h_mTlmax_1j_MM;
+    TH2F* h_mTlmax_2j_MM;
+      
+    TH2F* h_meff_1j_MM;
+    TH2F* h_meff_2j_MM;
+      
+    TH2F* h_mT2_1j_MM;
+    TH2F* h_mT2_2j_MM;
+      
+
+    TH2F* h_mT2J_1j_MM;
+    TH2F* h_mT2J_2j_MM;
+      
+
+    TH2F* h_mjj_1j_MM;
+    TH2F* h_mjj_2j_MM;
+	
+    TH2F* h_DeltaPhiMETll_1j_MM;
+    TH2F* h_DeltaPhiMETll_2j_MM;
+	
+    TH2F* h_DeltaPhill_1j_MM;
+    TH2F* h_DeltaPhill_2j_MM;
+      
+    TH2F* h_NBJets_1j_MM;
+    TH2F* h_NBJets_2j_MM;
+      
+    TH2F* h_NCJets_1j_MM;
+    TH2F* h_NCJets_2j_MM;
+      
+    TH2F* h_NFJets_1j_MM;
+    TH2F* h_NFJets_2j_MM;
+      
+    TH2F* h_DeltaPhijj_1j_MM;
+    TH2F* h_DeltaPhijj_2j_MM;
+      
+    TH2F* h_pTjj_1j_MM;
+    TH2F* h_pTjj_2j_MM;
+      
+    TH2F* h_pTll_1j_MM;
+    TH2F* h_pTll_2j_MM;
+      
+    TH2F* h_DeltaPhiMETl0_1j_MM;
+    TH2F* h_DeltaPhiMETl0_2j_MM;
+      
+    TH2F* h_DeltaPhiMETl1_1j_MM;
+    TH2F* h_DeltaPhiMETl1_2j_MM;
+	
+    TH2F* h_DeltaPhiMETj0_1j_MM;
+    TH2F* h_DeltaPhiMETj0_2j_MM;
+      
+    TH2F* h_DeltaPhiMETj1_1j_MM;
+    TH2F* h_DeltaPhiMETj1_2j_MM;
+      
+    TH2F* h_DeltaPhiMETjj_1j_MM;
+    TH2F* h_DeltaPhiMETjj_2j_MM;
+	
+    TH2F* h_DeltaRjj_1j_MM;
+    TH2F* h_DeltaRjj_2j_MM;
+      
+    TH2F* h_etal0_1j_MM;
+    TH2F* h_etal0_2j_MM;
+	
+    TH2F* h_etal1_1j_MM;
+    TH2F* h_etal1_2j_MM;
+	
+    TH2F* h_etaj0_1j_MM;
+    TH2F* h_etaj0_2j_MM;
+	
+    TH2F* h_etaj1_1j_MM;
+    TH2F* h_etaj1_2j_MM;
+      
+    TH2F* h_mTl0MET_1j_MM;
+    TH2F* h_mTl0MET_2j_MM;
+      
+    TH2F* h_mTl1MET_1j_MM;
+    TH2F* h_mTl1MET_2j_MM;
+	  
+    TH2F* h_DeltaPhilljj_1j_MM;
+    TH2F* h_DeltaPhilljj_2j_MM;
+	
+    TH2F* h_DeltaPhil0jj_1j_MM;
+    TH2F* h_DeltaPhil0jj_2j_MM;
+      
+    TH2F* h_DeltaPhil1jj_1j_MM;
+    TH2F* h_DeltaPhil1jj_2j_MM;
+      
+    TH2F* h_DeltaRlljj_1j_MM;
+    TH2F* h_DeltaRlljj_2j_MM;
+	
+    TH2F* h_DeltaEtajj_1j_MM;
+    TH2F* h_DeltaEtajj_2j_MM;
+      
+    TH2F* h_DeltaEtall_1j_MM;
+    TH2F* h_DeltaEtall_2j_MM;
+      
+    TH2F* h_mTll_1j_MM;
+    TH2F* h_mTll_2j_MM;
+      
+    TH2F* h_mMETll_1j_MM;
+    TH2F* h_mMETll_2j_MM;
+      
+    TH2F* h_DeltaYjj_1j_MM;
+    TH2F* h_DeltaYjj_2j_MM;
     
    TTree *fChain; //!pointer to the analyzed TTree or TChain
    
@@ -140,7 +275,7 @@ public :
    void fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM);
    void fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM);*/
    
-   void calc_MM_variables(TLorentzVector muon0_TLV, TLorentzVector muon1_TLV);
+   void calc_MM_variables(TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, vector<FourMom> *signalJets);
    
    float calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, vector<FourMom> *signalJets);
    
