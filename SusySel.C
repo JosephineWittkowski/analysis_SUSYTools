@@ -64,6 +64,8 @@ Bool_t SusySel::Process(Long64_t entry)
     if(entry== 0 || entry==1){
       cout << "event= " << m_eventParameters->eventNumber << endl;
       
+      
+    if(entry== 0  && m_eventParameters->eventNumber == 83) sample_identifier = 126893; //cutflow comparison  
     if(entry== 0  && (m_eventParameters->eventNumber == 1149513 || m_eventParameters->eventNumber == 3276687)) sample_identifier = 30000; //fake  
     if(entry== 0  && m_eventParameters->eventNumber == 25009) sample_identifier = 169471; //WW
     if(entry== 0  && m_eventParameters->eventNumber == 111) sample_identifier = 126988;//WWPlusJets
@@ -115,12 +117,12 @@ Bool_t SusySel::Process(Long64_t entry)
       calc_MM_variables(mu0_TLV, mu1_TLV, met_TLV, m_jets);
       
       if(mu0_TLV.Pt()>30.){
-	cutnumber_MM = 1.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
+	cutnumber_MM = 2.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
 	if(mu1_TLV.Pt()>20.){
-	  cutnumber_MM = 2.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
+	  cutnumber_MM = 3.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
 // 	  float HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, m_jets);
 	  if(HT_MM> 170.){
-	    cutnumber_MM = 3.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);	    
+	    cutnumber_MM = 4.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);	    
 	  }
 	}
       }
@@ -131,9 +133,14 @@ Bool_t SusySel::Process(Long64_t entry)
 //  Min(mT(l0), mT(l1)) >80
 //  	mlj < 120
     }
-//     if(m_l0->isEl && m_l1->isEl){
-//       cout << "EE" << endl;
-//     }
+    if(m_l0->isEl && m_l1->isEl){
+      float cutnumber_EE;
+      cutnumber_EE = 1.; fillHistos_EE(cutnumber_EE, m_eventParameters->weight);
+    }
+    if((m_l0->isEl && m_l1->isMu) || (m_l0->isMu && m_l1->isEl)){
+      float cutnumber_EM;
+      cutnumber_EM = 1.; fillHistos_EM(cutnumber_EM, m_eventParameters->weight);
+    }
 
    return kTRUE;
 }
@@ -177,6 +184,8 @@ void SusySel::SlaveTerminate()
 {
   cout << "sample_identifier= " << sample_identifier << endl;
   TString outputfile;
+  
+  if(sample_identifier == 126893)  outputfile = "output_126893_SusySel.root"; //cutflow  
   if(sample_identifier == 30000)  outputfile = "output_fake_SusySel.root"; //fake  
   if(sample_identifier == 169471)  outputfile = "output_WW_SusySel.root"; //WW
   if(sample_identifier == 126988)  outputfile = "output_WWPlusJets_SusySel.root";//WWPlusJets
