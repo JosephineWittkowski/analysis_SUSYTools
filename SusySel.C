@@ -52,6 +52,7 @@ void SusySel::Init(TTree *tree)
   fChain->SetBranchAddress("l0", &m_l0, &m_l0_b);
   fChain->SetBranchAddress("l1", &m_l1, &m_l1_b);
   fChain->SetBranchAddress("met", &m_met, &m_met_b);
+  fChain->SetBranchAddress("jets", &m_jets, &m_jets_b);
 
 }
 
@@ -101,17 +102,46 @@ Bool_t SusySel::Process(Long64_t entry)
     m_l0_b->GetEntry(entry);
     m_l1_b->GetEntry(entry);
     m_met_b->GetEntry(entry);
-//     cout << "m_eventParameters.weight= " << m_eventParameters->weight << endl;
-//     cout << "m_eventParameters.eventNumber= " << m_eventParameters->eventNumber << endl;
-//       
-//     cout<<"l0 : "<<fourMom2str(m_l0 )<<endl;
-//     cout<<"l1 : "<<fourMom2str(m_l1 )<<endl;
-//     cout<<"met : "<<fourMom2str(m_met )<<endl;
+    m_jets_b->GetEntry(entry);
+// cout << "m_eventParameters.weight= " << m_eventParameters->weight << endl;
+// cout << "m_eventParameters.eventNumber= " << m_eventParameters->eventNumber << endl;
+//
+// cout<<"l0 : "<<fourMom2str(m_l0 )<<endl;
+// cout<<"l1 : "<<fourMom2str(m_l1 )<<endl;
+// cout<<"met : "<<fourMom2str(m_met )<<endl;
+    
+    
+    TLorentzVector met_TLV;
+    met_TLV.SetPxPyPzE(m_met->px, m_met->py, m_met->pz, m_met->E);
+    
     if(m_l0->isMu && m_l1->isMu){
-      cout << "MM event" << endl;
-      fillHistos_MM(1., m_eventParameters->weight);
+      //   FourMom jet0 =     (*m_jets).at(0);
+//       cout << "jet0->px= " << jet0.px << endl;
+      float cutnumber_MM;
+      cutnumber_MM = 1.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
+      
+      TLorentzVector mu0_TLV, mu1_TLV;
+      mu0_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
+      mu1_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
+      calc_MM_variables(mu0_TLV, mu1_TLV);
+      if(mu0_TLV.Pt()>30.){
+	cutnumber_MM = 1.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
+	if(mu1_TLV.Pt()>20.){
+	  cutnumber_MM = 2.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);
+	  float HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, m_jets);
+	  cout << "HT_MM= " << HT_MM << endl;
+// 	  if(HT_MM> 170.){
+// 	    cutnumber_MM = 3.; fillHistos_MM(cutnumber_MM, m_eventParameters->weight);	    
+// 	  }
+	}
+      }
+//        	l0_pT>30
+//  l1_pT>20
+//  HT>170
+//  metRel>40
+//  Min(mT(l0), mT(l1)) >80
+//  	mlj < 120
     }
-
 
    return kTRUE;
 }
@@ -127,20 +157,30 @@ string SusySel::fourMom2str(const FourMom* fm)
     return oss.str();
 }
 
-void SusySel::fillHistos_EE(int cutnumber, float weight){
-  cutflow_EE->Fill(cutnumber,1.0);
-  cutflow_EE_ALL->Fill(cutnumber, weight);
-// return true;
-}
+
 /*--------------------------------------------------------------------------------*/
-void SusySel::fillHistos_MM(int cutnumber, float weight){
-  cutflow_MM->Fill(cutnumber,1.0);
-  cutflow_MM_ALL->Fill(cutnumber, weight);
-}
-/*--------------------------------------------------------------------------------*/
-void SusySel::fillHistos_EM(int cutnumber, float weight){
-  cutflow_EM->Fill(cutnumber,1.0);
-  cutflow_EM_ALL->Fill(cutnumber, weight);
+float SusySel::calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, vector<FourMom> *signalJets){
+  //Anyes: https://svnweb.cern.ch/trac/atlasinst/browser/Institutes/UCIrvine/ataffard/SusyWeakProdAna/trunk/Root/ToyNt.cxx#L404
+  
+  float HT = 0;
+  HT += l1.Pt();
+  HT += l2.Pt();
+  
+//   FourMom jet0 =     (*m_jets).at(0);
+//       cout << "jet0->px= " << jet0.px << endl;
+      
+  for(uint i=0; i<(*signalJets).size(); i++){
+    FourMom signalJet =     (*signalJets).at(0);
+//       cout << "jet0->px= " << jet0.px << endl;
+    TLorentzVector jet_TLV;
+    jet_TLV.SetPxPyPzE(m_met->px, m_met->py, m_met->pz, m_met->E);
+//     cout << "jet_TLV.Pt()= " << jet_TLV.Pt() << endl;
+    if(jet_TLV.Pt() > 20) HT += jet_TLV.Pt();
+  }
+  
+  HT += met.E();
+  return HT;
+
 }
 
 void SusySel::SlaveTerminate()

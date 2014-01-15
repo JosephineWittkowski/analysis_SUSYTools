@@ -61,7 +61,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
   m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
-  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/ZPlusJets_split4_SusySel.root", "SusySel");
+  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/WH_177501_SusySel.root", "SusySel");
   
 }
 
@@ -361,9 +361,16 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 26.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);	
 			LeptonVector anyLep(getAnyElOrMu(nt));
 			LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
+			if(nt.evt()->isMC){
 			const Lepton *l0 = m_signalLeptons[0];
 			const Lepton *l1 = m_signalLeptons[1];
-			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EE, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			}
+			if(calcFakeContribution){
+			  const Lepton *l0 = m_baseLeptons[0];
+			  const Lepton *l1 = m_baseLeptons[1];
+			  if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			}
 			//============================================
 			if(nSignalJets ==1){
 			  cutnumber = 27.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
@@ -578,9 +585,16 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			  cutnumber = 26.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				  
 			  LeptonVector anyLep(getAnyElOrMu(nt));
 			  LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
-			  const Lepton *l0 = m_signalLeptons[0];
-			  const Lepton *l1 = m_signalLeptons[1];
-			  if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			  if(nt.evt()->isMC){
+			    const Lepton *l0 = m_signalLeptons[0];
+			    const Lepton *l1 = m_signalLeptons[1];
+			    if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			  }
+			  if(calcFakeContribution){
+			    const Lepton *l0 = m_baseLeptons[0];
+			    const Lepton *l1 = m_baseLeptons[1];
+			    if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			  }
 			  //===============================================================================================================================		  
 			  if(nSignalJets ==1){
 			    cutnumber = 27.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
@@ -843,9 +857,16 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 		      LeptonVector anyLep(getAnyElOrMu(nt));
 		      LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
-		      const Lepton *l0 = m_signalLeptons[0];
-		      const Lepton *l1 = m_signalLeptons[1];
-		      if(makeNTuple) fillTupleMaker(weight_ALL_SS_EM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+		      if(nt.evt()->isMC){
+			const Lepton *l0 = m_signalLeptons[0];
+			const Lepton *l1 = m_signalLeptons[1];
+			if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+		      }
+		      if(calcFakeContribution){
+			const Lepton *l0 = m_baseLeptons[0];
+			const Lepton *l1 = m_baseLeptons[1];
+			if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+		      }
 		      //------------------------------------------------------------------------------------
 		      if(nSignalJets ==1){
 			cutnumber = 27.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);

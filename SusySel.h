@@ -96,12 +96,19 @@ public :
     TH1F* cutflow_ME;
     TH1F* cutflow_ME_ALL;
     
+    TH2F* h_pTl0_1j_MM;
+    TH2F* h_pTl0_2j_MM;
+    TH2F* h_pTl1_1j_MM;
+    TH2F* h_pTl1_2j_MM;
+    
    TTree *fChain; //!pointer to the analyzed TTree or TChain
    
     EventParameters* m_eventParameters;
     FourMom *m_l0, *m_l1, *m_met;
+    vector<FourMom> *m_jets;
     TBranch* m_eventParameters_b;
-    TBranch *m_l0_b, *m_l1_b, *m_met_b;
+    TBranch *m_l0_b, *m_l1_b, *m_met_b, *m_jets_b;
+    
 
 
    SusySel(TTree * /*tree*/ =0) : fChain(0) { }
@@ -128,14 +135,49 @@ public :
    void fillHistos_EM(int cutnumber, float weight);
    
    bool writeHistos();
-   
+/*   
    void fillHistos_EE_SRSS1(float cut_EE, float weight_ALL_EE);
    void fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM);
-   void fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM);
+   void fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM);*/
    
+   void calc_MM_variables(TLorentzVector muon0_TLV, TLorentzVector muon1_TLV);
+   
+   float calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, vector<FourMom> *signalJets);
    
 
    ClassDef(SusySel,0);
+   
+   //#####################################
+    
+    float pTl0_MM;
+    float pTl1_MM;
+    float etal0_MM;
+    float etal1_MM;
+    float DeltaR_MM;
+    float pTll_MM;
+    float Mll_MM;
+    float METrel_MM;
+    float MET_MM;
+    float HT_MM;
+    float mTWW_MM;
+    float mT_MM;
+    float mTmin_MM;
+    float mTmax_MM;
+    float mTl0MET_MM;
+    float mTl1MET_MM;
+    float mMET_MM;
+    float DeltaPhi_MM;
+    float DeltaPhiMETl0_MM;
+    float DeltaPhiMETl1_MM;
+    float DeltaPhiMETll_MM;
+    float mT2_MM;  
+    float mT2J_MM;       
+    float DeltaPhilljj_MM;
+    float DeltaPhil0jj_MM;
+    float DeltaPhil1jj_MM;
+    float DeltaRlljj_MM;
+    float Mljj_MM;
+    float DeltaEtall_MM;
 };
 
 #endif
