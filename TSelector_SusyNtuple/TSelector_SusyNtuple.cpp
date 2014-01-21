@@ -61,7 +61,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
   m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/forDavide_Sep11_2013.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
-  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/Muons_1_skimslim_SusySel.root", "SusySel");
+  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusySel_Muons_1.root", "SusySel");
   
 }
 
@@ -284,7 +284,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	TVector2 met_SS_TVector2;
 	met_SS_TLV = m_met->lv();
 	met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
-
+// 	if(nt.evt()->event == 2150756) cout << el0_SS_TLV.Pt() << " " << el1_SS_TLV.Pt() << " EE " << nt.evt()->event << "el0->q= " << el0->q << " el1->q= " << el1->q << endl;
 
 	//if SS event, get ChargeFlipWeight and modify electron and met TLV:
 	int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
@@ -359,22 +359,23 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		      cutnumber = 25.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
 		      if(nSignalJets >=1){
 			cutnumber = 26.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);	
-			LeptonVector anyLep(getAnyElOrMu(nt));
+			LeptonVector anyLep(getAnyElOrMu(nt, el0_SS, el1_SS));
 			LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
 			if(nt.evt()->isMC){
 			const Lepton *l0 = m_signalLeptons[0];
 			const Lepton *l1 = m_signalLeptons[1];
-			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EE, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EE, nt.evt()->run, nt.evt()->event, nt.evt()->isMC, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 			}
 			if(calcFakeContribution){
 			  const Lepton *l0 = m_baseLeptons[0];
 			  const Lepton *l1 = m_baseLeptons[1];
-			  if(makeNTuple) fillTupleMaker(weight_ALL_SS_EE, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			  if(makeNTuple) fillTupleMaker(weight_ALL_SS_EE, nt.evt()->run, nt.evt()->event, nt.evt()->isMC, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 			}
 			//============================================
 			if(nSignalJets ==1){
 			  cutnumber = 27.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
 			  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+			    
 
 			    cutnumber = 28.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
 			    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
@@ -537,17 +538,17 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			cutnumber = 25.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);
 			if(nSignalJets >=1){
 			  cutnumber = 26.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				  
-			  LeptonVector anyLep(getAnyElOrMu(nt));
+			  LeptonVector anyLep(getAnyElOrMu(nt, mu0, mu1));
 			  LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
 			  if(nt.evt()->isMC){
 			    const Lepton *l0 = m_signalLeptons[0];
 			    const Lepton *l1 = m_signalLeptons[1];
-			    if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			    if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, nt.evt()->isMC, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 			  }
 			  if(calcFakeContribution){
 			    const Lepton *l0 = m_baseLeptons[0];
 			    const Lepton *l1 = m_baseLeptons[1];
-			    if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			    if(makeNTuple) fillTupleMaker(weight_ALL_MM, nt.evt()->run, nt.evt()->event, nt.evt()->isMC, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 			  }
 			  //===============================================================================================================================		  
 			  if(nSignalJets ==1){
@@ -809,17 +810,17 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    cutnumber = 25.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 		    if(nSignalJets >=1){
 		      cutnumber = 26.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-		      LeptonVector anyLep(getAnyElOrMu(nt));
+		      LeptonVector anyLep(getAnyElOrMu(nt, el, mu));
 		      LeptonVector lowPtLep(subtract_vector(anyLep, m_baseLeptons)); // caveat: spurious sigLep dupl.
 		      if(nt.evt()->isMC){
 			const Lepton *l0 = m_signalLeptons[0];
 			const Lepton *l1 = m_signalLeptons[1];
-			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EM, nt.evt()->run, nt.evt()->event, nt.evt()->isMC, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 		      }
 		      if(calcFakeContribution){
 			const Lepton *l0 = m_baseLeptons[0];
 			const Lepton *l1 = m_baseLeptons[1];
-			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EM, nt.evt()->run, nt.evt()->event, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
+			if(makeNTuple) fillTupleMaker(weight_ALL_SS_EM, nt.evt()->run, nt.evt()->event, nt.evt()->isMC, *l0, *l1, *m_met, lowPtLep, m_signalJets2Lep);
 		      }
 		      //------------------------------------------------------------------------------------
 		      if(nSignalJets ==1){
@@ -834,7 +835,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      cutnumber = 31.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 			      if(METrel_EM>=50.){
 				cutnumber = 32.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-				
 				if((mllZcandImpact_mu_EM > MZ+20. || mllZcandImpact_mu_EM < MZ-20.) && (mllZcandImpact_el_EM > MZ+20. || mllZcandImpact_el_EM < MZ-20.)){
 				  cutnumber = 33.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 				}				 
@@ -856,7 +856,6 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			      cutnumber = 41.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 			      if(METrel_EM>=50.){
 				cutnumber = 42.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
-				if(nt.evt()->event==2374956) cout << "mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << " mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << endl;
 				if((mllZcandImpact_mu_EM > MZ+20. || mllZcandImpact_mu_EM < MZ-20.) && (mllZcandImpact_el_EM > MZ+20. || mllZcandImpact_el_EM < MZ-20.)){
 				  cutnumber = 43.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 				}
@@ -1554,14 +1553,14 @@ FourMom lepton2FourMom (const Lepton *l)
 //----------------------------------------------------------
 FourMom jet2FourMom (const Jet *j) { return (j ? FourMom().setJet(*j) : FourMom()); }
 //----------------------------------------------------------
-bool TSelector_SusyNtuple::fillTupleMaker(const double weight, const unsigned int run, const unsigned int event,
+bool TSelector_SusyNtuple::fillTupleMaker(const double weight, const unsigned int run, const unsigned int event, const bool isMc,
                       const Susy::Lepton &l0, const Susy::Lepton &l1, const Susy::Met &met,
                       const LeptonVector &otherLeptons, const JetVector &jets)
 {
     bool someBytesWritten(false);
     if(tree_) {
 //       cout << "fillTupleMaker" << endl;
-        eventPars_.setWeight(weight).setRun(run).setEvent(event);
+        eventPars_.setWeight(weight).setRun(run).setEvent(event).setIsmc(isMc);
         l0.isMu() ? l0_.setMu(l0) : l0_.setEl(l0);
         l1.isMu() ? l1_.setMu(l1) : l1_.setEl(l1);
         met_.setMet(met);
@@ -1575,20 +1574,28 @@ bool TSelector_SusyNtuple::fillTupleMaker(const double weight, const unsigned in
     return someBytesWritten;
 }
 /*--------------------------------------------------------------------------------*/
-LeptonVector TSelector_SusyNtuple::getAnyElOrMu(SusyNtObject &susyNt/*, SusyNtSys sys*/)
+LeptonVector TSelector_SusyNtuple::getAnyElOrMu(SusyNtObject &susyNt, const Lepton *l0, const Lepton *l1)
 {
     // DG 2013-12-02:
     // todo1 : re-implement with std algo
     // todo2 : re-implement with syst
     LeptonVector leptons;
     for(uint ie=0; ie<susyNt.ele()->size(); ++ie){
-        if(Electron* e = & susyNt.ele()->at(ie)){ //e->setState(sys);
-            leptons.push_back(static_cast<Lepton*>(e));
-        }
+      if(Electron* e = & susyNt.ele()->at(ie)){ //e->setState(sys);
+	if(fabs(e->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
+	if(fabs(e->z0SinTheta(true)) >= ELECTRON_Z0_SINTHETA_CUT) continue;
+	if((e->q * l0->q)<0. || (e->q * l1->q)<0.){
+	    leptons.push_back(static_cast<Lepton*>(e));
+	}
+      }
     }
     for(uint im=0; im<susyNt.muo()->size(); ++im){
         if(Muon* m = & susyNt.muo()->at(im)){ //m->setState(sys);
+	  if(fabs(m->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
+	  if(fabs(m->z0SinTheta(true)) >= MUON_Z0_SINTHETA_CUT) continue;
+	  if((m->q * l0->q)<0. || (m->q * l1->q)<0.){
             leptons.push_back(static_cast<Lepton*>(m));
+	  }
         }
     }
     return leptons;

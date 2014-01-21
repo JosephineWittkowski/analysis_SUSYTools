@@ -1838,16 +1838,19 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   TruthParticleVector truthMuons;
   for(uint index=0; index<nt.tpr()->size(); ++index){
     TruthParticle* particle = & nt.tpr()->at(index);
-    if(fabs((*particle).pdgId) == 11) truthElectrons.push_back(particle);
-    if(fabs(particle->pdgId) == 13) truthMuons.push_back(particle);
+//     if(fabs((*particle).pdgId) == 11) truthElectrons.push_back(particle);
+//     if(fabs(particle->pdgId) == 13) truthMuons.push_back(particle);
+//     cout << "particle->pdgId= " << particle->pdgId << " particle->motherPdgId= " << particle->motherPdgId << " particle->eta= " << particle->eta << " particle->phi= " << particle->phi << endl;
   }
   
   Electron* closest_signal_el;
   TLorentzVector closest_signal_el_TLV;
   for(uint ie=0; ie<Electrons_all_vec.size(); ie++){
     
+    
     Electron* el_ZcandImpact = Electrons_all_vec.at(ie);
     el_ZcandImpact->setState(NtSys_NOM);
+//     cout << " el_ZcandImpact->eta= " << el_ZcandImpact->eta << " el_ZcandImpact->phi= " << el_ZcandImpact->phi << endl;
 
     if((el_ZcandImpact->DeltaR(*el0) < 0.05) || (el_ZcandImpact->DeltaR(*el1) < 0.05)) continue; //no overlap w/ signal lepton
 
@@ -2603,6 +2606,7 @@ bool unbiased = true;
 	  Muon_ZcandImpact_vec.push_back(mu_ZcandImpact);
 	}
     }
+    
   }
 
   Electron* el_ZcandImpact;
