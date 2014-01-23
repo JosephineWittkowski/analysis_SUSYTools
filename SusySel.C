@@ -74,7 +74,7 @@ Bool_t SusySel::Process(Long64_t entry)
     if(entry== 0  && m_eventParameters->eventNumber == 111) sample_identifier = 126988;//WWPlusJets
     if(entry== 0  && m_eventParameters->eventNumber == 15004) sample_identifier = 157814; //WZ    
     if(entry== 0  && m_eventParameters->eventNumber == 5) sample_identifier = 116600; //ZZ
-    if(entry== 0  && m_eventParameters->eventNumber == 7522517) sample_identifier = 108346; //ttbar    
+    if(entry== 0  && m_eventParameters->eventNumber == 5012) sample_identifier = 108346; //ttbar    
     if(entry== 0  && m_eventParameters->eventNumber == 35015) sample_identifier = 110805; //ZPlusJets    
     if(entry== 0  && m_eventParameters->eventNumber == 10017) sample_identifier = 160155; //Higgs
 
@@ -102,8 +102,8 @@ Bool_t SusySel::Process(Long64_t entry)
     if(entry== 0  && m_eventParameters->eventNumber == 35001) sample_identifier = 177522; 
     if(entry== 0  && m_eventParameters->eventNumber == 9) sample_identifier = 177523; 
     if(entry== 0  && m_eventParameters->eventNumber == 6) sample_identifier = 177524; 
-    if(entry== 0  && m_eventParameters->eventNumber == 5010) sample_identifier = 177525; 
-    if(entry== 1  && m_eventParameters->eventNumber == 5025) sample_identifier = 177526; 
+    if(entry== 1  && m_eventParameters->eventNumber == 5025) sample_identifier = 177525; 
+    if(entry== 0  && m_eventParameters->eventNumber == 25003) sample_identifier = 177526; 
     if(entry== 0  && m_eventParameters->eventNumber == 20018) sample_identifier = 177527; 
     
     
@@ -183,67 +183,79 @@ Bool_t SusySel::Process(Long64_t entry)
 	}
       }
     }
+    
+  // ########################################### REOPTIMIZATION ###########################################
+  if(mass_3rdlepZ_EE > MZ+20. || mass_3rdlepZ_EE < MZ-20.){
+    cutnumber_EE = 31.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+    
+    if((*m_jets).size()==1){
+      cutnumber_EE = 32.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+      
+      if(el0_TLV.Pt() > 30. && el1_TLV.Pt() > 20.){
+	cutnumber_EE = 33.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	
+	if(Mll_EE > 100. || Mll_EE < 70.){
+	  cutnumber_EE = 34.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	  
+	  if(Mlj_EE < 90.){  
+	    cutnumber_EE = 35.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	    
+	    if(HT_EE > 200.){ // mTWW ="mtllmet"	
+	      cutnumber_EE = 36.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      
+		if(METrel_EE > 55.){
+		  cutnumber_EE = 37.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+		}
+	      }	
+	    }
+	  }
+	}
+      }
+      
+      
+      
+      
+  if((*m_jets).size()>=2 && (*m_jets).size() <=3){
+    cutnumber_EE = 52.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+    
+    if(el0_TLV.Pt() > 30. && el1_TLV.Pt() > 20.){
+      cutnumber_EE = 53.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+      
+      if(Mll_EE > 100. || Mll_EE < 70.){
+	cutnumber_EE = 54.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	
+	if(mTmax_EE > 100.){
+	    cutnumber_EE = 55.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    
+	    if(Mljj_EE < 120.){
+	      cutnumber_EE = 56.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	      
+	      if(METrel_EE > 55.){  
+		cutnumber_EE = 57.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
+	    }
+	  }
+	}
+      }
+    }
+      
+      
+  }
+      
+      
+	  
   }
   
-//       if((*m_jets).size()==1){
-// 	cutnumber_EE = 1.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-// 	if(Mll_EE > MZ+10. || Mll_EE < MZ-10.){
-// 	  cutnumber_EE = 2.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-// 	  if(mTWW_EE > 150.){ //="mtllmet"	          
-// 	      cutnumber_EE = 3.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-// 	      if(METrel_EE>80){
-// 		cutnumber_EE = 4.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-// 		if(HT_EE > 160.){
-// 		  cutnumber_EE = 5.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-// 		  if(mTmin_EE>65.){
-// 		    cutnumber_EE = 6.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-// // 		    cout << "Mll= " << calc_Ml_3rdl(el0_TLV, el1_TLV, m_lepts) << endl;
-// 		    }
-// 		  }
-// 		}
-// 	      }
-// 	    }
-// 	  }
-// 	  
-// 	  
-// 	  
-// 	  
-//       if((*m_jets).size()>=2){
-// 	cutnumber_EE = 1.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-// 	if(Mll_EE > MZ+10. || Mll_EE < MZ-10.){
-// 	  cutnumber_EE = 2.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-// 	  if(mTWW_EE > 130.){ //="mtllmet"	          
-// 	      cutnumber_EE = 3.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-// 	      if(METrel_EE>70){
-// 		cutnumber_EE = 4.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-// 		if(mTmin_EE>50.){
-// 		  cutnumber_EE = 5.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-// 		  }
-// 		}
-// 	      }
-// 	    }
-// 	  }
-// 	  
-// 	}
-//     --- BDT                      :    1 : ht        : 3.501e-01
+//1 jet:
+// --- BDT                      :    1 : ht        : 3.501e-01
 // --- BDT                      :    2 : mll       : 2.133e-01
 // --- BDT                      :    3 : metrel    : 1.965e-01
 // --- BDT                      :    4 : mtllmet   : 1.722e-01
 // --- BDT                      :    5 : mt2j      : 4.559e-02
 // --- BDT                      :    6 : mljj      : 2.229e-02
 
-// elif ll=='ee' and nj=='eq1j':
-//         return ( l0pt > 30.0
-//                 and l1pt > 30.0
-//                 and fabs(mll-91.2) > 10.0
-//                 and mtllmet > 100.0
-//                 and detall < 1.5
-//                 and mtmax > 100.0
-//                 and ht > 200.0
-//                 and mlj < 90.0
-//                 and l3Veto
-//                     )
 
+//2 jet:
 // --- BDT                      :    1 : mtllmet   : 2.224e-01
 // --- BDT                      :    2 : mljj      : 2.172e-01
 // --- BDT                      :    3 : mll       : 2.115e-01
@@ -251,17 +263,9 @@ Bool_t SusySel::Process(Long64_t entry)
 // --- BDT                      :    5 : metrel    : 1.144e-01
 // --- BDT                      :    6 : ht        : 1.050e-01
 
-//     elif ll=='ee' and nj=='ge2j':
-//         return ( l0pt > 30.0
-//                 and l1pt > 30.0
-//                 and fabs(mll-91.2) > 10.0
-//                 and detall < 1.5
-//                 and mtllmet > 150.0
-//                 and mljj < 120.0
-//                 and ht > 200.0
-//                 and l3Veto
 //===========================================================================================
 //===========================================================================================
+// ########################################### CUTFLOW COMPARISON ###########################################
     if(m_l0->isMu && m_l1->isMu){
       float cutnumber_MM;
       cutnumber_MM = 1.; fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
@@ -270,22 +274,12 @@ Bool_t SusySel::Process(Long64_t entry)
       mu0_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
       mu1_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
       calc_MM_variables(mu0_TLV, mu1_TLV, met_TLV, m_jets, m_lepts);
-      
-//       if(mu0_TLV.Pt()>30.){
-// 	cutnumber_MM = 2.; fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-// 	if(mu1_TLV.Pt()>20.){
-// 	  cutnumber_MM = 3.; fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-// 	  if(HT_MM> 170.){
-// 	    cutnumber_MM = 4.; fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	    
-// 	  }
-// 	}
-//       }
+
       if((*m_jets).size()==1){
 	cutnumber_MM = 2.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 	if(mu0_TLV.Pt() >= 30.){
 	  cutnumber_MM = 3.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 	  cutnumber_MM = 4.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight); //ZVeto
-	//SRSS1
 	  if(mTWW_MM >= 100.){ //100, 150, 200
 	    cutnumber_MM = 5.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 	    if(HT_MM >= 200.){
@@ -307,7 +301,6 @@ Bool_t SusySel::Process(Long64_t entry)
 	if(mu0_TLV.Pt() >= 30.){
 	  cutnumber_MM = 23.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
 	  cutnumber_MM = 24.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight); //ZVeto
-	//SRSS1
 	  if(mTWW_MM >= 100.){ //100, 150, 200
 	    cutnumber_MM = 25.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
 	    if(HT_MM >= 200.){
@@ -322,7 +315,60 @@ Bool_t SusySel::Process(Long64_t entry)
 	  }
 	}
       }
+      
+// ########################################### REOPTIMIZATION ###########################################
+      if(mass_3rdlepZ_MM > MZ+20. || mass_3rdlepZ_MM < MZ-20.){	  
+	cutnumber_MM = 31.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	
+	
+	if((*m_jets).size()==1){
+	cutnumber_MM = 32.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	
+	  if(mu0_TLV.Pt() >= 30. && mu1_TLV.Pt() >= 20.){  
+	    cutnumber_MM = 33.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	    
+	    if(DeltaEtall_MM < 1.5){
+	      cutnumber_MM = 34.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	      
+	      if(mTmax_MM >= 100.){
+		cutnumber_MM = 35.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);				
+		
+		if(Mlj_MM < 90.){
+		  cutnumber_MM = 36.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+		  
+		  if(HT_MM >= 200.){  
+		      cutnumber_MM = 37.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+		    }
+		}
+	      }
+	    }
+	  }
+	}
+//     ===============================================================================================================================		  
+      if((*m_jets).size()>=2 && (*m_jets).size()<=3){
+	cutnumber_MM = 52.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
+	
+	if(mu0_TLV.Pt() >= 30. && mu1_TLV.Pt() >= 20.){
+	  cutnumber_MM = 53.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
+	  
+	   if(DeltaEtall_MM < 1.5){
+	    cutnumber_MM = 54.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
+	    
+	    if(Mljj_MM <= 120.){
+	      cutnumber_MM = 55.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);	
+	      
+	      if(HT_MM >= 200.){     
+		cutnumber_MM = 56.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);	
+	      }
+	    }
+	  }
+	}
+      }     
+      
+      
     }
+    
+    
+  }
 //===========================================================================================
 //===========================================================================================
     if((m_l0->isEl && m_l1->isMu) || (m_l0->isMu && m_l1->isEl)){
@@ -399,6 +445,62 @@ Bool_t SusySel::Process(Long64_t entry)
 	  }
 	}
       }
+      
+      
+      
+      // ########################################### REOPTIMIZATION ###########################################
+      if(mass_3rdlepZ_EM > MZ+20. || mass_3rdlepZ_EM < MZ-20.){
+	cutnumber_EM = 31.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);	
+	
+	if((*m_jets).size()==1){
+	  cutnumber_EM = 32.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	  
+	    if(mu_TLV.Pt() >= 30. && el_TLV.Pt() >= 30.){  
+	      cutnumber_EM = 33.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	      
+	      if(DeltaEtall_EM < 1.5){
+		cutnumber_EM = 34.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);		
+	      
+	      if(mTmax_EM >= 110.){
+		cutnumber_EM = 35.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		
+		if(Mlj_EM < 90.){
+		  cutnumber_EM = 36.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		  
+		  if(mTWW_EM >= 110.){ //mtllmet
+		    cutnumber_EM = 37.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		    }
+		  }
+		}
+	      }
+	    }
+	  }
+//     ===============================================================================================================================		  
+      if((*m_jets).size()>=2){
+	cutnumber_EM = 52.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
+	if(mu_TLV.Pt() >= 30. && el_TLV.Pt() >= 30.){
+	  cutnumber_EM = 53.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
+	  if((*m_jets).size()<4){
+	    cutnumber_EM = 54.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
+	    if(DeltaEtall_EM < 1.5){
+	      cutnumber_EM = 55.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
+	      if(Mljj_EM<=120.){
+		cutnumber_EM = 56.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);				
+		if(mTWW_EM >= 110.){
+		  cutnumber_EM = 57.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
+		}
+	      }
+	    } 
+	  }
+	}
+      }
+      
+      
+      
+    }
+    
+    
+    
     }
 //===========================================================================================
 //===========================================================================================
@@ -539,6 +641,23 @@ float SusySel::calcMT2J(TLorentzVector metlv, TLorentzVector l0, TLorentzVector 
     return return_value;
   }
   
+}
+
+/*--------------------------------------------------------------------------------*/
+float SusySel::calcMT2(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1)
+{
+  //copied from SusyNtTools.cxx and modified to work with TLorenzVector
+
+  double pTMiss[3] = {0.0, metlv.Px(), metlv.Py()};
+  double pA[3] = {0.0, l0.Px(), l0.Py()};
+  double pB[3] = {0.0, l1.Px(), l1.Py()};
+  
+  // Create Mt2 object
+  mt2_bisect::mt2 mt2_event;
+  mt2_event.set_momenta(pA,pB,pTMiss);
+  mt2_event.set_mn(0); // LSP mass = 0 is Generic
+  
+  return mt2_event.get_mt2();
 }
 /*--------------------------------------------------------------------------------*/
 void SusySel::SlaveTerminate()

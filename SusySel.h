@@ -243,10 +243,13 @@ public :
     
     TH2F* h_mljj_1j_EE;
     TH2F* h_mljj_2j_EE;
+    
+    TH2F* h_mlj_1j_EE;
+    TH2F* h_mlj_2j_EE;
 //=======================================================
     
     
-    TH2F* h_pTl0_1j_MM;
+      TH2F* h_pTl0_1j_MM;
     TH2F* h_pTl0_2j_MM;
 
     TH2F* h_pTl1_1j_MM;
@@ -389,10 +392,12 @@ public :
     TH2F* h_mljj_1j_MM;
     TH2F* h_mljj_2j_MM;
     
+    TH2F* h_mlj_1j_MM;
+    TH2F* h_mlj_2j_MM;
     //=======================================================
     
     
-    TH2F* h_pTl0_1j_EM;
+   TH2F* h_pTl0_1j_EM;
     TH2F* h_pTl0_2j_EM;
 
     TH2F* h_pTl1_1j_EM;
@@ -533,7 +538,10 @@ public :
     TH2F* h_DeltaYjj_2j_EM;
     
     TH2F* h_mljj_1j_EM;
-    TH2F* h_mljj_2j_EM;    
+    TH2F* h_mljj_2j_EM;
+    
+    TH2F* h_mlj_1j_EM;
+    TH2F* h_mlj_2j_EM;    
     
    TTree *fChain; //!pointer to the analyzed TTree or TChain
    
@@ -583,6 +591,7 @@ public :
    float calcMt(TLorentzVector _l, TLorentzVector _nu);
    float calcMT2J(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1, vector<FourMom> *signalJets);
    float calc_Ml_3rdl(TLorentzVector l0_TLV, TLorentzVector l1_TLV, vector<FourMom> *m_leptons);
+   float calcMT2(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1);
    
 
    ClassDef(SusySel,0);
@@ -621,6 +630,7 @@ public :
     float DeltaPhil1jj_MM;
     float DeltaRlljj_MM;
     float Mljj_MM;
+    float Mlj_MM;
     float DeltaEtall_MM;
     float mass_3rdlepZ_MM;
     
@@ -654,6 +664,7 @@ public :
     float DeltaPhil1jj_EE;
     float DeltaRlljj_EE;
     float Mljj_EE;
+    float Mlj_EE;
     float DeltaEtall_EE;
     float mass_3rdlepZ_EE;
     
@@ -688,6 +699,7 @@ public :
     float DeltaPhil1jj_EM;
     float DeltaRlljj_EM;
     float Mljj_EM;
+    float Mlj_EM;
     float DeltaEtall_EM;
     float mass_3rdlepZ_EM;
 protected:
