@@ -193,58 +193,172 @@ Bool_t SusySel::Process(Long64_t entry)
       
       if(el0_TLV.Pt() > 30. && el1_TLV.Pt() > 20.){
 	cutnumber_EE = 33.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-	
 	if(Mll_EE > 100. || Mll_EE < 70.){
 	  cutnumber_EE = 34.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
 	  
-	  if(Mlj_EE < 90.){  
+	  if(HT_EE > 200.){ // mTWW ="mtllmet"	
 	    cutnumber_EE = 35.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-	    
-	    if(HT_EE > 200.){ // mTWW ="mtllmet"	
+	  
+	    if(METrel_EE > 55.){
 	      cutnumber_EE = 36.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-	      
-		if(METrel_EE > 55.){
-		  cutnumber_EE = 37.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-		}
-	      }	
+	      if(Mlj_EE < 90.){  
+		cutnumber_EE = 37.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
+	      if(Mlj_EE < 80.){  
+		cutnumber_EE = 38.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
 	    }
-	  }
+	    if(METrel_EE > 70.){
+	      cutnumber_EE = 39.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      if(Mlj_EE < 90.){  
+	      cutnumber_EE = 40.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
+	    }
+	  }		  
+	}
+	if(Mll_EE > 110. || Mll_EE < 70.){
+	  cutnumber_EE = 41.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	  
+	  if(HT_EE > 200.){ // mTWW ="mtllmet"	
+	    cutnumber_EE = 42.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	  
+	    if(METrel_EE > 55.){
+	      cutnumber_EE = 43.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      if(Mlj_EE < 90.){  
+		cutnumber_EE = 44.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
+	      if(Mlj_EE < 80.){  
+		cutnumber_EE = 45.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
+	    }
+	    if(METrel_EE > 70.){
+	      cutnumber_EE = 46.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      if(Mlj_EE < 90.){  
+	      cutnumber_EE = 47.; fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
+	    }
+	  }		  
 	}
       }
+    }
+
       
       
       
       
   if((*m_jets).size()>=2 && (*m_jets).size() <=3){
-    cutnumber_EE = 52.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+    cutnumber_EE = 55.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
     
     if(el0_TLV.Pt() > 30. && el1_TLV.Pt() > 20.){
-      cutnumber_EE = 53.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+      cutnumber_EE = 56.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
       
-      if(Mll_EE > 100. || Mll_EE < 70.){
-	cutnumber_EE = 54.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+      if(Mll_EE > 100. || Mll_EE < 80.){
+	cutnumber_EE = 57.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
 	
 	if(mTmax_EE > 100.){
-	    cutnumber_EE = 55.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-	    
-	    if(Mljj_EE < 120.){
-	      cutnumber_EE = 56.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-	      
-	      if(METrel_EE > 55.){  
-		cutnumber_EE = 57.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
-	      }
+	  cutnumber_EE = 58.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	  
+	  if(Mljj_EE < 120.){
+	    cutnumber_EE = 59.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 60.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 61.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	  }
+	  
+	  if(Mljj_EE < 130.){
+	    cutnumber_EE = 62.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 63.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 64.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
 	    }
 	  }
 	}
-      }
-    }
-      
-      
-  }
-      
-      
+
+	if(mTmax_EE > 150.){
+	  cutnumber_EE = 65.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
 	  
+	  if(Mljj_EE < 120.){
+	    cutnumber_EE = 66.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 67.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 68.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	  }
+	  
+	  if(Mljj_EE < 130.){
+	    cutnumber_EE = 69.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 70.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 71.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	  }
+	}
+	
+      }
+      if(Mll_EE > 100. || Mll_EE < 70.){
+		cutnumber_EE = 72.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	
+	if(mTmax_EE > 100.){
+	  cutnumber_EE = 73.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	  
+	  if(Mljj_EE < 120.){
+	    cutnumber_EE = 74.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 75.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 76.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	  }
+	  
+	  if(Mljj_EE < 130.){
+	    cutnumber_EE = 77.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 78.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 79.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	  }
+	}
+
+	if(mTmax_EE > 150.){
+	  cutnumber_EE = 80.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	  
+	  if(Mljj_EE < 120.){
+	    cutnumber_EE = 81.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 82.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 83.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	  }
+	  
+	  if(Mljj_EE < 130.){
+	    cutnumber_EE = 84.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(METrel_EE > 30.){  
+	      cutnumber_EE = 85.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	    if(METrel_EE > 55.){  
+	      cutnumber_EE = 86.; fillHistos_2j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }
+	  }
+	}
+      }      
+    }  
   }
+}
+}
   
 //1 jet:
 // --- BDT                      :    1 : ht        : 3.501e-01
@@ -336,8 +450,21 @@ Bool_t SusySel::Process(Long64_t entry)
 		  cutnumber_MM = 36.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 		  
 		  if(HT_MM >= 200.){  
-		      cutnumber_MM = 37.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+		    cutnumber_MM = 37.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+		    if(HT_MM >= 230.){  
+		      cutnumber_MM = 38.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 		    }
+		  }
+		}
+	      }
+	      if(mTmin_MM > 110.){
+		cutnumber_MM = 39.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+		if(Mlj_MM < 90.){
+		cutnumber_MM = 40.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+		
+		if(HT_MM >= 200.){  
+		    cutnumber_MM = 41.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+		  }
 		}
 	      }
 	    }
@@ -357,7 +484,16 @@ Bool_t SusySel::Process(Long64_t entry)
 	      cutnumber_MM = 55.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);	
 	      
 	      if(HT_MM >= 200.){     
-		cutnumber_MM = 56.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);	
+		cutnumber_MM = 56.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
+		if(HT_MM >= 210.){     
+		  cutnumber_MM = 57.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
+		  if(HT_MM >= 240.){     
+		    cutnumber_MM = 58.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);
+		    if(HT_MM >= 260.){     
+		      cutnumber_MM = 59.;  fillHistos_2j_MM(cutnumber_MM, m_eventParameters->weight);	
+		    }
+		  }
+		}
 	      }
 	    }
 	  }
@@ -469,25 +605,57 @@ Bool_t SusySel::Process(Long64_t entry)
 		  
 		  if(mTWW_EM >= 110.){ //mtllmet
 		    cutnumber_EM = 37.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		    if(mTWW_EM >= 120.){
+		      cutnumber_EM = 38.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		      if(mTWW_EM >= 150.){
+			cutnumber_EM = 39.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		      }
+		    }
 		    }
 		  }
 		}
-	      }
+		
+		if(METrel_EM >= 70.){
+		  cutnumber_EM = 40.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		  
+		  if(Mlj_EM < 80.){
+		    cutnumber_EM = 41.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		    
+		    if(mTWW_EM >= 110.){ //mtllmet
+		      cutnumber_EM = 42.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		      if(mTWW_EM >= 120.){
+			cutnumber_EM = 43.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+			if(mTWW_EM >= 150.){
+			  cutnumber_EM = 44.;  fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+			}
+		      }
+		    }
+		  }
+		}
+	      }   
 	    }
 	  }
 //     ===============================================================================================================================		  
-      if((*m_jets).size()>=2){
+      if((*m_jets).size()>=2 && (*m_jets).size()<=4){
 	cutnumber_EM = 52.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
+
 	if(mu_TLV.Pt() >= 30. && el_TLV.Pt() >= 30.){
 	  cutnumber_EM = 53.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
-	  if((*m_jets).size()<4){
-	    cutnumber_EM = 54.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
+
 	    if(DeltaEtall_EM < 1.5){
-	      cutnumber_EM = 55.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
-	      if(Mljj_EM<=120.){
-		cutnumber_EM = 56.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);				
-		if(mTWW_EM >= 110.){
-		  cutnumber_EM = 57.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
+	      cutnumber_EM = 54.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
+	      
+	      if(mTmax_EM > 120.){
+		cutnumber_EM = 55.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);				
+		
+		if(Mljj_EM < 120.){
+		  cutnumber_EM = 56.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
+		}
+	      }
+	      if(METrel_EM > 60.){
+		cutnumber_EM = 57.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
+		if(Mljj_EM < 120.){
+		  cutnumber_EM = 58.;  fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);		
 		}
 	      }
 	    } 
@@ -497,10 +665,6 @@ Bool_t SusySel::Process(Long64_t entry)
       
       
       
-    }
-    
-    
-    
     }
 //===========================================================================================
 //===========================================================================================
