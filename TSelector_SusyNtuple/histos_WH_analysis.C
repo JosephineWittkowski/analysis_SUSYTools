@@ -17,6 +17,11 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_DeltaR_JVF_ljOR_MM = new TH2F("h_DeltaR_JVF_ljOR_MM", "h_DeltaR_JVF_ljOR_MM", 70, 0, 7, 100, 0, 1); h_DeltaR_JVF_ljOR_MM->Sumw2();
   h_DeltaR_JVF_ljOR_mu_EM = new TH2F("h_DeltaR_JVF_ljOR_mu_EM", "h_DeltaR_JVF_ljOR_mu_EM", 70, 0, 7, 100, 0, 1); h_DeltaR_JVF_ljOR_mu_EM->Sumw2();
   h_DeltaR_JVF_ljOR_el_EM = new TH2F("h_DeltaR_JVF_ljOR_el_EM", "h_DeltaR_JVF_ljOR_el_EM", 70, 0, 7, 100, 0, 1); h_DeltaR_JVF_ljOR_el_EM->Sumw2();
+
+  h_DeltaR_mll_ljOR_EE = new TH2F("h_DeltaR_mll_ljOR_EE", "h_DeltaR_mll_ljOR_EE", 70, 0, 7, 100, 0, 500); h_DeltaR_mll_ljOR_EE->Sumw2();
+  h_DeltaR_mll_ljOR_MM = new TH2F("h_DeltaR_mll_ljOR_MM", "h_DeltaR_mll_ljOR_MM", 70, 0, 7, 100, 0, 500); h_DeltaR_mll_ljOR_MM->Sumw2();
+  h_DeltaR_mll_ljOR_mu_EM = new TH2F("h_DeltaR_mll_ljOR_mu_EM", "h_DeltaR_mll_ljOR_mu_EM", 70, 0, 7, 100, 0, 500); h_DeltaR_mll_ljOR_mu_EM->Sumw2();
+  h_DeltaR_mll_ljOR_el_EM = new TH2F("h_DeltaR_mll_ljOR_el_EM", "h_DeltaR_mll_ljOR_el_EM", 70, 0, 7, 100, 0, 500); h_DeltaR_mll_ljOR_el_EM->Sumw2();
   
   h_DeltaR_leptonType_ljOR_EE = new TH2F("h_DeltaR_leptonType_ljOR_EE", "h_DeltaR_leptonType_ljOR_EE", 70, 0, 7, 5, -0.5, 4.5); h_DeltaR_leptonType_ljOR_EE->Sumw2();
   h_DeltaR_leptonType_ljOR_MM = new TH2F("h_DeltaR_leptonType_ljOR_MM", "h_DeltaR_leptonType_ljOR_MM", 70, 0, 7, 5, -0.5, 4.5); h_DeltaR_leptonType_ljOR_MM->Sumw2();
@@ -157,6 +162,11 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_Mljj_EE_SRSS1 = new TH2F("h_Mljj_EE_SRSS1", "h_Mljj_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EE_SRSS1->Sumw2();
   h_Mljj_MM_SRSS1 = new TH2F("h_Mljj_MM_SRSS1", "h_Mljj_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_MM_SRSS1->Sumw2();
   h_Mljj_EM_SRSS1 = new TH2F("h_Mljj_EM_SRSS1", "h_Mljj_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mljj_EM_SRSS1->Sumw2();
+  
+  /*--------------------------------------------------------------------------------*/ 
+  h_Mlj_EE_SRSS1 = new TH2F("h_Mlj_EE_SRSS1", "h_Mlj_EE_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mlj_EE_SRSS1->Sumw2();
+  h_Mlj_MM_SRSS1 = new TH2F("h_Mlj_MM_SRSS1", "h_Mlj_MM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mlj_MM_SRSS1->Sumw2();
+  h_Mlj_EM_SRSS1 = new TH2F("h_Mlj_EM_SRSS1", "h_Mlj_EM_SRSS1", 100, 0, 500 ,130, 0, 129);  h_Mlj_EM_SRSS1->Sumw2();
   /*--------------------------------------------------------------------------------*/ 
   h_DeltaRLeptons_EE_SRSS1 = new TH2F("h_DeltaRLeptons_EE_SRSS1", "h_DeltaRLeptons_EE_SRSS1", 70, 0, 7 ,130, 0, 129);  h_DeltaRLeptons_EE_SRSS1->Sumw2();
   h_DeltaRLeptons_EE_SRSS2 = new TH2F("h_DeltaRLeptons_EE_SRSS2", "h_DeltaRLeptons_EE_SRSS2", 70, 0, 7 ,130, 0, 129);  h_DeltaRLeptons_EE_SRSS2->Sumw2();
@@ -1502,6 +1512,11 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_DeltaR_JVF_ljOR_el_EM->Write();
   h_DeltaR_JVF_ljOR_mu_EM->Write();
   
+  h_DeltaR_mll_ljOR_EE->Write(); 
+  h_DeltaR_mll_ljOR_MM->Write(); 
+  h_DeltaR_mll_ljOR_el_EM->Write();
+  h_DeltaR_mll_ljOR_mu_EM->Write();
+  
   h_DeltaR_leptonType_ljOR_EE->Write();
   h_DeltaR_leptonType_ljOR_MM->Write();
   h_DeltaR_leptonType_ljOR_mu_EM->Write();
@@ -1680,6 +1695,9 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_Mljj_EE_SRSS1->Write();
   h_Mljj_MM_SRSS1->Write();
   h_Mljj_EM_SRSS1->Write();
+  h_Mlj_EE_SRSS1->Write();
+  h_Mlj_MM_SRSS1->Write();
+  h_Mlj_EM_SRSS1->Write();
   
   return true;
 }
@@ -1765,12 +1783,20 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
   Mljj_EE = -1.;
+  Mlj_EE = -1.;
   if(nSignalJets>1){
     //find dijet axis:
     double DeltaRDijetEl0 = el0_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el0_TLV.Phi()),2));
     double DeltaRDijetE = el1_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - el1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el1_TLV.Phi()),2));
     TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetEl0 > DeltaRDijetE) ? el1_TLV : el0_TLV;
     Mljj_EE = (signalJet0_TLV + signalJet1_TLV + closestElecDijetAxis_TLV).M();
+  }
+  if(nSignalJets>0){
+    //find dijet axis:
+    double DeltaRDijetEl0 = el0_TLV.DeltaR(signalJet0_TLV); //sqrt(pow(fabs(etaDijetAxis - el0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el0_TLV.Phi()),2));
+    double DeltaRDijetE = el1_TLV.DeltaR(signalJet0_TLV); //sqrt(pow(fabs(etaDijetAxis - el1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el1_TLV.Phi()),2));
+    TLorentzVector closestElecDijetAxis_TLV = (DeltaRDijetEl0 > DeltaRDijetE) ? el1_TLV : el0_TLV;
+    Mlj_EE = (signalJet0_TLV + closestElecDijetAxis_TLV).M();
   }
   
   mT2_EE = calcMT2(met_TLV, el0_TLV, el1_TLV);
@@ -1797,10 +1823,11 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   sD0Signif_branch_l0_EE = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_EE;
   sD0Signif_branch_l1_EE = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_EE;
   
-  ElectronVector Electrons_all_vec;
+  ElectronVector Electrons_all_vec;// = getPreElectrons(&nt, NtSys_NOM);
   for(uint ie=0; ie<susyNt->ele()->size(); ++ie){
     Electron* e = & susyNt->ele()->at(ie);
     e->setState(NtSys_NOM);
+    if(e->pt < 6.) continue;
 
     Electrons_all_vec.push_back(e);
   }
@@ -1845,14 +1872,17 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   
   Electron* closest_signal_el;
   TLorentzVector closest_signal_el_TLV;
+  bool foundCandidate = false;
   for(uint ie=0; ie<Electrons_all_vec.size(); ie++){
     
     
     Electron* el_ZcandImpact = Electrons_all_vec.at(ie);
     el_ZcandImpact->setState(NtSys_NOM);
-//     cout << " el_ZcandImpact->eta= " << el_ZcandImpact->eta << " el_ZcandImpact->phi= " << el_ZcandImpact->phi << endl;
+
+    if(nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << nt.evt()->event << " el_ZcandImpact->pt= " << el_ZcandImpact->pt << " el_ZcandImpact->DeltaR(*el0)= " << el_ZcandImpact->DeltaR(*el0) << " el_ZcandImpact->DeltaR(*el1)= " << el_ZcandImpact->DeltaR(*el1) << " fabs(el_ZcandImpact->d0Sig(true))= " << fabs(el_ZcandImpact->d0Sig(true)) << " fabs(el_ZcandImpact->z0SinTheta(true)= " << fabs(el_ZcandImpact->z0SinTheta(true)) << " Mll(el0, el_ZcandImpact)= " << Mll(el0, el_ZcandImpact) << " Mll(el1, el_ZcandImpact)= " << Mll(el1, el_ZcandImpact) << " el_ZcandImpact->q= " << el_ZcandImpact->q << " el0->q= " << el0->q << " el1->q= " << el1->q << endl;
 
     if((el_ZcandImpact->DeltaR(*el0) < 0.05) || (el_ZcandImpact->DeltaR(*el1) < 0.05)) continue; //no overlap w/ signal lepton
+    
 
     if(fabs(el_ZcandImpact->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
     if(fabs(el_ZcandImpact->z0SinTheta(true)) >= ELECTRON_Z0_SINTHETA_CUT) continue;
@@ -1861,20 +1891,30 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
     ZcandImpactElec_TLV.SetPtEtaPhiE(el_ZcandImpact->pt, el_ZcandImpact->eta ,el_ZcandImpact->phi, el_ZcandImpact->pt*cosh(el_ZcandImpact->eta));
     ZcandImpactElec_TLV.SetPtEtaPhiM(el_ZcandImpact->pt, el_ZcandImpact->eta ,el_ZcandImpact->phi, el_ZcandImpact->m);
     
-    if((el_ZcandImpact->q * el0->q)<0. || (el_ZcandImpact->q * el1->q)<0.){
-	if((fabs(MZ - Mll(el0, el_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(el1, el_ZcandImpact)) < DeltaMZ_lZcandImpact)){
+//     if((el_ZcandImpact->q * el0->q)<0. || (el_ZcandImpact->q * el1->q)<0.){
+	float DeltaMZ_l0_ZcandImpact = 999.;
+	if((fabs(MZ - Mll(el0, el_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((el_ZcandImpact->q * el0->q)<0.)){
+	  DeltaMZ_l0_ZcandImpact = fabs(MZ - Mll(el0, el_ZcandImpact));
+	  foundCandidate = true;
+	}
+	float DeltaMZ_l1_ZcandImpact = 999.;
+	if((fabs(MZ - Mll(el1, el_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((el_ZcandImpact->q * el1->q)<0.)){
+	  DeltaMZ_l1_ZcandImpact = fabs(MZ - Mll(el1, el_ZcandImpact));
+	  foundCandidate = true;
+	}
+	if(foundCandidate && ( (fabs(MZ - Mll(el1, el_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(el0, el_ZcandImpact)) < DeltaMZ_lZcandImpact) )){
 
 	  el_ZcandImpact_lost = el_ZcandImpact;
-	  if(fabs(MZ - Mll(el0, el_ZcandImpact)) < fabs(MZ - Mll(el1, el_ZcandImpact))){
+	  if(DeltaMZ_l0_ZcandImpact < DeltaMZ_l1_ZcandImpact){
 	    closest_signal_el = el0;
 	    closest_signal_el_TLV = el0_TLV;
+	    foundCandidate = true;
 	  }
 	  else{
 	    closest_signal_el = el1;
 	    closest_signal_el_TLV = el1_TLV;
+	    foundCandidate = true;
 	  }
-	    
-	  
 	  mllZcandImpact_EE = Mll(closest_signal_el, el_ZcandImpact);      
 	  mTllZcandImpact_EE = calcMt(closest_signal_el_TLV, ZcandImpactElec_TLV);  
 	  pTlZcandImpact_EE = el_ZcandImpact->pt;
@@ -1888,15 +1928,17 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	  DeltaMZ_lZcandImpact = fabs(MZ - Mll(closest_signal_el, el_ZcandImpact));
 	  
 	  Electron_ZcandImpact_vec.push_back(el_ZcandImpact);
-	  
 	}
+	  
       }
-  }
+//       }
+//   }
 
 
   Nleptons_ZcandImpact_EE = Electron_ZcandImpact_vec.size();
   
   if(Nleptons_ZcandImpact_EE>0) {
+//     if(nt.evt()->event == 433899) cout << "el_ZcandImpact_lost->pt= " << el_ZcandImpact_lost->pt << " eta= " << el_ZcandImpact_lost->eta<< " phi= " << el_ZcandImpact_lost->phi  << " mllZcandImpact_EE= " << mllZcandImpact_EE << endl;
     ZcandLep_exists_EE = true;
     if(pTlZcandImpact_EE < 10.) ZcandLep_passesPT_EE = false;
     if(ptcone30lZcandImpact_EE >= ELECTRON_PTCONE30_PT_CUT) ZcandLep_passesPTcone_EE = false;
@@ -1915,7 +1957,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
     if(fabs(mllZcandImpact_EE - MZ) < 20.) h_3rdleptonType_EE->Fill(lepton_type, 1.);
   
     JetVector prejets = getPreJets(&nt, NtSys_NOM); 
-    if(fabs(mllZcandImpact_EE - MZ) < 20.){
+    if(/*fabs(mllZcandImpact_EE - MZ) < 20.*/1){
       TLorentzVector el_ZcandImpact_lost_TLV;
       el_ZcandImpact_lost_TLV.SetPtEtaPhiE(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->pt*cosh(el_ZcandImpact_lost->eta));
       el_ZcandImpact_lost_TLV.SetPtEtaPhiM(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->m);
@@ -2080,6 +2122,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	float etcone = elEtTopoConeCorr(el_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	    
 	h_DeltaR_JVF_ljOR_EE->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), prejets.at(ij)->jvf, 1.);      
+	h_DeltaR_mll_ljOR_EE->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), mllZcandImpact_EE, 1.);      
 
 	  
 // 	int lepton_type = -1;
@@ -2146,12 +2189,19 @@ void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, M
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
   Mljj_MM = -1.;
+  Mlj_MM = -1.;
   if(nSignalJets>1){
     double DeltaRDijetMu0 = mu0_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu0_TLV.Phi()),2));
     double DeltaRDijetMu1 = mu1_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu1_TLV.Phi()),2));
     TLorentzVector closestMuonDijetAxis_TLV = (DeltaRDijetMu0 > DeltaRDijetMu1) ? mu1_TLV : mu0_TLV;
     Mljj_MM = (signalJet0_TLV + signalJet1_TLV + closestMuonDijetAxis_TLV).M();
   }
+  if(nSignalJets>0){
+    double DeltaRDijetMu0 = mu0_TLV.DeltaR(signalJet0_TLV); //sqrt(pow(fabs(etaDijetAxis - mu0_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu0_TLV.Phi()),2));
+    double DeltaRDijetMu1 = mu1_TLV.DeltaR(signalJet0_TLV); //sqrt(pow(fabs(etaDijetAxis - mu1_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu1_TLV.Phi()),2));
+    TLorentzVector closestMuonDijetAxis_TLV = (DeltaRDijetMu0 > DeltaRDijetMu1) ? mu1_TLV : mu0_TLV;
+    Mlj_MM = (signalJet0_TLV + closestMuonDijetAxis_TLV).M();
+  }  
   
   mT2_MM = calcMT2(met_TLV, mu0_TLV, mu1_TLV);
   if(nSignalJets>1){
@@ -2177,10 +2227,11 @@ bool unbiased = true;
   sD0Signif_branch_l0_MM = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_MM;
   sD0Signif_branch_l1_MM = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_MM;
   
-  MuonVector Muons_all_vec;
+  MuonVector Muons_all_vec;// = getPreMuons(&nt, NtSys_NOM);
   for(uint im=0; im<susyNt->muo()->size(); ++im){
     Muon* mu = & susyNt->muo()->at(im);
     mu->setState(NtSys_NOM);    
+    if(mu->pt < 6.) continue;
     Muons_all_vec.push_back(mu);
   }
   
@@ -2213,22 +2264,39 @@ bool unbiased = true;
   Muon* mu_ZcandImpact_lost;  
   Muon* closest_signal_mu;
   TLorentzVector closest_signal_mu_TLV;
-  
+  bool foundCandidate = false;
   for(uint im=0; im<Muons_all_vec.size(); im++){
+//     if(nt.evt()->event == 2089564) cout << "DeltaMZ_lZcandImpact= " << DeltaMZ_lZcandImpact << endl;
     Muon* mu_ZcandImpact = Muons_all_vec.at(im);
     mu_ZcandImpact->setState(NtSys_NOM);
     
     if((mu_ZcandImpact->DeltaR(*mu0) < 0.05) || (mu_ZcandImpact->DeltaR(*mu1) < 0.05)) continue; //only check for separation of signal leptons
+
+//     if(nt.evt()->event == 2089564) cout << nt.evt()->event << " mu_ZcandImpact->pt= " << mu_ZcandImpact->pt << " mu_ZcandImpact->DeltaR(*mu0)= " << mu_ZcandImpact->DeltaR(*mu0) << " mu_ZcandImpact->DeltaR(*mu1)= " << mu_ZcandImpact->DeltaR(*mu1) << " fabs(mu_ZcandImpact->d0Sig(true))= " << fabs(mu_ZcandImpact->d0Sig(true)) << " fabs(mu_ZcandImpact->z0SinTheta(true)= " << fabs(mu_ZcandImpact->z0SinTheta(true)) << " Mll(mu0, mu_ZcandImpact)= " << Mll(mu0, mu_ZcandImpact) << " Mll(mu1, mu_ZcandImpact)= " << Mll(mu1, mu_ZcandImpact) << " mu_ZcandImpact->q= " << mu_ZcandImpact->q << " mu0->q= " << mu0->q << " mu1->q= " << mu1->q << endl;  
+
     if(fabs(mu_ZcandImpact->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
     if(fabs(mu_ZcandImpact->z0SinTheta(true)) >= MUON_Z0_SINTHETA_CUT) continue;
 
     TLorentzVector ZcandImpact_TLV;
     ZcandImpact_TLV.SetPtEtaPhiE(mu_ZcandImpact->pt, mu_ZcandImpact->eta ,mu_ZcandImpact->phi, mu_ZcandImpact->pt*cosh(mu_ZcandImpact->eta));
     ZcandImpact_TLV.SetPtEtaPhiM(mu_ZcandImpact->pt, mu_ZcandImpact->eta ,mu_ZcandImpact->phi, mu_ZcandImpact->m);
-    if((mu_ZcandImpact->q * mu0->q)<0. || (mu_ZcandImpact->q * mu1->q)<0.){
-	if((fabs(MZ - Mll(mu0, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(mu1, mu_ZcandImpact)) < DeltaMZ_lZcandImpact)){
+    
+//     if((mu_ZcandImpact->q * mu0->q)<0. || (mu_ZcandImpact->q * mu1->q)<0.){
+	float DeltaMZ_l0_ZcandImpact = 999.;
+	if(((fabs(MZ - Mll(mu0, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((mu_ZcandImpact->q * mu0->q)<0.))){
+	  DeltaMZ_l0_ZcandImpact = fabs(MZ - Mll(mu0, mu_ZcandImpact));
+	  foundCandidate = true;
+	}
+	float DeltaMZ_l1_ZcandImpact = 999.;
+	if(((fabs(MZ - Mll(mu1, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((mu_ZcandImpact->q * mu1->q)<0.))){
+	  DeltaMZ_l1_ZcandImpact = fabs(MZ - Mll(mu1, mu_ZcandImpact));
+	  foundCandidate = true;
+	}
+	
+	if(foundCandidate && ((fabs(MZ - Mll(mu1, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(mu0, mu_ZcandImpact)) < DeltaMZ_lZcandImpact))){
+ 
 	  mu_ZcandImpact_lost = mu_ZcandImpact;
-	  if(fabs(MZ - Mll(mu0, mu_ZcandImpact)) < fabs(MZ - Mll(mu1, mu_ZcandImpact))){
+	  if(DeltaMZ_l0_ZcandImpact < DeltaMZ_l1_ZcandImpact){
 	    closest_signal_mu = mu0;
 	    closest_signal_mu_TLV = mu0_TLV;
 	  }
@@ -2236,8 +2304,6 @@ bool unbiased = true;
 	    closest_signal_mu = mu1;
 	    closest_signal_mu_TLV = mu1_TLV;
 	  }
-	    
-	  
 	  mllZcandImpact_MM = Mll(closest_signal_mu, mu_ZcandImpact);      
 	  mTllZcandImpact_MM = calcMt(closest_signal_mu_TLV, ZcandImpact_TLV);  
 	  IClZcandImpact_MM = mu_ZcandImpact->isCombined;
@@ -2249,15 +2315,15 @@ bool unbiased = true;
 	  DeltaMZ_lZcandImpact = fabs(MZ - Mll(closest_signal_mu, mu_ZcandImpact));
 	  
 	  Muon_ZcandImpact_vec.push_back(mu_ZcandImpact);
-	  
 	}
+	  
       }
-    }
+//       }
+//     }
     
   Nleptons_ZcandImpact_MM = Muon_ZcandImpact_vec.size(); 
  
-  if(Nleptons_ZcandImpact_MM>0){
-    
+  if(Nleptons_ZcandImpact_MM>0){    
     ZcandLep_exists_MM = true;
     if(pTlZcandImpact_MM < 10.) ZcandLep_passesPT_MM = false;
     if(etalZcandImpact_MM >= 2.4) ZcandLep_passesEta_MM = false;
@@ -2274,7 +2340,7 @@ bool unbiased = true;
     if(fabs(mllZcandImpact_MM - MZ) < 20.) h_3rdleptonType_MM->Fill(lepton_type, 1.);
     
     JetVector prejets = getPreJets(&nt, NtSys_NOM); 
-    if(fabs(mllZcandImpact_MM - MZ) < 20.){
+    if(/*fabs(mllZcandImpact_MM - MZ) < 20.*/1){
       TLorentzVector mu_ZcandImpact_lost_TLV;
       mu_ZcandImpact_lost_TLV.SetPtEtaPhiE(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->pt*cosh(mu_ZcandImpact_lost->eta));
       mu_ZcandImpact_lost_TLV.SetPtEtaPhiM(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->m);
@@ -2432,6 +2498,7 @@ bool unbiased = true;
       for(uint ij=0; ij<prejets.size(); ij++){ 
 	
 	h_DeltaR_JVF_ljOR_MM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)), prejets.at(ij)->jvf, 1.);
+	h_DeltaR_mll_ljOR_MM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)), mllZcandImpact_MM, 1.);
 	int lepton_type = -1;
 	if(mu_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT){
 	  lepton_type = 1;
@@ -2485,6 +2552,7 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
   
   //Mljj: invariant mass of the lepton-dijet system formed by the two highest pT jets and the lepton closest to the dijet axis.
   Mljj_EM = -1.;
+  Mlj_EM = -1.;
   if(nSignalJets>1){
     //find dijet axis:
     double DeltaRDijetMu = mu_TLV.DeltaR(signalJet0_TLV + signalJet1_TLV); //sqrt(pow(fabs(etaDijetAxis - mu_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu_TLV.Phi()),2));
@@ -2492,6 +2560,15 @@ void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el
     TLorentzVector closestLepDijetAxis_TLV = (DeltaRDijetMu > DeltaRDijetEl) ? el_TLV : mu_TLV;
 
     Mljj_EM = (signalJet0_TLV + signalJet1_TLV + closestLepDijetAxis_TLV).M();
+
+  }
+  if(nSignalJets>0){
+    //find dijet axis:
+    double DeltaRDijetMu = mu_TLV.DeltaR(signalJet0_TLV); //sqrt(pow(fabs(etaDijetAxis - mu_TLV.Eta()),2) + pow(fabs(phiDijetAxis - mu_TLV.Phi()),2));
+    double DeltaRDijetEl = el_TLV.DeltaR(signalJet0_TLV); //sqrt(pow(fabs(etaDijetAxis - el_TLV.Eta()),2) + pow(fabs(phiDijetAxis - el_TLV.Phi()),2));
+    TLorentzVector closestLepDijetAxis_TLV = (DeltaRDijetMu > DeltaRDijetEl) ? el_TLV : mu_TLV;
+
+    Mlj_EM = (signalJet0_TLV + closestLepDijetAxis_TLV).M();
 
   }
   
@@ -2517,18 +2594,19 @@ bool unbiased = true;
   sD0Signif_branch_l0_EM = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_EM;
   sD0Signif_branch_l1_EM = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_EM;
       
-  MuonVector Muons_all_vec;
+  MuonVector Muons_all_vec;// = getPreMuons(&nt, NtSys_NOM);
   for(uint im=0; im<susyNt->muo()->size(); ++im){
     Muon* mu = & susyNt->muo()->at(im);
-    mu->setState(NtSys_NOM);    
+    mu->setState(NtSys_NOM); 
+    if(mu->pt < 6.) continue;
     Muons_all_vec.push_back(mu);
   }
   
-  ElectronVector Electrons_all_vec;
+  ElectronVector Electrons_all_vec;// = getPreElectrons(&nt, NtSys_NOM);
   for(uint ie=0; ie<susyNt->ele()->size(); ++ie){
     Electron* e = & susyNt->ele()->at(ie);
     e->setState(NtSys_NOM);
-
+    if(e->pt < 6.) continue;
     Electrons_all_vec.push_back(e);
   }
   
@@ -2595,7 +2673,12 @@ bool unbiased = true;
     mu_ZcandImpact = Muons_all_vec.at(im);
     mu_ZcandImpact->setState(NtSys_NOM);
     
+    
     if((mu_ZcandImpact->DeltaR(*mu) < 0.05) || mu_ZcandImpact->DeltaR(*el) < 0.05) continue;  //only check for separation of signal leptons
+
+    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << nt.evt()->event << " mu_ZcandImpact->pt= " << mu_ZcandImpact->pt << " mu_ZcandImpact->DeltaR(*mu)= " << 	mu_ZcandImpact->DeltaR(*mu) << " mu_ZcandImpact->DeltaR(*el)= " << mu_ZcandImpact->DeltaR(*el) << " fabs(mu_ZcandImpact->d0Sig(true))= " << fabs(mu_ZcandImpact->d0Sig(true)) << " fabs(mu_ZcandImpact->z0SinTheta(true)= " << fabs(mu_ZcandImpact->z0SinTheta(true)) << " Mll(mu, mu_ZcandImpact)= " << Mll(mu, mu_ZcandImpact) << " Mll(el, mu_ZcandImpact)= " << Mll(el, mu_ZcandImpact) << " mu_ZcandImpact->q= " << mu_ZcandImpact->q << " mu->q= " << mu->q << " el->q= " << el->q << endl;  
+    
+
     if(fabs(mu_ZcandImpact->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
     if(fabs(mu_ZcandImpact->z0SinTheta(true)) >= MUON_Z0_SINTHETA_CUT) continue;
     
@@ -2613,9 +2696,11 @@ bool unbiased = true;
   for(uint ie=0; ie<Electrons_all_vec.size(); ie++){
     el_ZcandImpact = Electrons_all_vec.at(ie);
     el_ZcandImpact->setState(NtSys_NOM);
-    
-	  
+
     if((el_ZcandImpact->DeltaR(*mu) < 0.05) || (el_ZcandImpact->DeltaR(*el) < 0.05)) continue; //only check for separation of signal leptons
+
+    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << nt.evt()->event << " el_ZcandImpact->pt= " << el_ZcandImpact->pt << " el_ZcandImpact->DeltaR(*mu)= " << el_ZcandImpact->DeltaR(*mu) << " el_ZcandImpact->DeltaR(*el)= " << el_ZcandImpact->DeltaR(*el) << " fabs(el_ZcandImpact->d0Sig(true))= " << fabs(el_ZcandImpact->d0Sig(true)) << " fabs(el_ZcandImpact->z0SinTheta(true)= " << fabs(el_ZcandImpact->z0SinTheta(true)) << " Mll(mu, el_ZcandImpact)= " << Mll(mu, el_ZcandImpact) << " Mll(el, el_ZcandImpact)= " << Mll(el, el_ZcandImpact) << " el_ZcandImpact->q= " << el_ZcandImpact->q << " mu->q= " << mu->q << " el->q= " << el->q << endl;  
+    
     
     if(fabs(el_ZcandImpact->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
     if(fabs(el_ZcandImpact->z0SinTheta(true)) >= ELECTRON_Z0_SINTHETA_CUT) continue;
@@ -2630,13 +2715,15 @@ bool unbiased = true;
       }
     }
   }
+  
  
   if(DeltaMZ_lZcandImpact_mu < DeltaMZ_lZcandImpact_el) isMu = true;
  
   else if (DeltaMZ_lZcandImpact_mu > DeltaMZ_lZcandImpact_el) isEl = true;
     
   
-  if(isMu){    
+  if(isMu){
+    
     TLorentzVector ZcandImpactMuon_TLV;
     ZcandImpactMuon_TLV.SetPtEtaPhiE(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->pt*cosh(mu_ZcandImpact_lost->eta));
     ZcandImpactMuon_TLV.SetPtEtaPhiM(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->m);
@@ -2649,6 +2736,7 @@ bool unbiased = true;
     ptcone30lZcandImpact_mu_EM = mu_ZcandImpact_lost->ptcone30ElStyle/mu_ZcandImpact_lost->pt;
     d0SiglZcandImpact_mu_EM = fabs(mu_ZcandImpact_lost->d0Sig(true));
     z0SinThetalZcandImpact_mu_EM = fabs(mu_ZcandImpact_lost->z0SinTheta(true));	
+    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << "mu_ZcandImpact_lost->pt= " << mu_ZcandImpact_lost->pt << " eta= " << mu_ZcandImpact_lost->eta<< " phi= " << mu_ZcandImpact_lost->phi  << " mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << endl;
   }
   
   if( isEl){    
@@ -2666,6 +2754,7 @@ bool unbiased = true;
     etcone30lZcandImpact_el_EM = etcone/el_ZcandImpact_lost->pt;		    	  
     d0SiglZcandImpact_el_EM = fabs(el_ZcandImpact_lost->d0Sig(true));
     z0SinThetalZcandImpact_el_EM = fabs(el_ZcandImpact_lost->z0SinTheta(true));	
+    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << "el_ZcandImpact_lost->pt= " << el_ZcandImpact_lost->pt << " eta= " << el_ZcandImpact_lost->eta<< " phi= " << el_ZcandImpact_lost->phi  << " mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << endl;
 //     DeltaMZ_lZcandImpact = fabs(MZ - Mll(el, el_ZcandImpact_lost));
   }
   
@@ -2692,7 +2781,7 @@ bool unbiased = true;
     else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
     else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
     else lepton_type = 0;      
-    if(fabs(mllZcandImpact_mu_EM - MZ) < 20.){
+    if(/*fabs(mllZcandImpact_mu_EM - MZ) < 20.*/1){
       h_3rdleptonType_mu_EM->Fill(lepton_type, 1.);
     
 //     cout << "       mu_ZcandImpact_lost->pt= " << mu_ZcandImpact_lost->pt << " mu->pt= " << mu->pt << " mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM;
@@ -2849,11 +2938,12 @@ bool unbiased = true;
       }
     }
       
-    if(fabs(mllZcandImpact_mu_EM - MZ) < 20.){
+    if(/*fabs(mllZcandImpact_mu_EM - MZ) < 20.*/1){
       
 //     cout << "mu_ZcandImpact->pt= " << mu_ZcandImpact->pt << " mu->pt= " << mu->pt << endl;
     for(uint ij=0; ij<prejets.size(); ij++){ 
       h_DeltaR_JVF_ljOR_mu_EM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)), prejets.at(ij)->jvf, 1.);
+      h_DeltaR_mll_ljOR_mu_EM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)), mllZcandImpact_mu_EM, 1.);
       int lepton_type = -1;
       if(mu_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT){
 	lepton_type = 1;
@@ -2886,7 +2976,7 @@ bool unbiased = true;
     else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
     else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
     else lepton_type = 0;      
-    if(fabs(mllZcandImpact_el_EM - MZ) < 20.){
+    if(/*fabs(mllZcandImpact_el_EM - MZ) < 20.*/1){
       h_3rdleptonType_el_EM->Fill(lepton_type, 1.);
     
     TLorentzVector el_ZcandImpact_lost_TLV;
@@ -3046,11 +3136,12 @@ bool unbiased = true;
       }
     }
       
-    if((mllZcandImpact_el_EM - MZ) < 20.){
+    if(/*(mllZcandImpact_el_EM - MZ) < 20.*/1){
       for(uint ij=0; ij<prejets.size(); ij++){ 
 	float etcone = elEtTopoConeCorr(el_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	float ptcone30 = elPtConeCorr(el_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	h_DeltaR_JVF_ljOR_el_EM->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), prejets.at(ij)->jvf, 1.);
+	h_DeltaR_mll_ljOR_el_EM->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), mllZcandImpact_el_EM, 1.);
 	int lepton_type = -1;
 	if(el_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT){
 	  lepton_type = 1;
@@ -3075,246 +3166,6 @@ bool unbiased = true;
   mZTT_coll = calcMZTauTau_coll(el_TLV, mu_TLV, met_TLV); 
 }
 
-
-void TSelector_SusyNtuple::estimate_WZ_tau_bg_EE(Electron* el0, Electron* e, TLorentzVector el0_TLV, TLorentzVector el1_TLV, SusyNtObject* susyNt){
-  TauVector preTaus = getPreTaus(susyNt, NtSys_NOM);
-//   Nleptons_tauZcand_EE = -1;
-//   Nleptons_preTau_EE = -1;
-//   ml0ltauZcand_EE = -1.;
-//   mTl0ltauZcand_EE = -1.;
-//   pTl0ltauZcand_EE = -1.;
-//   etal0ltauZcand_EE = -1.;
-//   jetBDTl0ltauZcand_EE = -1.;
-//   mltauZcand_EE = -1.;
-//   mTltauZcand_EE = -1.;
-//   pTltauZcand_EE = -1.;
-//   etaltauZcand_EE = -1.;
-//   jetBDTltauZcand_EE = -1.;
-    
-//   float DeltaMZ_l0_tauZcand = 99999.;
-//   float DeltaMZ_l1_tauZcand = 99999.;
-//   TauVector Tau_Zcand_vec;
-//   Tau* tau_lost_tauZcand;
-//   for(uint it=0; it<preTaus.size(); it++){
-//     Tau* tau_Zcand = preTaus.at(it);
-//     tau_Zcand->setState(NtSys_NOM);
-//     TLorentzVector tau_Zcand_TLV;
-//     tau_Zcand_TLV.SetPtEtaPhiE(tau_Zcand->pt, tau_Zcand->eta ,tau_Zcand->phi, tau_Zcand->pt*cosh(tau_Zcand->eta));
-//     tau_Zcand_TLV.SetPtEtaPhiM(tau_Zcand->pt, tau_Zcand->eta ,tau_Zcand->phi, tau_Zcand->m);
-//     
-//     if(tau_Zcand_TLV.DeltaR(el0_TLV) < 0.2 || tau_Zcand_TLV.DeltaR(el1_TLV) < 0.2) continue; //no overlap w/ signal lepton
-//       
-//     if((tau_Zcand->q * el0->q)<0. || (tau_Zcand->q * e->q)<0.){
-//       
-//       if(fabs(MZ - Mll(el0, tau_Zcand)) < DeltaMZ_l0_tauZcand){
-// 	Tau_Zcand_vec.push_back(tau_Zcand);
-// 	
-// 	ml0ltauZcand_EE = Mll(el0, tau_Zcand);      
-// 	mTl0ltauZcand_EE = calcMt(el0_TLV, tau_Zcand_TLV);  
-// 	pTl0ltauZcand_EE = tau_Zcand->pt;
-// 	etal0ltauZcand_EE = fabs(tau_Zcand->eta);
-// 	jetBDTl0ltauZcand_EE = tau_Zcand->jetBDTSigTight;
-// 	DeltaMZ_l0_tauZcand = fabs(MZ - Mll(el0, tau_Zcand));
-// 	tau_lost_tauZcand = tau_Zcand;
-//       }
-//       else{
-// 	if(fabs(MZ - Mll(e, tau_Zcand)) < DeltaMZ_l1_tauZcand){
-// 	  Tau_Zcand_vec.push_back(tau_Zcand);
-// 	  mltauZcand_EE = (el1_TLV + tau_Zcand_TLV).M();      
-// 	  mTltauZcand_EE = calcMt(el1_TLV, tau_Zcand_TLV);  
-// 	  pTltauZcand_EE = tau_Zcand->pt;
-// 	  etaltauZcand_EE = fabs(tau_Zcand->eta);
-// 	  jetBDTltauZcand_EE = tau_Zcand->jetBDTSigTight;
-// 	  
-// 	  DeltaMZ_l1_tauZcand = fabs(MZ - Mll(e, tau_Zcand));
-// 	  tau_lost_tauZcand = tau_Zcand;
-// 	}
-//       }
-//     } 
-//   }
-  
-//  Nleptons_tauZcand_EE = Tau_Zcand_vec.size(); 
-//  Nleptons_preTau_EE = preTaus.size(); 
-//  cout << "Nleptons_preTau_EE= " << Nleptons_preTau_EE << endl;
-
- 
-//   if(DeltaMZ_l0_tauZcand < DeltaMZ_l1_tauZcand){
-//     mltauZcand_EE = -1.;
-//     mTltauZcand_EE = -1.;
-//     pTltauZcand_EE = -1.;
-//     etaltauZcand_EE = -1.;
-//     jetBDTltauZcand_EE = -1.;
-// 
-//   }
-//   else{
-//     ml0ltauZcand_EE = -1.;      
-//     mTl0ltauZcand_EE = -1.;
-//     pTl0ltauZcand_EE = -1.;
-//     etal0ltauZcand_EE = -1.;
-//     jetBDTl0ltauZcand_EE = -1.;
-//   }
-}
-
-void TSelector_SusyNtuple::estimate_WZ_tau_bg_MM(Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, SusyNtObject* susyNt){
-  TauVector preTaus = getPreTaus(susyNt, NtSys_NOM);
-
-//   Nleptons_tauZcand_MM = -1;
-//   Nleptons_preTau_MM = -1;
-//   ml0ltauZcand_MM = -1.;
-//   mTl0ltauZcand_MM = -1.;
-//   pTl0ltauZcand_MM = -1.;
-//   etal0ltauZcand_MM = -1.;
-//   jetBDTl0ltauZcand_MM = -1.;
-//   mltauZcand_MM = -1.;
-//   mTltauZcand_MM = -1.;
-//   pTltauZcand_MM = -1.;
-//   etaltauZcand_MM = -1.;
-//   jetBDTltauZcand_MM = -1.;
-//   
-//   float DeltaMZ_l0_tauZcand = 99999.;
-//   float DeltaMZ_l1_tauZcand = 99999.;
-//   TauVector Tau_Zcand_vec;
-//   Tau* tau_lost_tauZcand;
-//   for(uint it=0; it<preTaus.size(); it++){
-//     Tau* tau_Zcand = preTaus.at(it);
-// 
-//     tau_Zcand->setState(NtSys_NOM);
-//     TLorentzVector tau_Zcand_TLV;
-//     tau_Zcand_TLV.SetPtEtaPhiE(tau_Zcand->pt, tau_Zcand->eta ,tau_Zcand->phi, tau_Zcand->pt*cosh(tau_Zcand->eta));
-//     tau_Zcand_TLV.SetPtEtaPhiM(tau_Zcand->pt, tau_Zcand->eta ,tau_Zcand->phi, tau_Zcand->m);
-//     
-//     if(tau_Zcand_TLV.DeltaR(mu0_TLV) < 0.2 || tau_Zcand_TLV.DeltaR(mu1_TLV) < 0.2) continue; //no overlap w/ signal lepton
-//       
-//     if((tau_Zcand->q * mu0->q)<0. || (tau_Zcand->q * mu1->q)<0.){
-//       
-//       if(fabs(MZ - Mll(mu0, tau_Zcand)) < DeltaMZ_l0_tauZcand){
-// 	Tau_Zcand_vec.push_back(tau_Zcand);
-// 	
-// 	ml0ltauZcand_MM = Mll(mu0, tau_Zcand);      
-// 	mTl0ltauZcand_MM = calcMt(mu0_TLV, tau_Zcand_TLV);  
-// 	pTl0ltauZcand_MM = tau_Zcand->pt;
-// 	etal0ltauZcand_MM = fabs(tau_Zcand->eta);
-// 	jetBDTl0ltauZcand_MM = tau_Zcand->jetBDTSigTight;
-// 	DeltaMZ_l0_tauZcand = fabs(MZ - Mll(mu0, tau_Zcand));
-// 	tau_lost_tauZcand = tau_Zcand;
-//       }
-//       else{
-// 	if(fabs(MZ - Mll(mu1, tau_Zcand)) < DeltaMZ_l1_tauZcand){
-// 	  Tau_Zcand_vec.push_back(tau_Zcand);
-// 	  mltauZcand_MM = (mu1_TLV + tau_Zcand_TLV).M();      
-// 	  mTltauZcand_MM = calcMt(mu1_TLV, tau_Zcand_TLV);  
-// 	  pTltauZcand_MM = tau_Zcand->pt;
-// 	  etaltauZcand_MM = fabs(tau_Zcand->eta);
-// 	  jetBDTltauZcand_MM = tau_Zcand->jetBDTSigTight;
-// 	  
-// 	  DeltaMZ_l1_tauZcand = fabs(MZ - Mll(mu1, tau_Zcand));
-// 	  tau_lost_tauZcand = tau_Zcand;
-// 	}
-//       }
-//     } 
-//   }
-  
-//  Nleptons_tauZcand_MM = Tau_Zcand_vec.size(); 
-//  Nleptons_preTau_MM = preTaus.size(); 
-//  cout << "Nleptons_preTau_MM= " << Nleptons_preTau_MM << endl;
-
- 
-//   if(DeltaMZ_l0_tauZcand < DeltaMZ_l1_tauZcand){
-//     mltauZcand_MM = -1.;
-//     mTltauZcand_MM = -1.;
-//     pTltauZcand_MM = -1.;
-//     etaltauZcand_MM = -1.;
-//     jetBDTltauZcand_MM = -1.;
-// 
-//   }
-//   else{
-//     ml0ltauZcand_MM = -1.;      
-//     mTl0ltauZcand_MM = -1.;
-//     pTl0ltauZcand_MM = -1.;
-//     etal0ltauZcand_MM = -1.;
-//     jetBDTl0ltauZcand_MM = -1.;
-//   }
-}
-
-void TSelector_SusyNtuple::estimate_WZ_tau_bg_EM(Muon* mu, Electron* el, TLorentzVector mu_TLV, TLorentzVector el_TLV, SusyNtObject* susyNt){
-  TauVector preTaus = getPreTaus(susyNt, NtSys_NOM);
-  
-//   Nleptons_tauZcand_EM = -1;
-//   Nleptons_preTau_EM = -1;
-//   ml0ltauZcand_EM = -1.;
-//   mTl0ltauZcand_EM = -1.;
-//   pTl0ltauZcand_EM = -1.;
-//   etal0ltauZcand_EM = -1.;
-//   jetBDTl0ltauZcand_EM = -1.;
-//   mltauZcand_EM = -1.;
-//   mTltauZcand_EM = -1.;
-//   pTltauZcand_EM = -1.;
-//   etaltauZcand_EM = -1.;
-//   jetBDTltauZcand_EM = -1.;
-//   
-//   float DeltaMZ_l0_tauZcand = 99999.;
-//   float DeltaMZ_l1_tauZcand = 99999.;
-//   TauVector Tau_Zcand_vec;
-//   Tau* tau_lost_tauZcand;
-//   for(uint it=0; it<preTaus.size(); it++){
-//     Tau* tau_Zcand = preTaus.at(it);
-//     tau_Zcand->setState(NtSys_NOM);
-//     TLorentzVector tau_Zcand_TLV;
-//     tau_Zcand_TLV.SetPtEtaPhiE(tau_Zcand->pt, tau_Zcand->eta ,tau_Zcand->phi, tau_Zcand->pt*cosh(tau_Zcand->eta));
-//     tau_Zcand_TLV.SetPtEtaPhiM(tau_Zcand->pt, tau_Zcand->eta ,tau_Zcand->phi, tau_Zcand->m);
-//     
-//     if(tau_Zcand_TLV.DeltaR(mu_TLV) < 0.2 || tau_Zcand_TLV.DeltaR(el_TLV) < 0.2) continue; //no overlap w/ signal lepton
-//       
-//     if((tau_Zcand->q * mu->q)<0. || (tau_Zcand->q * el->q)<0.){
-//       
-//       if(fabs(MZ - Mll(mu, tau_Zcand)) < DeltaMZ_l0_tauZcand){
-// 	Tau_Zcand_vec.push_back(tau_Zcand);
-// 	
-// 	ml0ltauZcand_EM = Mll(mu, tau_Zcand);      
-// 	mTl0ltauZcand_EM = calcMt(mu_TLV, tau_Zcand_TLV);  
-// 	pTl0ltauZcand_EM = tau_Zcand->pt;
-// 	etal0ltauZcand_EM = fabs(tau_Zcand->eta);
-// 	jetBDTl0ltauZcand_EM = tau_Zcand->jetBDTSigTight;
-// 	DeltaMZ_l0_tauZcand = fabs(MZ - Mll(mu, tau_Zcand));
-// 	tau_lost_tauZcand = tau_Zcand;
-//       }
-//       else{
-// 	if(fabs(MZ - Mll(el, tau_Zcand)) < DeltaMZ_l1_tauZcand){
-// 	  Tau_Zcand_vec.push_back(tau_Zcand);
-// 	  mltauZcand_EM = (el_TLV + tau_Zcand_TLV).M();      
-// 	  mTltauZcand_EM = calcMt(el_TLV, tau_Zcand_TLV);  
-// 	  pTltauZcand_EM = tau_Zcand->pt;
-// 	  etaltauZcand_EM = fabs(tau_Zcand->eta);
-// 	  jetBDTltauZcand_EM = tau_Zcand->jetBDTSigTight;
-// 	  
-// 	  DeltaMZ_l1_tauZcand = fabs(MZ - Mll(el, tau_Zcand));
-// 	  tau_lost_tauZcand = tau_Zcand;
-// 	}
-//       }
-//     } 
-//   }
-//   
-//   Nleptons_tauZcand_EM = Tau_Zcand_vec.size(); 
-//   Nleptons_preTau_EM = preTaus.size(); 
-//   cout << "Nleptons_preTau_EM= " << Nleptons_preTau_EM << endl;
-
- /*
-  if(DeltaMZ_l0_tauZcand < DeltaMZ_l1_tauZcand){
-    mltauZcand_EM = -1.;
-    mTltauZcand_EM = -1.;
-    pTltauZcand_EM = -1.;
-    etaltauZcand_EM = -1.;
-    jetBDTltauZcand_EM = -1.;
-
-  }
-  else{
-    ml0ltauZcand_EM = -1.;      
-    mTl0ltauZcand_EM = -1.;
-    pTl0ltauZcand_EM = -1.;
-    etal0ltauZcand_EM = -1.;
-    jetBDTl0ltauZcand_EM = -1.;
-  }*/
-}
   
 
 void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, float weight_ALL_EE){
@@ -3376,6 +3227,7 @@ void TSelector_SusyNtuple::fillHistos_EE_SRSS1(float cut_EE, float weight_ALL_EE
   h_D0Signif_branch_l1_EE_SRSS1->Fill(sD0Signif_branch_l1_EE, cut_EE, weight_ALL_EE);  
 
   h_Mljj_EE_SRSS1->Fill(Mljj_EE, cut_EE, weight_ALL_EE);  
+  h_Mlj_EE_SRSS1->Fill(Mlj_EE, cut_EE, weight_ALL_EE);  
 
   
   
@@ -3468,6 +3320,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM
   h_D0Signif_branch_l1_MM_SRSS1->Fill(sD0Signif_branch_l1_MM, cut_MM, weight_ALL_MM);  
   
   h_Mljj_MM_SRSS1->Fill(Mljj_MM, cut_MM, weight_ALL_MM);
+  h_Mlj_MM_SRSS1->Fill(Mlj_MM, cut_MM, weight_ALL_MM);
     
   h_Nleptons_ZcandImpact_MM_SRSS1->Fill(Nleptons_ZcandImpact_MM, cut_MM, weight_ALL_MM);  
   h_mllZcandImpact_MM_SRSS1->Fill(mllZcandImpact_MM, cut_MM, weight_ALL_MM);  
@@ -3551,6 +3404,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM
   h_D0Signif_branch_l1_EM_SRSS1->Fill(sD0Signif_branch_l1_EM, cut_EM, weight_ALL_EM);  
 
   h_Mljj_EM_SRSS1->Fill(Mljj_EM, cut_EM, weight_ALL_EM);  
+  h_Mlj_EM_SRSS1->Fill(Mlj_EM, cut_EM, weight_ALL_EM);  
 
   h_Nleptons_ZcandImpact_mu_EM_SRSS1->Fill(Nleptons_ZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
   h_mllZcandImpact_mu_EM_SRSS1->Fill(mllZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  

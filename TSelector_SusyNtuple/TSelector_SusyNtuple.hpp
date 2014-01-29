@@ -13,8 +13,8 @@
 // #include "TSystem.h"
 // Susy Common
 #include "SusyNtuple/SusyNtTruthAna.h"
-#include "SusyNtuple/SusyNtAna.h"
 #include "SusyNtuple/SusyNtTools.h"
+#include "SusyNtuple/SusyNtAna.h"
 #include "SusyNtuple/DilTrigLogic.h"
 #include "SUSYTools/SUSYObjDef.h"
 #include "LeptonTruthTools/RecoTruthMatch.h"
@@ -27,16 +27,16 @@
 #include "TH2.h"
 #include "TH3.h"
 // #include "mmc/mmc.cpp"
-#include "MultiLep/CutflowTools.h"
-
-#include "MultiLep/MuonD3PDObject.h"
-#include "MultiLep/ElectronD3PDObject.h"
-#include "MultiLep/VertexD3PDObject.h"
-#include "MultiLep/METD3PDObject.h"
-#include "MultiLep/JetD3PDObject.h"
-#include "MultiLep/TrackD3PDObject.h"
-#include "MultiLep/JetTools.h"
-#include "MultiLep/LeptonInfo.h"
+// #include "MultiLep/CutflowTools.h"
+// 
+// #include "MultiLep/MuonD3PDObject.h"
+// #include "MultiLep/ElectronD3PDObject.h"
+// #include "MultiLep/VertexD3PDObject.h"
+// #include "MultiLep/METD3PDObject.h"
+// #include "MultiLep/JetD3PDObject.h"
+// #include "MultiLep/TrackD3PDObject.h"
+// #include "MultiLep/JetTools.h"
+// #include "MultiLep/LeptonInfo.h"
 // #include "TupleMaker.h"
 
 #ifndef __CINT__
@@ -120,6 +120,11 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_DeltaR_JVF_ljOR_MM; 
     TH2F* h_DeltaR_JVF_ljOR_mu_EM;
     TH2F* h_DeltaR_JVF_ljOR_el_EM;
+    
+    TH2F* h_DeltaR_mll_ljOR_EE; 
+    TH2F* h_DeltaR_mll_ljOR_MM; 
+    TH2F* h_DeltaR_mll_ljOR_mu_EM;
+    TH2F* h_DeltaR_mll_ljOR_el_EM;    
     
     TH2F* h_DeltaR_leptonType_ljOR_EE;
     TH2F* h_DeltaR_leptonType_ljOR_MM;
@@ -250,6 +255,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_Mljj_EE_SRSS1;
     TH2F* h_Mljj_MM_SRSS1;
     TH2F* h_Mljj_EM_SRSS1;
+    
+    TH2F* h_Mlj_EE_SRSS1;
+    TH2F* h_Mlj_MM_SRSS1;
+    TH2F* h_Mlj_EM_SRSS1;    
     
     TH2F* h_DeltaRLeptons_EE_SRSS1;
     TH2F* h_DeltaRLeptons_EE_SRSS2;
@@ -945,15 +954,11 @@ class TSelector_SusyNtuple : public SusyNtAna
     void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_MM);
     void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM);
     
-    void estimate_WZ_tau_bg_EE(Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, SusyNtObject* susyNt);
-    void estimate_WZ_tau_bg_MM(Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, SusyNtObject* susyNt);
-    void estimate_WZ_tau_bg_EM(Muon* mu, Electron* el, TLorentzVector mu_TLV, TLorentzVector el_TLV, SusyNtObject* susyNt);
-    
     void fillHistos_EE_SRSS1(float cut_EE, float weight_ALL_EE);    
     void fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM);    
     void fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM);
     
-    float getFakeWeight(const LeptonVector &baseLeps, SusyMatrixMethod::FAKE_REGION region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
+    float getFakeWeight(const LeptonVector &baseLeps, susy::fake::Region region, float metRel, SusyMatrixMethod::SYSTEMATIC sys);
     
     float calc_D0(bool unbiased, const Lepton* lep);
     static bool compareElecMomentum (Electron* e0, Electron* e1);
@@ -1035,6 +1040,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhil1jj_EE;
     float DeltaRlljj_EE;
     float Mljj_EE;
+    float Mlj_EE;
     float DeltaEtall_EE;
     
     float D0_branch_l0_EE;
@@ -1099,6 +1105,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhil1jj_MM;
     float DeltaRlljj_MM;
     float Mljj_MM;
+    float Mlj_MM;
     float DeltaEtall_MM;
     
     float D0_branch_l0_MM;
@@ -1160,6 +1167,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float DeltaPhil1jj_EM;
     float DeltaRlljj_EM;
     float Mljj_EM;
+    float Mlj_EM;
     float DeltaEtall_EM;
     
     float D0_branch_l0_EM;
@@ -1250,7 +1258,6 @@ class TSelector_SusyNtuple : public SusyNtAna
     float sumw_from_histo;
     
     bool m_kIsData;
-    bool runWithPoD;
     bool calcFakeContribution; 
     
     enum LEP_TYPE{PR=0, CONV, HF, LF, TYPE_Undef};

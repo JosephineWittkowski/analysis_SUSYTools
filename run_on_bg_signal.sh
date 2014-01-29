@@ -1,4 +1,6 @@
-# root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_ZPlusJets/*\")"
+root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_bg_new2/root_files_ZPlusJets/split1/*\")"
+root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp3/jwittkow/SusyNtuple/ZPlusJets_old_new_download/split4/*\")"
+#root -l "run_root_TSelector_SusyNtuple.C(\"/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0145_ZPlusJets/split1/*\")"
 # root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp6/jwittkow/SusyNtuples_n0145_bg_new/WZ/*\")"
 
 
@@ -36,5 +38,5 @@
 # root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_signal_samples/user.gerbaudo.mc12_8TeV.177524.Herwigpp_sM_wA_noslep_notauhad_WH_2Lep_24.SusyNt.e2149_s1581_s1586_r3658_r3549_p1512_n0145.130911145836_r1/*\")"
 # root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_signal_samples/user.gerbaudo.mc12_8TeV.177525.Herwigpp_sM_wA_noslep_notauhad_WH_2Lep_25.SusyNt.e2149_s1581_s1586_r3658_r3549_p1512_n0145.130822144907/*\")"
 # root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_signal_samples/user.gerbaudo.mc12_8TeV.177526.Herwigpp_sM_wA_noslep_notauhad_WH_2Lep_26.SusyNt.e2149_s1581_s1586_r3658_r3549_p1512_n0145.131022115143/*\")"
-root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_signal_samples/user.gerbaudo.mc12_8TeV.177527.Herwigpp_sM_wA_noslep_notauhad_WH_2Lep_27.SusyNt.e2149_s1581_s1586_r3658_r3549_p1512_n0145.130911145949_r1/*\")"
+# root -l "run_root_TSelector_SusyNtuple.C(\"/data/etp5/jwittkow/SusyNtuples_n0145_signal_samples/user.gerbaudo.mc12_8TeV.177527.Herwigpp_sM_wA_noslep_notauhad_WH_2Lep_27.SusyNt.e2149_s1581_s1586_r3658_r3549_p1512_n0145.130911145949_r1/*\")"
 
