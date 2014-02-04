@@ -107,7 +107,8 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_failedSignalCriteria_el_EM = new TH2F("h_failedSignalCriteria_el_EM", "h_failedSignalCriteria_el_EM", 15, -0.5, 14.5, 130, 0, 129); h_failedSignalCriteria_el_EM->Sumw2();
 
   h_etcone30lZcandImpact_EE_SRSS1 = new TH2F("h_etcone30lZcandImpact_EE_SRSS1", "h_etcone30lZcandImpact_EE_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30lZcandImpact_EE_SRSS1->Sumw2();
-  
+  h_etcone30lZcandImpact_MM_SRSS1 = new TH2F("h_etcone30lZcandImpact_MM_SRSS1", "h_etcone30lZcandImpact_MM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30lZcandImpact_MM_SRSS1->Sumw2();
+  h_etcone30lZcandImpact_mu_EM_SRSS1 = new TH2F("h_etcone30lZcandImpact_mu_EM_SRSS1", "h_etcone30lZcandImpact_mu_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30lZcandImpact_mu_EM_SRSS1->Sumw2();
   h_etcone30lZcandImpact_el_EM_SRSS1 = new TH2F("h_etcone30lZcandImpact_el_EM_SRSS1", "h_etcone30lZcandImpact_el_EM_SRSS1", 100, 0, 1 ,130, 0, 129); h_etcone30lZcandImpact_el_EM_SRSS1->Sumw2();
     
    //ZcandidateImpactParamter
@@ -1594,7 +1595,8 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_failedSignalCriteria_el_EM->Write();
 
   h_etcone30lZcandImpact_EE_SRSS1->Write();  
-    
+  h_etcone30lZcandImpact_MM_SRSS1->Write();      
+  h_etcone30lZcandImpact_mu_EM_SRSS1->Write();
   h_etcone30lZcandImpact_el_EM_SRSS1->Write();
     
   h_Nleptons_ZcandImpact_EE_SRSS1->Write();
@@ -1823,7 +1825,8 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   sD0Signif_branch_l0_EE = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_EE;
   sD0Signif_branch_l1_EE = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_EE;
   
-  ElectronVector Electrons_all_vec;// = getPreElectrons(&nt, NtSys_NOM);
+  //get all electrons in SusyNtuple which have pT > 6 GeV
+  ElectronVector Electrons_all_vec;
   for(uint ie=0; ie<susyNt->ele()->size(); ++ie){
     Electron* e = & susyNt->ele()->at(ie);
     e->setState(NtSys_NOM);
@@ -1831,8 +1834,21 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 
     Electrons_all_vec.push_back(e);
   }
+    JetVector prejets = getPreJets(&nt, NtSys_NOM); 
+//   perform overlap removal to check which electrons *would* have been removed
+  ElectronVector elecs = Electrons_all_vec;
+  MuonVector muons = getPreMuons(susyNt, NtSys_NOM);
+  JetVector jets  = getPreJets(susyNt, NtSys_NOM);
+  TauVector taus = getPreTaus(susyNt, NtSys_NOM);
 
-  //ZcandImpact electrons: all electrons after the OR w/o m-j OR which are no signal electrons
+  // Now perform the overlap removals
+  performOverlap(elecs, muons, taus, jets);
+
+  // Do SFOS removal for Mll < 12 
+  removeSFOSPair(elecs, MLL_MIN);
+//   removeSFOSPair(muons, MLL_MIN);
+  
+
   mllZcandImpact_EE = -1.;      
   mTllZcandImpact_EE = -1.;
   IClZcandImpact_EE = -5;
@@ -1852,7 +1868,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   ZcandLep_passesZ0_EE = true; 
   ZcandLep_PassesMedium_EE = true;
   ZcandLep_PassesTight_EE = true; 
-  ZcandLep_PassesORAndMllCut_EE = true;
+  ZcandLep_PassesORAndMllCut_EE = false;
   ZcandLep_PassesPR_EE = true;
   
   
@@ -1860,162 +1876,154 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 
   ElectronVector Electron_ZcandImpact_vec;
   Electron* el_ZcandImpact_lost;
-
-  TruthParticleVector truthElectrons;
-  TruthParticleVector truthMuons;
-  for(uint index=0; index<nt.tpr()->size(); ++index){
-    TruthParticle* particle = & nt.tpr()->at(index);
-//     if(fabs((*particle).pdgId) == 11) truthElectrons.push_back(particle);
-//     if(fabs(particle->pdgId) == 13) truthMuons.push_back(particle);
-//     cout << "particle->pdgId= " << particle->pdgId << " particle->motherPdgId= " << particle->motherPdgId << " particle->eta= " << particle->eta << " particle->phi= " << particle->phi << endl;
-  }
+ 
   
-  Electron* closest_signal_el;
-  TLorentzVector closest_signal_el_TLV;
-  bool foundCandidate = false;
-  for(uint ie=0; ie<Electrons_all_vec.size(); ie++){
+  
+    Electron* closest_signal_el;
+    TLorentzVector closest_signal_el_TLV;
+    bool foundCandidate = false;
+    for(uint ie=0; ie<Electrons_all_vec.size(); ie++){
+      
     
-    
-    Electron* el_ZcandImpact = Electrons_all_vec.at(ie);
-    el_ZcandImpact->setState(NtSys_NOM);
+      Electron* el_ZcandImpact = Electrons_all_vec.at(ie);
+      el_ZcandImpact->setState(NtSys_NOM);
 
-    if(nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << nt.evt()->event << " el_ZcandImpact->pt= " << el_ZcandImpact->pt << " el_ZcandImpact->DeltaR(*el0)= " << el_ZcandImpact->DeltaR(*el0) << " el_ZcandImpact->DeltaR(*el1)= " << el_ZcandImpact->DeltaR(*el1) << " fabs(el_ZcandImpact->d0Sig(true))= " << fabs(el_ZcandImpact->d0Sig(true)) << " fabs(el_ZcandImpact->z0SinTheta(true)= " << fabs(el_ZcandImpact->z0SinTheta(true)) << " Mll(el0, el_ZcandImpact)= " << Mll(el0, el_ZcandImpact) << " Mll(el1, el_ZcandImpact)= " << Mll(el1, el_ZcandImpact) << " el_ZcandImpact->q= " << el_ZcandImpact->q << " el0->q= " << el0->q << " el1->q= " << el1->q << endl;
+      if((el_ZcandImpact->DeltaR(*el0) < 0.05) || (el_ZcandImpact->DeltaR(*el1) < 0.05)) continue; //no overlap w/ signal lepton
+      
+      if(fabs(el_ZcandImpact->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
+      if(fabs(el_ZcandImpact->z0SinTheta(true)) >= ELECTRON_Z0_SINTHETA_CUT) continue;
 
-    if((el_ZcandImpact->DeltaR(*el0) < 0.05) || (el_ZcandImpact->DeltaR(*el1) < 0.05)) continue; //no overlap w/ signal lepton
-    
+      TLorentzVector ZcandImpactElec_TLV;
+      ZcandImpactElec_TLV.SetPtEtaPhiE(el_ZcandImpact->pt, el_ZcandImpact->eta ,el_ZcandImpact->phi, el_ZcandImpact->pt*cosh(el_ZcandImpact->eta));
+      ZcandImpactElec_TLV.SetPtEtaPhiM(el_ZcandImpact->pt, el_ZcandImpact->eta ,el_ZcandImpact->phi, el_ZcandImpact->m);
 
-    if(fabs(el_ZcandImpact->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
-    if(fabs(el_ZcandImpact->z0SinTheta(true)) >= ELECTRON_Z0_SINTHETA_CUT) continue;
-
-    TLorentzVector ZcandImpactElec_TLV;
-    ZcandImpactElec_TLV.SetPtEtaPhiE(el_ZcandImpact->pt, el_ZcandImpact->eta ,el_ZcandImpact->phi, el_ZcandImpact->pt*cosh(el_ZcandImpact->eta));
-    ZcandImpactElec_TLV.SetPtEtaPhiM(el_ZcandImpact->pt, el_ZcandImpact->eta ,el_ZcandImpact->phi, el_ZcandImpact->m);
-    
-//     if((el_ZcandImpact->q * el0->q)<0. || (el_ZcandImpact->q * el1->q)<0.){
-	float DeltaMZ_l0_ZcandImpact = 999.;
-	if((fabs(MZ - Mll(el0, el_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((el_ZcandImpact->q * el0->q)<0.)){
-	  DeltaMZ_l0_ZcandImpact = fabs(MZ - Mll(el0, el_ZcandImpact));
-	  foundCandidate = true;
-	}
-	float DeltaMZ_l1_ZcandImpact = 999.;
-	if((fabs(MZ - Mll(el1, el_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((el_ZcandImpact->q * el1->q)<0.)){
-	  DeltaMZ_l1_ZcandImpact = fabs(MZ - Mll(el1, el_ZcandImpact));
-	  foundCandidate = true;
-	}
-	if(foundCandidate && ( (fabs(MZ - Mll(el1, el_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(el0, el_ZcandImpact)) < DeltaMZ_lZcandImpact) )){
-
-	  el_ZcandImpact_lost = el_ZcandImpact;
-	  if(DeltaMZ_l0_ZcandImpact < DeltaMZ_l1_ZcandImpact){
-	    closest_signal_el = el0;
-	    closest_signal_el_TLV = el0_TLV;
-	    foundCandidate = true;
-	  }
-	  else{
-	    closest_signal_el = el1;
-	    closest_signal_el_TLV = el1_TLV;
-	    foundCandidate = true;
-	  }
-	  mllZcandImpact_EE = Mll(closest_signal_el, el_ZcandImpact);      
-	  mTllZcandImpact_EE = calcMt(closest_signal_el_TLV, ZcandImpactElec_TLV);  
-	  pTlZcandImpact_EE = el_ZcandImpact->pt;
-	  etalZcandImpact_EE = fabs(el_ZcandImpact->eta);
-	  float ptcone30 = elPtConeCorr(el_ZcandImpact, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
-	  ptcone30lZcandImpact_EE = ptcone30/el_ZcandImpact->pt;
-	  float etcone = elEtTopoConeCorr(el_ZcandImpact, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
-	  etcone30lZcandImpact_EE = etcone/el_ZcandImpact->pt;		    	  
-	  d0SiglZcandImpact_EE = fabs(el_ZcandImpact->d0Sig(true));
-	  z0SinThetalZcandImpact_EE = fabs(el_ZcandImpact->z0SinTheta(true));	
-	  DeltaMZ_lZcandImpact = fabs(MZ - Mll(closest_signal_el, el_ZcandImpact));
-	  
-	  Electron_ZcandImpact_vec.push_back(el_ZcandImpact);
-	}
-	  
+//       SFOS pair with leading or subleading signal electron closer to Zmass?
+      float DeltaMZ_l0_ZcandImpact = 999.;
+      if((fabs(MZ - Mll(el0, el_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((el_ZcandImpact->q * el0->q)<0.)){
+	DeltaMZ_l0_ZcandImpact = fabs(MZ - Mll(el0, el_ZcandImpact));
+	foundCandidate = true;
       }
-//       }
-//   }
+      float DeltaMZ_l1_ZcandImpact = 999.;
+      if((fabs(MZ - Mll(el1, el_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((el_ZcandImpact->q * el1->q)<0.)){
+	DeltaMZ_l1_ZcandImpact = fabs(MZ - Mll(el1, el_ZcandImpact));
+	foundCandidate = true;
+      }
+      
+      if(foundCandidate && ( (fabs(MZ - Mll(el1, el_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(el0, el_ZcandImpact)) < DeltaMZ_lZcandImpact) )){
+
+	el_ZcandImpact_lost = el_ZcandImpact;
+	if(DeltaMZ_l0_ZcandImpact < DeltaMZ_l1_ZcandImpact){
+	  closest_signal_el = el0;
+	  closest_signal_el_TLV = el0_TLV;
+	}
+	else{
+	  closest_signal_el = el1;
+	  closest_signal_el_TLV = el1_TLV;
+	}
+	
+	mllZcandImpact_EE = Mll(closest_signal_el, el_ZcandImpact);      
+	mTllZcandImpact_EE = calcMt(closest_signal_el_TLV, ZcandImpactElec_TLV);  
+	pTlZcandImpact_EE = el_ZcandImpact->pt;
+	etalZcandImpact_EE = fabs(el_ZcandImpact->eta);
+	float ptcone30 = elPtConeCorr(el_ZcandImpact, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
+	ptcone30lZcandImpact_EE = ptcone30/std::min(el_ZcandImpact->pt,ELECTRON_ISO_PT_THRS);
+
+	
+	float etcone = elEtTopoConeCorr(el_ZcandImpact, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
+	etcone30lZcandImpact_EE = etcone/std::min(el_ZcandImpact->pt,ELECTRON_ISO_PT_THRS);	
+	d0SiglZcandImpact_EE = fabs(el_ZcandImpact->d0Sig(true));
+	z0SinThetalZcandImpact_EE = fabs(el_ZcandImpact->z0SinTheta(true));	
+	DeltaMZ_lZcandImpact = fabs(MZ - Mll(closest_signal_el, el_ZcandImpact));
+	
+	Electron_ZcandImpact_vec.push_back(el_ZcandImpact);
+      }
+      
+    }
 
 
   Nleptons_ZcandImpact_EE = Electron_ZcandImpact_vec.size();
   
   if(Nleptons_ZcandImpact_EE>0) {
-//     if(nt.evt()->event == 433899) cout << "el_ZcandImpact_lost->pt= " << el_ZcandImpact_lost->pt << " eta= " << el_ZcandImpact_lost->eta<< " phi= " << el_ZcandImpact_lost->phi  << " mllZcandImpact_EE= " << mllZcandImpact_EE << endl;
-    ZcandLep_exists_EE = true;
-    if(pTlZcandImpact_EE < 10.) ZcandLep_passesPT_EE = false;
-    if(ptcone30lZcandImpact_EE >= ELECTRON_PTCONE30_PT_CUT) ZcandLep_passesPTcone_EE = false;
-    if(etcone30lZcandImpact_EE >= ELECTRON_TOPOCONE30_PT_CUT) ZcandLep_passesETcone_EE = false;
-    if(d0SiglZcandImpact_EE >= ELECTRON_D0SIG_CUT_WH) ZcandLep_passesD0_EE = false;
-    if(z0SinThetalZcandImpact_EE >= ELECTRON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_EE = false;
-    ZcandLep_PassesMedium_EE = el_ZcandImpact_lost->mediumPP;
-    ZcandLep_PassesTight_EE = el_ZcandImpact_lost->tightPP;
-    if(el_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_EE =  false;
 
+    ZcandLep_exists_EE = true;
+//     if(fabs(mllZcandImpact_EE - MZ) < 20.){
+      if(pTlZcandImpact_EE < 10.) ZcandLep_passesPT_EE = false;
+      if(ptcone30lZcandImpact_EE >= ELECTRON_PTCONE30_PT_WH_CUT) ZcandLep_passesPTcone_EE = false;
+      if(etcone30lZcandImpact_EE >= ELECTRON_TOPOCONE30_PT_WH_CUT) ZcandLep_passesETcone_EE = false;
+      if(d0SiglZcandImpact_EE >= ELECTRON_D0SIG_CUT_WH) ZcandLep_passesD0_EE = false;
+      if(z0SinThetalZcandImpact_EE >= ELECTRON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_EE = false;
+      ZcandLep_PassesMedium_EE = el_ZcandImpact_lost->mediumPP;
+      ZcandLep_PassesTight_EE = el_ZcandImpact_lost->tightPP;
+      if(el_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_EE =  false;
+      for(unsigned int ie = 0; ie< elecs.size(); ie ++){
+	 if(elecs.at(ie)->DeltaR(*el_ZcandImpact_lost) < 0.0001) ZcandLep_PassesORAndMllCut_EE = true;
+      }
+//     }
+    
     int lepton_type = -1;
     if(el_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT) lepton_type = 1;	
     else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
     else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
     else lepton_type = 0;      
-    if(fabs(mllZcandImpact_EE - MZ) < 20.) h_3rdleptonType_EE->Fill(lepton_type, 1.);
-  
-    JetVector prejets = getPreJets(&nt, NtSys_NOM); 
-    if(/*fabs(mllZcandImpact_EE - MZ) < 20.*/1){
+    
+    if(fabs(mllZcandImpact_EE - MZ) < 20.){
+      
+      h_3rdleptonType_EE->Fill(lepton_type, 1.);
       TLorentzVector el_ZcandImpact_lost_TLV;
       el_ZcandImpact_lost_TLV.SetPtEtaPhiE(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->pt*cosh(el_ZcandImpact_lost->eta));
       el_ZcandImpact_lost_TLV.SetPtEtaPhiM(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->m);
       
 //       study HF lost electrons:
       if (el_ZcandImpact_lost->truthType == RecoTruthMatch::HF){
-
-// 	  cout << nt.evt()->event << "HF electron" << endl;
 	  
-	  h_Ntpr_ljOR_HF_EE->Fill(nt.tpr()->size(),  1.);
+// 	  h_Ntpr_ljOR_HF_EE->Fill(nt.tpr()->size(),  1.);
 	  
-	  TruthParticleVector candidates_3rd_truth_lepton;
-	  TruthParticle* third_truth_particle;
-	  TLorentzVector third_truth_particle_TLV;
+// 	  TruthParticleVector candidates_3rd_truth_lepton;
+// 	  TruthParticle* third_truth_particle;
+// 	  TLorentzVector third_truth_particle_TLV;
 	  
 	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
-	  float DeltaR_min_lostLepton_truthParticle = 999.;
-	  for(uint index=0; index<nt.tpr()->size(); ++index){
-	    TruthParticle* truthparticle = & nt.tpr()->at(index);
-	    TLorentzVector truthparticle_TLV;
-	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
-	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
-// 	    cout << "truthparticle->eta= " << truthparticle->eta << " truthparticle->phi= " << truthparticle->phi <<" truthparticle DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) << endl;
-	    
-	    if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
-
-	       
-	    if((truthparticle_TLV.DeltaR(el0_TLV) < 0.003) || (truthparticle_TLV.DeltaR(el1_TLV) < 0.003)) continue; //no overlap w/ signal lepton
-	    third_truth_particle = truthparticle;
-
-	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
-	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
-	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
-
-
-	    
-	    
-	  }
-	  h_DeltaR_min_lostLepton_truthParticle_HF_EE->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+// 	  float DeltaR_min_lostLepton_truthParticle = 999.;
+// 	  for(uint index=0; index<nt.tpr()->size(); ++index){
+// 	    TruthParticle* truthparticle = & nt.tpr()->at(index);
+// 	    TLorentzVector truthparticle_TLV;
+// 	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
+// 	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
+// 	    
+// 	    if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
+// 
+// 	       
+// 	    if((truthparticle_TLV.DeltaR(el0_TLV) < 0.003) || (truthparticle_TLV.DeltaR(el1_TLV) < 0.003)) continue; //no overlap w/ signal lepton
+// 	    third_truth_particle = truthparticle;
+// 
+// 	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
+// 	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
+// 	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
+// 
+// 
+// 	    
+// 	    
+// 	  }
+// 	  h_DeltaR_min_lostLepton_truthParticle_HF_EE->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
 
 	  //loop over 3rd truth lepton (should only be one):
 	  
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
-	    }
-	    
-	    h_DeltaR_min_lostLepton_truthJet_HF_EE->Fill(DeltaR_min_lostLepton_truthJet,  1.);
-	    
-	  }
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// // 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
+// 	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
+// 	    }
+// 	    
+// 	    h_DeltaR_min_lostLepton_truthJet_HF_EE->Fill(DeltaR_min_lostLepton_truthJet,  1.);
+// 	    
+// 	  }
 	  float DeltaR_min_lostLepton_preJet = 999.;
 	  Jet* prejet_minDeltaR;
 	  for(uint ij=0; ij<prejets.size(); ij++){ 
@@ -2024,7 +2032,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	      TLorentzVector prejet_TLV;
 	      prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
 	      prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) << endl;
+	      
 	      if(prejet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_preJet){
 		DeltaR_min_lostLepton_preJet = el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);
 		prejet_minDeltaR = prejet;
@@ -2033,66 +2041,60 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	      
 	    }
 	    h_DeltaR_min_lostLepton_preJet_HF_EE->Fill(DeltaR_min_lostLepton_preJet,  1.);
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_HF_EE->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
-// 	    cout << " prejet_minDeltaR->jvf= " <<  prejet_minDeltaR->jvf << " DeltaR_min_lostLepton_preJet= " << DeltaR_min_lostLepton_preJet << endl;
 	    
 	  
       }
       
       //study LF lost electrons:
       if (el_ZcandImpact_lost->truthType == RecoTruthMatch::LF){
-
-// 	  cout << nt.evt()->event << "LF electron" << endl;
 	  
-	  h_Ntpr_ljOR_LF_EE->Fill(nt.tpr()->size(),  1.);
+// 	  h_Ntpr_ljOR_LF_EE->Fill(nt.tpr()->size(),  1.);
 	  
-	  TruthParticleVector candidates_3rd_truth_lepton;
-	  TruthParticle* third_truth_particle;
-	  TLorentzVector third_truth_particle_TLV;
+// 	  TruthParticleVector candidates_3rd_truth_lepton;
+// 	  TruthParticle* third_truth_particle;
+// 	  TLorentzVector third_truth_particle_TLV;
 	  
 	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
-	  float DeltaR_min_lostLepton_truthParticle = 999.;
-	  for(uint index=0; index<nt.tpr()->size(); ++index){
-	    TruthParticle* truthparticle = & nt.tpr()->at(index);
-	    TLorentzVector truthparticle_TLV;
-	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
-	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
-// 	    cout << "truthparticle->eta= " << truthparticle->eta << " truthparticle->phi= " << truthparticle->phi <<" truthparticle DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) << endl;
-	    
-	    if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
-
-	       
-	    if((truthparticle_TLV.DeltaR(el0_TLV) < 0.003) || (truthparticle_TLV.DeltaR(el1_TLV) < 0.003)) continue; //no overlap w/ signal lepton
-	    third_truth_particle = truthparticle;
-
-	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
-	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
-	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
-
-
-	    
-	    
-	  }
-	  h_DeltaR_min_lostLepton_truthParticle_LF_EE->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+// 	  float DeltaR_min_lostLepton_truthParticle = 999.;
+// 	  for(uint index=0; index<nt.tpr()->size(); ++index){
+// 	    TruthParticle* truthparticle = & nt.tpr()->at(index);
+// 	    TLorentzVector truthparticle_TLV;
+// 	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
+// 	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
+// 	    
+// 	    if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
+// 
+// 	       
+// 	    if((truthparticle_TLV.DeltaR(el0_TLV) < 0.003) || (truthparticle_TLV.DeltaR(el1_TLV) < 0.003)) continue; //no overlap w/ signal lepton
+// 	    third_truth_particle = truthparticle;
+// 
+// 	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
+// 	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
+// 	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
+// 
+// 
+// 	    
+// 	    
+// 	  }
+// 	  h_DeltaR_min_lostLepton_truthParticle_LF_EE->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
 
 	  //loop over 3rd truth lepton (should only be one):
 	  
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
-	    }
-	    
-	    h_DeltaR_min_lostLepton_truthJet_LF_EE->Fill(DeltaR_min_lostLepton_truthJet,  1.);
-	    
-	  }
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// 	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
+// 	    }
+// 	    
+// 	    h_DeltaR_min_lostLepton_truthJet_LF_EE->Fill(DeltaR_min_lostLepton_truthJet,  1.);
+// 	    
+// 	  }
 	  float DeltaR_min_lostLepton_preJet = 999.;
 	  Jet* prejet_minDeltaR;
 	  for(uint ij=0; ij<prejets.size(); ij++){ 
@@ -2101,7 +2103,6 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	      TLorentzVector prejet_TLV;
 	      prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
 	      prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) << endl;
 	      if(el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) < DeltaR_min_lostLepton_preJet){
 		DeltaR_min_lostLepton_preJet = el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);
 		prejet_minDeltaR = prejet;
@@ -2109,12 +2110,11 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	      
 	      
 	    }
-// 	    cout << "EE DeltaR_min_lostLepton_preJet= " << DeltaR_min_lostLepton_preJet << endl;
 	    h_DeltaR_min_lostLepton_preJet_LF_EE->Fill(DeltaR_min_lostLepton_preJet,  1.);
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_LF_EE->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
 	    
 	  
       }
+    }
       
       for(uint ij=0; ij<prejets.size(); ij++){ 
 	Jet* prejet = prejets.at(ij);
@@ -2124,8 +2124,6 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	h_DeltaR_JVF_ljOR_EE->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), prejets.at(ij)->jvf, 1.);      
 	h_DeltaR_mll_ljOR_EE->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), mllZcandImpact_EE, 1.);      
 
-	  
-// 	int lepton_type = -1;
 	if(el_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT){
 	  lepton_type = 1;
 	  h_DeltaR_etcone_ljOR_PR_EE->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), etcone/el_ZcandImpact_lost->pt, 1.);
@@ -2143,7 +2141,6 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
 	if(fabs(mllZcandImpact_EE - MZ) < 20.) h_DeltaR_leptonType_ljOR_EE->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)), lepton_type, 1.);
       }
     }
-  }
  
 
   		  
@@ -2227,13 +2224,27 @@ bool unbiased = true;
   sD0Signif_branch_l0_MM = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_MM;
   sD0Signif_branch_l1_MM = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_MM;
   
-  MuonVector Muons_all_vec;// = getPreMuons(&nt, NtSys_NOM);
+  MuonVector Muons_all_vec;
   for(uint im=0; im<susyNt->muo()->size(); ++im){
     Muon* mu = & susyNt->muo()->at(im);
     mu->setState(NtSys_NOM);    
     if(mu->pt < 6.) continue;
     Muons_all_vec.push_back(mu);
   }
+  JetVector prejets = getPreJets(&nt, NtSys_NOM); 
+  ElectronVector elecs = getPreElectrons(susyNt, NtSys_NOM);
+  MuonVector muons = Muons_all_vec;
+  JetVector jets  = getPreJets(susyNt, NtSys_NOM);
+  TauVector taus = getPreTaus(susyNt, NtSys_NOM);
+
+  //cout<<"Select Taus: "<<selectTaus<<" size: "<<taus.size()<<endl;
+
+  // Now perform the overlap removals
+  performOverlap(elecs, muons, taus, jets);
+
+  // Do SFOS removal for Mll < 12 
+//   removeSFOSPair(elecs, MLL_MIN);
+  removeSFOSPair(muons, MLL_MIN);
   
   //ZcandImpact muons: all muons, only check for distance to signal muons
   mllZcandImpact_MM = -1.;      
@@ -2242,6 +2253,7 @@ bool unbiased = true;
   pTlZcandImpact_MM = -1.;
   etalZcandImpact_MM = -1.;
   ptcone30lZcandImpact_MM = -1.;
+  etcone30lZcandImpact_MM = -1.;
   d0SiglZcandImpact_MM = -1.;
   z0SinThetalZcandImpact_MM = -1.;
   
@@ -2254,7 +2266,7 @@ bool unbiased = true;
   ZcandLep_passesZ0_MM = true; 
   ZcandLep_PassesMedium_MM = true;
   ZcandLep_PassesTight_MM = true; 
-  ZcandLep_PassesORAndMllCut_MM = true; 
+  ZcandLep_PassesORAndMllCut_MM = false; 
   ZcandLep_PassesPR_MM = true; 
   
   
@@ -2266,13 +2278,11 @@ bool unbiased = true;
   TLorentzVector closest_signal_mu_TLV;
   bool foundCandidate = false;
   for(uint im=0; im<Muons_all_vec.size(); im++){
-//     if(nt.evt()->event == 2089564) cout << "DeltaMZ_lZcandImpact= " << DeltaMZ_lZcandImpact << endl;
+
     Muon* mu_ZcandImpact = Muons_all_vec.at(im);
     mu_ZcandImpact->setState(NtSys_NOM);
     
     if((mu_ZcandImpact->DeltaR(*mu0) < 0.05) || (mu_ZcandImpact->DeltaR(*mu1) < 0.05)) continue; //only check for separation of signal leptons
-
-//     if(nt.evt()->event == 2089564) cout << nt.evt()->event << " mu_ZcandImpact->pt= " << mu_ZcandImpact->pt << " mu_ZcandImpact->DeltaR(*mu0)= " << mu_ZcandImpact->DeltaR(*mu0) << " mu_ZcandImpact->DeltaR(*mu1)= " << mu_ZcandImpact->DeltaR(*mu1) << " fabs(mu_ZcandImpact->d0Sig(true))= " << fabs(mu_ZcandImpact->d0Sig(true)) << " fabs(mu_ZcandImpact->z0SinTheta(true)= " << fabs(mu_ZcandImpact->z0SinTheta(true)) << " Mll(mu0, mu_ZcandImpact)= " << Mll(mu0, mu_ZcandImpact) << " Mll(mu1, mu_ZcandImpact)= " << Mll(mu1, mu_ZcandImpact) << " mu_ZcandImpact->q= " << mu_ZcandImpact->q << " mu0->q= " << mu0->q << " mu1->q= " << mu1->q << endl;  
 
     if(fabs(mu_ZcandImpact->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
     if(fabs(mu_ZcandImpact->z0SinTheta(true)) >= MUON_Z0_SINTHETA_CUT) continue;
@@ -2281,66 +2291,71 @@ bool unbiased = true;
     ZcandImpact_TLV.SetPtEtaPhiE(mu_ZcandImpact->pt, mu_ZcandImpact->eta ,mu_ZcandImpact->phi, mu_ZcandImpact->pt*cosh(mu_ZcandImpact->eta));
     ZcandImpact_TLV.SetPtEtaPhiM(mu_ZcandImpact->pt, mu_ZcandImpact->eta ,mu_ZcandImpact->phi, mu_ZcandImpact->m);
     
-//     if((mu_ZcandImpact->q * mu0->q)<0. || (mu_ZcandImpact->q * mu1->q)<0.){
-	float DeltaMZ_l0_ZcandImpact = 999.;
-	if(((fabs(MZ - Mll(mu0, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((mu_ZcandImpact->q * mu0->q)<0.))){
-	  DeltaMZ_l0_ZcandImpact = fabs(MZ - Mll(mu0, mu_ZcandImpact));
-	  foundCandidate = true;
-	}
-	float DeltaMZ_l1_ZcandImpact = 999.;
-	if(((fabs(MZ - Mll(mu1, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((mu_ZcandImpact->q * mu1->q)<0.))){
-	  DeltaMZ_l1_ZcandImpact = fabs(MZ - Mll(mu1, mu_ZcandImpact));
-	  foundCandidate = true;
-	}
-	
-	if(foundCandidate && ((fabs(MZ - Mll(mu1, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(mu0, mu_ZcandImpact)) < DeltaMZ_lZcandImpact))){
- 
-	  mu_ZcandImpact_lost = mu_ZcandImpact;
-	  if(DeltaMZ_l0_ZcandImpact < DeltaMZ_l1_ZcandImpact){
-	    closest_signal_mu = mu0;
-	    closest_signal_mu_TLV = mu0_TLV;
-	  }
-	  else{
-	    closest_signal_mu = mu1;
-	    closest_signal_mu_TLV = mu1_TLV;
-	  }
-	  mllZcandImpact_MM = Mll(closest_signal_mu, mu_ZcandImpact);      
-	  mTllZcandImpact_MM = calcMt(closest_signal_mu_TLV, ZcandImpact_TLV);  
-	  IClZcandImpact_MM = mu_ZcandImpact->isCombined;
-	  pTlZcandImpact_MM = mu_ZcandImpact->pt;
-	  etalZcandImpact_MM = fabs(mu_ZcandImpact->eta);
-	  ptcone30lZcandImpact_MM = mu_ZcandImpact->ptcone30ElStyle/mu_ZcandImpact->pt;
-	  d0SiglZcandImpact_MM = fabs(mu_ZcandImpact->d0Sig(true));
-	  z0SinThetalZcandImpact_MM = fabs(mu_ZcandImpact->z0SinTheta(true));	
-	  DeltaMZ_lZcandImpact = fabs(MZ - Mll(closest_signal_mu, mu_ZcandImpact));
-	  
-	  Muon_ZcandImpact_vec.push_back(mu_ZcandImpact);
-	}
-	  
+    float DeltaMZ_l0_ZcandImpact = 999.;
+    if(((fabs(MZ - Mll(mu0, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((mu_ZcandImpact->q * mu0->q)<0.))){
+      DeltaMZ_l0_ZcandImpact = fabs(MZ - Mll(mu0, mu_ZcandImpact));
+      foundCandidate = true;
+    }
+    float DeltaMZ_l1_ZcandImpact = 999.;
+    if(((fabs(MZ - Mll(mu1, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) && ((mu_ZcandImpact->q * mu1->q)<0.))){
+      DeltaMZ_l1_ZcandImpact = fabs(MZ - Mll(mu1, mu_ZcandImpact));
+      foundCandidate = true;
+    }
+    
+    if(foundCandidate && ((fabs(MZ - Mll(mu1, mu_ZcandImpact)) < DeltaMZ_lZcandImpact) || (fabs(MZ - Mll(mu0, mu_ZcandImpact)) < DeltaMZ_lZcandImpact))){
+
+      mu_ZcandImpact_lost = mu_ZcandImpact;
+      if(DeltaMZ_l0_ZcandImpact < DeltaMZ_l1_ZcandImpact){
+	closest_signal_mu = mu0;
+	closest_signal_mu_TLV = mu0_TLV;
       }
-//       }
-//     }
+      else{
+	closest_signal_mu = mu1;
+	closest_signal_mu_TLV = mu1_TLV;
+      }
+      mllZcandImpact_MM = Mll(closest_signal_mu, mu_ZcandImpact);      
+      mTllZcandImpact_MM = calcMt(closest_signal_mu_TLV, ZcandImpact_TLV);  
+      IClZcandImpact_MM = mu_ZcandImpact->isCombined;
+      pTlZcandImpact_MM = mu_ZcandImpact->pt;
+      etalZcandImpact_MM = fabs(mu_ZcandImpact->eta);
+      ptcone30lZcandImpact_MM = mu_ZcandImpact->ptcone30ElStyle/std::min(mu_ZcandImpact->pt,MUON_ISO_PT_THRS);
+      float etcone30 = muEtConeCorr(mu_ZcandImpact, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false);
+      etcone30lZcandImpact_MM = etcone30/std::min(mu_ZcandImpact->pt,MUON_ISO_PT_THRS);	   
+      d0SiglZcandImpact_MM = fabs(mu_ZcandImpact->d0Sig(true));
+      z0SinThetalZcandImpact_MM = fabs(mu_ZcandImpact->z0SinTheta(true));	
+      DeltaMZ_lZcandImpact = fabs(MZ - Mll(closest_signal_mu, mu_ZcandImpact));
+      
+      Muon_ZcandImpact_vec.push_back(mu_ZcandImpact);
+    }
+      
+  }
+
     
   Nleptons_ZcandImpact_MM = Muon_ZcandImpact_vec.size(); 
  
   if(Nleptons_ZcandImpact_MM>0){    
     ZcandLep_exists_MM = true;
-    if(pTlZcandImpact_MM < 10.) ZcandLep_passesPT_MM = false;
-    if(etalZcandImpact_MM >= 2.4) ZcandLep_passesEta_MM = false;
-    if(ptcone30lZcandImpact_MM >= MUON_PTCONE30ELSTYLE_PT_CUT) ZcandLep_passesPTcone_MM = false;
-    if(d0SiglZcandImpact_MM >= MUON_D0SIG_CUT) ZcandLep_passesD0_MM = false;
-    if(z0SinThetalZcandImpact_MM >= MUON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_MM = false;
-    if(Muon_ZcandImpact_vec.size() > 0) if(mu_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_MM = false;
+//     if(fabs(mllZcandImpact_MM - MZ) < 20.){
+      if(pTlZcandImpact_MM < 10.) ZcandLep_passesPT_MM = false;
+      if(etalZcandImpact_MM >= 2.4) ZcandLep_passesEta_MM = false;
+      if(ptcone30lZcandImpact_MM >= MUON_PTCONE30ELSTYLE_PT_WH_CUT) ZcandLep_passesPTcone_MM = false;
+      if(etcone30lZcandImpact_MM >= MUON_ETCONE30_PT_WH_CUT) ZcandLep_passesETcone_MM = false;
+      if(d0SiglZcandImpact_MM >= MUON_D0SIG_CUT) ZcandLep_passesD0_MM = false;
+      if(z0SinThetalZcandImpact_MM >= MUON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_MM = false;
+      if(mu_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_MM = false;
+      for(unsigned int im = 0; im< muons.size(); im ++){
+	if(muons.at(im)->DeltaR(*mu_ZcandImpact_lost) < 0.0001) ZcandLep_PassesORAndMllCut_MM = true;
+      }
+//     }
     
-    int lepton_type = -1;
-    if(mu_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT) lepton_type = 1;	
-    else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
-    else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
-    else lepton_type = 0;      
-    if(fabs(mllZcandImpact_MM - MZ) < 20.) h_3rdleptonType_MM->Fill(lepton_type, 1.);
-    
-    JetVector prejets = getPreJets(&nt, NtSys_NOM); 
-    if(/*fabs(mllZcandImpact_MM - MZ) < 20.*/1){
+    if(fabs(mllZcandImpact_MM - MZ) < 20.){
+      int lepton_type = -1;
+      if(mu_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT) lepton_type = 1;	
+      else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
+      else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
+      else lepton_type = 0;      
+      h_3rdleptonType_MM->Fill(lepton_type, 1.);
+      
       TLorentzVector mu_ZcandImpact_lost_TLV;
       mu_ZcandImpact_lost_TLV.SetPtEtaPhiE(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->pt*cosh(mu_ZcandImpact_lost->eta));
       mu_ZcandImpact_lost_TLV.SetPtEtaPhiM(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->m);
@@ -2348,56 +2363,52 @@ bool unbiased = true;
       
       //study HF lost muons:
       if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::HF){
-// 	cout << nt.evt()->event << " HF muon" << endl;
-	  h_Ntpr_ljOR_HF_MM->Fill(nt.tpr()->size(),  1.);
-	  
-	  TruthParticleVector candidates_3rd_truth_lepton;
-	  TruthParticle* third_truth_particle;
-	  TLorentzVector third_truth_particle_TLV;
-	  float DeltaR_min_lostLepton_truthParticle = 999.;
-	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
-	  for(uint index=0; index<nt.tpr()->size(); ++index){
-	    TruthParticle* truthparticle = & nt.tpr()->at(index);
-	    TLorentzVector truthparticle_TLV;
-	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
-	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
-// 	    cout << "truthparticle->eta= " << truthparticle->eta << " truthparticle->phi= " << truthparticle->phi <<" truthparticle DeltaR= " << mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) << endl;
-	    if(mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
-	    
+// 	  h_Ntpr_ljOR_HF_MM->Fill(nt.tpr()->size(),  1.);
+// 	  
+// 	  TruthParticleVector candidates_3rd_truth_lepton;
+// 	  TruthParticle* third_truth_particle;
+// 	  TLorentzVector third_truth_particle_TLV;
+// 	  float DeltaR_min_lostLepton_truthParticle = 999.;
+// 	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
+// 	  for(uint index=0; index<nt.tpr()->size(); ++index){
+// 	    TruthParticle* truthparticle = & nt.tpr()->at(index);
+// 	    TLorentzVector truthparticle_TLV;
+// 	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
+// 	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
+// 	    if(mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
+// 	    
+// 
+// 	    if((truthparticle_TLV.DeltaR(mu0_TLV) < 0.003) || (truthparticle_TLV.DeltaR(mu1_TLV) < 0.003)) continue; //no overlap w/ signal lepton
+// 	    third_truth_particle = truthparticle;
+// 
+// 	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
+// 	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
+// 	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
+// 
+// 
+// 	  }
 
-	    if((truthparticle_TLV.DeltaR(mu0_TLV) < 0.003) || (truthparticle_TLV.DeltaR(mu1_TLV) < 0.003)) continue; //no overlap w/ signal lepton
-	    third_truth_particle = truthparticle;
-
-	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
-	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
-	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
-
-
-	  }
-
-	  h_DeltaR_min_lostLepton_truthParticle_HF_MM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+// 	  h_DeltaR_min_lostLepton_truthParticle_HF_MM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
 
 
 	  //loop over 3rd truth lepton (should only be one):
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-
-	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
-
-	    }
-
-	    h_DeltaR_min_lostLepton_truthJet_HF_MM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
-
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_HF_MM->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
-	  }
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// 
+// 	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
+// 
+// 	    }
+// 
+// 	    h_DeltaR_min_lostLepton_truthJet_HF_MM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
+// 
+// 	  }
 	  float DeltaR_min_lostLepton_preJet = 999.;
 	  Jet* prejet_minDeltaR;
 	  for(uint ij=0; ij<prejets.size(); ij++){ 
@@ -2406,7 +2417,6 @@ bool unbiased = true;
 	    TLorentzVector prejet_TLV;
 	    prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
 	    prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << third_truth_particle_TLV.DeltaR(prejet_TLV) << endl;
 	    if(mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) < DeltaR_min_lostLepton_preJet){
 	      prejet_minDeltaR = prejet;
 	      DeltaR_min_lostLepton_preJet = mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);	    
@@ -2420,11 +2430,10 @@ bool unbiased = true;
       
           //study LF lost muons:
       if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF){
-// 	cout << nt.evt()->event << " LF muon" << endl;
 
-	h_Ntpr_ljOR_LF_MM->Fill(nt.tpr()->size(),  1.);
+// 	h_Ntpr_ljOR_LF_MM->Fill(nt.tpr()->size(),  1.);
 	  
-	  
+/*	  
 	  TruthParticleVector candidates_3rd_truth_lepton;
 	  TruthParticle* third_truth_particle;
 	  TLorentzVector third_truth_particle_TLV;
@@ -2449,51 +2458,46 @@ bool unbiased = true;
 
 	  }
 
-	  h_DeltaR_min_lostLepton_truthParticle_LF_MM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+	  h_DeltaR_min_lostLepton_truthParticle_LF_MM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);*/
 
 
 	  //loop over 3rd truth lepton (should only be one):
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-
-	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
-
-	    }
-
-	    h_DeltaR_min_lostLepton_truthJet_LF_MM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
-
-
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_LF_MM->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// 
+// 	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
+// 
+// 	    }
+// 
+// 	    h_DeltaR_min_lostLepton_truthJet_LF_MM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
+// 	  }
+	float DeltaR_min_lostLepton_preJet = 999.;
+	Jet* prejet_minDeltaR;
+	for(uint ij=0; ij<prejets.size(); ij++){ 
+	  Jet* prejet = prejets.at(ij);
+	  
+	  TLorentzVector prejet_TLV;
+	  prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
+	  prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
+	  if(mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) < DeltaR_min_lostLepton_preJet){
+	    prejet_minDeltaR = prejet;
+	    DeltaR_min_lostLepton_preJet = mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);	    
 	  }
-	  float DeltaR_min_lostLepton_preJet = 999.;
-	  Jet* prejet_minDeltaR;
-	  for(uint ij=0; ij<prejets.size(); ij++){ 
-	    Jet* prejet = prejets.at(ij);
-	    
-	    TLorentzVector prejet_TLV;
-	    prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
-	    prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << third_truth_particle_TLV.DeltaR(prejet_TLV) << endl;
-	    if(mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) < DeltaR_min_lostLepton_preJet){
-	      prejet_minDeltaR = prejet;
-	      DeltaR_min_lostLepton_preJet = mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);	    
-	    }
-	    
-	    
-	  }
-	  h_DeltaR_min_lostLepton_preJet_LF_MM->Fill(DeltaR_min_lostLepton_preJet, 1.);
+	  
+	  
+	}
+	h_DeltaR_min_lostLepton_preJet_LF_MM->Fill(DeltaR_min_lostLepton_preJet, 1.);
 	  
       }
-      
-// 	cout << "      mu_ZcandImpact_lost->pt= " << mu_ZcandImpact_lost->pt << " closest_signal_mu->pt= " << closest_signal_mu->pt << " mllZcandImpact_MM= " << mllZcandImpact_MM;
+    }
+
       
       for(uint ij=0; ij<prejets.size(); ij++){ 
 	
@@ -2515,7 +2519,6 @@ bool unbiased = true;
       }
 
     }
-  }
     
   mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, met_TLV); 
 }
@@ -2594,7 +2597,7 @@ bool unbiased = true;
   sD0Signif_branch_l0_EM = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_EM;
   sD0Signif_branch_l1_EM = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_EM;
       
-  MuonVector Muons_all_vec;// = getPreMuons(&nt, NtSys_NOM);
+  MuonVector Muons_all_vec;
   for(uint im=0; im<susyNt->muo()->size(); ++im){
     Muon* mu = & susyNt->muo()->at(im);
     mu->setState(NtSys_NOM); 
@@ -2602,13 +2605,37 @@ bool unbiased = true;
     Muons_all_vec.push_back(mu);
   }
   
-  ElectronVector Electrons_all_vec;// = getPreElectrons(&nt, NtSys_NOM);
+  ElectronVector Electrons_all_vec;
   for(uint ie=0; ie<susyNt->ele()->size(); ++ie){
     Electron* e = & susyNt->ele()->at(ie);
     e->setState(NtSys_NOM);
     if(e->pt < 6.) continue;
     Electrons_all_vec.push_back(e);
   }
+  JetVector prejets = getPreJets(&nt, NtSys_NOM); 
+  ElectronVector elecs_mu = getPreElectrons(susyNt, NtSys_NOM);
+  MuonVector muons_mu = Muons_all_vec;
+  JetVector jets_mu  = getPreJets(susyNt, NtSys_NOM);
+  TauVector taus_mu = getPreTaus(susyNt, NtSys_NOM);
+
+  // Now perform the overlap removals
+  performOverlap(elecs_mu, muons_mu, taus_mu, jets_mu);
+
+  // Do SFOS removal for Mll < 12 
+//   removeSFOSPair(elecs_mu, MLL_MIN);
+  removeSFOSPair(muons_mu, MLL_MIN);
+  
+  ElectronVector elecs_el = Electrons_all_vec;
+  MuonVector muons_el = getPreMuons(susyNt, NtSys_NOM);
+  JetVector jets_el  = getPreJets(susyNt, NtSys_NOM);
+  TauVector taus_el = getPreTaus(susyNt, NtSys_NOM);
+
+  // Now perform the overlap removals
+  performOverlap(elecs_el, muons_el, taus_el, jets_el);
+
+  // Do SFOS removal for Mll < 12 
+  removeSFOSPair(elecs_el, MLL_MIN);
+//   removeSFOSPair(muons_el, MLL_MIN);
   
   //ZcandImpact muons: all muons, only check for distance to signal muons
   
@@ -2618,6 +2645,7 @@ bool unbiased = true;
   pTlZcandImpact_mu_EM = -1.;
   etalZcandImpact_mu_EM = -1.;
   ptcone30lZcandImpact_mu_EM = -1.;
+  etcone30lZcandImpact_mu_EM = -1.;
   d0SiglZcandImpact_mu_EM = -1.;
   z0SinThetalZcandImpact_mu_EM = -1.;
   
@@ -2640,7 +2668,7 @@ bool unbiased = true;
   ZcandLep_passesZ0_mu_EM = true; 
   ZcandLep_PassesMedium_mu_EM = true;
   ZcandLep_PassesTight_mu_EM = true; 
-  ZcandLep_PassesORAndMllCut_mu_EM = true;
+  ZcandLep_PassesORAndMllCut_mu_EM = false;
   ZcandLep_PassesPR_mu_EM = true;
   
   ZcandLep_exists_el_EM = false;
@@ -2652,7 +2680,7 @@ bool unbiased = true;
   ZcandLep_passesZ0_el_EM = true; 
   ZcandLep_PassesMedium_el_EM = true;
   ZcandLep_PassesTight_el_EM = true;
-  ZcandLep_PassesORAndMllCut_el_EM = true;
+  ZcandLep_PassesORAndMllCut_el_EM = false;
   ZcandLep_PassesPR_el_EM = true;
   
   
@@ -2676,9 +2704,6 @@ bool unbiased = true;
     
     if((mu_ZcandImpact->DeltaR(*mu) < 0.05) || mu_ZcandImpact->DeltaR(*el) < 0.05) continue;  //only check for separation of signal leptons
 
-    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << nt.evt()->event << " mu_ZcandImpact->pt= " << mu_ZcandImpact->pt << " mu_ZcandImpact->DeltaR(*mu)= " << 	mu_ZcandImpact->DeltaR(*mu) << " mu_ZcandImpact->DeltaR(*el)= " << mu_ZcandImpact->DeltaR(*el) << " fabs(mu_ZcandImpact->d0Sig(true))= " << fabs(mu_ZcandImpact->d0Sig(true)) << " fabs(mu_ZcandImpact->z0SinTheta(true)= " << fabs(mu_ZcandImpact->z0SinTheta(true)) << " Mll(mu, mu_ZcandImpact)= " << Mll(mu, mu_ZcandImpact) << " Mll(el, mu_ZcandImpact)= " << Mll(el, mu_ZcandImpact) << " mu_ZcandImpact->q= " << mu_ZcandImpact->q << " mu->q= " << mu->q << " el->q= " << el->q << endl;  
-    
-
     if(fabs(mu_ZcandImpact->d0Sig(true)) >= MUON_D0SIG_CUT) continue;
     if(fabs(mu_ZcandImpact->z0SinTheta(true)) >= MUON_Z0_SINTHETA_CUT) continue;
     
@@ -2699,9 +2724,6 @@ bool unbiased = true;
 
     if((el_ZcandImpact->DeltaR(*mu) < 0.05) || (el_ZcandImpact->DeltaR(*el) < 0.05)) continue; //only check for separation of signal leptons
 
-    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << nt.evt()->event << " el_ZcandImpact->pt= " << el_ZcandImpact->pt << " el_ZcandImpact->DeltaR(*mu)= " << el_ZcandImpact->DeltaR(*mu) << " el_ZcandImpact->DeltaR(*el)= " << el_ZcandImpact->DeltaR(*el) << " fabs(el_ZcandImpact->d0Sig(true))= " << fabs(el_ZcandImpact->d0Sig(true)) << " fabs(el_ZcandImpact->z0SinTheta(true)= " << fabs(el_ZcandImpact->z0SinTheta(true)) << " Mll(mu, el_ZcandImpact)= " << Mll(mu, el_ZcandImpact) << " Mll(el, el_ZcandImpact)= " << Mll(el, el_ZcandImpact) << " el_ZcandImpact->q= " << el_ZcandImpact->q << " mu->q= " << mu->q << " el->q= " << el->q << endl;  
-    
-    
     if(fabs(el_ZcandImpact->d0Sig(true)) >= ELECTRON_D0SIG_CUT_WH) continue;
     if(fabs(el_ZcandImpact->z0SinTheta(true)) >= ELECTRON_Z0_SINTHETA_CUT) continue;
     
@@ -2733,10 +2755,12 @@ bool unbiased = true;
     IClZcandImpact_mu_EM = mu_ZcandImpact_lost->isCombined;
     pTlZcandImpact_mu_EM = mu_ZcandImpact_lost->pt;
     etalZcandImpact_mu_EM = fabs(mu_ZcandImpact_lost->eta);
-    ptcone30lZcandImpact_mu_EM = mu_ZcandImpact_lost->ptcone30ElStyle/mu_ZcandImpact_lost->pt;
+    ptcone30lZcandImpact_mu_EM = mu_ZcandImpact_lost->ptcone30ElStyle/std::min(mu_ZcandImpact_lost->pt,MUON_ISO_PT_THRS);
+    float etcone30 = muEtConeCorr(mu_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC, false);
+    etcone30lZcandImpact_mu_EM = etcone30/std::min(mu_ZcandImpact_lost->pt,MUON_ISO_PT_THRS);  
     d0SiglZcandImpact_mu_EM = fabs(mu_ZcandImpact_lost->d0Sig(true));
     z0SinThetalZcandImpact_mu_EM = fabs(mu_ZcandImpact_lost->z0SinTheta(true));	
-    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << "mu_ZcandImpact_lost->pt= " << mu_ZcandImpact_lost->pt << " eta= " << mu_ZcandImpact_lost->eta<< " phi= " << mu_ZcandImpact_lost->phi  << " mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << endl;
+ 
   }
   
   if( isEl){    
@@ -2749,13 +2773,13 @@ bool unbiased = true;
     pTlZcandImpact_el_EM = el_ZcandImpact_lost->pt;
     etalZcandImpact_el_EM = fabs(el_ZcandImpact_lost->eta);
     float ptcone30 = elPtConeCorr(el_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
-    ptcone30lZcandImpact_el_EM = ptcone30/el_ZcandImpact_lost->pt;
+    ptcone30lZcandImpact_el_EM = ptcone30/std::min(el_ZcandImpact_lost->pt,ELECTRON_ISO_PT_THRS);
+    
     float etcone = elEtTopoConeCorr(el_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
-    etcone30lZcandImpact_el_EM = etcone/el_ZcandImpact_lost->pt;		    	  
+    etcone30lZcandImpact_el_EM = etcone/std::min(el_ZcandImpact_lost->pt,ELECTRON_ISO_PT_THRS);		    	  	    
     d0SiglZcandImpact_el_EM = fabs(el_ZcandImpact_lost->d0Sig(true));
     z0SinThetalZcandImpact_el_EM = fabs(el_ZcandImpact_lost->z0SinTheta(true));	
-    if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << "el_ZcandImpact_lost->pt= " << el_ZcandImpact_lost->pt << " eta= " << el_ZcandImpact_lost->eta<< " phi= " << el_ZcandImpact_lost->phi  << " mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << endl;
-//     DeltaMZ_lZcandImpact = fabs(MZ - Mll(el, el_ZcandImpact_lost));
+
   }
   
   
@@ -2764,84 +2788,81 @@ bool unbiased = true;
   Nleptons_ZcandImpact_mu_EM = Muon_ZcandImpact_vec.size();
   Nleptons_ZcandImpact_el_EM = Electron_ZcandImpact_vec.size();
   
-   
-  JetVector prejets = getPreJets(&nt, NtSys_NOM); 
   
   if(isMu){    
     ZcandLep_exists_mu_EM = true;
-    if(pTlZcandImpact_mu_EM < 10.) ZcandLep_passesPT_mu_EM = false;
-    if(fabs(etalZcandImpact_mu_EM) >= 2.4) ZcandLep_passesEta_mu_EM = false;
-    if(ptcone30lZcandImpact_mu_EM >= MUON_PTCONE30ELSTYLE_PT_CUT) ZcandLep_passesPTcone_mu_EM = false;
-    if(d0SiglZcandImpact_mu_EM >= MUON_D0SIG_CUT) ZcandLep_passesD0_mu_EM = false;
-    if(z0SinThetalZcandImpact_mu_EM >= MUON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_mu_EM = false;
-    if(mu_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_mu_EM = false;
-    
-    int lepton_type = -1;
-    if(mu_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT) lepton_type = 1;	
-    else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
-    else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
-    else lepton_type = 0;      
-    if(/*fabs(mllZcandImpact_mu_EM - MZ) < 20.*/1){
+//     if(fabs(mllZcandImpact_mu_EM - MZ) < 20.){
+      if(pTlZcandImpact_mu_EM < 10.) ZcandLep_passesPT_mu_EM = false;
+      if(fabs(etalZcandImpact_mu_EM) >= 2.4) ZcandLep_passesEta_mu_EM = false;
+      if(ptcone30lZcandImpact_mu_EM >= MUON_PTCONE30ELSTYLE_PT_WH_CUT) ZcandLep_passesPTcone_mu_EM = false;
+      if(etcone30lZcandImpact_mu_EM >= MUON_ETCONE30_PT_WH_CUT) ZcandLep_passesETcone_mu_EM = false;
+      if(d0SiglZcandImpact_mu_EM >= MUON_D0SIG_CUT) ZcandLep_passesD0_mu_EM = false;
+      if(z0SinThetalZcandImpact_mu_EM >= MUON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_mu_EM = false;
+      if(mu_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_mu_EM = false;
+      for(unsigned int im = 0; im< muons_mu.size(); im ++){
+	if(muons_mu.at(im)->DeltaR(*mu_ZcandImpact_lost) < 0.0001) ZcandLep_PassesORAndMllCut_mu_EM = true;
+      }
+//     }
+    if(fabs(mllZcandImpact_mu_EM - MZ) < 20.){
+      int lepton_type = -1;
+      if(mu_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT) lepton_type = 1;	
+      else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
+      else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
+      else lepton_type = 0;      
       h_3rdleptonType_mu_EM->Fill(lepton_type, 1.);
     
-//     cout << "       mu_ZcandImpact_lost->pt= " << mu_ZcandImpact_lost->pt << " mu->pt= " << mu->pt << " mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM;
     
-    TLorentzVector mu_ZcandImpact_lost_TLV;
-    mu_ZcandImpact_lost_TLV.SetPtEtaPhiE(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->pt*cosh(mu_ZcandImpact_lost->eta));
-    mu_ZcandImpact_lost_TLV.SetPtEtaPhiM(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->m);
-          //study HF lost muons:
+      TLorentzVector mu_ZcandImpact_lost_TLV;
+      mu_ZcandImpact_lost_TLV.SetPtEtaPhiE(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->pt*cosh(mu_ZcandImpact_lost->eta));
+      mu_ZcandImpact_lost_TLV.SetPtEtaPhiM(mu_ZcandImpact_lost->pt, mu_ZcandImpact_lost->eta ,mu_ZcandImpact_lost->phi, mu_ZcandImpact_lost->m);
+    //study HF lost muons:	
       if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::HF){
-// 	cout << nt.evt()->event << " HF EM muon" << endl;
-	  h_Ntpr_ljOR_HF_mu_EM->Fill(nt.tpr()->size(),  1.);
+	
+// 	  h_Ntpr_ljOR_HF_mu_EM->Fill(nt.tpr()->size(),  1.);
 	  
-	  TruthParticleVector candidates_3rd_truth_lepton;
-	  TruthParticle* third_truth_particle;
-	  TLorentzVector third_truth_particle_TLV;
-	  float DeltaR_min_lostLepton_truthParticle = 999.;
-	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
-	  for(uint index=0; index<nt.tpr()->size(); ++index){
-	    TruthParticle* truthparticle = & nt.tpr()->at(index);
-	    TLorentzVector truthparticle_TLV;
-	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
-	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
-// 	    cout << "truthparticle->eta= " << truthparticle->eta << " truthparticle->phi= " << truthparticle->phi <<" truthparticle DeltaR= " << mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) << endl;
-	    if(mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
-	    
-
-	    if(truthparticle_TLV.DeltaR(mu_TLV) < 0.003) continue; //no overlap w/ signal lepton
-	    third_truth_particle = truthparticle;
-
-	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
-	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
-	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
-
-
-	  }
-
-	  h_DeltaR_min_lostLepton_truthParticle_HF_mu_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+// 	  TruthParticleVector candidates_3rd_truth_lepton;
+// 	  TruthParticle* third_truth_particle;
+// 	  TLorentzVector third_truth_particle_TLV;
+// 	  float DeltaR_min_lostLepton_truthParticle = 999.;
+// 	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
+// 	  for(uint index=0; index<nt.tpr()->size(); ++index){
+// 	    TruthParticle* truthparticle = & nt.tpr()->at(index);
+// 	    TLorentzVector truthparticle_TLV;
+// 	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
+// 	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
+// 	    if(mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
+// 	    
+// 
+// 	    if(truthparticle_TLV.DeltaR(mu_TLV) < 0.003) continue; //no overlap w/ signal lepton
+// 	    third_truth_particle = truthparticle;
+// 
+// 	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
+// 	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
+// 	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
+// 
+// 
+// 	  }
+// 
+// 	  h_DeltaR_min_lostLepton_truthParticle_HF_mu_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
 
 
 	  //loop over 3rd truth lepton (should only be one):
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-
-	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
-
-	    }
-
-	    h_DeltaR_min_lostLepton_truthJet_HF_mu_EM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
-
-
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_HF_mu_EM->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
-	  }
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// 	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
+// 
+// 	    }
+// 
+// 	    h_DeltaR_min_lostLepton_truthJet_HF_mu_EM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
+// 
+// 	  }
 	  
 	  float DeltaR_min_lostLepton_preJet = 999.;
 	  Jet* prejet_minDeltaR;
@@ -2851,7 +2872,6 @@ bool unbiased = true;
 	    TLorentzVector prejet_TLV;
 	    prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
 	    prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << third_truth_particle_TLV.DeltaR(prejet_TLV) << endl;
 	    if(mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) < DeltaR_min_lostLepton_preJet){
 	      prejet_minDeltaR = prejet;
 	      DeltaR_min_lostLepton_preJet = mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);	    
@@ -2865,58 +2885,52 @@ bool unbiased = true;
       
           //study LF lost muons:
       if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF){
-// 	cout << nt.evt()->event << " LF muon" << endl;
 
-	h_Ntpr_ljOR_LF_mu_EM->Fill(nt.tpr()->size(),  1.);
-	  
-	  
-	  TruthParticleVector candidates_3rd_truth_lepton;
-	  TruthParticle* third_truth_particle;
-	  TLorentzVector third_truth_particle_TLV;
-	  float DeltaR_min_lostLepton_truthParticle = 999.;
-	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
-	  for(uint index=0; index<nt.tpr()->size(); ++index){
-	    TruthParticle* truthparticle = & nt.tpr()->at(index);
-	    TLorentzVector truthparticle_TLV;
-	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
-	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
-// 	    cout << "truthparticle->eta= " << truthparticle->eta << " truthparticle->phi= " << truthparticle->phi <<" truthparticle DeltaR= " << mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) << endl;
-	    if(mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
-	    
-
-	    if(truthparticle_TLV.DeltaR(mu_TLV) < 0.003) continue; //no overlap w/ signal lepton
-	    third_truth_particle = truthparticle;
-
-	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
-	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
-	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
-
-
-	  }
-
-	  h_DeltaR_min_lostLepton_truthParticle_LF_mu_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+// 	h_Ntpr_ljOR_LF_mu_EM->Fill(nt.tpr()->size(),  1.);
+// 	  
+// 	  
+// 	  TruthParticleVector candidates_3rd_truth_lepton;
+// 	  TruthParticle* third_truth_particle;
+// 	  TLorentzVector third_truth_particle_TLV;
+// 	  float DeltaR_min_lostLepton_truthParticle = 999.;
+// 	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
+// 	  for(uint index=0; index<nt.tpr()->size(); ++index){
+// 	    TruthParticle* truthparticle = & nt.tpr()->at(index);
+// 	    TLorentzVector truthparticle_TLV;
+// 	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
+// 	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
+// 	    if(mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = mu_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
+// 	    
+// 
+// 	    if(truthparticle_TLV.DeltaR(mu_TLV) < 0.003) continue; //no overlap w/ signal lepton
+// 	    third_truth_particle = truthparticle;
+// 
+// 	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
+// 	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
+// 	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
+// 
+// 
+// 	  }
+// 
+// 	  h_DeltaR_min_lostLepton_truthParticle_LF_mu_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
 
 
 	  //loop over 3rd truth lepton (should only be one):
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-
-	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
-
-	    }
-
-	    h_DeltaR_min_lostLepton_truthJet_LF_mu_EM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
-
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_LF_mu_EM->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
-	  }
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// 	      if(mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = mu_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV);	    
+// 
+// 	    }
+// 
+// 	    h_DeltaR_min_lostLepton_truthJet_LF_mu_EM->Fill(DeltaR_min_lostLepton_truthJet, 1.);
+// 	  }
 	  float DeltaR_min_lostLepton_preJet = 999.;
 	  Jet* prejet_minDeltaR;
 	  for(uint ij=0; ij<prejets.size(); ij++){ 
@@ -2925,7 +2939,6 @@ bool unbiased = true;
 	    TLorentzVector prejet_TLV;
 	    prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
 	    prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << third_truth_particle_TLV.DeltaR(prejet_TLV) << endl;
 	    if(mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) < DeltaR_min_lostLepton_preJet){
 	      prejet_minDeltaR = prejet;
 	      DeltaR_min_lostLepton_preJet = mu_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);	    
@@ -2938,9 +2951,8 @@ bool unbiased = true;
       }
     }
       
-    if(/*fabs(mllZcandImpact_mu_EM - MZ) < 20.*/1){
+//     if(fabs(mllZcandImpact_mu_EM - MZ) < 20.){
       
-//     cout << "mu_ZcandImpact->pt= " << mu_ZcandImpact->pt << " mu->pt= " << mu->pt << endl;
     for(uint ij=0; ij<prejets.size(); ij++){ 
       h_DeltaR_JVF_ljOR_mu_EM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)), prejets.at(ij)->jvf, 1.);
       h_DeltaR_mll_ljOR_mu_EM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)), mllZcandImpact_mu_EM, 1.);
@@ -2955,87 +2967,88 @@ bool unbiased = true;
       }
       else if (mu_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
       else lepton_type = 0;
-      h_DeltaR_leptonType_ljOR_mu_EM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)),lepton_type, 1.);
+      if(fabs(mllZcandImpact_mu_EM - MZ) < 20.)h_DeltaR_leptonType_ljOR_mu_EM->Fill(mu_ZcandImpact_lost->DeltaR(*prejets.at(ij)),lepton_type, 1.);
     }
-    }
+//     }
   }
   
   if(isEl){
     ZcandLep_exists_el_EM = true;
-    if(pTlZcandImpact_el_EM < 10.) ZcandLep_passesPT_el_EM = false;
-    if(ptcone30lZcandImpact_el_EM >= ELECTRON_PTCONE30_PT_CUT) ZcandLep_passesPTcone_el_EM = false;
-    if(etcone30lZcandImpact_el_EM >= ELECTRON_TOPOCONE30_PT_CUT) ZcandLep_passesETcone_el_EM = false;
-    if(d0SiglZcandImpact_el_EM >= ELECTRON_D0SIG_CUT_WH) ZcandLep_passesD0_el_EM = false;
-    if(z0SinThetalZcandImpact_el_EM >= ELECTRON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_el_EM = false;
-    ZcandLep_PassesMedium_el_EM = el_ZcandImpact_lost->mediumPP;
-    ZcandLep_PassesTight_el_EM = el_ZcandImpact_lost->tightPP;
-    if(el_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_el_EM = false;
-    
-    int lepton_type = -1;
-    if(el_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT) lepton_type = 1;	
-    else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
-    else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
-    else lepton_type = 0;      
-    if(/*fabs(mllZcandImpact_el_EM - MZ) < 20.*/1){
+//     if(fabs(mllZcandImpact_el_EM - MZ) < 20.){
+      if(pTlZcandImpact_el_EM < 10.) ZcandLep_passesPT_el_EM = false;
+      if(ptcone30lZcandImpact_el_EM >= ELECTRON_PTCONE30_PT_WH_CUT) ZcandLep_passesPTcone_el_EM = false;
+      if(etcone30lZcandImpact_el_EM >= ELECTRON_TOPOCONE30_PT_WH_CUT) ZcandLep_passesETcone_el_EM = false;
+      if(d0SiglZcandImpact_el_EM >= ELECTRON_D0SIG_CUT_WH) ZcandLep_passesD0_el_EM = false;
+      if(z0SinThetalZcandImpact_el_EM >= ELECTRON_Z0_SINTHETA_CUT) ZcandLep_passesZ0_el_EM = false;
+      ZcandLep_PassesMedium_el_EM = el_ZcandImpact_lost->mediumPP;
+      ZcandLep_PassesTight_el_EM = el_ZcandImpact_lost->tightPP;
+      if(el_ZcandImpact_lost->truthType != RecoTruthMatch::PROMPT) ZcandLep_PassesPR_el_EM = false;
+      for(unsigned int ie = 0; ie< elecs_el.size(); ie ++){
+	if(elecs_el.at(ie)->DeltaR(*el_ZcandImpact_lost) < 0.0001) ZcandLep_PassesORAndMllCut_el_EM = true;
+      }
+//     }
+    if(fabs(mllZcandImpact_el_EM - MZ) < 20.){    
+      int lepton_type = -1;
+      if(el_ZcandImpact_lost->truthType == RecoTruthMatch::PROMPT) lepton_type = 1;	
+      else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::HF) lepton_type = 2;	
+      else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
+      else lepton_type = 0;      
+
       h_3rdleptonType_el_EM->Fill(lepton_type, 1.);
     
-    TLorentzVector el_ZcandImpact_lost_TLV;
-    el_ZcandImpact_lost_TLV.SetPtEtaPhiE(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->pt*cosh(el_ZcandImpact_lost->eta));
-    el_ZcandImpact_lost_TLV.SetPtEtaPhiM(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->m);
+      TLorentzVector el_ZcandImpact_lost_TLV;
+      el_ZcandImpact_lost_TLV.SetPtEtaPhiE(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->pt*cosh(el_ZcandImpact_lost->eta));
+      el_ZcandImpact_lost_TLV.SetPtEtaPhiM(el_ZcandImpact_lost->pt, el_ZcandImpact_lost->eta ,el_ZcandImpact_lost->phi, el_ZcandImpact_lost->m);
 //      study HF lost electrons:
       if (el_ZcandImpact_lost->truthType == RecoTruthMatch::HF){
-
-// 	  cout << nt.evt()->event << "HF EM electron" << endl;
 	  
-	  h_Ntpr_ljOR_HF_el_EM->Fill(nt.tpr()->size(),  1.);
-	  
-	  TruthParticleVector candidates_3rd_truth_lepton;
-	  TruthParticle* third_truth_particle;
-	  TLorentzVector third_truth_particle_TLV;
-	  
-	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
-	  float DeltaR_min_lostLepton_truthParticle = 999.;
-	  for(uint index=0; index<nt.tpr()->size(); ++index){
-	    TruthParticle* truthparticle = & nt.tpr()->at(index);
-	    TLorentzVector truthparticle_TLV;
-	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
-	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
-// 	    cout << "truthparticle->eta= " << truthparticle->eta << " truthparticle->phi= " << truthparticle->phi <<" truthparticle DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) << endl;
-	    
-	    if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
-
-	       
-	    if(truthparticle_TLV.DeltaR(el_TLV) < 0.003) continue; //no overlap w/ signal lepton
-	    third_truth_particle = truthparticle;
-
-	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
-	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
-	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
-
-
-	    
-	    
-	  }
-	  h_DeltaR_min_lostLepton_truthParticle_HF_el_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+// 	h_Ntpr_ljOR_HF_el_EM->Fill(nt.tpr()->size(),  1.);
+// 	  
+// 	TruthParticleVector candidates_3rd_truth_lepton;
+// 	TruthParticle* third_truth_particle;
+// 	TLorentzVector third_truth_particle_TLV;
+// 	
+	//loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
+// 	float DeltaR_min_lostLepton_truthParticle = 999.;
+// 	for(uint index=0; index<nt.tpr()->size(); ++index){
+// 	  TruthParticle* truthparticle = & nt.tpr()->at(index);
+// 	  TLorentzVector truthparticle_TLV;
+// 	  truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
+// 	  truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
+// 	  
+// 	  if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
+// 
+// 	      
+// 	  if(truthparticle_TLV.DeltaR(el_TLV) < 0.003) continue; //no overlap w/ signal lepton
+// 	  third_truth_particle = truthparticle;
+// 
+// 	  third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
+// 	  third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
+// 	  candidates_3rd_truth_lepton.push_back(third_truth_particle);
+// 
+// 
+// 	    
+// 	    
+// 	  }
+// 	  h_DeltaR_min_lostLepton_truthParticle_HF_el_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
 
 	  //loop over 3rd truth lepton (should only be one):
 	  
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
-	    }
-	    
-	    h_DeltaR_min_lostLepton_truthJet_HF_el_EM->Fill(DeltaR_min_lostLepton_truthJet,  1.);
-	    
-	  }
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// 	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
+// 	    }
+// 	    
+// 	    h_DeltaR_min_lostLepton_truthJet_HF_el_EM->Fill(DeltaR_min_lostLepton_truthJet,  1.);
+// 	    
+// 	  }
 	  float DeltaR_min_lostLepton_preJet = 999.;
 	  Jet* prejet_minDeltaR;
 	  for(uint ij=0; ij<prejets.size(); ij++){ 
@@ -3044,7 +3057,6 @@ bool unbiased = true;
 	      TLorentzVector prejet_TLV;
 	      prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
 	      prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) << endl;
 	      if(prejet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_preJet){
 		DeltaR_min_lostLepton_preJet = el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);
 		prejet_minDeltaR = prejet;
@@ -3052,67 +3064,59 @@ bool unbiased = true;
 	      
 	      
 	    }
-	    h_DeltaR_min_lostLepton_preJet_HF_el_EM->Fill(DeltaR_min_lostLepton_preJet,  1.);
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_HF_el_EM->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
-// 	    cout << " prejet_minDeltaR->jvf= " <<  prejet_minDeltaR->jvf << " DeltaR_min_lostLepton_preJet= " << DeltaR_min_lostLepton_preJet << endl;
-	    
+	    h_DeltaR_min_lostLepton_preJet_HF_el_EM->Fill(DeltaR_min_lostLepton_preJet,  1.);	    
 	  
       }
       
       //study LF lost electrons:
       if (el_ZcandImpact_lost->truthType == RecoTruthMatch::LF){
-
-// 	  cout << nt.evt()->event << "LF electron" << endl;
 	  
-	  h_Ntpr_ljOR_LF_el_EM->Fill(nt.tpr()->size(),  1.);
-	  
-	  TruthParticleVector candidates_3rd_truth_lepton;
-	  TruthParticle* third_truth_particle;
-	  TLorentzVector third_truth_particle_TLV;
-	  
-	  //loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
-	  float DeltaR_min_lostLepton_truthParticle = 999.;
-	  for(uint index=0; index<nt.tpr()->size(); ++index){
-	    TruthParticle* truthparticle = & nt.tpr()->at(index);
-	    TLorentzVector truthparticle_TLV;
-	    truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
-	    truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);
-// 	    cout << "truthparticle->eta= " << truthparticle->eta << " truthparticle->phi= " << truthparticle->phi <<" truthparticle DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) << endl;
-	    
-	    if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
-
-	       
-	    if(truthparticle_TLV.DeltaR(el_TLV) < 0.003) continue; //no overlap w/ signal lepton
-	    third_truth_particle = truthparticle;
-
-	    third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
-	    third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
-	    candidates_3rd_truth_lepton.push_back(third_truth_particle);
-
-
-	    
-	    
-	  }
-	  h_DeltaR_min_lostLepton_truthParticle_LF_el_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
+// 	h_Ntpr_ljOR_LF_el_EM->Fill(nt.tpr()->size(),  1.);
+// 	
+// 	TruthParticleVector candidates_3rd_truth_lepton;
+// 	TruthParticle* third_truth_particle;
+// 	TLorentzVector third_truth_particle_TLV;
+// 	
+// 	//loop over truth particles: which can be matched to signal leptons, which one is the 3rd one?
+// 	float DeltaR_min_lostLepton_truthParticle = 999.;
+// 	for(uint index=0; index<nt.tpr()->size(); ++index){
+// 	  TruthParticle* truthparticle = & nt.tpr()->at(index);
+// 	  TLorentzVector truthparticle_TLV;
+// 	  truthparticle_TLV.SetPtEtaPhiE(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->pt*cosh(truthparticle->eta));
+// 	  truthparticle_TLV.SetPtEtaPhiM(truthparticle->pt, truthparticle->eta ,truthparticle->phi, truthparticle->m);	  
+// 	  if(el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV) < DeltaR_min_lostLepton_truthParticle) DeltaR_min_lostLepton_truthParticle = el_ZcandImpact_lost_TLV.DeltaR(truthparticle_TLV);	    
+// 
+// 	      
+// 	  if(truthparticle_TLV.DeltaR(el_TLV) < 0.003) continue; //no overlap w/ signal lepton
+// 	  third_truth_particle = truthparticle;
+// 
+// 	  third_truth_particle_TLV.SetPtEtaPhiE(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->pt*cosh(third_truth_particle->eta));
+// 	  third_truth_particle_TLV.SetPtEtaPhiM(third_truth_particle->pt, third_truth_particle->eta ,third_truth_particle->phi, third_truth_particle->m);
+// 	  candidates_3rd_truth_lepton.push_back(third_truth_particle);
+// 
+// 
+// 	    
+// 	    
+// 	  }
+// 	  h_DeltaR_min_lostLepton_truthParticle_LF_el_EM->Fill(DeltaR_min_lostLepton_truthParticle, 1.);
 
 	  //loop over 3rd truth lepton (should only be one):
 	  
-	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
-
-	    float DeltaR_min_lostLepton_truthJet = 999.;
-	    //can this be matched to one of the truth jets?
-	    for(uint index=0; index<nt.tjt()->size(); ++index){
-	      TruthJet* truthjet = & nt.tjt()->at(index);
-	      TLorentzVector truthjet_TLV;
-	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
-	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
-// 	      cout << "truthjet->eta= " << truthjet->eta << " truthjet->phi= " << truthjet->phi << " truthjet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(truthjet_TLV) << endl;
-	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
-	    }
-	    
-	    h_DeltaR_min_lostLepton_truthJet_LF_el_EM->Fill(DeltaR_min_lostLepton_truthJet,  1.);
-	    
-	  }
+// 	  for(uint i = 0; i < candidates_3rd_truth_lepton.size(); i++){
+// 
+// 	    float DeltaR_min_lostLepton_truthJet = 999.;
+// 	    //can this be matched to one of the truth jets?
+// 	    for(uint index=0; index<nt.tjt()->size(); ++index){
+// 	      TruthJet* truthjet = & nt.tjt()->at(index);
+// 	      TLorentzVector truthjet_TLV;
+// 	      truthjet_TLV.SetPtEtaPhiE(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->pt*cosh(truthjet->eta));
+// 	      truthjet_TLV.SetPtEtaPhiM(truthjet->pt, truthjet->eta ,truthjet->phi, truthjet->m);
+// 	      if(truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_truthJet) DeltaR_min_lostLepton_truthJet = truthjet_TLV.DeltaR(el_ZcandImpact_lost_TLV);
+// 	    }
+// 	    
+// 	    h_DeltaR_min_lostLepton_truthJet_LF_el_EM->Fill(DeltaR_min_lostLepton_truthJet,  1.);
+// 	    
+// 	  }
 	  float DeltaR_min_lostLepton_preJet = 999.;
 	  Jet* prejet_minDeltaR;
 	  for(uint ij=0; ij<prejets.size(); ij++){ 
@@ -3121,7 +3125,6 @@ bool unbiased = true;
 	      TLorentzVector prejet_TLV;
 	      prejet_TLV.SetPtEtaPhiE(prejet->pt, prejet->eta ,prejet->phi, prejet->pt*cosh(prejet->eta));
 	      prejet_TLV.SetPtEtaPhiM(prejet->pt, prejet->eta ,prejet->phi, prejet->m);
-// 	      cout << "prejet->eta= " << prejet->eta << " prejet->phi= " << prejet->phi << " prejet DeltaR= " << el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV) << endl;
 	      if(prejet_TLV.DeltaR(el_ZcandImpact_lost_TLV) < DeltaR_min_lostLepton_preJet){
 		DeltaR_min_lostLepton_preJet = el_ZcandImpact_lost_TLV.DeltaR(prejet_TLV);
 		prejet_minDeltaR = prejet;
@@ -3129,14 +3132,10 @@ bool unbiased = true;
 	      
 	      
 	    }
-	    h_DeltaR_min_lostLepton_preJet_LF_el_EM->Fill(DeltaR_min_lostLepton_preJet,  1.);
-// 	    h_DeltaR_min_lostLepton_preJet_JVF_LF_el_EM->Fill(DeltaR_min_lostLepton_preJet, prejet_minDeltaR->jvf, 1. );
-	    
+	    h_DeltaR_min_lostLepton_preJet_LF_el_EM->Fill(DeltaR_min_lostLepton_preJet,  1.);    
 	  
       }
     }
-      
-    if(/*(mllZcandImpact_el_EM - MZ) < 20.*/1){
       for(uint ij=0; ij<prejets.size(); ij++){ 
 	float etcone = elEtTopoConeCorr(el_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
 	float ptcone30 = elPtConeCorr(el_ZcandImpact_lost, m_baseElectrons, m_baseMuons, nt.evt()->nVtx, nt.evt()->isMC);
@@ -3155,10 +3154,9 @@ bool unbiased = true;
 	}
 	else if (el_ZcandImpact_lost->truthType == RecoTruthMatch::LF) lepton_type = 3;
 	else lepton_type = 0;
-	h_DeltaR_leptonType_ljOR_el_EM->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)),lepton_type, 1.);
+	if(fabs(mllZcandImpact_el_EM - MZ) < 20.)h_DeltaR_leptonType_ljOR_el_EM->Fill(el_ZcandImpact_lost->DeltaR(*prejets.at(ij)),lepton_type, 1.);
       }
     }
-  }
 
 
   
@@ -3337,6 +3335,7 @@ void TSelector_SusyNtuple::fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM
     if(!ZcandLep_passesPT_MM) h_failedSignalCriteria_MM->Fill(2., cut_MM, weight_ALL_MM);
     if(!ZcandLep_passesEta_MM) h_failedSignalCriteria_MM->Fill(3., cut_MM, weight_ALL_MM);
     if(!ZcandLep_passesPTcone_MM) h_failedSignalCriteria_MM->Fill(4., cut_MM, weight_ALL_MM);
+    if(!ZcandLep_passesETcone_MM) h_failedSignalCriteria_MM->Fill(5., cut_MM, weight_ALL_MM);
     if(!ZcandLep_passesD0_MM) h_failedSignalCriteria_MM->Fill(6., cut_MM, weight_ALL_MM);
     if(!ZcandLep_passesZ0_MM) h_failedSignalCriteria_MM->Fill(7., cut_MM, weight_ALL_MM);
     if(!ZcandLep_PassesORAndMllCut_MM) h_failedSignalCriteria_MM->Fill(10., cut_MM, weight_ALL_MM);  
@@ -3413,7 +3412,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM
   h_pTlZcandImpact_mu_EM_SRSS1->Fill(pTlZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
   h_etalZcandImpact_mu_EM_SRSS1->Fill(etalZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
   h_ptcone30lZcandImpact_mu_EM_SRSS1->Fill(ptcone30lZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
-//   h_etcone30lZcandImpact_mu_EM_SRSS1->Fill(etcone30lZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
+  h_etcone30lZcandImpact_mu_EM_SRSS1->Fill(etcone30lZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
   h_d0SiglZcandImpact_mu_EM_SRSS1->Fill(d0SiglZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
   h_z0SinThetalZcandImpact_mu_EM_SRSS1->Fill(z0SinThetalZcandImpact_mu_EM, cut_EM, weight_ALL_EM);  
   
@@ -3434,7 +3433,7 @@ void TSelector_SusyNtuple::fillHistos_EM_SRSS1(float cut_EM, float weight_ALL_EM
     if(!ZcandLep_passesPT_mu_EM) h_failedSignalCriteria_mu_EM->Fill(2., cut_EM, weight_ALL_EM);
     if(!ZcandLep_passesEta_mu_EM) h_failedSignalCriteria_mu_EM->Fill(3., cut_EM, weight_ALL_EM);
     if(!ZcandLep_passesPTcone_mu_EM) h_failedSignalCriteria_mu_EM->Fill(4., cut_EM, weight_ALL_EM);
-  //   if(!ZcandLep_passesETcone_mu_EM) h_failedSignalCriteria_mu_EM->Fill(5., cut_EM, weight_ALL_EM);
+    if(!ZcandLep_passesETcone_mu_EM) h_failedSignalCriteria_mu_EM->Fill(5., cut_EM, weight_ALL_EM);
     if(!ZcandLep_passesD0_mu_EM) h_failedSignalCriteria_mu_EM->Fill(6., cut_EM, weight_ALL_EM);
     if(!ZcandLep_passesZ0_mu_EM) h_failedSignalCriteria_mu_EM->Fill(7., cut_EM, weight_ALL_EM);
   //   if(!ZcandLepPassesMedium_mu_EM) h_failedSignalCriteria_mu_EM->Fill(8., cut_EM, weight_ALL_EM);

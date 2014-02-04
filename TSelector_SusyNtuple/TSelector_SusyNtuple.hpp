@@ -202,7 +202,9 @@ class TSelector_SusyNtuple : public SusyNtAna
     TH2F* h_failedSignalCriteria_mu_EM;
     TH2F* h_failedSignalCriteria_el_EM;
         
-    TH2F* h_etcone30lZcandImpact_EE_SRSS1;        
+    TH2F* h_etcone30lZcandImpact_EE_SRSS1;   
+    TH2F* h_etcone30lZcandImpact_MM_SRSS1;        
+    TH2F* h_etcone30lZcandImpact_mu_EM_SRSS1;  
     TH2F* h_etcone30lZcandImpact_el_EM_SRSS1;  
    
     TH2F* h_Nleptons_ZcandImpact_EE_SRSS1;
@@ -1123,6 +1125,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float etalZcandImpact_MM;
     int IClZcandImpact_MM;
     float ptcone30lZcandImpact_MM;
+    float etcone30lZcandImpact_MM;
     float d0SiglZcandImpact_MM;
     float z0SinThetalZcandImpact_MM;
     
@@ -1188,6 +1191,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     float etalZcandImpact_mu_EM;
     int IClZcandImpact_mu_EM;
     float ptcone30lZcandImpact_mu_EM;
+    float etcone30lZcandImpact_mu_EM;
     float d0SiglZcandImpact_mu_EM;
     float z0SinThetalZcandImpact_mu_EM;    
     

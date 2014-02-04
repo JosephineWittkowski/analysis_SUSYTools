@@ -23,6 +23,7 @@ TSelector_SusyNtuple::TSelector_SusyNtuple() :
         m_writeOut (false)
 {
   setAnaType(Ana_2LepWH);
+  
 
   if(m_writeOut) {
     out.open("event.dump");
@@ -61,7 +62,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
   m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/FinalFakeHist_Jan_02.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
-  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusySel_WH_177523.root", "SusySel");
+  if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusySel_Egamma_6_NEW.root", "SusySel");
   
 }
 
@@ -178,6 +179,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
   }
   
 //   from MET, calculate METrel
+//   Met met = m_met;
   bool useForwardJets = true;
   float METrel = getMetRel(m_met, m_signalLeptons, m_signalJets2Lep, useForwardJets);
 
@@ -251,59 +253,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	//product of all weights, for SS and OS MC events:
 	weight_ALL_EE = (nt.evt()->isMC) ? weight_ALL_EE * lep_SF_EE * trigW_EE : 1; //consider pileup, xsec, lumi (as argument), MC eventWeight.
 	weight_ALL_EE *= getBTagWeight(nt.evt());
-	//calc charge flip weights:
-	//Note that the charge flip is only applied in SS region (ee or em) and only for MC events that are true OS.
-	//The charge flip changes both the lepton pt of the electron that charge flip and the change needs to be propagated to the met.
-	float chargeFlipWeight = 1.0;
-
-	//make a copy of electrons and MET which will eventually be changed by ChargeFlip tool:
-	ElectronVector electrons_SS;
-	Electron* el0_SS;
-	Electron* el1_SS;
-	el0_SS = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(0) : electrons.at(1);
-	el1_SS = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(1) : electrons.at(0);
-	TLorentzVector el0_SS_TLV, el1_SS_TLV;
-	el0_SS_TLV.SetPtEtaPhiE(el0_SS->pt, el0_SS->eta ,el0_SS->phi, el0_SS->pt*cosh(el0_SS->eta));
-	el0_SS_TLV.SetPtEtaPhiM(el0_SS->pt, el0_SS->eta ,el0_SS->phi, el0_SS->m);
-	el1_SS_TLV.SetPtEtaPhiE(el1_SS->pt, el1_SS->eta ,el1_SS->phi, el1_SS->pt*cosh(el1_SS->eta));
-	el1_SS_TLV.SetPtEtaPhiM(el1_SS->pt, el1_SS->eta ,el1_SS->phi, el1_SS->m);
-
-	TLorentzVector met_SS_TLV;
-	TVector2 met_SS_TVector2;
-	met_SS_TLV = m_met->lv();
-	met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
-// 	if(nt.evt()->event == 2150756) cout << el0_SS_TLV.Pt() << " " << el1_SS_TLV.Pt() << " EE " << nt.evt()->event << "el0->q= " << el0->q << " el1->q= " << el1->q << endl;
-
-	//if SS event, get ChargeFlipWeight and modify electron and met TLV:
-	int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
-	int pdg1 = 11 * (-1) * el1->q;
-	if((el0->q * el1->q)<0 && nt.evt()->isMC){	
-	  m_chargeFlip.setSeed(nt.evt()->event);
-	  if(nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << "before CF el0_SS_TLV.Pt()= " << el0_SS_TLV.Pt() << " el1_SS_TLV.Pt()= " << el1_SS_TLV.Pt() << endl;
-	  chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
-	  chargeFlipWeight*= m_chargeFlip.overlapFrac().first;	
-	  if(nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << "after CF el0_SS_TLV.Pt()= " << el0_SS_TLV.Pt() << " el1_SS_TLV.Pt()= " << el1_SS_TLV.Pt() << endl;
-
-	  if(el1_SS_TLV.Pt() > el0_SS_TLV.Pt()){
-	    TLorentzVector el0_SS_buffer_TLV, el1_SS_buffer_TLV;
-	    el0_SS_buffer_TLV = el1_SS_TLV;
-	    el1_SS_buffer_TLV = el0_SS_TLV;
-	    
-	    el0_SS_TLV = el0_SS_buffer_TLV;
-	    el1_SS_TLV = el1_SS_buffer_TLV;
-	  }
-	  //get changed MET and fill in TLorentzVector:
-	  met_SS_TLV.SetPx(met_SS_TVector2.Px());
-	  met_SS_TLV.SetPy(met_SS_TVector2.Py());	
-	  met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
-
-	}
-	float weight_ALL_SS_EE = 1.0;
-	weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight; //multiply only SS weight by chargeFlipWeight
-	float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
 	
-	calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_EE);
-	calcJet_variables(met_SS_TLV);
 	h_NpreTaus->Fill(preTaus.size(), 15, weight_ALL_EE);
 	cutnumber = 16.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_EE); //pass nlep
 	
@@ -315,17 +265,65 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	    cutnumber = 19.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_EE);
 	    if(!nt.evt()->isMC || CheckRealLeptons(electrons, m_signalMuons)){
 	      cutnumber = 20.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_EE);
-	      cutnumber = 100.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_EE);
-
-	
 	
 
+
+		
+		//calc charge flip weights:
+		//Note that the charge flip is only applied in SS region (ee or em) and only for MC events that are true OS.
+		//The charge flip changes both the lepton pt of the electron that charge flip and the change needs to be propagated to the met.
+		float chargeFlipWeight = 1.0;
+
+		//make a copy of electrons and MET which will eventually be changed by ChargeFlip tool:
+		ElectronVector electrons_SS;
+		Electron* el0_SS;
+		Electron* el1_SS;
+		el0_SS = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(0) : electrons.at(1);
+		el1_SS = (electrons.at(0)->pt > electrons.at(1)->pt) ? electrons.at(1) : electrons.at(0);
+		TLorentzVector el0_SS_TLV(*el0_SS);
+		TLorentzVector el1_SS_TLV(*el1_SS);
+
+		TLorentzVector met_SS_TLV;
+		TVector2 met_SS_TVector2;
+		met_SS_TLV = m_met->lv();
+		met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
+
+		//if SS event, get ChargeFlipWeight and modify electron and met TLV:
+		int pdg0 = 11 * (-1) * el0->q; // Remember 11 = elec which has charge -1
+		int pdg1 = 11 * (-1) * el1->q;
+		if((el0->q * el1->q)<0 && nt.evt()->isMC){	
+		  m_chargeFlip.setSeed(nt.evt()->event);
+		  chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el0_SS_TLV, pdg1, &el1_SS_TLV, &met_SS_TVector2, 0);
+		  chargeFlipWeight*= m_chargeFlip.overlapFrac().first;	
+		  el0_SS->pt = el0_SS_TLV.Pt(); el0_SS->resetTLV();
+		  el1_SS->pt = el1_SS_TLV.Pt(); el1_SS->resetTLV();
+
+		  if(el1_SS_TLV.Pt() > el0_SS_TLV.Pt()){
+		    TLorentzVector el0_SS_buffer_TLV, el1_SS_buffer_TLV;
+		    el0_SS_buffer_TLV = el1_SS_TLV;
+		    el1_SS_buffer_TLV = el0_SS_TLV;
+		    
+		    el0_SS_TLV = el0_SS_buffer_TLV;
+		    el1_SS_TLV = el1_SS_buffer_TLV;
+		  }
+		  //get changed MET and fill in TLorentzVector:
+		  met_SS_TLV.SetPx(met_SS_TVector2.Px());
+		  met_SS_TLV.SetPy(met_SS_TVector2.Py());	
+		  met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
+
+		}
+		float weight_ALL_SS_EE = 1.0;
+		weight_ALL_SS_EE = weight_ALL_EE * chargeFlipWeight; //multiply only SS weight by chargeFlipWeight
+		float METrel_SS = recalcMetRel(met_SS_TLV, el0_SS_TLV, el1_SS_TLV, m_signalJets2Lep, useForwardJets);
 		//if running on data for fake bg, instead of weights (pileup, xsec, eventweight, trigger, SF, btag, ...) use fakeWeight from SusyMatrixMethod
 		// only meaningful in SS SR
 		if(!nt.evt()->isMC && calcFakeContribution){
 		  weight_ALL_EE = getFakeWeight(m_baseLeptons, susy::fake::CR_SRWHSS, METrel_SS, SusyMatrixMethod::SYS_NONE);
 		  weight_ALL_SS_EE = weight_ALL_EE;
 		}
+		
+		calc_EE_variables(leptons, el0, el1, el0_SS_TLV, el1_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_EE);
+		calcJet_variables(met_SS_TLV);
 
 		//------------------------------------------------------------------------------------
 		//----------------------------------SR-SS-EE------------------------------------------
@@ -333,18 +331,18 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		if(nt.evt()->isMC || (!nt.evt()->isMC && (el0->q * el1->q)>0)){ //MC: also take into account OS events by charge flip weight!
 		//------------------------------------------------------------------------------------
 		  cutnumber = 21.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE); //SS cut: applied only on weighted events
-		  if(nt.evt()->event == 140871 || nt.evt()->event == 2697245){
-		    cout << "EE " << nt.evt()->event <<
-		    " total w= " << weight_ALL_EE
-		    << " SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)= " << SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)
-		    << " lep_SF_EE= " << lep_SF_EE 
-		    << " trigW_EE= " << trigW_EE 
-		    << " btag= " << getBTagWeight(nt.evt())
-		    << " chargeFlipWeight= " << chargeFlipWeight << endl;
-		  }
+// 		  if(nt.evt()->event == 140871 || nt.evt()->event == 2697245){
+// 		    cout << "EE " << nt.evt()->event <<
+// 		    " total w= " << weight_ALL_EE
+// 		    << " SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)= " << SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)
+// 		    << " lep_SF_EE= " << lep_SF_EE 
+// 		    << " trigW_EE= " << trigW_EE 
+// 		    << " btag= " << getBTagWeight(nt.evt())
+// 		    << " chargeFlipWeight= " << chargeFlipWeight << endl;
+// 		  }
 		  if((mllZcandImpact_EE > MZ+20. || mllZcandImpact_EE < MZ-20.)){
-// 		    if(nt.evt()->event == 2697245) cout << "passed: EE " << nt.evt()->event << " mllZcandImpact_EE= " << mllZcandImpact_EE << " el0_SS_TLV.Pt()= " << el0_SS_TLV.Pt() << "eta= " << el0_SS_TLV.Eta() << " phi= " << el0_SS_TLV.Phi() << " el1_SS_TLV.Pt()= " << el1_SS_TLV.Pt() << " eta= " <<  el1_SS_TLV.Eta() << " << phi= " << el1_SS_TLV.Phi() << endl;
 		    cutnumber = 22.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+		    
 		    if(numberOfFJets(m_signalJets2Lep) == 0){
 		      cutnumber = 23.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
 		      if(numberOfCBJets(m_signalJets2Lep) == 0){
@@ -419,9 +417,60 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    }
 		  }
 		}
-		else{
-		  if(nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << "vetoed: EE " << nt.evt()->event << " mllZcandImpact_EE= " << mllZcandImpact_EE << " el0_SS_TLV.Pt()= " << el0_SS_TLV.Pt() << "eta= " << el0_SS_TLV.Eta() << " phi= " << el0_SS_TLV.Phi() << " el1_SS_TLV.Pt()= " << el1_SS_TLV.Pt() << " eta= " <<  el1_SS_TLV.Eta() << " << phi= " << el1_SS_TLV.Phi() << endl;
-		}
+		
+		
+		
+		
+		
+		
+		//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+		
+		
+		    
+		    if(numberOfFJets(m_signalJets2Lep) == 0){
+		      if(numberOfCBJets(m_signalJets2Lep) == 0){
+			if(nSignalJets >=1){
+			//============================================
+			if(nSignalJets ==1){
+			  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+			    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
+			      if(Mlj_EE < 90.){
+				if(HT_EE > 200.){			    
+				  if(METrel_SS > 55.){
+				    cutnumber = 50.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+				    if((mllZcandImpact_EE > MZ+20. || mllZcandImpact_EE < MZ-20.)){
+				      cutnumber = 51.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+				    }
+				    
+				  }
+				}
+			      }
+			    }
+			  }
+			}//end ==1 jets
+	    //==================
+			if(nSignalJets >=2 && nSignalJets <=3){
+			if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+			  if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){			    
+			    if(mTmax_EE > 100.){
+			      if(Mljj_EE < 120.){
+				if(METrel_EE>=30.){			    
+				  cutnumber = 52.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+				  if((mllZcandImpact_EE > MZ+20. || mllZcandImpact_EE < MZ-20.)){
+				    cutnumber = 53.; fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE);
+				  }
+				}
+			      }
+			    }
+			  }
+			}
+		      }//end >=2 jets
+		    } //end >=1 jets
+		  //=========================================
+		    }
+		  }
+		
+		//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 	      }//end SS
 	    }
 	  }
@@ -589,9 +638,47 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 			}
 		      }
 		    }
-		    else{
-// 		      cout << "vetoed: MM " << nt.evt()->event << " mllZcandImpact_MM= " << mllZcandImpact_MM << " mu0_TLV.Pt()= " << mu0_TLV.Pt() << "eta= " << mu0_TLV.Eta() << " phi= " << mu0_TLV.Phi() << " mu1_TLV.Pt()= " << mu1_TLV.Pt() << " eta= " <<  mu1_TLV.Eta() << " << phi= " << mu1_TLV.Phi() << endl;
+		    
+		    //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+		    if(numberOfFJets(m_signalJets2Lep) == 0){
+		      if(numberOfCBJets(m_signalJets2Lep) == 0){
+			if(nSignalJets >=1){
+			  //===============================================================================================================================		  
+			  if(nSignalJets ==1){
+			    if(mu0_TLV.Pt()>=20. && mu1_TLV.Pt()>=20. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
+			      if(DeltaEtall_MM < 1.5){
+				if(mTmax_MM > 100.){
+				  if(Mlj_MM < 90.){
+				    if(HT_MM > 200.){
+				      cutnumber = 50.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				
+				      if((mllZcandImpact_MM > MZ+20. || mllZcandImpact_MM < MZ-20.)){
+					cutnumber = 51.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				
+				      }
+				    }
+				  }
+				}
+			      }
+			    }
+			  }//end ==1 jets
+			  //===============================================================================================================================		  
+			  if(nSignalJets >=2 && nSignalJets <=3){
+			    if(mu0_TLV.Pt()>=30. && mu1_TLV.Pt()>=30. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
+			    if(DeltaEtall_MM<1.5){
+			      if(Mljj_MM < 120.){
+				if(HT_MM >= 220.){
+				  cutnumber = 52.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				
+				  if((mllZcandImpact_MM > MZ+20. || mllZcandImpact_MM < MZ-20.)){
+				    cutnumber = 53.;  fillHistos_MM_SRSS1(cutnumber, weight_ALL_MM);				
+				  }
+				}
+			      }
+			    }
+			  }
+			}//end >=2 jets      
+		      }//end >=1 jets
 		    }
+		  }
+		      //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 		  } //end SS
 		}
 	      }
@@ -649,43 +736,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
     weight_ALL_EM = (nt.evt()->isMC) ? weight_ALL_EM * lep_SF_EM * trigW_EM: 1;
     weight_ALL_EM *= getBTagWeight(nt.evt());
 
-    //calc charge flip weights:
-    //Note that the charge flip is only applied in SS region (ee or em) and only for MC events that are true OS.
-    //The charge flip changes both the lepton pt of the electron that charge flip and the change needs to be propagated to the met.
-    float chargeFlipWeight = 1.0;	
-    //make a copy of electrons and MET which will eventually be changed by ChargeFlip tool:
-    Electron* el_SS;
-    el_SS = electrons.at(0);
-    ElectronVector electrons_SS;
-    electrons_SS = electrons;
-    TLorentzVector el_SS_TLV;
-    el_SS_TLV.SetPtEtaPhiE(el_SS->pt, el_SS->eta ,el_SS->phi, el_SS->pt*cosh(el_SS->eta));
-    el_SS_TLV.SetPtEtaPhiM(el_SS->pt, el_SS->eta ,el_SS->phi, el_SS->m);
 
-    TLorentzVector met_SS_TLV;
-    TVector2 met_SS_TVector2;
-    met_SS_TLV = m_met->lv();
-    met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
-
-    int pdg0 = 11 * (-1) * el->q; // Remember 11 = elec which has charge -1
-    TLorentzVector empty_TLV;
-
-    if(el->q*mu->q<0 && nt.evt()->isMC){
-      m_chargeFlip.setSeed(nt.evt()->event);
-      if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << "before CF el_SS_TLV.Pt()= " << el_SS_TLV.Pt() << " el_SS_TLV.M()= " << el_SS_TLV.M() << endl;
-      chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el_SS_TLV, 13, &empty_TLV, &met_SS_TVector2, 0);
-      chargeFlipWeight*= m_chargeFlip.overlapFrac().first;
-      if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << "after CF el_SS_TLV.Pt()= " << el_SS_TLV.Pt() << " el_SS_TLV.M()= " << el_SS_TLV.M() << endl;
-      //get changed MET and fill in TLorentzVector:
-      met_SS_TLV.SetPx(met_SS_TVector2.Px());
-      met_SS_TLV.SetPy(met_SS_TVector2.Py());	
-      met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
-    }
-    float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
-    float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
-    
-    calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_SS_EM);
-    calcJet_variables(met_SS_TLV);
       //------------------------------------------------------------------------------------      
       h_NpreTaus->Fill(preTaus.size(), 17, weight_ALL_EM);
       cutnumber = 16.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_EM); //pass nlep
@@ -703,6 +754,44 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 	    if(!nt.evt()->isMC || CheckRealLeptons(electrons, muons)){	      
 	      cutnumber = 20.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_EM);
 	      
+	      //calc charge flip weights:
+	      //Note that the charge flip is only applied in SS region (ee or em) and only for MC events that are true OS.
+	      //The charge flip changes both the lepton pt of the electron that charge flip and the change needs to be propagated to the met.
+	      float chargeFlipWeight = 1.0;	
+	      //make a copy of electrons and MET which will eventually be changed by ChargeFlip tool:
+	      Electron* el_SS;
+	      el_SS = electrons.at(0);
+	      ElectronVector electrons_SS;
+	      electrons_SS = electrons;
+	      TLorentzVector el_SS_TLV(*el_SS);
+	  //     TLorentzVector el_SS_TLV;
+	  //     el_SS_TLV.SetPtEtaPhiE(el_SS->pt, el_SS->eta ,el_SS->phi, el_SS->pt*cosh(el_SS->eta));
+	  //     el_SS_TLV.SetPtEtaPhiM(el_SS->pt, el_SS->eta ,el_SS->phi, el_SS->m);
+
+	      TLorentzVector met_SS_TLV;
+	      TVector2 met_SS_TVector2;
+	      met_SS_TLV = m_met->lv();
+	      met_SS_TVector2.Set(met_SS_TLV.Px(), met_SS_TLV.Py());
+
+	      int pdg0 = 11 * (-1) * el->q; // Remember 11 = elec which has charge -1
+	      TLorentzVector empty_TLV;
+
+	      if(el->q*mu->q<0 && nt.evt()->isMC){
+		m_chargeFlip.setSeed(nt.evt()->event);
+		chargeFlipWeight = m_chargeFlip.OS2SS(pdg0, &el_SS_TLV, 13, &empty_TLV, &met_SS_TVector2, 0);
+		chargeFlipWeight*= m_chargeFlip.overlapFrac().first;
+		el_SS->pt = el_SS_TLV.Pt(); el_SS->resetTLV();
+		//get changed MET and fill in TLorentzVector:
+		met_SS_TLV.SetPx(met_SS_TVector2.Px());
+		met_SS_TLV.SetPy(met_SS_TVector2.Py());	
+		met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
+	      }
+	      float weight_ALL_SS_EM = weight_ALL_EM * chargeFlipWeight;
+	      float METrel_SS = recalcMetRel(met_SS_TLV, el_SS_TLV, mu_TLV, m_signalJets2Lep, useForwardJets);
+	      
+	      calc_EM_variables(leptons, el, mu, mu_TLV, el_SS_TLV, met_SS_TLV, signalJet0_TLV, signalJet1_TLV, useForwardJets, &nt, weight_ALL_SS_EM);
+	      calcJet_variables(met_SS_TLV);
+	      
 	      // only meaningful in SS SR:
 	      if(!nt.evt()->isMC && calcFakeContribution){
 		weight_ALL_EM = getFakeWeight(m_baseLeptons, susy::fake::CR_SRWHSS, METrel_SS, SusyMatrixMethod::SYS_NONE);
@@ -715,18 +804,17 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 //----------------------------------SR-SS1-EM------------------------------------------
 //------------------------------------------------------------------------------------
 	      if(nt.evt()->isMC || (!nt.evt()->isMC && (el->q*mu->q)>0)){
-	      if(nt.evt()->event == 859255 || nt.evt()->event == 1181870){
-		cout << "EM " << nt.evt()->event <<
-		" total w= " << weight_ALL_SS_EM
-		<< " SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)= " << SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)
-		<< " lep_SF_EM= " << lep_SF_EM 
-		<< " trigW_EM= " << trigW_EM 
-		<< " btag= " << getBTagWeight(nt.evt())
-		<< " chargeFlipWeight= " << chargeFlipWeight << endl;
-	      }
+// 	      if(nt.evt()->event == 859255 || nt.evt()->event == 1181870){
+// 		cout << "EM " << nt.evt()->event <<
+// 		" total w= " << weight_ALL_SS_EM
+// 		<< " SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)= " << SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)
+// 		<< " lep_SF_EM= " << lep_SF_EM 
+// 		<< " trigW_EM= " << trigW_EM 
+// 		<< " btag= " << getBTagWeight(nt.evt())
+// 		<< " chargeFlipWeight= " << chargeFlipWeight << endl;
+// 	      }
 		cutnumber = 21.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM); //SS cut: applied only on weighted events
 		if((mllZcandImpact_mu_EM > MZ+20. || mllZcandImpact_mu_EM < MZ-20.) && (mllZcandImpact_el_EM > MZ+20. || mllZcandImpact_el_EM < MZ-20.)){
-// 		  if(nt.evt()->event == 1829002 || nt.evt()->event == 507221) cout << "passed: EM " << nt.evt()->event << " mllZcandImpact_EE= " << mllZcandImpact_EE << " mu_TLV.Pt()= " << mu_TLV.Pt() << "eta= " << mu_TLV.Eta() << " phi= " << mu_TLV.Phi() << " el_SS_TLV.Pt()= " << el_SS_TLV.Pt() << " eta= " <<  el_SS_TLV.Eta() << " << phi= " << el_SS_TLV.Phi() << endl;
 		  cutnumber = 22.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
 		  
 		  if(numberOfFJets(m_signalJets2Lep) == 0){
@@ -795,9 +883,48 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		    }
 		  }
 		}
-		else{
-		  if(nt.evt()->event == 859255 || nt.evt()->event == 1181870) cout << "vetoed: EM " << nt.evt()->event << "mllZcandImpact_mu_EM= " << mllZcandImpact_mu_EM << " mllZcandImpact_el_EM= " << mllZcandImpact_el_EM << " mu_TLV.Pt()= " << mu_TLV.Pt() << "eta= " << mu_TLV.Eta() << " phi= " << mu_TLV.Phi() << " el_SS_TLV.Pt()= " << el_SS_TLV.Pt() << " eta= " <<  el_SS_TLV.Eta() << " << phi= " << el_SS_TLV.Phi() << endl;
-		}
+		//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+		
+		  if(numberOfFJets(m_signalJets2Lep) == 0){		    
+		    if(numberOfCBJets(m_signalJets2Lep) == 0){
+		      if(nSignalJets >=1){
+		      //------------------------------------------------------------------------------------
+		      if(nSignalJets ==1){
+			if(el_SS_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+			  if(DeltaEtall_EM < 1.5){
+			    if(mTmax_EM > 110){
+			      if(Mlj_EM < 90.){
+				if(mTWW_EM > 120.){
+				  cutnumber = 50.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+				  if((mllZcandImpact_mu_EM > MZ+20. || mllZcandImpact_mu_EM < MZ-20.) && (mllZcandImpact_el_EM > MZ+20. || mllZcandImpact_el_EM < MZ-20.)){
+				    cutnumber = 51.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+				  }
+				}				 
+			      }
+			    }
+			  }
+			}
+		      }//end ==1jet
+		//------------------------------------------------------------------------------------
+		      if(nSignalJets >=2 && nSignalJets <=3){
+			if(el_SS_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+			  if(DeltaEtall_EM < 1.5){			    
+			    if(Mljj_EM < 120.){
+			      if(mTWW_EM >= 110.){
+				cutnumber = 52.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+				if((mllZcandImpact_mu_EM > MZ+20. || mllZcandImpact_mu_EM < MZ-20.) && (mllZcandImpact_el_EM > MZ+20. || mllZcandImpact_el_EM < MZ-20.)){
+				  cutnumber = 53.; fillHistos_EM_SRSS1(cutnumber, weight_ALL_SS_EM);
+				}
+			      }
+			    }
+			  }
+			}
+		      }//end >=2 jets
+		//------------------------------------------------------------------------------------
+		    }//end >=1 jets
+		    }
+		  }
+		  //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 	      }
 	    }
 	  }
@@ -849,14 +976,23 @@ if(signal_electron->isChargeFlip) return false;
 /*--------------------------------------------------------------------------------*/
 float TSelector_SusyNtuple::getBTagWeight(const Event* evt)
 {
+//   configureBTagTool("0_3511",MV1_80, false);
+// if(nt.evt()->event == 859255 || nt.evt()->event == 1181870 || nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << "jets used for bTagSF(): " << endl;
   JetVector tempJets;
   for(uint ij=0; ij<m_baseJets.size(); ++ij){
     Jet* jet = m_baseJets.at(ij);
-    if( !(jet->Pt() > JET_PT_L20_CUT && fabs(jet->detEta) < JET_ETA_CUT_2L) ) continue;
+    if( jet->Pt() < JET_PT_L20_CUT        ) continue;
+    if( fabs(jet->detEta) > JET_ETA_CUT_2L ) continue;
     tempJets.push_back(jet);
+//     if(nt.evt()->event == 859255 || nt.evt()->event == 1181870 || nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << "jet->pt= " << jet->pt << endl;
   }
+//   if(nt.evt()->event == 859255 || nt.evt()->event == 1181870 || nt.evt()->event == 140871 || nt.evt()->event == 2697245) cout << "# jets used for bTagSF(): " << tempJets.size() << endl;
 
   return bTagSF(evt, tempJets, nt.evt()->mcChannel, BTag_NOM);
+  
+  
+//   if(valJets.size()==0) return 1;//safety.
+
 // return 0.;
 }
 
@@ -1608,15 +1744,15 @@ void TSelector_SusyNtuple::SlaveTerminate()
     if(sample_identifier == 116600)outputfile="histos_ZN_ZZ_bgTable.root";
     if(sample_identifier == 108346)outputfile="histos_ZN_ttbarWtop_bgTable.root";
     
-    if(sample_identifier == 110805 || sample_identifier == 173045)outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split1.root";
-    if(sample_identifier == 117670 || sample_identifier == 173042)outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split2.root";    
-    if(sample_identifier == 173041 || sample_identifier == 147770)outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split3.root";           
-    if(sample_identifier == 173044 || sample_identifier == 110805)outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split4.root";    
+//     if(sample_identifier == 110805) outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split1.root";
+//     if(sample_identifier == 117671) outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split2.root";    
+//     if(sample_identifier == 173041)outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split3.root";           
+//     if(sample_identifier == 173045)outputfile="histos_ZN_ZPlusJetsOLD_bgTable_split4.root"; 
     
-    if(sample_identifier == 147106)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split1.root";    
-    if(sample_identifier == 147117)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split2.root";    
-    if(sample_identifier == 147105)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split3.root";    
-    if(sample_identifier == 147771)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split4.root";    
+    if(sample_identifier == 147105)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split1.root";    
+    if(sample_identifier == 147123)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split2.root";    
+    if(sample_identifier == 147771)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split3.root";    
+    if(sample_identifier == 173045)outputfile="histos_ZN_ZPlusJetsNEW_bgTable_split4.root";    
     
     
     
