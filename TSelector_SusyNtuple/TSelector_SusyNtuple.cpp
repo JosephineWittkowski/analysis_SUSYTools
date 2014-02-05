@@ -47,7 +47,7 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
 
 
   SusyNtAna::Begin(0);
-  m_susyObj.initialize(nt.evt()->isMC);
+//   m_susyObj.initialize(nt.evt()->isMC);
 
   
 
@@ -63,6 +63,8 @@ void TSelector_SusyNtuple::SlaveBegin(TTree* /*tree*/)
   m_matrix = new SusyMatrixMethod::DiLeptonMatrixMethod();
   m_matrix->configure("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusyMatrixMethod/data/FinalFakeHist_Jan_02.root", SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT, SusyMatrixMethod::PT);
   if(makeNTuple) initTupleMaker("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SusySel_Egamma_6_NEW.root", "SusySel");
+//   string xsecFileName  = gSystem->ExpandPathName("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SUSYTools/data/susy_crosssections_8TeV.txt");
+  m_susyXsec = new SUSY::CrossSectionDB("/data/etp3/jwittkow/analysis_SUSYTools_03_04/SUSYTools/data/mc12_8TeV/Herwigpp_UEEE3_CTEQ6L1_simplifiedModel_wA.txt");
   
 }
 
@@ -134,10 +136,13 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 
   // charge flip background contribution in SS channels: for the e^pm e^pm and e^pm mu^pm channels, processes that are opposite-sign in truth but where one electron has undergone a “charge flip”. Contributions from WW, ttbar, Z/gamma* and single top are via charge-flip
   // In previous analysis, it has been observed that the charge flip rate in data is lower than that in the simulation by about 20%. Because of this disagreement, the electron charge flip rate is measured in data as a function of |eta| and combined with the smaller dependence on pT taken from simulation.
+    
+  float weight_ALL = (nt.evt()->isMC) ? SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap) : 1.;
+  if(mcid>= 177501 && mcid <= 177527) 	weight_ALL = weight_ALL/nt.evt()->xsec * m_susyXsec->xsectTimesEff(mcid);
   
-  float weight_ALL_EE = (nt.evt()->isMC) ? SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap) : 1.;
-  float weight_ALL_MM = (nt.evt()->isMC) ? SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap) : 1.;
-  float weight_ALL_EM = (nt.evt()->isMC) ? SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap) : 1.;
+  float weight_ALL_EE = weight_ALL;
+  float weight_ALL_MM = weight_ALL;
+  float weight_ALL_EM = weight_ALL;
   
   //select Leptons, Jets, ... automatically with SusyNt methods:
   selectObjects(NtSys_NOM, false, TauID_medium);
@@ -333,7 +338,7 @@ Bool_t TSelector_SusyNtuple::Process(Long64_t entry)
 		  cutnumber = 21.;  fillHistos_EE_SRSS1(cutnumber, weight_ALL_SS_EE); //SS cut: applied only on weighted events
 // 		  if(nt.evt()->event == 140871 || nt.evt()->event == 2697245){
 // 		    cout << "EE " << nt.evt()->event <<
-// 		    " total w= " << weight_ALL_EE
+// 		    " total w= " << weight_ALL_EE << endl;
 // 		    << " SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)= " << SusyNtTools::getEventWeight(nt.evt(), LUMI_A_L, true, &m_sumwMap)
 // 		    << " lep_SF_EE= " << lep_SF_EE 
 // 		    << " trigW_EE= " << trigW_EE 

@@ -23,6 +23,7 @@
 #include "SusyNtuple/WhTruthExtractor.h"
 #include "Mt2/mt2_bisect.h" 
 #include "SusyMatrixMethod/DiLeptonMatrixMethod.h"
+// #include "SusyXSReader/XSReader.h"
 #include "TH1.h"
 #include "TH2.h"
 #include "TH3.h"
@@ -1240,6 +1241,8 @@ class TSelector_SusyNtuple : public SusyNtAna
     DilTrigLogic*      m_trigObjWithoutRU;      // My trigger logic class
     chargeFlip m_chargeFlip;
     SusyMatrixMethod::DiLeptonMatrixMethod* m_matrix;
+    SUSY::CrossSectionDB*                       m_susyXsec;     // SUSY cross section database
+//     XSReader* susyXS;
 //     SusyNtTruthAna* susyAnaTruth;
 //     susy::wh::TupleMaker m_tupleMaker;
     //initialize missing mass calculator MMC for identification of Z->tau tau events
