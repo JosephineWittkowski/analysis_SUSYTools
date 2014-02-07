@@ -1,6 +1,6 @@
 {
    
-  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04/histos_cutflow_fake_Egamma_periodA.root");
+  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04/histos_ZN_177501_bgTable.root");
   hn.Print();
 TH1F *alpha_raw = (TH1F*)hn.Get("cutflow_EE");
 TH1F *beta_raw = (TH1F*)hn.Get("cutflow_EM");
