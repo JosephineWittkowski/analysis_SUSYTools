@@ -74,7 +74,7 @@ void run_TSelector_SusyNtuple_Truth_n0150_WH(TString SysUncertType, TString Inpu
     
       cout<<"Have you set up RootCore via  \"source RootCore/scripts/setup.sh\" ?"<<endl;  
 
-      gSystem->Setenv("ROOTCOREDIR", "/data/etp3/jwittkow/analysis_SUSYTools_03_04_SusyNt_01_16/RootCore");
+      gSystem->Setenv("ROOTCOREDIR", "/data/etp3/jwittkow/analysis_SUSYTools_03_04/RootCore");
       gSystem->SetIncludePath("-I$ROOTCOREDIR/include/");
 
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+"); 

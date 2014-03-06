@@ -1,4 +1,4 @@
-bool TSelector_SusyNtuple::defineHistos(){
+void TSelector_SusyNtuple::defineHistos(){
 
   h_storeSumwMcid = new TH1F("h_storeSumwMcid", "h_storeSumwMcid", 200000, 0, 200000.);  h_storeSumwMcid->Sumw2();
   
@@ -825,17 +825,18 @@ bool TSelector_SusyNtuple::defineHistos(){
   h_D0Signif_branch_l1_EM_SROS1 = new TH2F("h_D0Signif_branch_l1_EM_SROS1", "h_D0Signif_branch_l1_EM_SROS1", 200, -10, 10 ,130, 0, 129);  h_D0Signif_branch_l1_EM_SROS1->Sumw2();
   
   /*--------------------------------------------------------------------------------*/ 
-
-
-
-
+}
+ void TSelector_SusyNtuple::defineHistos_sysUncert(){ 
+  cutflow_EE_sysUncert = new TH2F("cutflow_EE_sysUncert", "cutflow_EE_sysUncert" ,130, 0, 129, 60, 0, 59); cutflow_EE_sysUncert->Sumw2();
+  cutflow_MM_sysUncert = new TH2F("cutflow_MM_sysUncert", "cutflow_MM_sysUncert" ,130, 0, 129, 60, 0, 59); cutflow_MM_sysUncert->Sumw2();
+  cutflow_EM_sysUncert = new TH2F("cutflow_EM_sysUncert", "cutflow_EM_sysUncert" ,130, 0, 129, 60, 0, 59); cutflow_EM_sysUncert->Sumw2();
   
-  return true;
+  
 
 }
 
 
-bool TSelector_SusyNtuple::writeHistos(){
+void TSelector_SusyNtuple::writeHistos(){
 
   bool EE_SRSS1 = true;
   bool EE_SRSS2 = false;
@@ -1701,18 +1702,24 @@ bool TSelector_SusyNtuple::writeHistos(){
   h_Mlj_MM_SRSS1->Write();
   h_Mlj_EM_SRSS1->Write();
   
-  return true;
 }
 
-bool TSelector_SusyNtuple::addHistos(){
-
-  //nEEded when running with Proof On Demand
-
-//     fOutput->Add( h_storeSumwMcid);
-
-  return true;
-    
+void TSelector_SusyNtuple::writeHistos_sysUncert(){
+  
+  cutflow_EE_sysUncert->Write();  
+  cutflow_MM_sysUncert->Write();  
+  cutflow_EM_sysUncert->Write();
 }
+
+// void TSelector_SusyNtuple::addHistos(){
+// 
+//   //nEEded when running with Proof On Demand
+// 
+// //     fOutput->Add( h_storeSumwMcid);
+// 
+// //   return true;
+//     
+// }
 void TSelector_SusyNtuple::calcJet_variables(TLorentzVector met_TLV){
   
   TLorentzVector signalJet0_TLV;
@@ -1752,7 +1759,7 @@ void TSelector_SusyNtuple::calcJet_variables(TLorentzVector met_TLV){
   }
     
 }
-void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EE){
+void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EE, SusyNtSys SysSetting, bool n0150BugFix){
   
   pTl0_EE = el0_TLV.Pt();
   pTl1_EE = el1_TLV.Pt();
@@ -1829,17 +1836,17 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
   ElectronVector Electrons_all_vec;
   for(uint ie=0; ie<susyNt->ele()->size(); ++ie){
     Electron* e = & susyNt->ele()->at(ie);
-    e->setState(NtSys_NOM);
+    e->setState(SysSetting);
     if(e->pt < 6.) continue;
 
     Electrons_all_vec.push_back(e);
   }
-    JetVector prejets = getPreJets(&nt, NtSys_NOM); 
+    JetVector prejets = getPreJets(&nt, SysSetting); 
 //   perform overlap removal to check which electrons *would* have been removed
   ElectronVector elecs = Electrons_all_vec;
-  MuonVector muons = getPreMuons(susyNt, NtSys_NOM);
-  JetVector jets  = getPreJets(susyNt, NtSys_NOM);
-  TauVector taus = getPreTaus(susyNt, NtSys_NOM);
+  MuonVector muons = getPreMuons(susyNt, SysSetting, n0150BugFix);
+  JetVector jets  = getPreJets(susyNt, SysSetting);
+  TauVector taus = getPreTaus(susyNt, SysSetting);
 
   // Now perform the overlap removals
   performOverlap(elecs, muons, taus, jets);
@@ -1886,7 +1893,7 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
       
     
       Electron* el_ZcandImpact = Electrons_all_vec.at(ie);
-      el_ZcandImpact->setState(NtSys_NOM);
+      el_ZcandImpact->setState(SysSetting);
 
       if((el_ZcandImpact->DeltaR(*el0) < 0.05) || (el_ZcandImpact->DeltaR(*el1) < 0.05)) continue; //no overlap w/ signal lepton
       
@@ -2147,8 +2154,8 @@ void TSelector_SusyNtuple::calc_EE_variables(LeptonVector &leptons, Electron* el
    mZTT_coll = calcMZTauTau_coll(el0_TLV, el1_TLV, met_TLV); 
 }
 
-void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_MM){
-  
+void TSelector_SusyNtuple::calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_MM, SusyNtSys SysSetting, bool n0150BugFix){
+
   TLorentzVector mu0_TLV_n, mu1_TLV_n;
   mu0_TLV_n.SetPtEtaPhiE(mu0->pt, mu0->eta ,mu0->phi, mu0->pt*cosh(mu0->eta));
   mu0_TLV_n.SetPtEtaPhiM(mu0->pt, mu0->eta ,mu0->phi, mu0->m);
@@ -2224,18 +2231,20 @@ bool unbiased = true;
   sD0Signif_branch_l0_MM = calc_D0(unbiased, leptons.at(0)) / D0err_branch_l0_MM;
   sD0Signif_branch_l1_MM = calc_D0(unbiased, leptons.at(1)) / D0err_branch_l1_MM;
   
+  
   MuonVector Muons_all_vec;
   for(uint im=0; im<susyNt->muo()->size(); ++im){
     Muon* mu = & susyNt->muo()->at(im);
-    mu->setState(NtSys_NOM);    
+    mu->setState(SysSetting, n0150BugFix);    
     if(mu->pt < 6.) continue;
     Muons_all_vec.push_back(mu);
   }
-  JetVector prejets = getPreJets(&nt, NtSys_NOM); 
-  ElectronVector elecs = getPreElectrons(susyNt, NtSys_NOM);
+  
+  JetVector prejets = getPreJets(&nt, SysSetting); 
+  ElectronVector elecs = getPreElectrons(susyNt, SysSetting);
   MuonVector muons = Muons_all_vec;
-  JetVector jets  = getPreJets(susyNt, NtSys_NOM);
-  TauVector taus = getPreTaus(susyNt, NtSys_NOM);
+  JetVector jets  = getPreJets(susyNt, SysSetting);
+  TauVector taus = getPreTaus(susyNt, SysSetting);
 
   //cout<<"Select Taus: "<<selectTaus<<" size: "<<taus.size()<<endl;
 
@@ -2280,7 +2289,7 @@ bool unbiased = true;
   for(uint im=0; im<Muons_all_vec.size(); im++){
 
     Muon* mu_ZcandImpact = Muons_all_vec.at(im);
-    mu_ZcandImpact->setState(NtSys_NOM);
+    mu_ZcandImpact->setState(SysSetting, n0150BugFix);
     
     if((mu_ZcandImpact->DeltaR(*mu0) < 0.05) || (mu_ZcandImpact->DeltaR(*mu1) < 0.05)) continue; //only check for separation of signal leptons
 
@@ -2519,11 +2528,11 @@ bool unbiased = true;
       }
 
     }
-    
+
   mZTT_coll = calcMZTauTau_coll(mu0_TLV, mu1_TLV, met_TLV); 
 }
 
-void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM){
+void TSelector_SusyNtuple::calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM, SusyNtSys SysSetting, bool n0150BugFix){
   
   pTl0_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? el_TLV.Pt() : mu_TLV.Pt();
   pTl1_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? mu_TLV.Pt() : el_TLV.Pt();
@@ -2600,7 +2609,7 @@ bool unbiased = true;
   MuonVector Muons_all_vec;
   for(uint im=0; im<susyNt->muo()->size(); ++im){
     Muon* mu = & susyNt->muo()->at(im);
-    mu->setState(NtSys_NOM); 
+    mu->setState(SysSetting, n0150BugFix); 
     if(mu->pt < 6.) continue;
     Muons_all_vec.push_back(mu);
   }
@@ -2608,15 +2617,15 @@ bool unbiased = true;
   ElectronVector Electrons_all_vec;
   for(uint ie=0; ie<susyNt->ele()->size(); ++ie){
     Electron* e = & susyNt->ele()->at(ie);
-    e->setState(NtSys_NOM);
+    e->setState(SysSetting);
     if(e->pt < 6.) continue;
     Electrons_all_vec.push_back(e);
   }
-  JetVector prejets = getPreJets(&nt, NtSys_NOM); 
-  ElectronVector elecs_mu = getPreElectrons(susyNt, NtSys_NOM);
+  JetVector prejets = getPreJets(&nt, SysSetting); 
+  ElectronVector elecs_mu = getPreElectrons(susyNt, SysSetting);
   MuonVector muons_mu = Muons_all_vec;
-  JetVector jets_mu  = getPreJets(susyNt, NtSys_NOM);
-  TauVector taus_mu = getPreTaus(susyNt, NtSys_NOM);
+  JetVector jets_mu  = getPreJets(susyNt, SysSetting);
+  TauVector taus_mu = getPreTaus(susyNt, SysSetting);
 
   // Now perform the overlap removals
   performOverlap(elecs_mu, muons_mu, taus_mu, jets_mu);
@@ -2626,9 +2635,9 @@ bool unbiased = true;
   removeSFOSPair(muons_mu, MLL_MIN);
   
   ElectronVector elecs_el = Electrons_all_vec;
-  MuonVector muons_el = getPreMuons(susyNt, NtSys_NOM);
-  JetVector jets_el  = getPreJets(susyNt, NtSys_NOM);
-  TauVector taus_el = getPreTaus(susyNt, NtSys_NOM);
+  MuonVector muons_el = getPreMuons(susyNt, SysSetting, n0150BugFix);
+  JetVector jets_el  = getPreJets(susyNt, SysSetting);
+  TauVector taus_el = getPreTaus(susyNt, SysSetting);
 
   // Now perform the overlap removals
   performOverlap(elecs_el, muons_el, taus_el, jets_el);
@@ -2699,7 +2708,7 @@ bool unbiased = true;
   //loop over all muons and electrons, check for separation from signal leptons (in the meaning of DeltaR). If one SFOS pair is closer to Zmass, use this third lepton. Mark if it is electron or muon with 'isEl' and 'isMu'
   for(uint im=0; im<Muons_all_vec.size(); im++){
     mu_ZcandImpact = Muons_all_vec.at(im);
-    mu_ZcandImpact->setState(NtSys_NOM);
+    mu_ZcandImpact->setState(SysSetting, n0150BugFix);
     
     
     if((mu_ZcandImpact->DeltaR(*mu) < 0.05) || mu_ZcandImpact->DeltaR(*el) < 0.05) continue;  //only check for separation of signal leptons
@@ -2720,7 +2729,7 @@ bool unbiased = true;
   Electron* el_ZcandImpact;
   for(uint ie=0; ie<Electrons_all_vec.size(); ie++){
     el_ZcandImpact = Electrons_all_vec.at(ie);
-    el_ZcandImpact->setState(NtSys_NOM);
+    el_ZcandImpact->setState(SysSetting);
 
     if((el_ZcandImpact->DeltaR(*mu) < 0.05) || (el_ZcandImpact->DeltaR(*el) < 0.05)) continue; //only check for separation of signal leptons
 

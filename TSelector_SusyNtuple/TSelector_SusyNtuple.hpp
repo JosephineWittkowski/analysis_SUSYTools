@@ -904,6 +904,10 @@ class TSelector_SusyNtuple : public SusyNtAna
   TH2F* h_D0Signif_branch_l1_MM_SROS1;
   TH2F* h_D0Signif_branch_l1_EM_SROS1;
   
+  TH2F* cutflow_EE_sysUncert;  
+  TH2F* cutflow_MM_sysUncert; 
+  TH2F* cutflow_EM_sysUncert;
+  
     
     SUSYObjDef m_susyObj;      // SUSY object definitions
     
@@ -932,7 +936,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     // Cut methods
     bool CheckRealLeptons(const ElectronVector& signal_electrons, MuonVector& signal_muons);
     bool CheckChargeFlipElectrons(const ElectronVector& signal_electrons);
-    float getBTagWeight(const Event* evt);
+    float getBTagWeight(const Event* evt, BTagSys SysSettingBTag);
     float recalcMetRel(TLorentzVector metLV, TLorentzVector l1, TLorentzVector l2, const JetVector& jets, bool useForward);
     float calcMT2(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1);
     float calcMT2J(TLorentzVector metlv, TLorentzVector l0, TLorentzVector l1, TLorentzVector j0, TLorentzVector j1);
@@ -945,17 +949,19 @@ class TSelector_SusyNtuple : public SusyNtAna
     float calcMt(TLorentzVector _l, TLorentzVector _nu);
     float calcSumMv1(const JetVector &signalJets);
     
-    bool defineHistos();
-    bool writeHistos();
-    bool addHistos();
+    void defineHistos();
+    void defineHistos_sysUncert();
+    void writeHistos();
+    void writeHistos_sysUncert();
+//     void addHistos();
     void fillHistos_EE(int cutnumber, float weight);
     void fillHistos_MM(int cutnumber, float weight);
     void fillHistos_EM(int cutnumber, float weight);
     
     void calcJet_variables(TLorentzVector met_TLV);
-    void calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EE);
-    void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_MM);
-    void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM);
+    void calc_EE_variables(LeptonVector &leptons, Electron* el0, Electron* el1, TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EE, SusyNtSys SysSetting, bool n0150BugFix);
+    void calc_MM_variables(LeptonVector &leptons, Muon* mu0, Muon* mu1, TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_MM, SusyNtSys SysSetting, bool n0150BugFix);
+    void calc_EM_variables(LeptonVector &leptons, Electron* el, Muon* mu, TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, TLorentzVector signalJet0_TLV, TLorentzVector signalJet1_TLV, bool useForwardJets, SusyNtObject* susyNt, float weight_EM, SusyNtSys SysSetting, bool n0150BugFix);
     
     void fillHistos_EE_SRSS1(float cut_EE, float weight_ALL_EE);    
     void fillHistos_MM_SRSS1(float cut_MM, float weight_ALL_MM);    
@@ -966,14 +972,14 @@ class TSelector_SusyNtuple : public SusyNtAna
     float calc_D0(bool unbiased, const Lepton* lep);
     static bool compareElecMomentum (Electron* e0, Electron* e1);
     static bool compareMuonMomentum (Muon* mu0, Muon* mu1);
-    ElectronVector getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys);
-    ElectronVector getOverlapElectrons(SusyNtObject* susyNt, SusyNtSys sys);
-    MuonVector getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys);
-    MuonVector getOverlapMuons(SusyNtObject* susyNt, SusyNtSys sys);
+//     ElectronVector getSoftElectrons(SusyNtObject* susyNt, SusyNtSys sys);
+//     ElectronVector getOverlapElectrons(SusyNtObject* susyNt, SusyNtSys sys);
+//     MuonVector getSoftMuons(SusyNtObject* susyNt, SusyNtSys sys);
+//     MuonVector getOverlapMuons(SusyNtObject* susyNt, SusyNtSys sys);
     bool isCMSJet(const Susy::Jet* jet);
     int numberOfCMSJets(const JetVector& jets);    
     vector<TLorentzVector> overlapRemoval(vector<TLorentzVector> objects_type1, vector<TLorentzVector> indices_2, double dr, bool sameType, bool removeSoft) ;
-    bool doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM);
+    bool doEventCleaning_andFillHistos(int flag, float weight_ALL_EE, float weight_ALL_MM, float weight_ALL_EM, SusyNtSys SysSetting, bool n0150BugFix);
     bool initTupleMaker(const std::string &outFilename, const std::string &treename);
     bool initFile(const std::string &outFilename);
     bool initTree(const std::string &treename);
@@ -981,6 +987,10 @@ class TSelector_SusyNtuple : public SusyNtAna
     bool fillTupleMaker(const double weight, const unsigned int run, const unsigned int event, const bool isMc, const Susy::Lepton &l0, const Susy::Lepton &l1, const Susy::Met &met, const LeptonVector &otherLeptons, const JetVector &jets);
     LeptonVector getAnyElOrMu(SusyNtObject &susyNt, const Lepton *l0, const Lepton *l1);
     bool closeTupleMaker();
+//     SusyNtSys returnSysUncertType(int isys);
+//     int returnSysUncertNumber(SusyNtSys UncertType);
+//     int returnSysUncertBTagNumber(BTagSys UncertType);
+    char *GetID(Int_t type);
 
     // Selection region
     void setSelection(std::string s) { m_sel = s; }
@@ -990,6 +1000,7 @@ class TSelector_SusyNtuple : public SusyNtAna
     Analysis::AnalysisMuonConfigurableScaleFactors* m_muon_scaleFactor;
     bool makeNTuple;
     bool run_on_SusyNtuple;
+    bool calcSysUncert;
 
     int nSignalJets;
     float MET;
@@ -1266,6 +1277,12 @@ class TSelector_SusyNtuple : public SusyNtAna
     
     bool m_kIsData;
     bool calcFakeContribution; 
+    int isys;
+    SusyNtSys SysSetting;
+    BTagSys SysSettingBTag;
+    int qflipSysUncertType;
+    bool n0150BugFix;
+    SusyMatrixMethod::SYSTEMATIC SysSettingFake;
     
     enum LEP_TYPE{PR=0, CONV, HF, LF, TYPE_Undef};
     
